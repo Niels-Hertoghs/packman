@@ -9,7 +9,17 @@ jobs:
       - checkout
       - run: apt update
       - run: DEBIAN_FRONTEND=noninteractive TZ=Europe/Brussels apt install -y gcc g++ libsfml-dev cmake git
-      - run: mkdir -p ../build
-      - run: cd ../build && cmake ..
-      - run: make
-      - run: make install
+      - run:
+          name: Configureer, Compileer en Installeer met CMake
+          # Alle build-stappen in één shell-sessie
+          command: |
+            mkdir -p build
+            cd build
+            # Voer CMake uit. Nu werkt '..' correct omdat we in de 'build' map zijn.
+            cmake ..
+            
+            # Voer 'make' uit
+            make
+            
+            # Voer 'make install' uit
+            make install
