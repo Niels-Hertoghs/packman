@@ -8,7 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
 # Voeg je broncode toe
-add_executable(packman main.cpp)
+add_executable(packman main.cpp
+        logic/game.cpp
+        logic/game.h
+        logic/state_maneger/stateManeger.cpp
+        logic/state_maneger/stateManeger.h)
 
 # Link de SFML-libraries
 target_link_libraries(packman sfml-graphics sfml-window sfml-system)

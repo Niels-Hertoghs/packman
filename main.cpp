@@ -1,25 +1,10 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include <memory>
+#include "logic/game.h"
 
 int main() {
-
-
-    sf::RenderWindow window(sf::VideoMode(800, 600), "packman");
-
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen()) {
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    std::unique_ptr<game> Game(new game);
+    Game->playGame();
 
     return 0;
 };
