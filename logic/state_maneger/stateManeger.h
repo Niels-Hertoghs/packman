@@ -13,36 +13,37 @@ class state;
 
 class stateManeger {
 private:
-    std::stack<std::unique_ptr<state>> states;
+    std::stack<std::unique_ptr<state>> stack;
 
 public:
     stateManeger();
     void pushState(std::unique_ptr<state> newState);
-    void popState();
-    state* getCurrentState();
+    void prevState();
+    std::unique_ptr<state> getCurrentState();
 
-    void start();
-    void levelState();
+    void runTop(sf::RenderWindow& window, sf::Event& event);
 };
 
 class state {
 public:
 
     state() = default;
-    virtual ~state() = default; // virtuele destructor is cruciaal
+    virtual ~state() = default;
+
+    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager) = 0;
 };
 
 class menuState : public state {
-private:
-    std::shared_ptr<state> currentState;
-    public:
-    menuState();
+public:
+    menuState() = default;
+    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager) override;
 };
 
 class LevelState : public state {
 
 public:
-    LevelState();
+    LevelState() = default;
+    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager) override;
 };
 
 
