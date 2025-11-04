@@ -35,30 +35,33 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event) {
-    stack.top().get()->run(window, event,*this);
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam) {
+    stack.top().get()->run(window, event,*this,cam);
 }
 
 
 // menu state
-void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager) {
+void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam) {
+
     //lettertype inladen
-    sf::Font arialFont;
-    if (!arialFont.loadFromFile("input_output/packman_font.ttf")) {
+    sf::Font packmanFont;
+    if (!packmanFont.loadFromFile("input_output/packman_font.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;
     }
 
-    // de pagina naam en de prev hisgh score afdrrukken
-    sf::Text menuText = makeText(arialFont, "Menu", 60, sf::Color::Yellow, 320, 50);
-    sf::Text highscoreText = makeText(arialFont, "Previous High score: " + std::to_string(60), 20, sf::Color::White, 280, 150);
-
+    // menu title maken
+    std::pair<int,int> menuPos = cam.worldToPixel(0.55f, 0.525f);
+    sf::Text menuText = makeText(packmanFont, "Menu", 60, sf::Color::Yellow, menuPos.first, menuPos.second);
+    sf::Text highscoreText = makeText(packmanFont, "Previous High score: " + std::to_string(60), 20, sf::Color::White, 280, 150);
+    sf::FloatRect bounds = menuText.getLocalBounds();
+    menuText.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
     //de play butten
     sf::RectangleShape playButton(sf::Vector2f(300, 100));
     playButton.setFillColor(sf::Color::Green);
     playButton.setPosition(250, 250);
 
-    sf::Text playText = makeText(arialFont, "Play", 60, sf::Color::Magenta, 320, 50);
+    sf::Text playText = makeText(packmanFont, "Play", 60, sf::Color::Magenta, 320, 50);
     // Tekst centreren in de knop
     sf::FloatRect textRect = playText.getLocalBounds();
     playText.setOrigin(textRect.left + textRect.width / 2.0f,
@@ -84,7 +87,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     window.draw(playText);
 }
 
-void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager) {
+void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam) {
     sf::Font arialFont;
     if (!arialFont.loadFromFile("input_output/arial.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;

@@ -3,7 +3,7 @@
 //
 
 #include "game.h"
-
+#include "camera.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
@@ -18,13 +18,14 @@ void game::playGame() {
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    camera cam(desktop.width, desktop.height);
 
     std::cout << "Desktop resolutie: " << desktop.width << "x" << desktop.height << std::endl;
 
     // Stel de gewenste schaal in (bijv. 80% van de schermgrootte)
     float scale = 0.8f;
-    unsigned int width = static_cast<unsigned int>(desktop.width * scale);
-    unsigned int height = static_cast<unsigned int>(desktop.height * scale);
+    unsigned int width = desktop.width * scale;
+    unsigned int height = desktop.height * scale;
 
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
@@ -42,11 +43,14 @@ void game::playGame() {
         while(window.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
                 window.close();
+            } if (event.type == sf::Event::Resized) {
+                // Update camera dimensions on window resize
+                cam = camera(event.size.width, event.size.height);
             }
         }
         window.clear(sf::Color::Black);
 
-        manager.runTop(window, event);
+        manager.runTop(window, event, cam);
 
         window.display();
     }

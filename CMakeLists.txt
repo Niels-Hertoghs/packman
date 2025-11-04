@@ -10,9 +10,8 @@ find_package(SFML 2 COMPONENTS system window graphics)
 # Voeg je broncode toe
 add_executable(packman main.cpp
         logic/game.cpp
-        logic/game.h
         logic/state_maneger/stateManeger.cpp
-        logic/state_maneger/stateManeger.h)
+        logic/camera.cpp)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

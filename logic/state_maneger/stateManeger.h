@@ -8,9 +8,14 @@
 #include <memory>
 #include <stack>
 #include <vector>
+#include "../camera.h"
 
 class state;
 
+/**
+ * class stateManeger
+ * brief Manages the different states of the game (menu, level, pause, etc.).
+ */
 class stateManeger {
 private:
     std::stack<std::unique_ptr<state>> stack;
@@ -21,29 +26,41 @@ public:
     void prevState();
     std::unique_ptr<state> getCurrentState();
 
-    void runTop(sf::RenderWindow& window, sf::Event& event);
+    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam);
 };
 
+/**
+ * class state
+ * brief Abstract base class for different game states.
+ */
 class state {
 public:
 
     state() = default;
     virtual ~state() = default;
 
-    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager) = 0;
+    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam) = 0;
 };
 
+/**
+ * class menuState
+ * brief Represents the menu state of the game.
+ */
 class menuState : public state {
 public:
     menuState() = default;
-    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager) override;
+    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam) override;
 };
 
+/**
+ * class LevelState
+ * brief Represents the level state of the game.
+ */
 class LevelState : public state {
 
 public:
     LevelState() = default;
-    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager) override;
+    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam) override;
 };
 
 
