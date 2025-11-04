@@ -18,14 +18,12 @@ void game::playGame() {
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    camera cam(desktop.width, desktop.height);
-
-    std::cout << "Desktop resolutie: " << desktop.width << "x" << desktop.height << std::endl;
 
     // Stel de gewenste schaal in (80% van de schermgrootte)
     float scale = 0.8f;
     unsigned int width = desktop.width * scale;
     unsigned int height = desktop.height * scale;
+    camera cam(width, height);
 
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
@@ -45,11 +43,11 @@ void game::playGame() {
                 window.close();
             } if (event.type == sf::Event::Resized) {
                 // Update camera dimensions on window resize
-                cam = camera(event.size.width, event.size.height);
+                cam.setDimensions(event.size.width, event.size.height);
+                std::cout << "New width: " << event.size.width << ", New height: " << event.size.height << std::endl;
             }
         }
         window.clear(sf::Color::Black);
-
         manager.runTop(window, event, cam);
 
         window.display();

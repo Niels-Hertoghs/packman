@@ -75,7 +75,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     int teller = 1;
     for (char c : inhoud) {
          if (c == ' ') {
-             highScoreText += '\n' +std::to_string(teller) + ": ";
+             highScoreText += '\n' +std::to_string(teller) + ":";
              teller++;
          }
         highScoreText.push_back(c);
