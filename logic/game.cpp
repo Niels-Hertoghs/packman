@@ -22,7 +22,7 @@ void game::playGame() {
 
     std::cout << "Desktop resolutie: " << desktop.width << "x" << desktop.height << std::endl;
 
-    // Stel de gewenste schaal in (bijv. 80% van de schermgrootte)
+    // Stel de gewenste schaal in (80% van de schermgrootte)
     float scale = 0.8f;
     unsigned int width = desktop.width * scale;
     unsigned int height = desktop.height * scale;

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "stateManeger.h"
+#include <fstream>
 
 sf::Text makeText(const sf::Font& fontF, const std::string& text, int charSize, sf::Color color,int x, int y) {
     sf::Text menuText;
@@ -50,11 +51,42 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     }
 
     // menu title maken
-    std::pair<int,int> menuPos = cam.worldToPixel(0.55f, 0.525f);
+    std::pair<int,int> menuPos = cam.worldToPixel(0.f, 0.55f);
     sf::Text menuText = makeText(packmanFont, "Menu", 60, sf::Color::Yellow, menuPos.first, menuPos.second);
-    sf::Text highscoreText = makeText(packmanFont, "Previous High score: " + std::to_string(60), 20, sf::Color::White, 280, 150);
-    sf::FloatRect bounds = menuText.getLocalBounds();
-    menuText.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    sf::FloatRect menuBounds = menuText.getLocalBounds();
+    menuText.setOrigin(menuBounds.width / 2.f, menuBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
+
+    // De high score tekst
+    std::pair<int,int> highPos = cam.worldToPixel(0.f, 0.35f);
+    sf::Text highscoreText = makeText(packmanFont, "Previous High scores:", 20, sf::Color::White, highPos.first, highPos.second);
+    sf::FloatRect highScoreRect = highscoreText.getLocalBounds();
+    highscoreText.setOrigin(highScoreRect.width / 2.f, highScoreRect.height / 2.f);
+
+    //De high scores zelf
+    //De string maken
+    std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
+    if (!file) {
+        std::cerr << "Kon bestand niet openen.\n";
+    }
+    std::string inhoud((std::istreambuf_iterator<char>(file)),
+                   std::istreambuf_iterator<char>()); // lees alles
+
+    std::string highScoreText = "1: ";
+    int teller = 1;
+    for (char c : inhoud) {
+         if (c == ' ') {
+             highScoreText += '\n' +std::to_string(teller) + ": ";
+             teller++;
+         }
+        highScoreText.push_back(c);
+    }
+
+    std::pair<int,int> highNumbPos = cam.worldToPixel(0.f, 0.f);
+    sf::Text highNumbText = makeText(packmanFont, highScoreText, 20, sf::Color::White, highNumbPos.first, highNumbPos.second);
+    sf::FloatRect highNumbBounds = highNumbText.getLocalBounds();
+    highNumbText.setOrigin(highNumbBounds.width / 2.f, highNumbBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
+
+
 
     //de play butten
     sf::RectangleShape playButton(sf::Vector2f(300, 100));
@@ -82,6 +114,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     }
 
     window.draw(menuText);
+    window.draw(highNumbText);
     window.draw(highscoreText);
     window.draw(playButton);
     window.draw(playText);

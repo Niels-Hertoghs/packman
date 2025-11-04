@@ -16,3 +16,11 @@ void camera::setDimensions(unsigned int w, unsigned int h) {
     width = w;
     height = h;
 }
+
+int camera::distanceToPixelsHeight(const float& distance) const {
+    return static_cast<int>((-distance+1)/2 * height);
+}
+
+int camera::distanceToPixelsWidth(const float& distance) const {
+    return static_cast<int>((distance+1)/2 * width);
+}
