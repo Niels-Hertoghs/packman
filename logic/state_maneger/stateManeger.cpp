@@ -121,7 +121,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 
 void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam) {
     sf::Font arialFont;
-    if (!arialFont.loadFromFile("input_output/arial.ttf")) {
+    if (!arialFont.loadFromFile("input_output/packman_font.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;
     }
 

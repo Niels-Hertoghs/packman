@@ -43,6 +43,9 @@ void game::playGame() {
                 window.close();
             }
             if (event.type == sf::Event::Resized) {
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+
                 // Update camera dimensions on window resize
                 cam.setDimensions(event.size.width, event.size.height);
             }

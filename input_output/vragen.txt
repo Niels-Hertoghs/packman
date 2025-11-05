@@ -1,0 +1,2 @@
+Mag ik de opmaak van de menu state in statemaneger doen?
+klopt de structuur en de patterns?
