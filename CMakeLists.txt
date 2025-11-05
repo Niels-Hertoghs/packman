@@ -11,7 +11,13 @@ find_package(SFML 2 COMPONENTS system window graphics)
 add_executable(packman main.cpp
         logic/game.cpp
         logic/state_maneger/stateManeger.cpp
-        logic/camera.cpp)
+        logic/camera.cpp
+        logic/world.cpp
+        logic/world.h
+        logic/entities/entity.cpp
+        logic/entities/entity.h
+        logic/render.cpp
+        logic/render.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

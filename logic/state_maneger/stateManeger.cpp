@@ -6,6 +6,8 @@
 #include "stateManeger.h"
 #include <fstream>
 
+#include "../render.h"
+
 sf::Text makeText(const sf::Font& fontF, const std::string& text, float charSize, sf::Color color,float x, float y,const camera& cam) {
     sf::Text Text;
     Text.setFont(fontF);
@@ -120,14 +122,20 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 }
 
 void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam) {
-    sf::Font arialFont;
-    if (!arialFont.loadFromFile("input_output/packman_font.ttf")) {
+    Render render;
+    std::vector<sf::RectangleShape> shape;
+    std::vector<sf::Text> text;
+
+    sf::Font packmanFont;
+    if (!packmanFont.loadFromFile("input_output/packman_font.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;
     }
 
-    // de pagina naam en de prev hisgh score afdrrukken
-    sf::Text menuText = makeText(arialFont, "Menu", 0.6, sf::Color::Yellow, 0.0f, 0.f,cam);
-    window.draw(menuText);
+    std::tie(shape, text) = render.loadMap(cam,packmanFont);
+
+    for (const auto& line:text) {
+        window.draw(line);
+    }
 
 }
 
