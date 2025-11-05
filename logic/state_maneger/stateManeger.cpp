@@ -6,14 +6,23 @@
 #include "stateManeger.h"
 #include <fstream>
 
-sf::Text makeText(const sf::Font& fontF, const std::string& text, int charSize, sf::Color color,int x, int y) {
-    sf::Text menuText;
-    menuText.setFont(fontF);
-    menuText.setString(text);
-    menuText.setCharacterSize(charSize);
-    menuText.setFillColor(color);
-    menuText.setPosition(x,y);
-    return menuText;
+sf::Text makeText(const sf::Font& fontF, const std::string& text, float charSize, sf::Color color,float x, float y,const camera& cam) {
+    sf::Text Text;
+    Text.setFont(fontF);
+    Text.setString(text);
+    Text.setCharacterSize(cam.distanceToPixelsHeight(charSize));
+    Text.setFillColor(color);
+
+    // Zet origin wél met top en left in aanmerking genomen
+    sf::FloatRect bounds = Text.getLocalBounds();
+    Text.setOrigin(bounds.left + bounds.width / 2.f,
+                   bounds.top  + bounds.height / 2.f);
+
+    // En pas dan pas de positie toe (zodat position refereert aan de nieuwe origin)
+    auto Pos = cam.worldToPixel(x, y);
+    Text.setPosition(static_cast<float>(Pos.first), static_cast<float>(Pos.second));
+
+    return Text;
 }
 
 stateManeger::stateManeger() {
@@ -51,14 +60,12 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     }
 
     // menu title maken
-    std::pair<int,int> menuPos = cam.worldToPixel(0.f, 0.55f);
-    sf::Text menuText = makeText(packmanFont, "Menu", 60, sf::Color::Yellow, menuPos.first, menuPos.second);
+    sf::Text menuText = makeText(packmanFont, "Menu", 0.15, sf::Color::Yellow, 0.f, 0.55f,cam);
     sf::FloatRect menuBounds = menuText.getLocalBounds();
-    menuText.setOrigin(menuBounds.width / 2.f, menuBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
+    // menuText.setOrigin(menuBounds.left + menuBounds.width / 2.f, menuBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
 
     // De high score tekst
-    std::pair<int,int> highPos = cam.worldToPixel(0.f, 0.35f);
-    sf::Text highscoreText = makeText(packmanFont, "Previous High scores:", 20, sf::Color::White, highPos.first, highPos.second);
+    sf::Text highscoreText = makeText(packmanFont, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
     sf::FloatRect highScoreRect = highscoreText.getLocalBounds();
     highscoreText.setOrigin(highScoreRect.width / 2.f, highScoreRect.height / 2.f);
 
@@ -81,8 +88,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
         highScoreText.push_back(c);
     }
 
-    std::pair<int,int> highNumbPos = cam.worldToPixel(0.f, 0.f);
-    sf::Text highNumbText = makeText(packmanFont, highScoreText, 20, sf::Color::White, highNumbPos.first, highNumbPos.second);
+    sf::Text highNumbText = makeText(packmanFont, highScoreText, 0.05f, sf::Color::White, 0.f, 0.f,cam);
     sf::FloatRect highNumbBounds = highNumbText.getLocalBounds();
     highNumbText.setOrigin(highNumbBounds.width / 2.f, highNumbBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
 
@@ -93,7 +99,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     playButton.setFillColor(sf::Color::Green);
     playButton.setPosition(250, 250);
 
-    sf::Text playText = makeText(packmanFont, "Play", 60, sf::Color::Magenta, 320, 50);
+    sf::Text playText = makeText(packmanFont, "Play", 0.2f, sf::Color::Magenta, -1.f, -1.f,cam);
     // Tekst centreren in de knop
     sf::FloatRect textRect = playText.getLocalBounds();
     playText.setOrigin(textRect.left + textRect.width / 2.0f,
@@ -127,7 +133,7 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     }
 
     // de pagina naam en de prev hisgh score afdrrukken
-    sf::Text menuText = makeText(arialFont, "Menu", 60, sf::Color::Yellow, 320, 50);
+    sf::Text menuText = makeText(arialFont, "Menu", 0.6, sf::Color::Yellow, 0.0f, 0.f,cam);
     window.draw(menuText);
 
 }

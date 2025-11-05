@@ -35,16 +35,20 @@ void game::playGame() {
         (desktop.height - height) / 2
     ));
 
-    // main wondow loop
+    // main window loop
     while(window.isOpen()) {
         sf::Event event{};
         while(window.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
                 window.close();
-            } if (event.type == sf::Event::Resized) {
+            }
+            if (event.type == sf::Event::Resized) {
                 // Update camera dimensions on window resize
                 cam.setDimensions(event.size.width, event.size.height);
-                std::cout << "New width: " << event.size.width << ", New height: " << event.size.height << std::endl;
+
+                if (event.size.width < 500) {
+                    std::cout << "he";
+                }
             }
         }
         window.clear(sf::Color::Black);
