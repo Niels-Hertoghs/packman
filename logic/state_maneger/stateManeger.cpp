@@ -15,8 +15,8 @@ sf::Text makeText(const sf::Font& fontF, const std::string& text, float charSize
 
     // Zet origin wél met top en left in aanmerking genomen
     sf::FloatRect bounds = Text.getLocalBounds();
-    Text.setOrigin(bounds.left + bounds.width / 2.f,
-                   bounds.top  + bounds.height / 2.f);
+    Text.setOrigin((bounds.left + bounds.width) / 2.f,
+                   (bounds.top  + bounds.height) / 2.f);
 
     // En pas dan pas de positie toe (zodat position refereert aan de nieuwe origin)
     auto Pos = cam.worldToPixel(x, y);
@@ -61,13 +61,10 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 
     // menu title maken
     sf::Text menuText = makeText(packmanFont, "Menu", 0.15, sf::Color::Yellow, 0.f, 0.55f,cam);
-    sf::FloatRect menuBounds = menuText.getLocalBounds();
-    // menuText.setOrigin(menuBounds.left + menuBounds.width / 2.f, menuBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
 
     // De high score tekst
     sf::Text highscoreText = makeText(packmanFont, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
-    sf::FloatRect highScoreRect = highscoreText.getLocalBounds();
-    highscoreText.setOrigin(highScoreRect.width / 2.f, highScoreRect.height / 2.f);
+
 
     //De high scores zelf
     //De string maken
@@ -95,30 +92,26 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 
 
     //de play butten
-    sf::RectangleShape playButton(sf::Vector2f(300, 100));
+    int playButtenSizeHeight = cam.distanceToPixelsHeight(0.4f);
+    int playButtenSizeWidth = cam.distanceToPixelsWidth(0.2f);
+    sf::RectangleShape playButton(sf::Vector2f(static_cast<float>(playButtenSizeWidth),static_cast<float>(playButtenSizeHeight)));
     playButton.setFillColor(sf::Color::Green);
-    playButton.setPosition(250, 250);
+    sf::FloatRect boundsRect =  playButton.getLocalBounds();
+    playButton.setOrigin(boundsRect.width / 2.f, boundsRect.height / 2.f);
+    std::pair<int, int> playButtenPos = cam.worldToPixel(0.f,-0.5f);
+    playButton.setPosition(static_cast<float>(playButtenPos.first), static_cast<float>(playButtenPos.second));
 
-    sf::Text playText = makeText(packmanFont, "Play", 0.2f, sf::Color::Magenta, -1.f, -1.f,cam);
-    // Tekst centreren in de knop
-    sf::FloatRect textRect = playText.getLocalBounds();
-    playText.setOrigin(textRect.left + textRect.width / 2.0f,
-                       textRect.top + textRect.height / 2.0f);
-    playText.setPosition(
-        playButton.getPosition().x + playButton.getSize().x / 2.0f,
-        playButton.getPosition().y + playButton.getSize().y / 2.0f
-    );
+    sf::Text playText = makeText(packmanFont, "Play", 0.2f, sf::Color::Magenta, 0.f, -0.5f,cam);
 
     if (event.type == sf::Event::MouseButtonPressed &&
          event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
         if (playButton.getGlobalBounds().contains(mousePos)) {
-            //TODO: zou de ander moeten oproepen
             manager.pushState(std::make_unique<LevelState>());
-
         }
     }
 
+    // alles tekenen op de window
     window.draw(menuText);
     window.draw(highNumbText);
     window.draw(highscoreText);

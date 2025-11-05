@@ -45,15 +45,10 @@ void game::playGame() {
             if (event.type == sf::Event::Resized) {
                 // Update camera dimensions on window resize
                 cam.setDimensions(event.size.width, event.size.height);
-
-                if (event.size.width < 500) {
-                    std::cout << "he";
-                }
             }
         }
         window.clear(sf::Color::Black);
         manager.runTop(window, event, cam);
-
         window.display();
     }
 }
