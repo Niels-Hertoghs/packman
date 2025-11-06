@@ -96,7 +96,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 
     //de play butten
     int playButtenSizeHeight = cam.distanceToPixelsHeight(0.4f);
-    int playButtenSizeWidth = cam.distanceToPixelsWidth(0.2f);
+    int playButtenSizeWidth = cam.distanceToPixelsWidth(1.2f);
     sf::RectangleShape playButton(sf::Vector2f(static_cast<float>(playButtenSizeWidth),static_cast<float>(playButtenSizeHeight)));
     playButton.setFillColor(sf::Color::Green);
     sf::FloatRect boundsRect =  playButton.getLocalBounds();
@@ -131,7 +131,7 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     }
 
     // alle sprites in een render classe zetten
-    std::unique_ptr<Render> tussen = wereld.render(cam,packmanFont);
+    Render* tussen = wereld.render(cam,packmanFont);
 
     // alle sprites in de window zetten
     for (const auto& line:tussen->sprites) {

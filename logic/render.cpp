@@ -45,7 +45,7 @@ void Render::loadMap(const camera& camera, const sf::Font& fontF) {
 void Render::addWall(float x,float y) {
     int WallSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
     int WallSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
-    sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeHeight),static_cast<float>(WallSizeWidth)));
+    sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeWidth),static_cast<float>(WallSizeHeight)));
     wall.setFillColor(sf::Color::Blue);
     std::pair<unsigned int,unsigned int> pair = cam.worldToPixel(x,y);
     wall.setPosition(pair.first,pair.second);

@@ -3,6 +3,7 @@
 //
 
 #include "camera.h"
+#include <cmath>
 
 camera::camera(unsigned int w, unsigned int h) : height(h), width(w) {}
 
@@ -18,9 +19,9 @@ void camera::setDimensions(unsigned int w, unsigned int h) {
 }
 
 int camera::distanceToPixelsHeight(const float& distance) const {
-    return static_cast<int>((distance)/2 * height);
+    return std::round((distance)/2 * height) + 1; // +1 om de gap te dichten tussen de entities
 }
 
 int camera::distanceToPixelsWidth(const float& distance) const {
-    return static_cast<int>((distance+1)/2 * width);
+    return std::round((distance)/2 * width) + 1; // +1 om de gap te dichten tussen de entities
 }

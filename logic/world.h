@@ -20,7 +20,7 @@ private:
 public:
     world();
 
-    std::unique_ptr<Render> render( const camera& cam,const sf::Font& pacmanFont);
+    Render* render( const camera& cam,const sf::Font& pacmanFont);
 };
 
 
