@@ -63,7 +63,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     }
 
     // menu title maken
-    sf::Text menuText = makeText(packmanFont, "Menu", 0.15, sf::Color::Yellow, 0.f, 0.55f,cam);
+    sf::Text menuText = makeText(packmanFont, "Menu", 0.15f, sf::Color::Yellow, 0.f, 0.55f,cam);
 
     // De high score tekst
     sf::Text highscoreText = makeText(packmanFont, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
@@ -125,13 +125,13 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,world& wereld) {
     // Render render;
 
-    sf::Font packmanFont;
-    if (!packmanFont.loadFromFile("input_output/packman_font.ttf")) {
+    sf::Font Font;
+    if (!Font.loadFromFile("input_output/packman_font.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;
     }
 
     // alle sprites in een render classe zetten
-    Render* tussen = wereld.render(cam,packmanFont);
+    Render* tussen = wereld.render(cam,Font);
 
     // alle sprites in de window zetten
     for (const auto& line:tussen->sprites) {

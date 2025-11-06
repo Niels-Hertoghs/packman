@@ -25,9 +25,13 @@ world::world(const std::string& inputFile) {
                     std::unique_ptr<wall> muur = std::make_unique<wall>(x, y);
                     walls.push_back(std::move(muur));
                 }  else if (c == '-') {
-                    std::unique_ptr<coin> munt = std::make_unique<coin>(x + 1.f/20.f, y - 1.f/14.f);
-                    collectables.push_back(std::move(munt));
-                }//TODO: de rest inladen
+                    std::unique_ptr<coin> Coin = std::make_unique<coin>(x + 1.f/20.f, y - 1.f/14.f);
+                    collectables.push_back(std::move(Coin));
+                } else if (c == 'f') {
+                    std::unique_ptr<fruit> Fruit = std::make_unique<fruit>(x, y);
+                    collectables.push_back(std::move(Fruit));
+                }
+                //TODO: de rest inladen
                 x += 0.1;
             }
             y -= 1.0/7.0;
@@ -41,7 +45,7 @@ world::world(const std::string& inputFile) {
 
 Render* world::render(const camera& cam,const sf::Font& pacmanFont) {
     Render* render = new Render(cam);
-    render->loadMap(cam,pacmanFont);
+    render->Leveltekst(cam,pacmanFont);
 
     for (const std::shared_ptr<wall>& muur:walls) {
         muur->render(render);

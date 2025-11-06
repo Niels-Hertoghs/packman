@@ -17,18 +17,17 @@
 class Render {
 public:
     camera cam;
+    sf::Texture texture;
     std::vector<sf::RectangleShape> sprites;
     std::vector<sf::CircleShape> coins;
     std::vector<sf::Text> text;
 public:
-    explicit Render(const camera &cam)
-        : cam(cam) {
-    }
+    explicit Render(const camera &cam);
 
-    void loadMap(const camera& camera,const sf::Font& fontF);
+    void Leveltekst(const camera& camera,const sf::Font& fontF);
     void addWall(float x,float y);
     void addCoin(float x,float y);
-
+    void addFruit(float x,float y);
 };
 
 

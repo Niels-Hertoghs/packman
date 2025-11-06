@@ -31,8 +31,10 @@ public:
      void render(Render *render) override;
 };
 
-// class fruit : public collectable {
-//
-// };
+class fruit : public collectable {
+public:
+     fruit(float x, float y);
+     void render(Render *render) override;
+};
 
 #endif //PACKMAN_COLLECTABLE_H

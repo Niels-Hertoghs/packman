@@ -25,8 +25,20 @@ sf::Text makeText2(const sf::Font& fontF, const std::string& text, float charSiz
     return Text;
 }
 
+Render::Render(const camera &cam) : cam(cam) {
+    sf::Texture Texture;
+    if (!Texture.loadFromFile("input_output/sprite.png")) {
+        std::cerr << "Kon fruit texture niet laden!" << std::endl;
+    }
+    texture = Texture;
+}
 
-void Render::loadMap(const camera& camera, const sf::Font& fontF) {
+
+void Render::Leveltekst(const camera& camera, const sf::Font& fontF) {
+    // level tekst maken
+    int level = 1; //TODO: het huidige level opvragen
+    sf::Text levelText = makeText2(fontF, "Level: " + std::to_string(level), 0.16f, sf::Color::Yellow, 0.f, 1.f - 1.f/7.f,cam);
+    text.push_back(levelText);
 
     // Score afbeelden (links vanonder)
     int currentScore = 100; //TODO: score halen uit score klasse
@@ -64,4 +76,19 @@ void Render::addCoin(float x,float y) {
     coinShape.setOrigin(bounds.width/2,bounds.height/2);
     coinShape.setFillColor(sf::Color::White);
     coins.push_back(coinShape);
+}
+
+void Render::addFruit(float x,float y) {
+
+    int FruitSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
+    int FruitSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
+    sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
+
+    Fruit.setTexture(&texture);
+    Fruit.setTextureRect(sf::IntRect(610, 150, 32, 32));
+
+    std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+    Fruit.setPosition(pos.first,pos.second);
+    Fruit.setOrigin(0,0);
+    sprites.push_back(Fruit);
 }
