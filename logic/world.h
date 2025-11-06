@@ -11,14 +11,15 @@
 #include "camera.h"
 #include "render.h"
 #include "entities/entity.h"
-
+#include "entities/collectable.h"
+#include  "entities/movableEntity.h"
 
 class world {
 private:
     std::vector<std::shared_ptr<wall>> walls;
-
+    std::vector<std::shared_ptr<collectable>> collectables;
 public:
-    world();
+    world(const std::string& inputFile);
 
     Render* render( const camera& cam,const sf::Font& pacmanFont);
 };

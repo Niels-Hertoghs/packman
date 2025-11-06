@@ -16,25 +16,13 @@ private:
     float y;
 public:
     entity(float x, float y);
+    virtual void render(Render* render) = 0;
 
     [[nodiscard]] float getX() const;
     [[nodiscard]] float getY() const;
 };
 
 
-/// in een ander map zetten
-// class movableEntity : public entity {
-//PRIVATE:
-// std::string direction;
-//
-// };
-// class Ghost : public movableEntity {
-//
-// };
-//
-// class Packman : public movableEntity {
-//
-// };
 
 /**
  * class wall
@@ -45,22 +33,6 @@ public:
     wall(float x,float y);
     void render(Render* render);
 };
-
-
-/// in een andere file zetten
-// class collectable : public entity {
-// private:
-//  float size;
-//
-// };
-//
-// class coin : public collectable {
-// };
-//
-// class fruit : public collectable {
-//
-// };
-
 
 
 

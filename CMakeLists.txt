@@ -17,7 +17,11 @@ add_executable(packman main.cpp
         logic/entities/entity.cpp
         logic/entities/entity.h
         logic/render.cpp
-        logic/render.h)
+        logic/render.h
+        logic/entities/movableEntity.cpp
+        logic/entities/movableEntity.h
+        logic/entities/collectable.cpp
+        logic/entities/collectable.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

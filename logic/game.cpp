@@ -16,7 +16,7 @@ game::game() {
 
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
-    std::unique_ptr<world> wereld = std::make_unique<world>();;
+    std::unique_ptr<world> wereld = std::make_unique<world>("input_output/map.txt");;
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();

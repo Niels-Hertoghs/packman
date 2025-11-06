@@ -18,6 +18,7 @@ class Render {
 public:
     camera cam;
     std::vector<sf::RectangleShape> sprites;
+    std::vector<sf::CircleShape> coins;
     std::vector<sf::Text> text;
 public:
     explicit Render(const camera &cam)
@@ -26,6 +27,7 @@ public:
 
     void loadMap(const camera& camera,const sf::Font& fontF);
     void addWall(float x,float y);
+    void addCoin(float x,float y);
 
 };
 

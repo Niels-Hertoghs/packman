@@ -138,6 +138,11 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
         window.draw(line);
     }
 
+    // alle coins in de window zetten
+    for (const auto& line:tussen->coins) {
+        window.draw(line);
+    }
+
     // alle text in de window zetten
     for (const auto& text:tussen->text) {
         window.draw(text);

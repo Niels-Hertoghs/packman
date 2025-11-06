@@ -4,6 +4,8 @@
 
 #include "render.h"
 
+#include "entities/collectable.h"
+
 sf::Text makeText2(const sf::Font& fontF, const std::string& text, float charSize, sf::Color color,float x, float y,const camera& cam) {
     sf::Text Text;
     Text.setFont(fontF);
@@ -47,8 +49,19 @@ void Render::addWall(float x,float y) {
     int WallSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
     sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeWidth),static_cast<float>(WallSizeHeight)));
     wall.setFillColor(sf::Color::Blue);
-    std::pair<unsigned int,unsigned int> pair = cam.worldToPixel(x,y);
-    wall.setPosition(pair.first,pair.second);
+    std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+    wall.setPosition(pos.first,pos.second);
     wall.setOrigin(0,0);
     sprites.push_back(wall);
+}
+
+void Render::addCoin(float x,float y) {
+    int radius = cam.distanceToPixelsHeight(0.016f);
+    sf::CircleShape coinShape(radius);
+    std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+    coinShape.setPosition(pos.first,pos.second);
+    sf::FloatRect bounds = coinShape.getLocalBounds();
+    coinShape.setOrigin(bounds.width/2,bounds.height/2);
+    coinShape.setFillColor(sf::Color::White);
+    coins.push_back(coinShape);
 }

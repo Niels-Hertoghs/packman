@@ -3,29 +3,39 @@
 //
 
 #include "world.h"
+#include <fstream>
+#include <sstream>
+
 #include "render.h"
 
-world::world() {
-    // linker en rechter muur maken
-    double y = 1.f - 2.f/7.f;
-    for (int i = 0; i<11;i++) {
-        std::unique_ptr<wall> Lmuur = std::make_unique<wall>(-1.f,y); // voor de linker muur
-        walls.push_back(std::move(Lmuur));
+world::world(const std::string& inputFile) {
+    try {
+        std::ifstream file(inputFile);
+        if (!file.is_open()) {
+            throw std::runtime_error("Bestand bestaat niet: " + inputFile);
+        }
 
-        std::unique_ptr<wall> Rmuur = std::make_unique<wall>(1.f - 1.f/7.f,y); // voor de linker muur
-        walls.push_back(std::move(Rmuur));
-        y -= 1.f/7.f;
-    }
+        // Hier komt je code om het bestand te lezen
+        std::string line;
+        double y = 1.0 - 2.0/7.0;
+        while (std::getline(file, line)) {
+            double x = -1.0; // reset x per regel
+            for (char c : line) {
+                if (c == '#') {
+                    std::unique_ptr<wall> muur = std::make_unique<wall>(x, y);
+                    walls.push_back(std::move(muur));
+                }  else if (c == '-') {
+                    std::unique_ptr<coin> munt = std::make_unique<coin>(x + 1.f/20.f, y - 1.f/14.f);
+                    collectables.push_back(std::move(munt));
+                }//TODO: de rest inladen
+                x += 0.1;
+            }
+            y -= 1.0/7.0;
+        }
 
-    // boven en onder muur maken
-    double x = -1.f + 1.f/10.f;
-    for (int i = 0; i<18;i++) {
-        std::unique_ptr<wall> Bmuur = std::make_unique<wall>(x,1.f - 2.f/7.f); // voor de boven muur
-        walls.push_back(std::move(Bmuur));
-
-        std::unique_ptr<wall> Omuur = std::make_unique<wall>(x,-1.f + 2.f/7.f); // voor de onder muur
-        walls.push_back(std::move(Omuur));
-        x += 1.f/10.f;
+    } catch (const std::exception& e) {
+        std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+        throw;
     }
 }
 
@@ -35,6 +45,10 @@ Render* world::render(const camera& cam,const sf::Font& pacmanFont) {
 
     for (const std::shared_ptr<wall>& muur:walls) {
         muur->render(render);
+    }
+
+    for (const std::shared_ptr<collectable>& munt:collectables) {
+        munt->render(render);
     }
 
     return render;
