@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "state_maneger/stateManeger.h"
+#include "world.h"
 
 game::game() {
 
@@ -15,6 +16,7 @@ game::game() {
 
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
+    std::unique_ptr<world> wereld = std::make_unique<world>();;
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -51,7 +53,7 @@ void game::playGame() {
             }
         }
         window.clear(sf::Color::Black);
-        manager.runTop(window, event, cam);
+        manager.runTop(window, event, cam,*wereld);
         window.display();
     }
 }

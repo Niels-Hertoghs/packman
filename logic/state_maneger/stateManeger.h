@@ -10,6 +10,7 @@
 #include <vector>
 #include "../camera.h"
 
+class world;
 class state;
 
 /**
@@ -26,7 +27,7 @@ public:
     void prevState();
     std::unique_ptr<state> getCurrentState();
 
-    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam);
+    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam,world& wereld);
 };
 
 /**
@@ -39,7 +40,7 @@ public:
     state() = default;
     virtual ~state() = default;
 
-    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam) = 0;
+    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam, world& wereld) = 0;
 };
 
 /**
@@ -49,7 +50,7 @@ public:
 class menuState : public state {
 public:
     menuState() = default;
-    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam) override;
+    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam, world& wereld) override;
 };
 
 /**
@@ -60,7 +61,7 @@ class LevelState : public state {
 
 public:
     LevelState() = default;
-    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam) override;
+    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,world& wereld) override;
 };
 
 

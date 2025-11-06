@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include "../render.h"
+#include "../world.h"
 
 sf::Text makeText(const sf::Font& fontF, const std::string& text, float charSize, sf::Color color,float x, float y,const camera& cam) {
     sf::Text Text;
@@ -47,13 +48,13 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam) {
-    stack.top().get()->run(window, event,*this,cam);
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,world& wereld) {
+    stack.top().get()->run(window, event,*this,cam,wereld);
 }
 
 
 // menu state
-void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam) {
+void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,world& wereld) {
 
     //lettertype inladen
     sf::Font packmanFont;
@@ -121,21 +122,25 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     window.draw(playText);
 }
 
-void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam) {
-    Render render;
-    std::vector<sf::RectangleShape> shape;
-    std::vector<sf::Text> text;
+void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,world& wereld) {
+    // Render render;
 
     sf::Font packmanFont;
     if (!packmanFont.loadFromFile("input_output/packman_font.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;
     }
 
-    std::tie(shape, text) = render.loadMap(cam,packmanFont);
+    // alle sprites in een render classe zetten
+    std::unique_ptr<Render> tussen = wereld.render(cam,packmanFont);
 
-    for (const auto& line:text) {
+    // alle sprites in de window zetten
+    for (const auto& line:tussen->sprites) {
         window.draw(line);
     }
 
+    // alle text in de window zetten
+    for (const auto& text:tussen->text) {
+        window.draw(text);
+    }
 }
 

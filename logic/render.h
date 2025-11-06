@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include "state_maneger/stateManeger.h"
 #include "camera.h"
+#include "entities/entity.h"
 
 /**
  * class render
@@ -15,8 +16,16 @@
  */
 class Render {
 public:
-    Render();
-    std::pair<std::vector<sf::RectangleShape>,std::vector<sf::Text>> loadMap(const camera& camera,const sf::Font& fontF);
+    camera cam;
+    std::vector<sf::RectangleShape> sprites;
+    std::vector<sf::Text> text;
+public:
+    explicit Render(const camera &cam)
+        : cam(cam) {
+    }
+
+    void loadMap(const camera& camera,const sf::Font& fontF);
+    void addWall(float x,float y);
 
 };
 

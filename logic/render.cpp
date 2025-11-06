@@ -23,11 +23,8 @@ sf::Text makeText2(const sf::Font& fontF, const std::string& text, float charSiz
     return Text;
 }
 
-Render::Render() = default;
 
-std::pair<std::vector<sf::RectangleShape>,std::vector<sf::Text>> Render::loadMap(const camera& camera, const sf::Font& fontF) {
-    std::vector<sf::RectangleShape> rectangles;
-    std::vector<sf::Text> text;
+void Render::loadMap(const camera& camera, const sf::Font& fontF) {
 
     // Score afbeelden (links vanonder)
     int currentScore = 100; //TODO: score halen uit score klasse
@@ -43,6 +40,15 @@ std::pair<std::vector<sf::RectangleShape>,std::vector<sf::Text>> Render::loadMap
     sf::FloatRect LifesBounds = LifesText.getLocalBounds();
     LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
     text.push_back(LifesText);
+}
 
-    return {rectangles,text};
+void Render::addWall(float x,float y) {
+    int WallSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
+    int WallSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
+    sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeHeight),static_cast<float>(WallSizeWidth)));
+    wall.setFillColor(sf::Color::Blue);
+    std::pair<unsigned int,unsigned int> pair = cam.worldToPixel(x,y);
+    wall.setPosition(pair.first,pair.second);
+    wall.setOrigin(0,0);
+    sprites.push_back(wall);
 }
