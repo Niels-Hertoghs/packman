@@ -81,7 +81,7 @@ void Render::addCoin(float x,float y) {
 void Render::addFruit(float x,float y) {
 
     int FruitSizeHeight = cam.distanceToPixelsHeight(1.f/17.f);
-    int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/23.f);
+    int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/27.f);
     sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
 
     Fruit.setTexture(&texture);
