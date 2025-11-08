@@ -8,6 +8,7 @@
 #include "state_maneger/stateManeger.h"
 #include "camera.h"
 #include "entities/entity.h"
+#include "entities/movableEntity.h"
 
 /**
  * class render
@@ -28,6 +29,7 @@ public:
     void addWall(float x,float y);
     void addCoin(float x,float y);
     void addFruit(float x,float y);
+    void addPackman(float x,float y);
 };
 
 

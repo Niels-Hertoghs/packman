@@ -79,13 +79,12 @@ void Render::addCoin(float x,float y) {
 }
 
 void Render::addFruit(float x,float y) {
-
     int FruitSizeHeight = cam.distanceToPixelsHeight(1.f/17.f);
     int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/27.f);
     sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
 
     Fruit.setTexture(&texture);
-    Fruit.setTextureRect(sf::IntRect(598, 149, 40, 45));
+    Fruit.setTextureRect(sf::IntRect(601, 153, 36, 36));
 
     sf::FloatRect bounds = Fruit.getLocalBounds();
     Fruit.setOrigin(bounds.width/2,bounds.height/2);
@@ -94,3 +93,19 @@ void Render::addFruit(float x,float y) {
     Fruit.setPosition(pos.first,pos.second);
     sprites.push_back(Fruit);
 }
+
+void Render::addPackman(float x, float y) {
+    int PacmanSizeHeight =  cam.distanceToPixelsHeight(2.f/14.f);
+    int PacmanSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
+    sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
+
+    Packman.setTexture(&texture);
+    Packman.setTextureRect(sf::IntRect(849, 51, 41, 41));
+
+    sf::FloatRect bounds = Packman.getLocalBounds();
+    Packman.setOrigin(bounds.width/2,bounds.height/2);
+
+    std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+    Packman.setPosition(pos.first,pos.second);
+    sprites.push_back(Packman);
+};

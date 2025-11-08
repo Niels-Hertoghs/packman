@@ -31,11 +31,14 @@ world::world(const std::string& inputFile) {
                     std::unique_ptr<fruit> Fruit = std::make_unique<fruit>(x + 1.f/20.f, y - 1.f/14.f);
                     collectables.push_back(std::move(Fruit));
                 }
-                //TODO: de rest inladen
                 x += 0.1;
             }
             y -= 1.0/7.0;
         }
+
+
+        std::unique_ptr<Packman> packman = std::make_unique<Packman>(0.f, 1 - 19.f/14.f);
+        pacman = std::move(packman);
 
     } catch (const std::exception& e) {
         std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
@@ -44,16 +47,21 @@ world::world(const std::string& inputFile) {
 }
 
 Render* world::render(const camera& cam,const sf::Font& pacmanFont) {
-    Render* render = new Render(cam);
+    Render* render = new Render(cam); //TODO: shared pointer
     render->Leveltekst(cam,pacmanFont);
 
+    // walls
     for (const std::shared_ptr<wall>& muur:walls) {
         muur->render(render);
     }
 
+    // cons / fruits
     for (const std::shared_ptr<collectable>& munt:collectables) {
         munt->render(render);
     }
+
+    //pacman
+    pacman->render(render);
 
     return render;
 }

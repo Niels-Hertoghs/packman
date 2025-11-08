@@ -14,19 +14,19 @@ private:
      std::string direction;
  public:
      movableEntity(float x,float y);
-     virtual void render(Render *render) override;
+     virtual void render(Render *render) override = 0;
 
  };
 
-// class Packman : public movableEntity {
-// public:
-//     Packman(float x,float y);
-//     void render(Render *render) override;
-// };
-//
-//  class Ghost : public movableEntity {
-//
-//  };
+class Packman : public movableEntity {
+public:
+    Packman(float x,float y);
+    void render(Render *render) override;
+};
+
+ // class Ghost : public movableEntity {
+ //
+ // };
 
 
 
