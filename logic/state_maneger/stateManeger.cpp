@@ -112,6 +112,11 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
         if (playButton.getGlobalBounds().contains(mousePos)) {
             manager.pushState(std::make_unique<LevelState>());
         }
+        // else if (event.type == sf::Event::KeyPressed) {
+        //     if (event.key.code == sf::Keyboard::Up) {
+        //
+        //     }
+        // }
     }
 
     // alles tekenen op de window

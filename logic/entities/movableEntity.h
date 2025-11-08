@@ -9,7 +9,7 @@
 
 class Render;
 
- class movableEntity : public entity {
+class movableEntity : public entity {
 private:
      std::string direction;
  public:
@@ -22,6 +22,8 @@ class Packman : public movableEntity {
 public:
     Packman(float x,float y);
     void render(Render *render) override;
+
+    void update(float deltaTime);
 };
 
  // class Ghost : public movableEntity {

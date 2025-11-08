@@ -11,7 +11,7 @@ class Render;
  * brief Abstract class of all items/entities that are in the game
  */
 class entity {
-private:
+protected:
     float x;
     float y;
 public:

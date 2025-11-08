@@ -5,10 +5,11 @@
 #include "game.h"
 #include "camera.h"
 #include <iostream>
+#include <thread>
 #include <SFML/Graphics.hpp>
-
 #include "state_maneger/stateManeger.h"
 #include "world.h"
+#include "../Stopwatch.h"
 
 game::game() {
 
@@ -16,6 +17,7 @@ game::game() {
 
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
+    Stopwatch stopwatch; //stopwatch updaten
     std::unique_ptr<world> wereld = std::make_unique<world>("input_output/map.txt");;
 
     // Vraag de resolutie van het primaire scherm op
@@ -29,7 +31,6 @@ void game::playGame() {
 
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
-    window.setVerticalSyncEnabled(true); // max FPS aan de FPS van aparaat
 
     // Plaats het venster in het midden van het scherm
     window.setPosition(sf::Vector2i(
@@ -39,6 +40,9 @@ void game::playGame() {
 
     // main window loop
     while(window.isOpen()) {
+        stopwatch.tick(); //stopwatch updaten
+        float deltaTime = stopwatch.getDeltaTime();
+
         sf::Event event{};
         while(window.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
@@ -52,8 +56,11 @@ void game::playGame() {
                 cam.setDimensions(event.size.width, event.size.height);
             }
         }
+        wereld->update(deltaTime);
         window.clear(sf::Color::Black);
         manager.runTop(window, event, cam,*wereld);
         window.display();
     }
+    // max 60 fps
+    std::this_thread::sleep_for(std::chrono::milliseconds(16));
 }

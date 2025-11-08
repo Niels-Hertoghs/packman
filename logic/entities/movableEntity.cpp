@@ -13,3 +13,7 @@ Packman::Packman(float x, float y)  : movableEntity(x,y) {}
 void Packman::render(Render *render) {
     render->addPackman(this->getX(),this->getY());
 }
+
+void Packman::update(float delta) {
+    x = x * (delta*1000);
+}

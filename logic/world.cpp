@@ -65,3 +65,8 @@ Render* world::render(const camera& cam,const sf::Font& pacmanFont) {
 
     return render;
 }
+
+
+void world::update(float deltaTime) {
+    pacman->update(deltaTime);
+}
