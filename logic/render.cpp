@@ -80,15 +80,17 @@ void Render::addCoin(float x,float y) {
 
 void Render::addFruit(float x,float y) {
 
-    int FruitSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
-    int FruitSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
+    int FruitSizeHeight = cam.distanceToPixelsHeight(1.f/17.f);
+    int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/23.f);
     sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
 
     Fruit.setTexture(&texture);
-    Fruit.setTextureRect(sf::IntRect(610, 150, 32, 32));
+    Fruit.setTextureRect(sf::IntRect(598, 149, 40, 45));
+
+    sf::FloatRect bounds = Fruit.getLocalBounds();
+    Fruit.setOrigin(bounds.width/2,bounds.height/2);
 
     std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
     Fruit.setPosition(pos.first,pos.second);
-    Fruit.setOrigin(0,0);
     sprites.push_back(Fruit);
 }

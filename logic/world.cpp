@@ -28,7 +28,7 @@ world::world(const std::string& inputFile) {
                     std::unique_ptr<coin> Coin = std::make_unique<coin>(x + 1.f/20.f, y - 1.f/14.f);
                     collectables.push_back(std::move(Coin));
                 } else if (c == 'f') {
-                    std::unique_ptr<fruit> Fruit = std::make_unique<fruit>(x, y);
+                    std::unique_ptr<fruit> Fruit = std::make_unique<fruit>(x + 1.f/20.f, y - 1.f/14.f);
                     collectables.push_back(std::move(Fruit));
                 }
                 //TODO: de rest inladen
