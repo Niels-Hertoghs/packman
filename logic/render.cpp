@@ -100,7 +100,7 @@ void Render::addPackman(float x, float y) {
     sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
 
     Packman.setTexture(&texture);
-    Packman.setTextureRect(sf::IntRect(849, 51, 41, 41));
+    Packman.setTextureRect(sf::IntRect(849, 51, 45, 41));
 
     sf::FloatRect bounds = Packman.getLocalBounds();
     Packman.setOrigin(bounds.width/2,bounds.height/2);
