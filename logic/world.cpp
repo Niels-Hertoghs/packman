@@ -70,3 +70,8 @@ Render* world::render(const camera& cam,const sf::Font& pacmanFont) {
 void world::update(float deltaTime) {
     pacman->update(deltaTime);
 }
+
+void world::updatePacmanDir(const std::string& direction) {
+    pacman->updateDir(direction);
+}
+

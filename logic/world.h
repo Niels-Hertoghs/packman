@@ -22,8 +22,10 @@ private:
 public:
     world(const std::string& inputFile);
 
+
     Render* render( const camera& cam,const sf::Font& pacmanFont);
     void update(float deltaTime);
+    void updatePacmanDir(const std::string& direction);
 };
 
 

@@ -10,7 +10,7 @@
 class Render;
 
 class movableEntity : public entity {
-private:
+protected:
      std::string direction;
  public:
      movableEntity(float x,float y);
@@ -24,6 +24,7 @@ public:
     void render(Render *render) override;
 
     void update(float deltaTime);
+    void updateDir(const std::string& direction);
 };
 
  // class Ghost : public movableEntity {

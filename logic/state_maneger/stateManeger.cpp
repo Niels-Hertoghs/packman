@@ -32,6 +32,11 @@ stateManeger::stateManeger() {
     pushState(std::make_unique<menuState>());
 }
 
+LevelState::LevelState(world& wereld)
+ {
+    // wereld.start();
+}
+
 
 void stateManeger::pushState(std::unique_ptr<state> newState) {
     stack.push(std::move(newState));
@@ -110,14 +115,11 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
          event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
         if (playButton.getGlobalBounds().contains(mousePos)) {
-            manager.pushState(std::make_unique<LevelState>());
+            manager.pushState(std::make_unique<LevelState>(wereld));
         }
-        // else if (event.type == sf::Event::KeyPressed) {
-        //     if (event.key.code == sf::Keyboard::Up) {
-        //
-        //     }
-        // }
     }
+
+
 
     // alles tekenen op de window
     window.draw(menuText);
@@ -129,6 +131,19 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 
 void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,world& wereld) {
     // Render render;
+
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Up) {
+            wereld.updatePacmanDir("up");
+        } else if (event.key.code == sf::Keyboard::Down) {
+            wereld.updatePacmanDir("down");
+        } else if (event.key.code == sf::Keyboard::Left) {
+            wereld.updatePacmanDir("left");
+        } else if (event.key.code == sf::Keyboard::Right) {
+            wereld.updatePacmanDir("right");
+        }
+    }
+
 
     sf::Font Font;
     if (!Font.loadFromFile("input_output/packman_font.ttf")) {

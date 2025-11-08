@@ -60,7 +60,7 @@ public:
 class LevelState : public state {
 
 public:
-    LevelState() = default;
+    LevelState(world& wereld);
     void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,world& wereld) override;
 };
 
