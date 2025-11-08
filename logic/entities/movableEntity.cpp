@@ -15,5 +15,5 @@ void Packman::render(Render *render) {
 }
 
 void Packman::update(float delta) {
-    x = x * (delta*1000);
+    x = x + (delta*0.1);
 }
