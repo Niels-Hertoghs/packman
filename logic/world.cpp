@@ -42,7 +42,7 @@ void world::startWorld() {
         y -= 1.0/7.0;
     }
 
-    //pacman aanmaken
+    //pacman aanmaken, origin = midpunt
     pacman = std::make_shared<Packman>(0.f, 1 - 19.f/14.f);
 }
 
@@ -69,13 +69,13 @@ std::shared_ptr<Render> world::render(const camera& cam,const sf::Font& pacmanFo
 
 
 void world::update(float deltaTime) {
-    pacman->update(deltaTime);
-    for (auto muur : walls) {
-        if (pacman->standsOn(muur)) {
-            pacman->prevLocation();
-            return;
-        }
-    }
+    pacman->update(deltaTime,walls);
+    // for (auto muur : walls) {
+    //     if (pacman->standsOn(muur)) {
+    //         pacman->prevLocation();
+    //         return;
+    //     }
+    // }
 
 }
 
