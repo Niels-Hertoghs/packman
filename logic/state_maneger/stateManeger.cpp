@@ -32,7 +32,7 @@ stateManeger::stateManeger() {
     pushState(std::make_unique<menuState>());
 }
 
-LevelState::LevelState(world& wereld)
+LevelState::LevelState(std::shared_ptr<world> wereld)
  {
     // wereld.start();
 }
@@ -53,13 +53,13 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,world& wereld) {
-    stack.top().get()->run(window, event,*this,cam,wereld);
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
+    stack.top().get()->run(window, event,*this,cam,wereld,deltaTime);
 }
 
 
 // menu state
-void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,world& wereld) {
+void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
 
     //lettertype inladen
     sf::Font packmanFont;
@@ -116,9 +116,9 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
         sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
         if (playButton.getGlobalBounds().contains(mousePos)) {
             manager.pushState(std::make_unique<LevelState>(wereld));
+            wereld->startWorld();
         }
     }
-
 
 
     // alles tekenen op de window
@@ -129,18 +129,17 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     window.draw(playText);
 }
 
-void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,world& wereld) {
-    // Render render;
+void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
-            wereld.updatePacmanDir("up");
+            wereld->updatePacmanDir("up");
         } else if (event.key.code == sf::Keyboard::Down) {
-            wereld.updatePacmanDir("down");
+            wereld->updatePacmanDir("down");
         } else if (event.key.code == sf::Keyboard::Left) {
-            wereld.updatePacmanDir("left");
+            wereld->updatePacmanDir("left");
         } else if (event.key.code == sf::Keyboard::Right) {
-            wereld.updatePacmanDir("right");
+            wereld->updatePacmanDir("right");
         }
     }
 
@@ -151,7 +150,7 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     }
 
     // alle sprites in een render classe zetten
-    std::shared_ptr<Render> tussen = wereld.render(cam,Font);
+    std::shared_ptr<Render> tussen = wereld->render(cam,Font);
 
     // alle sprites in de window zetten
     for (const auto& line:tussen->sprites) {
@@ -167,5 +166,6 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     for (const auto& text:tussen->text) {
         window.draw(text);
     }
+    wereld->update(deltaTime);
 }
 

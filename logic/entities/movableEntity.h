@@ -11,9 +11,10 @@ class Render;
 
 class movableEntity : public entity {
 protected:
-     std::string direction;
+    std::string direction;
+    float speed;
  public:
-     movableEntity(float x,float y);
+     movableEntity(float x,float y,float speed);
      virtual void render(std::shared_ptr<Render> render) override = 0;
 
  };

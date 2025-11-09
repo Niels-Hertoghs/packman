@@ -4,6 +4,7 @@
 
 #ifndef PACKMAN_WORLD_H
 #define PACKMAN_WORLD_H
+#include <fstream>
 #include <memory>
 #include <vector>
 #include <SFML/Graphics/Font.hpp>
@@ -19,9 +20,10 @@ private:
     std::vector<std::unique_ptr<wall>> walls;
     std::vector<std::unique_ptr<collectable>> collectables;
     std::unique_ptr<Packman> pacman;
+    std::string inputFile;
 public:
     world(const std::string& inputFile);
-
+    void startWorld();
 
     std::shared_ptr<Render> render( const camera& cam,const sf::Font& pacmanFont);
     void update(float deltaTime);

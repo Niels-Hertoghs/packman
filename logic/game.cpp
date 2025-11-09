@@ -18,7 +18,7 @@ game::game() {
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
     Stopwatch& stopwatch = Stopwatch::getInstance(); //stopwatch aanmaken, als singleton
-    std::unique_ptr<world> wereld = std::make_unique<world>("input_output/map.txt");
+    std::shared_ptr<world> wereld = std::make_shared<world>("input_output/map.txt");
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -56,9 +56,8 @@ void game::playGame() {
                 cam.setDimensions(event.size.width, event.size.height);
             }
         }
-        wereld->update(deltaTime);
         window.clear(sf::Color::Black);
-        manager.runTop(window, event, cam,*wereld);
+        manager.runTop(window, event, cam,wereld,deltaTime);
         window.display();
     }
     // max 60 fps
