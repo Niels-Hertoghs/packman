@@ -17,7 +17,7 @@ private:
      float size;
 public:
      collectable(float x, float y);
-     virtual void render(Render *render) override = 0;
+     virtual void render(std::shared_ptr<Render> render) override = 0;
 
 };
 
@@ -28,13 +28,13 @@ public:
 class coin : public collectable {
 public:
      coin(float x, float y);
-     void render(Render *render) override;
+     void render(std::shared_ptr<Render> render) override;
 };
 
 class fruit : public collectable {
 public:
      fruit(float x, float y);
-     void render(Render *render) override;
+     void render(std::shared_ptr<Render> render) override;
 };
 
 #endif //PACKMAN_COLLECTABLE_H

@@ -18,6 +18,6 @@ float entity::getY() const {
 
 wall::wall(float x, float y) : entity(x, y) {}
 
-void wall::render(Render* render) {
+void wall::render(std::shared_ptr<Render> render) {
     render->addWall(this->getX(),this->getY());
 }

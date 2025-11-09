@@ -151,7 +151,7 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     }
 
     // alle sprites in een render classe zetten
-    Render* tussen = wereld.render(cam,Font);
+    std::shared_ptr<Render> tussen = wereld.render(cam,Font);
 
     // alle sprites in de window zetten
     for (const auto& line:tussen->sprites) {

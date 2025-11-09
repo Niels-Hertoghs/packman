@@ -10,7 +10,7 @@ movableEntity::movableEntity(float x, float y) : entity(x, y), direction("right"
 
 Packman::Packman(float x, float y)  : movableEntity(x,y) {}
 
-void Packman::render(Render *render) {
+void Packman::render(std::shared_ptr<Render> render) {
     render->addPackman(this->getX(),this->getY());
 }
 

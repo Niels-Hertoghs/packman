@@ -16,14 +16,14 @@
 
 class world {
 private:
-    std::vector<std::shared_ptr<wall>> walls;
-    std::vector<std::shared_ptr<collectable>> collectables;
-    std::shared_ptr<Packman> pacman;
+    std::vector<std::unique_ptr<wall>> walls;
+    std::vector<std::unique_ptr<collectable>> collectables;
+    std::unique_ptr<Packman> pacman;
 public:
     world(const std::string& inputFile);
 
 
-    Render* render( const camera& cam,const sf::Font& pacmanFont);
+    std::shared_ptr<Render> render( const camera& cam,const sf::Font& pacmanFont);
     void update(float deltaTime);
     void updatePacmanDir(const std::string& direction);
 };

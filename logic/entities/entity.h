@@ -4,6 +4,7 @@
 
 #ifndef PACKMAN_ENTITY_H
 #define PACKMAN_ENTITY_H
+#include <memory>
 
 class Render;
 /**
@@ -16,7 +17,7 @@ protected:
     float y;
 public:
     entity(float x, float y);
-    virtual void render(Render* render) = 0;
+    virtual void render(std::shared_ptr<Render> render) = 0;
 
     [[nodiscard]] float getX() const;
     [[nodiscard]] float getY() const;
@@ -31,7 +32,7 @@ public:
 class wall : public entity {
 public:
     wall(float x,float y);
-    void render(Render* render);
+    void render(std::shared_ptr<Render> render);
 };
 
 

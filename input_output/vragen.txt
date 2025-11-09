@@ -1,3 +1,4 @@
-Mag ik de opmaak van de menu state in statemaneger doen?
+Mag ik de opmaak van de menu state in statemaneger doen? (de tekst toevoegen enz, of zoals level menu)
 klopt de structuur en de patterns?
 Mag ik alles van de map hardcode zoals ik nu heb gedaan?
+kan het zijn dat ik enkel unique pointers gebruik en bijna nooit shared? Waneer gebruik je eig het best shared ( geen theorie antwoord)

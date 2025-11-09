@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include "state_maneger/stateManeger.h"
 #include "world.h"
-#include "../Stopwatch.h"
+#include "Stopwatch.h"
 
 game::game() {
 
@@ -17,8 +17,8 @@ game::game() {
 
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
-    Stopwatch stopwatch; //stopwatch updaten
-    std::unique_ptr<world> wereld = std::make_unique<world>("input_output/map.txt");;
+    Stopwatch& stopwatch = Stopwatch::getInstance(); //stopwatch aanmaken, als singleton
+    std::unique_ptr<world> wereld = std::make_unique<world>("input_output/map.txt");
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();

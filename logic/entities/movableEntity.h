@@ -14,14 +14,14 @@ protected:
      std::string direction;
  public:
      movableEntity(float x,float y);
-     virtual void render(Render *render) override = 0;
+     virtual void render(std::shared_ptr<Render> render) override = 0;
 
  };
 
 class Packman : public movableEntity {
 public:
     Packman(float x,float y);
-    void render(Render *render) override;
+    void render(std::shared_ptr<Render> render) override;
 
     void update(float deltaTime);
     void updateDir(const std::string& direction);

@@ -22,14 +22,11 @@ world::world(const std::string& inputFile) {
             double x = -1.0; // reset x per regel
             for (char c : line) {
                 if (c == '#') {
-                    std::unique_ptr<wall> muur = std::make_unique<wall>(x, y);
-                    walls.push_back(std::move(muur));
+                    walls.push_back(std::make_unique<wall>(x, y));
                 }  else if (c == '-') {
-                    std::unique_ptr<coin> Coin = std::make_unique<coin>(x + 1.f/20.f, y - 1.f/14.f);
-                    collectables.push_back(std::move(Coin));
+                    collectables.push_back(std::make_unique<coin>(x + 1.f/20.f, y - 1.f/14.f));
                 } else if (c == 'f') {
-                    std::unique_ptr<fruit> Fruit = std::make_unique<fruit>(x + 1.f/20.f, y - 1.f/14.f);
-                    collectables.push_back(std::move(Fruit));
+                    collectables.push_back(std::make_unique<fruit>(x + 1.f/20.f, y - 1.f/14.f));
                 }
                 x += 0.1;
             }
@@ -46,17 +43,17 @@ world::world(const std::string& inputFile) {
     }
 }
 
-Render* world::render(const camera& cam,const sf::Font& pacmanFont) {
-    Render* render = new Render(cam); //TODO: shared pointer
+std::shared_ptr<Render> world::render(const camera& cam,const sf::Font& pacmanFont) {
+    std::shared_ptr<Render> render = std::make_shared<Render>(cam);
     render->Leveltekst(cam,pacmanFont);
 
     // walls
-    for (const std::shared_ptr<wall>& muur:walls) {
+    for (const std::unique_ptr<wall>& muur:walls) {
         muur->render(render);
     }
 
     // cons / fruits
-    for (const std::shared_ptr<collectable>& munt:collectables) {
+    for (const std::unique_ptr<collectable>& munt:collectables) {
         munt->render(render);
     }
 
