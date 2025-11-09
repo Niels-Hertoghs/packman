@@ -17,9 +17,9 @@
 
 class world {
 private:
-    std::vector<std::unique_ptr<wall>> walls;
-    std::vector<std::unique_ptr<collectable>> collectables;
-    std::unique_ptr<Packman> pacman;
+    std::vector<std::shared_ptr<wall>> walls;
+    std::vector<std::shared_ptr<collectable>> collectables;
+    std::shared_ptr<Packman> pacman;
     std::string inputFile;
 public:
     world(const std::string& inputFile);
