@@ -27,7 +27,6 @@ protected:
 
 class Packman : public movableEntity {
 private:
-    std::string prevDirection;
     std::string nextDirection;
 public:
     Packman(float x,float y);

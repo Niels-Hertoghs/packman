@@ -34,64 +34,58 @@ void Packman::render(std::shared_ptr<Render> render) {
 
 void Packman::update(float delta,std::vector<std::shared_ptr<wall>>& walls) {
 
-
     prevX = this->getX();
     prevY = this->getY();
 
     float newX = x;
     float newY = y;
 
+    // zien of pack man die richting uit kan gaan
     if (direction != nextDirection && !nextDirection.empty()) {
-        if (nextDirection == "right") {
-            newX = x + 1/10.f;
-        } else if (nextDirection == "left") {
-            newX = x - 1/10.f;
-        } else if (nextDirection == "up") {
-            newY = y + 1/7.f;
-        } else if (nextDirection == "down") {
-            newY = y - 1/7.f;
-        }
-        bool canMove = true;
-        for (std::shared_ptr<wall>& wall : walls) {
-            if (wouldCollide(wall,newX,newY)) {
-                canMove = false;
-                // this->prevLocation();
+        // meteen volgende blokje bekijken zodat de buffer geen verschil maakt
+        // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
+        float stepX = 0.f, stepY = 0.f;
 
-                break;
-            }
-        }
-        if (canMove) {
-            direction = nextDirection;
-            // return;
+        if (nextDirection == "right") stepX = 0.1f;
+        else if (nextDirection == "left") stepX = -0.1f;
+        else if (nextDirection == "up") stepY = 1.f / 7.f;
+        else if (nextDirection == "down") stepY = -1.f / 7.f;
+
+        newX = x + stepX;
+        newY = y + stepY;
+
+        bool canMove = std::none_of(walls.begin(), walls.end(),
+            [&](const std::shared_ptr<wall>& w) { return wouldCollide(w, newX, newY); });
+
+        if (canMove) direction = nextDirection;
+    }
+    // ga de richting uit
+    float dx = 0.f, dy = 0.f;
+    if (direction == "right") dx = 0.2f;
+    else if (direction == "left") dx = -0.2f;
+    else if (direction == "up") dy = 2.f / 7.f;
+    else if (direction == "down") dy = -2.f / 7.f;
+
+    // Positie updaten
+    x += delta * dx * speed;
+    y += delta * dy * speed;
+
+
+
+    // zie of de huidige richting niet op een muur staat
+    for (auto& w : walls) {
+        if (standsOn(w)) {
+            prevLocation();
+            break;
         }
     }
-    if (direction == "right") {
-        x = x + (delta*0.2 * speed);
-    } else if (direction == "left") {
-        x = x - (delta*0.2) * speed;
-    } else if (direction == "up") {
-        y = y + (delta* (2.f/7.f) * speed);
-    } else if (direction == "down") {
-        y = y - (delta* (2.f/7.f) * speed);
-    }
-
-     for (std::shared_ptr<wall>& wall : walls) {
-         if (this->standsOn(wall)) {
-             this->prevLocation();
-         }
-     }
 }
 
 void Packman::updateDir(const std::string& Direction) {
-
     nextDirection = Direction;
-
-    // prevDirection = direction;
-    // direction = Direction;
 }
 
 void Packman::prevLocation() {
-    // direction = prevDirection;
     x = prevX;
     y = prevY;
 }
