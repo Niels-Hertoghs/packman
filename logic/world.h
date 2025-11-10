@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Font.hpp>
 
 #include "camera.h"
+#include "observer.h"
 #include "render.h"
 #include "entities/entity.h"
 #include "entities/collectable.h"
@@ -21,8 +22,10 @@ private:
     std::vector<std::shared_ptr<collectable>> collectables;
     std::shared_ptr<Packman> pacman;
     std::string inputFile;
+
+    std::shared_ptr<Score> score;
 public:
-    world(const std::string& inputFile);
+    world(const std::string& inputFile,std::shared_ptr<Score> score);
     void startWorld();
 
     std::shared_ptr<Render> render( const camera& cam,const sf::Font& pacmanFont);

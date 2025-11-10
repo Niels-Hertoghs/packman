@@ -9,3 +9,6 @@ void world::update(float deltaTime) {
 
         }
     } is dit een raw pointer?
+
+
+score.coinEaten(); iun wereld.cpp, is dit oke voor observer?

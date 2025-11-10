@@ -7,6 +7,8 @@
 #include <iostream>
 #include <thread>
 #include <SFML/Graphics.hpp>
+
+#include "observer.h"
 #include "state_maneger/stateManeger.h"
 #include "world.h"
 #include "Stopwatch.h"
@@ -18,7 +20,8 @@ game::game() {
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
     Stopwatch& stopwatch = Stopwatch::getInstance(); //stopwatch aanmaken, als singleton
-    std::shared_ptr<world> wereld = std::make_shared<world>("input_output/map.txt");
+    std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch); // score observer aanmaken
+    std::shared_ptr<world> wereld = std::make_shared<world>("input_output/map.txt",score);
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();

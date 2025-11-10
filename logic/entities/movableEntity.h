@@ -32,6 +32,8 @@ public:
     Packman(float x,float y);
     void render(std::shared_ptr<Render> render) override;
 
+    bool standsOnCoin(const std::shared_ptr<entity>& other);
+
     void update(float deltaTime,std::vector<std::shared_ptr<wall>>& walls);
     void updateDir(const std::string& direction);
     void prevLocation();

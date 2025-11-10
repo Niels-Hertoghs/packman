@@ -26,6 +26,8 @@ bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, float nex
     return overlapX && overlapY;
 }
 
+
+
 Packman::Packman(float x, float y)  : movableEntity(x,y,1.f), nextDirection("") {}
 
 void Packman::render(std::shared_ptr<Render> render) {
@@ -74,7 +76,7 @@ void Packman::update(float delta,std::vector<std::shared_ptr<wall>>& walls) {
 
 
     // zie of de huidige pos niet op een muur staat
-    for (auto& w : walls) {
+    for (std::shared_ptr<wall>& w : walls) {
         if (standsOn(w)) {
             prevLocation();
             break;
@@ -89,6 +91,21 @@ void Packman::updateDir(const std::string& Direction) {
 void Packman::prevLocation() {
     x = prevX;
     y = prevY;
+}
+
+bool Packman::standsOnCoin(const std::shared_ptr<entity>& other) {
+    float radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
+    float radiusy = 0.016f + 1/15.f;
+
+
+    float pacX = x;
+    float pacY = y;
+
+    float buffer = 0.001f;
+
+    bool overlapX = pacX < other->getX() + radiusx - buffer && pacX + radiusx > other->getX() + buffer;
+    bool overlapY = pacY > other->getY() - radiusy + buffer && pacY - radiusy < other->getY() - buffer;
+    return overlapX && overlapY;
 }
 
 

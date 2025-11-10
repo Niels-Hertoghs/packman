@@ -8,7 +8,7 @@
 
 #include "render.h"
 
-world::world(const std::string& inputFile2) {
+world::world(const std::string& inputFile2,std::shared_ptr<Score> sco) : score(sco) {
     try {
         std::ifstream file(inputFile2);
         if (!file.is_open()) {
@@ -48,7 +48,7 @@ void world::startWorld() {
 
 
 std::shared_ptr<Render> world::render(const camera& cam,const sf::Font& pacmanFont) {
-    std::shared_ptr<Render> render = std::make_shared<Render>(cam);
+    std::shared_ptr<Render> render = std::make_shared<Render>(cam,score);
     render->Leveltekst(cam,pacmanFont);
 
     // walls
@@ -70,13 +70,14 @@ std::shared_ptr<Render> world::render(const camera& cam,const sf::Font& pacmanFo
 
 void world::update(float deltaTime) {
     pacman->update(deltaTime,walls);
-    // for (auto muur : walls) {
-    //     if (pacman->standsOn(muur)) {
-    //         pacman->prevLocation();
-    //         return;
-    //     }
-    // }
-
+    for (auto it = collectables.begin(); it != collectables.end(); ) {
+        if (pacman->standsOnCoin(*it)) {
+            score->coinEaten();
+            it = collectables.erase(it); // erase retourneert de volgende iterator
+        } else {
+            ++it;
+        }
+    }
 }
 
 void world::updatePacmanDir(const std::string& direction) {

@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include "state_maneger/stateManeger.h"
 #include "camera.h"
+#include "observer.h"
 #include "entities/entity.h"
 #include "entities/movableEntity.h"
 
@@ -22,8 +23,10 @@ public:
     std::vector<sf::RectangleShape> sprites;
     std::vector<sf::CircleShape> coins;
     std::vector<sf::Text> text;
+
+    std::shared_ptr<Score> score;
 public:
-    explicit Render(const camera &cam);
+    explicit Render(const camera &cam, std::shared_ptr<Score> score);
 
     void Leveltekst(const camera& camera,const sf::Font& fontF);
     void addWall(float x,float y);

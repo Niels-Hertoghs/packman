@@ -25,7 +25,7 @@ sf::Text makeText2(const sf::Font& fontF, const std::string& text, float charSiz
     return Text;
 }
 
-Render::Render(const camera &cam) : cam(cam) {
+Render::Render(const camera &cam, std::shared_ptr<Score> sc) : cam(cam), score(sc) {
     sf::Texture Texture;
     if (!Texture.loadFromFile("input_output/sprite.png")) {
         std::cerr << "Kon fruit texture niet laden!" << std::endl;
@@ -41,7 +41,7 @@ void Render::Leveltekst(const camera& camera, const sf::Font& fontF) {
     text.push_back(levelText);
 
     // Score afbeelden (links vanonder)
-    int currentScore = 100; //TODO: score halen uit score klasse
+    int currentScore = score->getScore();
     sf::Text scoreText = makeText2(fontF, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, camera); //TODO: grote aanpassen + plaats
     sf::FloatRect scoreTextBounds = scoreText.getLocalBounds();
     scoreText.setOrigin(0,scoreTextBounds.height);
@@ -100,7 +100,7 @@ void Render::addPackman(float x, float y) {
     sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
 
     Packman.setTexture(&texture);
-    Packman.setTextureRect(sf::IntRect(849, 51, 45, 41));
+    Packman.setTextureRect(sf::IntRect(847, 51, 45, 41));
 
     sf::FloatRect bounds = Packman.getLocalBounds();
     Packman.setOrigin(bounds.width/2,bounds.height/2);

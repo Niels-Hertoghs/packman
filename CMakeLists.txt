@@ -23,7 +23,9 @@ add_executable(packman main.cpp
         logic/entities/collectable.cpp
         logic/entities/collectable.h
         logic/Stopwatch.cpp
-        logic/Stopwatch.h)
+        logic/Stopwatch.h
+        logic/observer.cpp
+        logic/observer.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 
