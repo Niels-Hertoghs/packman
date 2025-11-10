@@ -23,7 +23,7 @@ bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, float nex
     float pacX = nextX - 1.f/20.f;
     float pacY = nextY + 1.f/14.f;
 
-    float buffer = 0.001f;
+    float buffer = 0.005f;
 
     bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
     bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
