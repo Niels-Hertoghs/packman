@@ -24,11 +24,10 @@ world::world(const std::string& inputFile2,std::shared_ptr<Score> sco) : score(s
 void world::startWorld() {
     std::ifstream file(inputFile); // bestand openen
 
-    // Hier komt je code om het bestand te lezen
     std::string line;
     double y = 1.0 - 2.0/7.0;
     while (std::getline(file, line)) {
-        double x = -1.0; // reset x per regel
+        double x = -1.0;
         for (char c : line) {
             if (c == '#') {
                 walls.push_back(std::make_shared<wall>(x, y));
@@ -71,7 +70,10 @@ std::shared_ptr<Render> world::render(const camera& cam,const sf::Font& pacmanFo
 
 
 void world::update(float deltaTime) {
+    // pacman updaten, oa de locatie
     pacman->update(deltaTime,walls);
+
+    // zien of pacman niet op een collectable staat
     for (auto it = collectables.begin(); it != collectables.end(); ) {
         if (pacman->standsOnCoin(*it)) {
             score->coinEaten(it->get()->getPoints());
@@ -83,11 +85,6 @@ void world::update(float deltaTime) {
 }
 
 void world::updatePacmanDir(const std::string& direction) {
-    // for (auto muur : walls) {
-    //     if (pacman->standsOn(muur)) {
-    //         return;
-    //     }
-    // }
     pacman->updateDir(direction);
 }
 

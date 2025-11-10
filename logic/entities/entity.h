@@ -8,26 +8,32 @@
 
 class Render;
 /**
- * class entity
- * brief Abstract class of all items/entities that are in the game
+ * @class entity
+ * @brief Een abstracte klasse voor alle objecten in de game.
  */
 class entity {
 protected:
-    float x;
-    float y;
+    float x; /// Positie op de x as.
+    float y; /// Positie op de y as.
 public:
+    // constructor
     entity(float x, float y);
+
+    // pure virtual
     virtual void render(std::shared_ptr<Render> render) = 0;
 
+    // methodes
     [[nodiscard]] float getX() const;
     [[nodiscard]] float getY() const;
+
+    virtual ~entity() = default;
 };
 
 
 
 /**
- * class wall
- * brief represents a wall in the map
+ * @class wall
+ * @brief Concrete klasse die een muur representeert.
  */
 class wall : public entity {
 public:

@@ -6,6 +6,10 @@
 
 #include "../render.h"
 
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class movableEntity
+/// ---------------------------------------------------------------------------------------------------------------
+
 movableEntity::movableEntity(float x, float y, float speed) : entity(x, y), direction("right"), speed(speed) {}
 
 bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
@@ -26,7 +30,15 @@ bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, float nex
     return overlapX && overlapY;
 }
 
+void movableEntity::prevLocation() {
+    x = prevX;
+    y = prevY;
+}
 
+
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class Packman
+/// ---------------------------------------------------------------------------------------------------------------
 
 Packman::Packman(float x, float y)  : movableEntity(x,y,1.f), nextDirection("") {}
 
@@ -88,11 +100,6 @@ void Packman::updateDir(const std::string& Direction) {
     nextDirection = Direction;
 }
 
-void Packman::prevLocation() {
-    x = prevX;
-    y = prevY;
-}
-
 bool Packman::standsOnCoin(const std::shared_ptr<entity>& other) {
     float radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
     float radiusy = 0.016f + 1/15.f;
@@ -108,4 +115,7 @@ bool Packman::standsOnCoin(const std::shared_ptr<entity>& other) {
     return overlapX && overlapY;
 }
 
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class ghost
+/// ---------------------------------------------------------------------------------------------------------------
 

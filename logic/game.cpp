@@ -44,7 +44,7 @@ void game::playGame() {
     // main window loop
     while(window.isOpen()) {
         stopwatch.tick(); //stopwatch updaten
-        float deltaTime = stopwatch.getDeltaTime();
+        float deltaTime = stopwatch.getDeltaTime(); // tijd sinds laatste tick
 
         sf::Event event{};
         while(window.pollEvent(event)) {
@@ -52,6 +52,7 @@ void game::playGame() {
                 window.close();
             }
             if (event.type == sf::Event::Resized) {
+                // centreert de inhoud terug
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
                 window.setView(sf::View(visibleArea));
 

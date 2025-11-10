@@ -27,6 +27,9 @@ sf::Text makeText(const sf::Font& fontF, const std::string& text, float charSize
 
     return Text;
 }
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class stateManeger
+/// ---------------------------------------------------------------------------------------------------------------
 
 stateManeger::stateManeger() {
     pushState(std::make_unique<menuState>());
@@ -58,7 +61,10 @@ void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const came
 }
 
 
-// menu state
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class menuState
+/// ---------------------------------------------------------------------------------------------------------------
+
 void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
 
     //lettertype inladen
@@ -128,6 +134,10 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
     window.draw(playButton);
     window.draw(playText);
 }
+
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class LevelState
+/// ---------------------------------------------------------------------------------------------------------------
 
 void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
 

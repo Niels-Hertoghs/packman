@@ -16,6 +16,10 @@
 #include "entities/collectable.h"
 #include  "entities/movableEntity.h"
 
+/**
+ * Class world
+ * brief bevat alle entities, en bevat de algemene game logica.
+ */
 class world {
 private:
     std::vector<std::shared_ptr<wall>> walls;

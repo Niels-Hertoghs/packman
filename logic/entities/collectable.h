@@ -9,13 +9,12 @@
 class Render;
 
 /**
- * class collectable
- * brief An abstract class for the collectables.
+ * @class collectable
+ * @brief Een abstracte klasse voor collectables.
  */
 class collectable : public entity {
 private:
-     float points; /// hoeveel points er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten
-     // float size;
+     float points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
 public:
      // constructor
      collectable(float x, float y,float points);
@@ -29,8 +28,8 @@ public:
 };
 
 /**
- * class coin
- * brief A concrete class for the coins.
+ * @class coin
+ * @brief Een concrete klasse voor de coins.
  */
 class coin : public collectable {
 

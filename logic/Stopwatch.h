@@ -6,8 +6,12 @@
 #define PACKMAN_STOPWATCH_H
 #include <chrono>
 
-
+/**
+ * Class Stopwatch
+ * brief Houdt alles van tijd bij in de game.
+ */
 class Stopwatch {
+private:
     using clock = std::chrono::high_resolution_clock;
     std::chrono::time_point<clock> lastTime; /// tijdspunt van laatste tick
     std::chrono::time_point<clock> lastTimeEaten; /// tijdspunt van laatst gegeten coin
@@ -16,7 +20,8 @@ class Stopwatch {
     Stopwatch(); // privat econstructor
 public:
     static Stopwatch& getInstance();
-    // Verwijder copy constructor en assignment operator
+
+    // Verwijder copy constructor en assignment operator, om singleton behouden
     Stopwatch(const Stopwatch&) = delete;
     Stopwatch& operator=(const Stopwatch&) = delete;
 
