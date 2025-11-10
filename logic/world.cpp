@@ -33,9 +33,11 @@ void world::startWorld() {
             if (c == '#') {
                 walls.push_back(std::make_shared<wall>(x, y));
             }  else if (c == '-') {
-                collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f));
+                // points staat op 40 om te beginne
+                collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
             } else if (c == 'f') {
-                collectables.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f));
+                // points staan op 50 om te beginne, is meer dan coins
+                collectables.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50));
             }
             x += 0.1;
         }
@@ -72,7 +74,7 @@ void world::update(float deltaTime) {
     pacman->update(deltaTime,walls);
     for (auto it = collectables.begin(); it != collectables.end(); ) {
         if (pacman->standsOnCoin(*it)) {
-            score->coinEaten();
+            score->coinEaten(it->get()->getPoints());
             it = collectables.erase(it); // erase retourneert de volgende iterator
         } else {
             ++it;

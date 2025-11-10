@@ -1,0 +1,3 @@
+alle walls zijn met hun linker boven coo opgeslagen in de vectors.
+spookjes, pacman en coins met hun center.
+als alles gestart wordt

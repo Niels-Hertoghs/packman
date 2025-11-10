@@ -19,7 +19,7 @@ private:
     int score;
 public:
     Score(Stopwatch& stopwatch);
-    void coinEaten();
+    void coinEaten(float coinPoints);
 
     [[nodiscard]] int getScore() const;
 };
