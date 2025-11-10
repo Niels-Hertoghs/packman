@@ -42,14 +42,15 @@ void Packman::update(float delta,std::vector<std::shared_ptr<wall>>& walls) {
 
     // zien of pack man die richting uit kan gaan
     if (direction != nextDirection && !nextDirection.empty()) {
-        // meteen volgende blokje bekijken zodat de buffer geen verschil maakt
+        // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
         // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
+        // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/4 van een blokje om te zien of het een muur is.
         float stepX = 0.f, stepY = 0.f;
 
-        if (nextDirection == "right") stepX = 0.1f;
-        else if (nextDirection == "left") stepX = -0.1f;
-        else if (nextDirection == "up") stepY = 1.f / 7.f;
-        else if (nextDirection == "down") stepY = -1.f / 7.f;
+        if (nextDirection == "right") stepX = 1/40.f;
+        else if (nextDirection == "left") stepX = -1/40.f;
+        else if (nextDirection == "up") stepY = 1.f / 28.f;
+        else if (nextDirection == "down") stepY = -1.f / 28.f;
 
         newX = x + stepX;
         newY = y + stepY;
@@ -72,7 +73,7 @@ void Packman::update(float delta,std::vector<std::shared_ptr<wall>>& walls) {
 
 
 
-    // zie of de huidige richting niet op een muur staat
+    // zie of de huidige pos niet op een muur staat
     for (auto& w : walls) {
         if (standsOn(w)) {
             prevLocation();
