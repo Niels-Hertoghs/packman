@@ -12,3 +12,5 @@ void world::update(float deltaTime) {
 
 
 score.coinEaten(); iun wereld.cpp, is dit oke voor observer?
+
+hoe werk view observer?

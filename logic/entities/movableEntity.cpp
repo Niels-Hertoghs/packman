@@ -40,7 +40,7 @@ void movableEntity::prevLocation() {
 /// @class Packman
 /// ---------------------------------------------------------------------------------------------------------------
 
-Packman::Packman(double x, double y)  : movableEntity(x,y,3.f), nextDirection("") {}
+Packman::Packman(double x, double y)  : movableEntity(x,y,1.f), nextDirection("") {}
 
 void Packman::render(std::shared_ptr<Render> render) {
     render->addPackman(this->getX(),this->getY());
@@ -58,13 +58,14 @@ void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls) {
     if (direction != nextDirection && !nextDirection.empty()) {
         // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
         // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
-        // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/4 van een blokje om te zien of het een muur is.
+        // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/8 van een blokje om te zien of het een muur is.
+        // 1/8, is redelijk kklein maar ook niet te klein dat het foutgen geeft, in mijn testen
         double stepX = 0.f, stepY = 0.f;
 
-        if (nextDirection == "right") stepX = 1/40.f;
-        else if (nextDirection == "left") stepX = -1/40.f;
-        else if (nextDirection == "up") stepY = 1.f / 28.f;
-        else if (nextDirection == "down") stepY = -1.f / 28.f;
+        if (nextDirection == "right") stepX = 1/80.f;
+        else if (nextDirection == "left") stepX = -1/80.f;
+        else if (nextDirection == "up") stepY = 1.f / 56.f;
+        else if (nextDirection == "down") stepY = -1.f / 56.f;
 
         newX = x + stepX;
         newY = y + stepY;
