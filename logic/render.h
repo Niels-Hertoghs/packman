@@ -29,10 +29,10 @@ public:
     explicit Render(const camera &cam, std::shared_ptr<Score> score);
 
     void Leveltekst(const camera& camera,const sf::Font& fontF);
-    void addWall(float x,float y);
-    void addCoin(float x,float y);
-    void addFruit(float x,float y);
-    void addPackman(float x,float y);
+    void addWall(double x,double y);
+    void addCoin(double x,double y);
+    void addFruit(double x,double y);
+    void addPackman(double x,double y);
 };
 
 

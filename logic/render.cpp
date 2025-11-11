@@ -6,7 +6,7 @@
 
 #include "entities/collectable.h"
 
-sf::Text makeText2(const sf::Font& fontF, const std::string& text, float charSize, sf::Color color,float x, float y,const camera& cam) {
+sf::Text makeText2(const sf::Font& fontF, const std::string& text, double charSize, sf::Color color,double x, double y,const camera& cam) {
     sf::Text Text;
     Text.setFont(fontF);
     Text.setString(text);
@@ -56,7 +56,7 @@ void Render::Leveltekst(const camera& camera, const sf::Font& fontF) {
     text.push_back(LifesText);
 }
 
-void Render::addWall(float x,float y) {
+void Render::addWall(double x,double y) {
     int WallSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
     int WallSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
     sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeWidth),static_cast<float>(WallSizeHeight)));
@@ -67,7 +67,7 @@ void Render::addWall(float x,float y) {
     sprites.push_back(wall);
 }
 
-void Render::addCoin(float x,float y) {
+void Render::addCoin(double x,double y) {
     int radius = cam.distanceToPixelsHeight(0.016f);
     sf::CircleShape coinShape(radius);
     std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
@@ -78,7 +78,7 @@ void Render::addCoin(float x,float y) {
     coins.push_back(coinShape);
 }
 
-void Render::addFruit(float x,float y) {
+void Render::addFruit(double x,double y) {
     int FruitSizeHeight = cam.distanceToPixelsHeight(1.f/17.f);
     int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/27.f);
     sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
@@ -94,7 +94,7 @@ void Render::addFruit(float x,float y) {
     sprites.push_back(Fruit);
 }
 
-void Render::addPackman(float x, float y) {
+void Render::addPackman(double x, double y) {
     int PacmanSizeHeight =  cam.distanceToPixelsHeight(2.f/14.f);
     int PacmanSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
     sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));

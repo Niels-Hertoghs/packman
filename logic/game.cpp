@@ -27,7 +27,7 @@ void game::playGame() {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
     // Stel de gewenste schaal in (80% van de schermgrootte)
-    float scale = 0.8f;
+    double scale = 0.8f;
     unsigned int width = desktop.width * scale;
     unsigned int height = desktop.height * scale;
     camera cam(width, height);
@@ -44,7 +44,7 @@ void game::playGame() {
     // main window loop
     while(window.isOpen()) {
         stopwatch.tick(); //stopwatch updaten
-        float deltaTime = stopwatch.getDeltaTime(); // tijd sinds laatste tick
+        double deltaTime = stopwatch.getDeltaTime(); // tijd sinds laatste tick
 
         sf::Event event{};
         while(window.pollEvent(event)) {

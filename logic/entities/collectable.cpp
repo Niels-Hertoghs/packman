@@ -10,13 +10,13 @@
 /// @class collectable
 /// ---------------------------------------------------------------------------------------------------------------
 ///
-collectable::collectable(float x, float y,float Points) : entity(x,y ), points(Points) {}
+collectable::collectable(double x, double y,double Points) : entity(x,y ), points(Points) {}
 
-float collectable::getPoints() {
+double collectable::getPoints() {
     return points;
 }
 
-void collectable::setPoints(float newPoints) {
+void collectable::setPoints(double newPoints) {
     points = newPoints;
 }
 
@@ -24,7 +24,7 @@ void collectable::setPoints(float newPoints) {
 /// @class coin
 /// ---------------------------------------------------------------------------------------------------------------
 
-coin::coin(float x, float y,float points) : collectable(x,y,points){}
+coin::coin(double x, double y,double points) : collectable(x,y,points){}
 
 void coin::render(std::shared_ptr<Render> render) {
     render->addCoin(this->getX(),this->getY());
@@ -34,7 +34,7 @@ void coin::render(std::shared_ptr<Render> render) {
 /// @class fruit
 /// ---------------------------------------------------------------------------------------------------------------
 
-fruit::fruit(float x, float y,float points) : collectable(x,y,points){}
+fruit::fruit(double x, double y,double points) : collectable(x,y,points){}
 
 
 void fruit::render(std::shared_ptr<Render> render) {

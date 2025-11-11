@@ -13,18 +13,18 @@ class Render;
  */
 class entity {
 protected:
-    float x; /// Positie op de x as.
-    float y; /// Positie op de y as.
+    double x; /// Positie op de x as.
+    double y; /// Positie op de y as.
 public:
     // constructor
-    entity(float x, float y);
+    entity(double x, double y);
 
     // pure virtual
     virtual void render(std::shared_ptr<Render> render) = 0;
 
     // methodes
-    [[nodiscard]] float getX() const;
-    [[nodiscard]] float getY() const;
+    [[nodiscard]] double getX() const;
+    [[nodiscard]] double getY() const;
 
     virtual ~entity() = default;
 };
@@ -37,7 +37,7 @@ public:
  */
 class wall : public entity {
 public:
-    wall(float x,float y);
+    wall(double x,double y);
     void render(std::shared_ptr<Render> render);
 };
 

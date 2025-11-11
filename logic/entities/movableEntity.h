@@ -19,18 +19,18 @@ class Render;
 class movableEntity : public entity {
 protected:
     std::string direction; /// Richting dat het object gaat.
-    float speed; /// De snelheid van het object.
-    float prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
+    double speed; /// De snelheid van het object.
+    double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
 public:
     // constructor
-    movableEntity(float x,float y,float speed);
+    movableEntity(double x,double y,double speed);
 
     // pure virutal
     virtual void render(std::shared_ptr<Render> render) override = 0;
-    virtual void update(float deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
+    virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
 
     // methodes
-    bool wouldCollide(const std::shared_ptr<entity>& other, float newX, float newY);
+    bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
     bool standsOn(const std::shared_ptr<entity>& other);
     void prevLocation();
 };
@@ -44,11 +44,11 @@ private:
     std::string nextDirection; /// Volgende richting zodra mogelijk.
 public:
     // constructor
-    Packman(float x,float y);
+    Packman(double x,double y);
 
     // methodes
     void render(std::shared_ptr<Render> render) override;
-    void update(float deltaTime,std::vector<std::shared_ptr<wall>>& walls) override;
+    void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) override;
 
 
     bool standsOnCoin(const std::shared_ptr<entity>& other);

@@ -9,13 +9,13 @@
 /// @class entity
 /// ---------------------------------------------------------------------------------------------------------------
 
-entity::entity(float x,float y) : x(x), y(y) {}
+entity::entity(double x,double y) : x(x), y(y) {}
 
-float entity::getX() const {
+double entity::getX() const {
     return x;
 }
 
-float entity::getY() const {
+double entity::getY() const {
     return y;
 }
 
@@ -23,7 +23,7 @@ float entity::getY() const {
 /// @class wall
 /// ---------------------------------------------------------------------------------------------------------------
 
-wall::wall(float x, float y) : entity(x, y) {}
+wall::wall(double x, double y) : entity(x, y) {}
 
 void wall::render(std::shared_ptr<Render> render) {
     render->addWall(this->getX(),this->getY());

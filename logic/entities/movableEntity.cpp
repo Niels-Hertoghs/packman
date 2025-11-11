@@ -10,20 +10,20 @@
 /// @class movableEntity
 /// ---------------------------------------------------------------------------------------------------------------
 
-movableEntity::movableEntity(float x, float y, float speed) : entity(x, y), direction("right"), speed(speed) {}
+movableEntity::movableEntity(double x, double y, double speed) : entity(x, y), direction("right"), speed(speed) {}
 
 bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
     return this->wouldCollide(other,x,y);
 }
 
-bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, float nextX, float nextY) {
-    float width = 1.f / 10.f;
-    float height = 1.f / 7.f;
+bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, double nextX, double nextY) {
+    double width = 1.f / 10.f;
+    double height = 1.f / 7.f;
 
-    float pacX = nextX - 1.f/20.f;
-    float pacY = nextY + 1.f/14.f;
+    double pacX = nextX - 1.f/20.f;
+    double pacY = nextY + 1.f/14.f;
 
-    float buffer = 0.005f;
+    double buffer = 0.005f;
 
     bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
     bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
@@ -40,26 +40,26 @@ void movableEntity::prevLocation() {
 /// @class Packman
 /// ---------------------------------------------------------------------------------------------------------------
 
-Packman::Packman(float x, float y)  : movableEntity(x,y,1.f), nextDirection("") {}
+Packman::Packman(double x, double y)  : movableEntity(x,y,3.f), nextDirection("") {}
 
 void Packman::render(std::shared_ptr<Render> render) {
     render->addPackman(this->getX(),this->getY());
 }
 
-void Packman::update(float delta,std::vector<std::shared_ptr<wall>>& walls) {
+void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls) {
 
     prevX = this->getX();
     prevY = this->getY();
 
-    float newX = x;
-    float newY = y;
+    double newX = x;
+    double newY = y;
 
     // zien of pack man die richting uit kan gaan
     if (direction != nextDirection && !nextDirection.empty()) {
         // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
         // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
         // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/4 van een blokje om te zien of het een muur is.
-        float stepX = 0.f, stepY = 0.f;
+        double stepX = 0.f, stepY = 0.f;
 
         if (nextDirection == "right") stepX = 1/40.f;
         else if (nextDirection == "left") stepX = -1/40.f;
@@ -75,7 +75,7 @@ void Packman::update(float delta,std::vector<std::shared_ptr<wall>>& walls) {
         if (canMove) direction = nextDirection;
     }
     // ga de richting uit
-    float dx = 0.f, dy = 0.f;
+    double dx = 0.f, dy = 0.f;
     if (direction == "right") dx = 0.2f;
     else if (direction == "left") dx = -0.2f;
     else if (direction == "up") dy = 2.f / 7.f;
@@ -101,14 +101,14 @@ void Packman::updateDir(const std::string& Direction) {
 }
 
 bool Packman::standsOnCoin(const std::shared_ptr<entity>& other) {
-    float radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
-    float radiusy = 0.016f + 1/15.f;
+    double radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
+    double radiusy = 0.016f + 1/15.f;
 
 
-    float pacX = x;
-    float pacY = y;
+    double pacX = x;
+    double pacY = y;
 
-    float buffer = 0.001f;
+    double buffer = 0.001f;
 
     bool overlapX = pacX < other->getX() + radiusx - buffer && pacX + radiusx > other->getX() + buffer;
     bool overlapY = pacY > other->getY() - radiusy + buffer && pacY - radiusy < other->getY() - buffer;

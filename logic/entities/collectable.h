@@ -14,17 +14,17 @@ class Render;
  */
 class collectable : public entity {
 private:
-     float points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
+     double points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
 public:
      // constructor
-     collectable(float x, float y,float points);
+     collectable(double x, double y,double points);
 
      // pure virtual
      virtual void render(std::shared_ptr<Render> render) override = 0;
 
      // methods
-     float getPoints();
-     void setPoints(float newPoints);
+     double getPoints();
+     void setPoints(double newPoints);
 };
 
 /**
@@ -34,13 +34,13 @@ public:
 class coin : public collectable {
 
 public:
-     coin(float x, float y, float points);
+     coin(double x, double y, double points);
      void render(std::shared_ptr<Render> render) override;
 };
 
 class fruit : public collectable {
 public:
-     fruit(float x, float y, float points);
+     fruit(double x, double y, double points);
      void render(std::shared_ptr<Render> render) override;
 };
 

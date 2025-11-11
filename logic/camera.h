@@ -17,9 +17,9 @@ private:
 public:
     camera(unsigned int w, unsigned int h);
 
-    [[nodiscard]] std::pair<int,int> worldToPixel(const float& width, const float& height) const;
-    [[nodiscard]] int distanceToPixelsHeight(const float& distance) const;
-    [[nodiscard]] int distanceToPixelsWidth(const float& distance) const;
+    [[nodiscard]] std::pair<int,int> worldToPixel(const double& width, const double& height) const;
+    [[nodiscard]] int distanceToPixelsHeight(const double& distance) const;
+    [[nodiscard]] int distanceToPixelsWidth(const double& distance) const;
     void setDimensions(unsigned int w, unsigned int h);
 };
 
