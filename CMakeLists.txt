@@ -4,8 +4,8 @@ project(packman)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Vind SFML (minimaal versie 2.5)
-find_package(SFML 2 COMPONENTS system window graphics)
+# Vind SFML (minimaal versie 2.6)
+find_package(SFML 2.6 COMPONENTS system window graphics)
 
 # Voeg je broncode toe
 add_executable(packman main.cpp
