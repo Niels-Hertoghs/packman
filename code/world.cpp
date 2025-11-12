@@ -32,6 +32,18 @@ namespace logic {
             for (char c : line) {
                 if (c == '#') {
                     walls.push_back(std::make_shared<wall>(x, y));
+                    // wall.subscribe(new wallView)
+                    // in de main loop ook een wereldView maken samen met wereld en die laten subsriben
+                    // in de main loop dan na elke tick, wereldView->render doen, die heeft als private een pointer naar window en zet daar alles op
+                    // vraag: in de initializatie (hier) ook de observer van elke member maken? en die dan toevoegen aan wereldView? (coins enz) wall heeft niet echt een observer nodig
+                    // for elk object in wereldView(wallView { draw{ teken}})
+
+                    // uit elke view met getters werken naar wat ge nodig hebt.
+                    // dan zou alles maar 1 keer in de window gezet moeten worden tot iets update moet dat veranderen, rest blijft staan
+                    // wereld heeft ook een score observer
+
+                    // abstract observer (entityView kijk opdracht, foto)  met pure virtual update/notify en draw rest is over erving
+                    // ! voor dat je start denk eerst na over alles en als er iets niet klopt, los op voor dat je begin!
                 }  else if (c == '-') {
                     // points staat op 40 om te beginne
                     collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
