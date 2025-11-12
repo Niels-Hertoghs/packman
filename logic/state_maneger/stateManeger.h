@@ -10,7 +10,9 @@
 #include <vector>
 #include "../camera.h"
 
-class world;
+namespace logic {
+    class world;
+}
 class state;
 
 /**
@@ -27,7 +29,7 @@ public:
     void prevState();
     std::unique_ptr<state> getCurrentState();
 
-    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime);
+    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime);
 };
 
 /**
@@ -40,7 +42,7 @@ public:
     state() = default;
     virtual ~state() = default;
 
-    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) = 0;
+    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) = 0;
 };
 
 /**
@@ -50,7 +52,7 @@ public:
 class menuState : public state {
 public:
     menuState() = default;
-    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam, std::shared_ptr<world> wereld,const float &deltaTime) override;
+    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam, std::shared_ptr<logic::world> wereld,const float &deltaTime) override;
 };
 
 /**
@@ -60,8 +62,8 @@ public:
 class LevelState : public state {
 
 public:
-    LevelState(std::shared_ptr<world> wereld);
-    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) override;
+    LevelState(std::shared_ptr<logic::world> wereld);
+    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) override;
 };
 
 

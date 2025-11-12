@@ -6,40 +6,45 @@
 #define PACKMAN_ENTITY_H
 #include <memory>
 
-class Render;
-/**
- * @class entity
- * @brief Een abstracte klasse voor alle objecten in de game.
- */
-class entity {
-protected:
-    double x; /// Positie op de x as.
-    double y; /// Positie op de y as.
-public:
-    // constructor
-    entity(double x, double y);
+namespace render {
+    class Render;
+}
 
-    // pure virtual
-    virtual void render(std::shared_ptr<Render> render) = 0;
+namespace logic {
+    /**
+     * @class entity
+     * @brief Een abstracte klasse voor alle objecten in de game.
+     */
+    class entity {
+    protected:
+        double x; /// Positie op de x as.
+        double y; /// Positie op de y as.
+    public:
+        // constructor
+        entity(double x, double y);
 
-    // methodes
-    [[nodiscard]] double getX() const;
-    [[nodiscard]] double getY() const;
+        // pure virtual
+        virtual void render(std::shared_ptr<render::Render> render) = 0;
 
-    virtual ~entity() = default;
-};
+        // methodes
+        [[nodiscard]] double getX() const;
+        [[nodiscard]] double getY() const;
+
+        virtual ~entity() = default;
+    };
 
 
 
-/**
- * @class wall
- * @brief Concrete klasse die een muur representeert.
- */
-class wall : public entity {
-public:
-    wall(double x,double y);
-    void render(std::shared_ptr<Render> render);
-};
+    /**
+     * @class wall
+     * @brief Concrete klasse die een muur representeert.
+     */
+    class wall : public entity {
+    public:
+        wall(double x,double y);
+        void render(std::shared_ptr<render::Render> render);
+    };
+}
 
 
 

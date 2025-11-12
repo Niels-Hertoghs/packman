@@ -35,7 +35,7 @@ stateManeger::stateManeger() {
     pushState(std::make_unique<menuState>());
 }
 
-LevelState::LevelState(std::shared_ptr<world> wereld)
+LevelState::LevelState(std::shared_ptr<logic::world> wereld)
  {
     // wereld.start();
 }
@@ -56,7 +56,7 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) {
     stack.top().get()->run(window, event,*this,cam,wereld,deltaTime);
 }
 
@@ -65,7 +65,7 @@ void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const came
 /// @class menuState
 /// ---------------------------------------------------------------------------------------------------------------
 
-void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
+void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) {
 
     //lettertype inladen
     sf::Font packmanFont;
@@ -139,7 +139,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 /// @class LevelState
 /// ---------------------------------------------------------------------------------------------------------------
 
-void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<world> wereld,const float &deltaTime) {
+void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) {
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
@@ -160,7 +160,7 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     }
 
     // alle sprites in een render classe zetten
-    std::shared_ptr<Render> tussen = wereld->render(cam,Font);
+    std::shared_ptr<render::Render> tussen = wereld->render(cam,Font);
 
     // alle sprites in de window zetten
     for (const auto& line:tussen->sprites) {

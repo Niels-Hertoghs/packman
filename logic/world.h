@@ -16,26 +16,28 @@
 #include "entities/collectable.h"
 #include  "entities/movableEntity.h"
 
-/**
- * Class world
- * brief bevat alle entities, en bevat de algemene game logica.
- */
-class world {
-private:
-    std::vector<std::shared_ptr<wall>> walls;
-    std::vector<std::shared_ptr<collectable>> collectables;
-    std::shared_ptr<Packman> pacman;
-    std::string inputFile;
+namespace logic {
+    /**
+     * Class world
+     * brief bevat alle entities, en bevat de algemene game logica.
+     */
+    class world {
+    private:
+        std::vector<std::shared_ptr<wall>> walls;
+        std::vector<std::shared_ptr<collectable>> collectables;
+        std::shared_ptr<Packman> pacman;
+        std::string inputFile;
 
-    std::shared_ptr<Score> score;
-public:
-    world(const std::string& inputFile,std::shared_ptr<Score> score);
-    void startWorld();
+        std::shared_ptr<Score> score;
+    public:
+        world(const std::string& inputFile,std::shared_ptr<Score> score);
+        void startWorld();
 
-    std::shared_ptr<Render> render( const camera& cam,const sf::Font& pacmanFont);
-    void update(float deltaTime);
-    void updatePacmanDir(const std::string& direction);
-};
+        std::shared_ptr<render::Render> render( const camera& cam,const sf::Font& pacmanFont);
+        void update(float deltaTime);
+        void updatePacmanDir(const std::string& direction);
+    };
+}
 
 
 #endif //PACKMAN_WORLD_H

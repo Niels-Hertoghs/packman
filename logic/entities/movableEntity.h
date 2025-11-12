@@ -9,57 +9,59 @@
 
 #include "entity.h"
 
-class Render;
+namespace render {
+    class Render;
+}
 
 
-/**
- * Class movableEntity
- * brief Abstacte klasse voor de beweegbare objecten.
- */
-class movableEntity : public entity {
-protected:
-    std::string direction; /// Richting dat het object gaat.
-    double speed; /// De snelheid van het object.
-    double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
-public:
-    // constructor
-    movableEntity(double x,double y,double speed);
+namespace logic {
+    /**
+     * Class movableEntity
+     * brief Abstacte klasse voor de beweegbare objecten.
+     */
+    class movableEntity : public entity {
+    protected:
+        std::string direction; /// Richting dat het object gaat.
+        double speed; /// De snelheid van het object.
+        double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
+    public:
+        // constructor
+        movableEntity(double x,double y,double speed);
 
-    // pure virutal
-    virtual void render(std::shared_ptr<Render> render) override = 0;
-    virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
+        // pure virutal
+        virtual void render(std::shared_ptr<render::Render> render) override = 0;
+        virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
 
-    // methodes
-    bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
-    bool standsOn(const std::shared_ptr<entity>& other);
-    void prevLocation();
-};
+        // methodes
+        bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
+        bool standsOn(const std::shared_ptr<entity>& other);
+        void prevLocation();
+    };
 
-/**
- * Class Packman
- * brief Het Packman object.De concrete klasse.
- */
-class Packman : public movableEntity {
-private:
-    std::string nextDirection; /// Volgende richting zodra mogelijk.
-public:
-    // constructor
-    Packman(double x,double y);
+    /**
+     * Class Packman
+     * brief Het Packman object.De concrete klasse.
+     */
+    class Packman : public movableEntity {
+    private:
+        std::string nextDirection; /// Volgende richting zodra mogelijk.
+    public:
+        // constructor
+        Packman(double x,double y);
 
-    // methodes
-    void render(std::shared_ptr<Render> render) override;
-    void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) override;
-
-
-    bool standsOnCoin(const std::shared_ptr<entity>& other);
-    void updateDir(const std::string& direction);
-};
-
- // class Ghost : public movableEntity {
- //
- // };
+        // methodes
+        void render(std::shared_ptr<render::Render> render) override;
+        void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) override;
 
 
+        bool standsOnCoin(const std::shared_ptr<entity>& other);
+        void updateDir(const std::string& direction);
+    };
+
+    // class Ghost : public movableEntity {
+    //
+    // };
+}
 
 
 #endif //PACKMAN_MOVABLEENTITY_H

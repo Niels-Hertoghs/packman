@@ -21,7 +21,7 @@ void game::playGame() {
     stateManeger manager; // state manager aanmaken
     Stopwatch& stopwatch = Stopwatch::getInstance(); //stopwatch aanmaken, als singleton
     std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch); // score observer aanmaken
-    std::shared_ptr<world> wereld = std::make_shared<world>("input_output/map.txt",score);
+    std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt",score);
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
