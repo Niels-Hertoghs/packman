@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "observer.h"
-#include "state_maneger/stateManeger.h"
+#include "logic/state_maneger/stateManeger.h"
 #include "world.h"
 #include "Stopwatch.h"
 

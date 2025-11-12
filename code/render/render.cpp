@@ -4,7 +4,7 @@
 
 #include "render.h"
 
-#include "entities/collectable.h"
+#include "../logic/entities/collectable.h"
 
 sf::Text makeText2(const sf::Font& fontF, const std::string& text, double charSize, sf::Color color,double x, double y,const camera& cam) {
     sf::Text Text;

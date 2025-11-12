@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-#include "logic/game.h"
+#include "code/game.h"
 
 int main() {
     std::unique_ptr<game> Game(new game);

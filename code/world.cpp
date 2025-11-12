@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "render.h"
+#include "render/render.h"
 
 namespace logic {
     world::world(const std::string& inputFile2,std::shared_ptr<Score> sco) : score(sco) {

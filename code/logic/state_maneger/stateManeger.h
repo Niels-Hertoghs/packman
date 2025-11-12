@@ -8,7 +8,7 @@
 #include <memory>
 #include <stack>
 #include <vector>
-#include "../camera.h"
+#include "../../camera.h"
 
 namespace logic {
     class world;

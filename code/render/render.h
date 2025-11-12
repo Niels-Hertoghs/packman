@@ -5,11 +5,11 @@
 #ifndef PACKMAN_RENDER_H
 #define PACKMAN_RENDER_H
 #include <SFML/Graphics.hpp>
-#include "state_maneger/stateManeger.h"
-#include "camera.h"
-#include "observer.h"
-#include "entities/entity.h"
-#include "entities/movableEntity.h"
+#include "../logic/state_maneger/stateManeger.h"
+#include "../camera.h"
+#include "../observer.h"
+#include "../logic/entities/entity.h"
+#include "../logic/entities/movableEntity.h"
 
 namespace render {
     /**

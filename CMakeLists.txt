@@ -9,23 +9,23 @@ find_package(SFML 2.6 COMPONENTS system window graphics)
 
 # Voeg je broncode toe
 add_executable(packman main.cpp
-        logic/game.cpp
-        logic/state_maneger/stateManeger.cpp
-        logic/camera.cpp
-        logic/world.cpp
-        logic/world.h
-        logic/entities/entity.cpp
-        logic/entities/entity.h
-        logic/render.cpp
-        logic/render.h
-        logic/entities/movableEntity.cpp
-        logic/entities/movableEntity.h
-        logic/entities/collectable.cpp
-        logic/entities/collectable.h
-        logic/Stopwatch.cpp
-        logic/Stopwatch.h
-        logic/observer.cpp
-        logic/observer.h)
+        code/game.cpp
+        code/logic/state_maneger/stateManeger.cpp
+        code/camera.cpp
+        code/world.cpp
+        code/world.h
+        code/logic/entities/entity.cpp
+        code/logic/entities/entity.h
+        code/render/render.cpp
+        code/render/render.h
+        code/logic/entities/movableEntity.cpp
+        code/logic/entities/movableEntity.h
+        code/logic/entities/collectable.cpp
+        code/logic/entities/collectable.h
+        code/Stopwatch.cpp
+        code/Stopwatch.h
+        code/observer.cpp
+        code/observer.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

@@ -4,7 +4,7 @@
 
 #include "collectable.h"
 
-#include "../render.h"
+#include "../../render/render.h"
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class collectable

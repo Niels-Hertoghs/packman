@@ -11,10 +11,10 @@
 
 #include "camera.h"
 #include "observer.h"
-#include "render.h"
-#include "entities/entity.h"
-#include "entities/collectable.h"
-#include  "entities/movableEntity.h"
+#include "render/render.h"
+#include "logic/entities/entity.h"
+#include "logic/entities/collectable.h"
+#include "logic/entities/movableEntity.h"
 
 namespace logic {
     /**
