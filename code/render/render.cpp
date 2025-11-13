@@ -42,11 +42,11 @@ namespace render {
         text.push_back(levelText);
 
         // Score afbeelden (links vanonder)
-        int currentScore = score->getScore();
-        sf::Text scoreText = makeText2(fontF, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, camera); //TODO: grote aanpassen + plaats
-        sf::FloatRect scoreTextBounds = scoreText.getLocalBounds();
-        scoreText.setOrigin(0,scoreTextBounds.height);
-        text.push_back(scoreText);
+        // int currentScore = score->getScore();
+        // sf::Text scoreText = makeText2(fontF, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, camera); //TODO: grote aanpassen + plaats
+        // sf::FloatRect scoreTextBounds = scoreText.getLocalBounds();
+        // scoreText.setOrigin(0,scoreTextBounds.height);
+        // text.push_back(scoreText);
 
 
         // remainings lifes afbeelden (rechts vanonder)

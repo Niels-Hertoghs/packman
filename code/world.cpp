@@ -9,7 +9,7 @@
 #include "render/render.h"
 
 namespace logic {
-    world::world(const std::string& inputFile2,std::shared_ptr<Score> sco) : score(sco) {
+    world::world(const std::string& inputFile2) {
         try {
             std::ifstream file(inputFile2);
             if (!file.is_open()) {
@@ -89,7 +89,21 @@ namespace logic {
         pacman->updateDir(direction);
     }
 
+
+    void world::subscribeScore(std::shared_ptr<Score> _score) {
+        score = _score;
+    }
+
     std::vector<std::shared_ptr<wall>> world::get_walls() const {
         return walls;
     }
+
+    std::vector<std::shared_ptr<collectable>> world::get_collectables() const {
+        return collectables;
+    }
+
+    std::shared_ptr<Packman> world::get_pacman() const {
+        return pacman;
+    }
+
 }

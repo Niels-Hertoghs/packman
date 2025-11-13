@@ -30,14 +30,20 @@ namespace logic {
 
         std::shared_ptr<Score> score;
     public:
-        world(const std::string& inputFile,std::shared_ptr<Score> score);
+        world(const std::string& inputFile);
         void startWorld();
 
         std::shared_ptr<render::Render> render( const camera& cam,const sf::Font& pacmanFont);
         void update(float deltaTime);
         void updatePacmanDir(const std::string& direction);
 
-std::vector<std::shared_ptr<wall>> get_walls() const;
+        void subscribeScore(std::shared_ptr<Score> score);
+
+        //getters
+        std::vector<std::shared_ptr<wall>> get_walls() const;
+         std::vector<std::shared_ptr<collectable>> get_collectables() const;
+
+        std::shared_ptr<Packman> get_pacman() const;
     };
 }
 

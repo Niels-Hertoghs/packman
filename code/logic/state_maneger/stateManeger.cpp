@@ -176,6 +176,7 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
     for (const auto& text:tussen->text) {
         window.draw(text);
     }
+
     wereld->update(deltaTime);
 }
 

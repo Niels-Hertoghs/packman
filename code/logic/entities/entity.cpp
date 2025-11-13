@@ -34,7 +34,7 @@ namespace logic {
         return std::pair<double,double>(this->x,this->y);
     }
 
-    void wall::wallSubscribe(std::shared_ptr<wallView>* wallObserver) {
+    void wall::wallSubscribe(std::shared_ptr<wallView> wallObserver) {
         _wallObserver = wallObserver;
     }
 

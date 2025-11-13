@@ -6,6 +6,7 @@
 #define PACKMAN_OBSERVER_H
 #include <SFML/Graphics.hpp>
 
+#include "camera.h"
 #include "Stopwatch.h"
 #include "render/notifications.h"
 class IObserver {
@@ -15,8 +16,10 @@ class Observer {
 protected:
     Stopwatch& stopwatch;
     sf::RenderWindow& window;
+    camera _camera;
+
 public:
-    Observer(Stopwatch& stopwatch,sf::RenderWindow& window);
+    Observer(Stopwatch& stopwatch,sf::RenderWindow& window,camera& camera);
     virtual ~Observer() = default;
 
     virtual void notify(enum notifications message) = 0;
@@ -26,10 +29,13 @@ public:
 class Score : public Observer {
 private:
     int score;
+    sf::Font font;
+
 public:
-    Score(Stopwatch& stopwatch,sf::RenderWindow& window);
+    Score(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam);
     void coinEaten(float coinPoints);
-    virtual void notify(enum notifications message);
+    void notify(enum notifications message) override;
+    void draw() override;
 
     [[nodiscard]] int getScore() const;
 };

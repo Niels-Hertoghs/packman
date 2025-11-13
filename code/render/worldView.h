@@ -18,7 +18,7 @@ private:
     // std::vector<std::shared_ptr<collectableView>> collectables;
     // std::shared_ptr<PackmanView> pacman;
 public:
-    worldView(logic::world& wereld);
+    worldView(const std::shared_ptr<logic::world>& _wereld,Stopwatch& stopwatch, camera camera, sf::RenderWindow& window);
     void draw();
 };
 

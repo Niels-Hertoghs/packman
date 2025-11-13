@@ -3,15 +3,7 @@
 //
 
 #include "game.h"
-#include "camera.h"
-#include <iostream>
-#include <thread>
-#include <SFML/Graphics.hpp>
 
-#include "observer.h"
-#include "logic/state_maneger/stateManeger.h"
-#include "world.h"
-#include "Stopwatch.h"
 
 game::game() {
 
@@ -20,6 +12,9 @@ game::game() {
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
     Stopwatch& stopwatch = Stopwatch::getInstance(); //stopwatch aanmaken, als singleton
+    std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
+    // wereld->startWorld();
+
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -33,8 +28,7 @@ void game::playGame() {
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
 
-    std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch,window); // score observer aanmaken
-    std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt",score);
+    // std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch,window); // score observer aanmaken
 
     // Plaats het venster in het midden van het scherm
     window.setPosition(sf::Vector2i(
@@ -62,7 +56,10 @@ void game::playGame() {
             }
         }
         window.clear(sf::Color::Black);
-        manager.runTop(window, event, cam,wereld,deltaTime);
+        // manager.runTop(window, event, cam,wereld,deltaTime);
+        std::shared_ptr<worldView> wereldView = std::make_shared<worldView>(wereld,stopwatch,cam,window);
+
+        wereldView->draw();
         window.display();
     }
     // max 60 fps

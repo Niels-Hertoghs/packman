@@ -5,6 +5,16 @@
 #ifndef PACKMAN_GAME_H
 #define PACKMAN_GAME_H
 #include <SFML/Graphics.hpp>
+#include "camera.h"
+#include <iostream>
+#include <thread>
+#include <SFML/Graphics.hpp>
+
+#include "observer.h"
+#include "logic/state_maneger/stateManeger.h"
+#include "world.h"
+#include "Stopwatch.h"
+#include "render/worldView.h"
 
 
 class game {
