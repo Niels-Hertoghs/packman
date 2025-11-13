@@ -9,6 +9,7 @@
 #include "../../render/render.h"
 #include "../../world.h"
 
+
 sf::Text makeText(const sf::Font& fontF, const std::string& text, double charSize, sf::Color color,double x, double y,const camera& cam) {
     sf::Text Text;
     Text.setFont(fontF);
@@ -56,8 +57,8 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) {
-    stack.top().get()->run(window, event,*this,cam,wereld,deltaTime);
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) {
+    stack.top().get()->run(window, event,*this,cam,wereld,deltaTime, stopwatch);
 }
 
 
@@ -65,7 +66,7 @@ void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const came
 /// @class menuState
 /// ---------------------------------------------------------------------------------------------------------------
 
-void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) {
+void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) {
 
     //lettertype inladen
     sf::Font packmanFont;
@@ -139,7 +140,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 /// @class LevelState
 /// ---------------------------------------------------------------------------------------------------------------
 
-void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) {
+void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) {
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
@@ -152,30 +153,34 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
             wereld->updatePacmanDir("right");
         }
     }
+    std::shared_ptr<worldView> wereldView = std::make_shared<worldView>(wereld,stopwatch,cam,window);
+
+    wereldView->draw();
 
 
-    sf::Font Font;
-    if (!Font.loadFromFile("input_output/packman_font.ttf")) {
-        std::cerr << "Kon het lettertype niet laden!" << std::endl;
-    }
 
-    // alle sprites in een render classe zetten
-    std::shared_ptr<render::Render> tussen = wereld->render(cam,Font);
-
-    // alle sprites in de window zetten
-    for (const auto& line:tussen->sprites) {
-        window.draw(line);
-    }
-
-    // alle coins in de window zetten
-    for (const auto& line:tussen->coins) {
-        window.draw(line);
-    }
-
-    // alle text in de window zetten
-    for (const auto& text:tussen->text) {
-        window.draw(text);
-    }
+    // sf::Font Font;
+    // if (!Font.loadFromFile("input_output/packman_font.ttf")) {
+    //     std::cerr << "Kon het lettertype niet laden!" << std::endl;
+    // }
+    //
+    // // alle sprites in een render classe zetten
+    // std::shared_ptr<render::Render> tussen = wereld->render(cam,Font);
+    //
+    // // alle sprites in de window zetten
+    // for (const auto& line:tussen->sprites) {
+    //     window.draw(line);
+    // }
+    //
+    // // alle coins in de window zetten
+    // for (const auto& line:tussen->coins) {
+    //     window.draw(line);
+    // }
+    //
+    // // alle text in de window zetten
+    // for (const auto& text:tussen->text) {
+    //     window.draw(text);
+    // }
 
     wereld->update(deltaTime);
 }

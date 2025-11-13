@@ -30,7 +30,7 @@ namespace logic {
 
         std::shared_ptr<Score> score;
     public:
-        world(const std::string& inputFile);
+        explicit world(const std::string& inputFile);
         void startWorld();
 
         std::shared_ptr<render::Render> render( const camera& cam,const sf::Font& pacmanFont);

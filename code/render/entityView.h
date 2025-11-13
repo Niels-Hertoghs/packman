@@ -28,7 +28,7 @@ protected:
     sf::RectangleShape _wall;
     std::shared_ptr<logic::wall> wallModel;
 public:
-    wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::wall> wallM);
+    wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::wall>& wallM);
 
     void draw() override;
     void notify(enum notifications message) override;

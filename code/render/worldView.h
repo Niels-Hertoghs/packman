@@ -8,8 +8,9 @@
 
 #include "../observer.h"
 #include "entityView.h"
-#include "../world.h"
-
+namespace logic {
+    class world;
+}
 // dit is voor als er objecten worden verwijderd dan doet die hier iets, bij de notify
 // anderws geeft die de melding door denk ik
 class worldView : public IObserver {

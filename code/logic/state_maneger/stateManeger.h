@@ -9,6 +9,8 @@
 #include <stack>
 #include <vector>
 #include "../../camera.h"
+#include "../../Stopwatch.h"
+#include "../../render/worldView.h"
 
 namespace logic {
     class world;
@@ -29,7 +31,7 @@ public:
     void prevState();
     std::unique_ptr<state> getCurrentState();
 
-    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime);
+    void runTop(sf::RenderWindow& window, sf::Event& event,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch);
 };
 
 /**
@@ -42,7 +44,7 @@ public:
     state() = default;
     virtual ~state() = default;
 
-    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) = 0;
+    virtual void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) = 0;
 };
 
 /**
@@ -52,7 +54,7 @@ public:
 class menuState : public state {
 public:
     menuState() = default;
-    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam, std::shared_ptr<logic::world> wereld,const float &deltaTime) override;
+    void run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager,const camera& cam, std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) override;
 };
 
 /**
@@ -63,7 +65,7 @@ class LevelState : public state {
 
 public:
     LevelState(std::shared_ptr<logic::world> wereld);
-    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime) override;
+    void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) override;
 };
 
 

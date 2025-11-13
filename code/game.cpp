@@ -56,10 +56,8 @@ void game::playGame() {
             }
         }
         window.clear(sf::Color::Black);
-        // manager.runTop(window, event, cam,wereld,deltaTime);
-        std::shared_ptr<worldView> wereldView = std::make_shared<worldView>(wereld,stopwatch,cam,window);
+        manager.runTop(window, event, cam,wereld,deltaTime,stopwatch);
 
-        wereldView->draw();
         window.display();
     }
     // max 60 fps
