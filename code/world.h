@@ -36,6 +36,8 @@ namespace logic {
         std::shared_ptr<render::Render> render( const camera& cam,const sf::Font& pacmanFont);
         void update(float deltaTime);
         void updatePacmanDir(const std::string& direction);
+
+std::vector<std::shared_ptr<wall>> get_walls() const;
     };
 }
 

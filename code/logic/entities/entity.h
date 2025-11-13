@@ -6,6 +6,8 @@
 #define PACKMAN_ENTITY_H
 #include <memory>
 
+#include "../../render/entityView.h"
+
 namespace render {
     class Render;
 }
@@ -40,9 +42,14 @@ namespace logic {
      * @brief Concrete klasse die een muur representeert.
      */
     class wall : public entity {
+    private:
+        std::shared_ptr<wallView>* _wallObserver;
     public:
         wall(double x,double y);
         void render(std::shared_ptr<render::Render> render);
+        [[nodiscard]] std::pair<double,double> getPosition() const;
+
+        void wallSubscribe(std::shared_ptr<wallView>* wallObserver);
     };
 }
 

@@ -29,4 +29,13 @@ namespace logic {
     void wall::render(std::shared_ptr<render::Render> render) {
         render->addWall(this->getX(),this->getY());
     }
+
+    std::pair<double,double> wall::getPosition() const {
+        return std::pair<double,double>(this->x,this->y);
+    }
+
+    void wall::wallSubscribe(std::shared_ptr<wallView>* wallObserver) {
+        _wallObserver = wallObserver;
+    }
+
 }

@@ -25,7 +25,12 @@ add_executable(packman main.cpp
         code/Stopwatch.cpp
         code/Stopwatch.h
         code/observer.cpp
-        code/observer.h)
+        code/observer.h
+        code/render/entityView.cpp
+        code/render/entityView.h
+        code/render/notifications.h
+        code/render/worldView.cpp
+        code/render/worldView.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

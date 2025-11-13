@@ -4,9 +4,9 @@
 
 #include "observer.h"
 
-Observer::Observer(Stopwatch& stopwatch) : stopwatch(stopwatch) {}
+Observer::Observer(Stopwatch& stopwatch,sf::RenderWindow& window2) : stopwatch(stopwatch),window(window2) {}
 
-Score::Score(Stopwatch& stopwatch) : Observer(stopwatch), score(0) {}
+Score::Score(Stopwatch& stopwatch,sf::RenderWindow& window) : Observer(stopwatch,window), score(0) {}
 
 void Score::coinEaten(float coinPoints) {
     float lastEatenTime = stopwatch.eatCollectable();

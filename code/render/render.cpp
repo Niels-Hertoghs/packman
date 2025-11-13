@@ -58,14 +58,14 @@ namespace render {
     }
 
     void Render::addWall(double x,double y) {
-        int WallSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
-        int WallSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
-        sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeWidth),static_cast<float>(WallSizeHeight)));
-        wall.setFillColor(sf::Color::Blue);
-        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
-        wall.setPosition(pos.first,pos.second);
-        wall.setOrigin(0,0);
-        sprites.push_back(wall);
+        // int WallSizeHeight = cam.distanceToPixelsHeight(2.f/14.f);
+        // int WallSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
+        // sf::RectangleShape wall(sf::Vector2f(static_cast<float>(WallSizeWidth),static_cast<float>(WallSizeHeight)));
+        // wall.setFillColor(sf::Color::Blue);
+        // std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+        // wall.setPosition(pos.first,pos.second);
+        // wall.setOrigin(0,0);
+        // sprites.push_back(wall);
     }
 
     void Render::addCoin(double x,double y) {
