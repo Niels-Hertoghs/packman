@@ -36,7 +36,8 @@ stateManeger::stateManeger() {
     pushState(std::make_unique<menuState>());
 }
 
-LevelState::LevelState(std::shared_ptr<logic::world> wereld)
+LevelState::LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> world)
+    : worldView(std::move(world))
  {
     // wereld.start();
 }
@@ -122,8 +123,15 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
          event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
         if (playButton.getGlobalBounds().contains(mousePos)) {
-            manager.pushState(std::make_unique<LevelState>(wereld));
+            // alles in de wereld inladen
             wereld->startWorld();
+            // alle view observers linken aan objecten, elk object een observer geven
+            std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,stopwatch,cam,window);
+
+            std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
+            //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
+            manager.pushState(std::move(level));
+
         }
     }
 
@@ -153,9 +161,9 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
             wereld->updatePacmanDir("right");
         }
     }
-    std::shared_ptr<worldView> wereldView = std::make_shared<worldView>(wereld,stopwatch,cam,window);
 
-    wereldView->draw();
+
+    worldView->draw();
 
 
 

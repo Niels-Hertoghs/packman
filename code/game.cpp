@@ -46,6 +46,7 @@ void game::playGame() {
             if(event.type == sf::Event::Closed) {
                 window.close();
             }
+
             if (event.type == sf::Event::Resized) {
                 // centreert de inhoud terug
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);

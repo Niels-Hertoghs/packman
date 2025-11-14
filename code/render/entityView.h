@@ -15,23 +15,24 @@ namespace logic {
     class wall;
 }
 
-class entityView : public Observer {
-protected:
+namespace view {
+    class entityView : public Observer {
+    protected:
 
-public:
-    entityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam);
-    virtual void notify(enum notifications message) = 0;
-};
+    public:
+        entityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam);
+        virtual void notify(enum notifications message) = 0;
+    };
 
-class wallView : public entityView {
-protected:
-    sf::RectangleShape _wall;
-    std::shared_ptr<logic::wall> wallModel;
-public:
-    wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::wall>& wallM);
+    class wallView : public entityView {
+    protected:
+        sf::RectangleShape _wall;
+        std::shared_ptr<logic::wall> wallModel;
+    public:
+        wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::wall>& wallM);
 
-    void draw() override;
-    void notify(enum notifications message) override;
-};
-
+        void draw() override;
+        void notify(enum notifications message) override;
+    };
+}
 #endif //PACKMAN_ENTITYVIEW_H

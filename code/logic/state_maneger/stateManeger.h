@@ -62,9 +62,10 @@ public:
  * brief Represents the level state of the game.
  */
 class LevelState : public state {
-
+private:
+    std::unique_ptr<view::worldView> worldView;
 public:
-    LevelState(std::shared_ptr<logic::world> wereld);
+    LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> world);
     void run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager,const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) override;
 };
 

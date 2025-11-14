@@ -12,7 +12,9 @@ namespace render {
     class Render;
 }
 
-class wallView;
+namespace view {
+    class wallView;
+}
 
 namespace logic {
     /**
@@ -45,13 +47,13 @@ namespace logic {
      */
     class wall : public entity {
     private:
-        std::shared_ptr<wallView> _wallObserver;
+        std::shared_ptr<view::wallView> _wallObserver;
     public:
         wall(double x,double y);
         void render(std::shared_ptr<render::Render> render);
         [[nodiscard]] std::pair<double,double> getPosition() const;
 
-        void wallSubscribe(std::shared_ptr<wallView> wallObserver);
+        void wallSubscribe(std::shared_ptr<view::wallView> wallObserver);
     };
 }
 
