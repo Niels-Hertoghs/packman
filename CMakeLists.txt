@@ -33,8 +33,8 @@ add_executable(packman main.cpp
         code/render/worldView.h
         code/render/movableEntityView.cpp
         code/render/movableEntityView.h
-        code/render/collectableEntityView.cpp
-        code/render/collectableEntityView.h)
+        code/render/collectableView.cpp
+        code/render/collectableView.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

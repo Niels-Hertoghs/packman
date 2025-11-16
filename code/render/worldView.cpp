@@ -7,12 +7,29 @@
 
 namespace view {
     worldView::worldView(const std::shared_ptr<logic::world>& wereld,Stopwatch& stopwatch, camera camera, sf::RenderWindow& window) {
+
+        // De wall observers worden aangemaakt en gelinkt aan de models.
         for (std::shared_ptr<logic::wall>& _wall : wereld->get_walls()) {
             std::shared_ptr<wallView> wall = std::make_shared<wallView>(stopwatch,window,camera,_wall);
             _wall->wallSubscribe(wall);
             walls.push_back(wall);
         }
 
+        // De fruit observers worden aangemaakt en gelinkt aan de models.
+        for (std::shared_ptr<logic::fruit>& _fruit : wereld->get_fruits()) {
+            std::shared_ptr<fruitView> fruit = std::make_shared<fruitView>(stopwatch,window,camera,_fruit);
+            _fruit->fruitSubscribe(fruit);
+            fruits.push_back(fruit);
+        }
+
+        // De wall observers worden aangemaakt en gelinkt aan de models.
+        for (std::shared_ptr<logic::coin>& _coin : wereld->get_coins()) {
+            std::shared_ptr<coinView> coin = std::make_shared<coinView>(stopwatch,window,camera,_coin);
+            _coin->coinSubscribe(coin);
+            coins.push_back(coin);
+        }
+
+        // pacman observer wordt aangemaakt en gelinkt aan pacman model.
         std::shared_ptr<logic::Packman> Pacman = wereld->get_pacman();
         std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(stopwatch,window,camera,Pacman);
         Pacman->pacmanSubscribe(PacmanView);
@@ -22,6 +39,12 @@ namespace view {
     void worldView::draw() {
         for (std::shared_ptr<view::wallView>& muur : walls) {
             muur->draw();
+        }
+        for (std::shared_ptr<view::fruitView>& fruit : fruits) {
+            fruit->draw();
+        }
+        for (std::shared_ptr<view::coinView>& coin : coins) {
+            coin->draw();
         }
         pacman->draw();
     }

@@ -34,10 +34,10 @@ namespace logic {
                     walls.push_back(std::make_shared<wall>(x, y));
                 }  else if (c == '-') {
                     // points staat op 40 om te beginne
-                    collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
+                    coins.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
                 } else if (c == 'f') {
                     // points staan op 50 om te beginne, is meer dan coins
-                    collectables.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50));
+                    fruits.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50));
                 }
                 x += 0.1;
             }
@@ -51,20 +51,20 @@ namespace logic {
 
     std::shared_ptr<render::Render> world::render(const camera& cam,const sf::Font& pacmanFont) {
         std::shared_ptr<render::Render> render = std::make_shared<render::Render>(cam,score);
-        render->Leveltekst(cam,pacmanFont);
-
-        // walls
-        for (const std::shared_ptr<wall>& muur:walls) {
-            muur->render(render);
-        }
-
-        // cons / fruits
-        for (const std::shared_ptr<collectable>& munt:collectables) {
-            munt->render(render);
-        }
-
-        //pacman
-        pacman->render(render);
+        // render->Leveltekst(cam,pacmanFont);
+        //
+        // // walls
+        // for (const std::shared_ptr<wall>& muur:walls) {
+        //     muur->render(render);
+        // }
+        //
+        // // cons / fruits
+        // for (const std::shared_ptr<collectable>& munt:collectables) {
+        //     munt->render(render);
+        // }
+        //
+        // //pacman
+        // pacman->render(render);
 
         return render;
     }
@@ -75,10 +75,18 @@ namespace logic {
         pacman->update(deltaTime,walls);
 
         // zien of pacman niet op een collectable staat
-        for (auto it = collectables.begin(); it != collectables.end(); ) {
+        for (auto it = coins.begin(); it != coins.end(); ) {
             if (pacman->standsOnCoin(*it)) {
                 score->coinEaten(it->get()->getPoints());
-                it = collectables.erase(it); // erase retourneert de volgende iterator
+                it = coins.erase(it); // erase retourneert de volgende iterator
+            } else {
+                ++it;
+            }
+        }
+        for (auto it = fruits.begin(); it != fruits.end(); ) {
+            if (pacman->standsOnCoin(*it)) {
+                score->coinEaten(it->get()->getPoints());
+                it = fruits.erase(it); // erase retourneert de volgende iterator
             } else {
                 ++it;
             }
@@ -98,8 +106,12 @@ namespace logic {
         return walls;
     }
 
-    std::vector<std::shared_ptr<collectable>> world::get_collectables() const {
-        return collectables;
+    std::vector<std::shared_ptr<fruit>> world::get_fruits() const {
+        return fruits;
+    }
+
+    std::vector<std::shared_ptr<coin>> world::get_coins() const {
+        return coins;
     }
 
     std::shared_ptr<Packman> world::get_pacman() const {

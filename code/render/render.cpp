@@ -69,30 +69,30 @@ namespace render {
     }
 
     void Render::addCoin(double x,double y) {
-        int radius = cam.distanceToPixelsHeight(0.016f);
-        sf::CircleShape coinShape(radius);
-        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
-        coinShape.setPosition(pos.first,pos.second);
-        sf::FloatRect bounds = coinShape.getLocalBounds();
-        coinShape.setOrigin(bounds.width/2,bounds.height/2);
-        coinShape.setFillColor(sf::Color::White);
-        coins.push_back(coinShape);
+        // int radius = cam.distanceToPixelsHeight(0.016f);
+        // sf::CircleShape coinShape(radius);
+        // std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+        // coinShape.setPosition(pos.first,pos.second);
+        // sf::FloatRect bounds = coinShape.getLocalBounds();
+        // coinShape.setOrigin(bounds.width/2,bounds.height/2);
+        // coinShape.setFillColor(sf::Color::White);
+        // coins.push_back(coinShape);
     }
 
     void Render::addFruit(double x,double y) {
-        int FruitSizeHeight = cam.distanceToPixelsHeight(1.f/17.f);
-        int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/27.f);
-        sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
-
-        Fruit.setTexture(&texture);
-        Fruit.setTextureRect(sf::IntRect(601, 153, 36, 36));
-
-        sf::FloatRect bounds = Fruit.getLocalBounds();
-        Fruit.setOrigin(bounds.width/2,bounds.height/2);
-
-        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
-        Fruit.setPosition(pos.first,pos.second);
-        sprites.push_back(Fruit);
+        // int FruitSizeHeight = cam.distanceToPixelsHeight(1.f/17.f);
+        // int FruitSizeWidth = cam.distanceToPixelsWidth(1.f/27.f);
+        // sf::RectangleShape Fruit(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
+        //
+        // Fruit.setTexture(&texture);
+        // Fruit.setTextureRect(sf::IntRect(601, 153, 36, 36));
+        //
+        // sf::FloatRect bounds = Fruit.getLocalBounds();
+        // Fruit.setOrigin(bounds.width/2,bounds.height/2);
+        //
+        // std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+        // Fruit.setPosition(pos.first,pos.second);
+        // sprites.push_back(Fruit);
     }
 
     void Render::addPackman(double x, double y) {

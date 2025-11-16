@@ -30,6 +30,11 @@ namespace logic {
         render->addCoin(this->getX(),this->getY());
     }
 
+    void coin::coinSubscribe(std::shared_ptr<view::coinView> CoinObserver) {
+        coinObserver = CoinObserver;
+    }
+
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class fruit
     /// ---------------------------------------------------------------------------------------------------------------
@@ -40,4 +45,9 @@ namespace logic {
     void fruit::render(std::shared_ptr<render::Render> render) {
         render->addFruit(this->getX(),this->getY());
     }
+
+    void fruit::fruitSubscribe(std::shared_ptr<view::fruitView> FruitObserver) {
+        fruitObserver = FruitObserver;
+    }
+
 }

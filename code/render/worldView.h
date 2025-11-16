@@ -9,6 +9,7 @@
 #include "../observer.h"
 #include "entityView.h"
 #include "movableEntityView.h"
+#include "collectableView.h"
 
 namespace logic {
     class world;
@@ -20,7 +21,8 @@ namespace view {
     class worldView : public IObserver {
     private:
         std::vector<std::shared_ptr<wallView>> walls;
-        // std::vector<std::shared_ptr<collectableView>> collectables;
+        std::vector<std::shared_ptr<fruitView>> fruits;
+        std::vector<std::shared_ptr<coinView>> coins;
         // std::vector<std::shared_ptr<view::movableEntityView>> movables;
         std::shared_ptr<view::packmanView> pacman;
     public:

@@ -24,7 +24,8 @@ namespace logic {
     class world {
     private:
         std::vector<std::shared_ptr<wall>> walls;
-        std::vector<std::shared_ptr<collectable>> collectables;
+        std::vector<std::shared_ptr<fruit>> fruits;
+        std::vector<std::shared_ptr<coin>> coins;
         std::shared_ptr<Packman> pacman;
         std::string inputFile;
 
@@ -41,7 +42,8 @@ namespace logic {
 
         //getters
         [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
-        [[nodiscard]] std::vector<std::shared_ptr<collectable>> get_collectables() const;
+        [[nodiscard]] std::vector<std::shared_ptr<fruit>> get_fruits() const;
+        [[nodiscard]] std::vector<std::shared_ptr<coin>> get_coins() const;
 
         [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
     };
