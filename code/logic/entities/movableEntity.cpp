@@ -69,7 +69,18 @@ namespace logic {
             bool canMove = std::none_of(walls.begin(), walls.end(),
                 [&](const std::shared_ptr<wall>& w) { return wouldCollide(w, newX, newY); });
 
-            if (canMove) direction = nextDirection;
+            if (canMove) {
+                direction = nextDirection;
+                if (direction == directions::RIGHT) {
+                    packmanObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+                } else if (direction == directions::LEFT) {
+                    packmanObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+                } else if (direction == directions::UP) {
+                    packmanObserver->notify(notifications::CHANGE_DIRECTION_UP);
+                } else {
+                    packmanObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+                }
+            }
         }
         // ga de richting uit
         double dx = 0.f, dy = 0.f;

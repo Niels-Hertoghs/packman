@@ -35,7 +35,9 @@ namespace view {
     void coinView::notify(enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
+            coinModel.reset();
         }
+
     }
 
 
@@ -78,6 +80,7 @@ namespace view {
     void fruitView::notify(enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
+            fruitModel.reset();
         }
 
     }

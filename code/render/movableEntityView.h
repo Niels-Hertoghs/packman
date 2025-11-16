@@ -5,6 +5,7 @@
 #ifndef PACKMAN_MOVABLEENTITYVIEW_H
 #define PACKMAN_MOVABLEENTITYVIEW_H
 #include "entityView.h"
+#include "notifications.h"
 
 namespace logic {
     class Packman;
@@ -13,9 +14,11 @@ namespace logic {
 namespace view {
     class movableEntityView : public entityView {
     protected:
+        int counter;
         sf::Texture texture;
+        std::vector<std::pair<int,int>> spriteCo;
     public:
-        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam);
+        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,const std::vector<std::pair<int,int>>& spriteCo);
         void draw() override = 0;
         void notify(enum notifications message) override = 0;
     };

@@ -15,6 +15,7 @@ private:
     using clock = std::chrono::high_resolution_clock;
     std::chrono::time_point<clock> lastTime; /// tijdspunt van laatste tick
     std::chrono::time_point<clock> lastTimeEaten; /// tijdspunt van laatst gegeten coin
+    std::chrono::time_point<clock> lastChangedSprite; /// tijdspunt van laatst veranderede sprite
     float deltaTime; // in seconden
 
     Stopwatch(); // privat econstructor
@@ -28,6 +29,12 @@ public:
     void tick();
     float getDeltaTime() const;
     float eatCollectable();
+
+    /**
+     *
+     * @return Ofdat de sprite moet veranderen.
+     */
+    bool changeSprite();
 
     ~Stopwatch() = default;
 };
