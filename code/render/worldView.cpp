@@ -6,7 +6,9 @@
 #include "../world.h"
 
 namespace view {
-    worldView::worldView(const std::shared_ptr<logic::world>& wereld,Stopwatch& stopwatch, camera camera, sf::RenderWindow& window) {
+    worldView::worldView(const std::shared_ptr<logic::world>& wereld,Stopwatch& stopwatch, camera camera, sf::RenderWindow& window,std::shared_ptr<Score>& _score)
+        : score(_score)
+    {
 
         // De wall observers worden aangemaakt en gelinkt aan de models.
         for (std::shared_ptr<logic::wall>& _wall : wereld->get_walls()) {
@@ -47,5 +49,6 @@ namespace view {
             coin->draw();
         }
         pacman->draw();
+        score->draw();
     }
 }

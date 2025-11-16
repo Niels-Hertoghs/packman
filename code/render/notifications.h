@@ -11,7 +11,8 @@ enum notifications {
     CHANGE_DIRECTION_LEFT,
     CHANGE_DIRECTION_RIGHT,
     CHANGE_POSITION,
-    DELETE
+    DELETE,
+    COLLECTED
 };
 
 enum directions {

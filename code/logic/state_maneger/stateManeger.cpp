@@ -58,7 +58,8 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) {
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime, Stopwatch
+                          & stopwatch) {
     stack.top().get()->run(window, event,*this,cam,wereld,deltaTime, stopwatch);
 }
 
@@ -67,7 +68,8 @@ void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, const came
 /// @class menuState
 /// ---------------------------------------------------------------------------------------------------------------
 
-void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) {
+void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+                    float& deltaTime, Stopwatch& stopwatch) {
 
     //lettertype inladen
     sf::Font packmanFont;
@@ -126,7 +128,10 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
             // alles in de wereld inladen
             wereld->startWorld();
             // alle view observers linken aan objecten, elk object een observer geven
-            std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,stopwatch,cam,window);
+            std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch,window,cam); // score observer aanmaken
+
+            std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,stopwatch,cam,window,score);
+            wereld->subscribeScore(score);
 
             std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
             //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
@@ -148,7 +153,8 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event,stateManeger& man
 /// @class LevelState
 /// ---------------------------------------------------------------------------------------------------------------
 
-void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &manager, const camera& cam,std::shared_ptr<logic::world> wereld,const float &deltaTime,Stopwatch& stopwatch) {
+void LevelState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+                     float& deltaTime, Stopwatch& stopwatch) {
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {

@@ -19,9 +19,9 @@ void camera::setDimensions(unsigned int w, unsigned int h) {
 }
 
 int camera::distanceToPixelsHeight(const double& distance) const {
-    return std::round((distance)/2 * height) + 1; // +1 om de gap te dichten tussen de entities
+    return std::round((distance)/2 * height) + 1; // +1 om de ruimte te dichten tussen de entities
 }
 
 int camera::distanceToPixelsWidth(const double& distance) const {
-    return std::round((distance)/2 * width) + 1; // +1 om de gap te dichten tussen de entities
+    return std::round((distance)/2 * width) + 1; // +1 om de ruimte te dichten tussen de entities
 }

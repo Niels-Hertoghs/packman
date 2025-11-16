@@ -48,6 +48,8 @@ namespace logic {
           coin(double x, double y, double points);
           void render(std::shared_ptr<render::Render> render) override;
           void coinSubscribe(std::shared_ptr<view::coinView> coinObserver);
+
+          void collected();
      };
 
      class fruit : public collectable {
@@ -58,6 +60,8 @@ namespace logic {
           fruit(double x, double y, double points);
           void render(std::shared_ptr<render::Render> render) override;
           void fruitSubscribe(std::shared_ptr<view::fruitView> fruitObserver);
+          void collected();
+
      };
 }
 #endif //PACKMAN_COLLECTABLE_H

@@ -19,6 +19,8 @@ namespace view {
      * @brief Een abstracte klasse voor alle collectables.
      */
     class collectableView : public entityView {
+    protected:
+        bool collected;
     public:
         /**
          * @brief Constructor voor de collectable observer.

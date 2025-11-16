@@ -10,7 +10,7 @@
 
 namespace view {
     collectableView::collectableView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam)
-        : entityView(stopwatch, window, cam) {}
+        : entityView(stopwatch, window, cam),collected(false) {}
 
     coinView::coinView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam, std::shared_ptr<logic::coin>& CoinModel)
         : collectableView(stopwatch, window, cam), coinModel(CoinModel)
@@ -27,11 +27,15 @@ namespace view {
     }
 
     void coinView::draw() {
-        window.draw(_coin);
+        if (!collected) {
+            window.draw(_coin);
+        }
     }
 
     void coinView::notify(enum notifications message) {
-        // verwijderen als geclaimd is
+        if (message == notifications::COLLECTED) {
+            collected = true;
+        }
     }
 
 
@@ -66,11 +70,16 @@ namespace view {
     }
 
     void fruitView::draw() {
-        window.draw(_fruit);
+        if (!collected) {
+            window.draw(_fruit);
+        }
     }
 
     void fruitView::notify(enum notifications message) {
-        // verwijder wanneer geclaoimd is
+        if (message == notifications::COLLECTED) {
+            collected = true;
+        }
+
     }
 
 

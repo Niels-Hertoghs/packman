@@ -34,6 +34,10 @@ namespace logic {
         coinObserver = CoinObserver;
     }
 
+    void coin::collected() {
+        coinObserver->notify(notifications::COLLECTED);
+    }
+
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class fruit
@@ -49,5 +53,10 @@ namespace logic {
     void fruit::fruitSubscribe(std::shared_ptr<view::fruitView> FruitObserver) {
         fruitObserver = FruitObserver;
     }
+
+    void fruit::collected() {
+        fruitObserver->notify(notifications::COLLECTED);
+    }
+
 
 }

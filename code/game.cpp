@@ -28,7 +28,6 @@ void game::playGame() {
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
 
-    // std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch,window); // score observer aanmaken
 
     // Plaats het venster in het midden van het scherm
     window.setPosition(sf::Vector2i(

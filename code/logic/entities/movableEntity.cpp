@@ -94,6 +94,8 @@ namespace logic {
             if (standsOn(w)) {
                 prevLocation();
                 break;
+            } else {
+                packmanObserver->notify(notifications::CHANGE_POSITION);
             }
         }
     }

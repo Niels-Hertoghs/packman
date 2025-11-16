@@ -77,6 +77,7 @@ namespace logic {
         // zien of pacman niet op een collectable staat
         for (auto it = coins.begin(); it != coins.end(); ) {
             if (pacman->standsOnCoin(*it)) {
+                it->get()->collected();
                 score->coinEaten(it->get()->getPoints());
                 it = coins.erase(it); // erase retourneert de volgende iterator
             } else {
@@ -85,6 +86,7 @@ namespace logic {
         }
         for (auto it = fruits.begin(); it != fruits.end(); ) {
             if (pacman->standsOnCoin(*it)) {
+                it->get()->collected();
                 score->coinEaten(it->get()->getPoints());
                 it = fruits.erase(it); // erase retourneert de volgende iterator
             } else {

@@ -47,6 +47,10 @@ namespace view {
     }
 
     void packmanView::notify(enum notifications message) {
+        if (message == notifications::CHANGE_POSITION) {
+        std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(pacmanModel->getX(),pacmanModel->getY());
+            _pacman.setPosition(pos.first,pos.second);
+        }
         // direction veranderen
     }
 
