@@ -26,7 +26,7 @@ namespace view {
     class packmanView : public movableEntityView {
     private:
         sf::RectangleShape _pacman;
-        std::shared_ptr<logic::Packman> pacmanModel;
+        std::weak_ptr<logic::Packman> pacmanModel;
     public:
         packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam, std::shared_ptr<logic::Packman>& pacmanModel);
         void draw() override;

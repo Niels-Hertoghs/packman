@@ -18,7 +18,10 @@ namespace view {
     {
         int radius = cam.distanceToPixelsHeight(0.016f);
         sf::CircleShape coinShape(radius);
-        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(coinModel->getX(),coinModel->getY());
+        std::pair<unsigned int,unsigned int> pos;
+        if (auto observer = coinModel.lock()) {
+            pos = cam.worldToPixel(observer->getX(),observer->getY());
+        }
         coinShape.setPosition(pos.first,pos.second);
         sf::FloatRect bounds = coinShape.getLocalBounds();
         coinShape.setOrigin(bounds.width/2,bounds.height/2);
@@ -66,7 +69,10 @@ namespace view {
         sf::FloatRect bounds = Fruit.getLocalBounds();
         Fruit.setOrigin(bounds.width/2,bounds.height/2);
 
-        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(fruitModel->getX(),fruitModel->getY());
+        std::pair<unsigned int,unsigned int> pos;
+        if (auto observer = fruitModel.lock()) {
+            pos = cam.worldToPixel(observer->getX(),observer->getY());
+        }
         Fruit.setPosition(pos.first,pos.second);
         _fruit = Fruit;
     }

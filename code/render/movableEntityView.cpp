@@ -53,7 +53,10 @@ namespace view {
 
     void packmanView::notify(enum notifications message) {
         if (message == notifications::CHANGE_POSITION) {
-        std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(pacmanModel->getX(),pacmanModel->getY());
+            std::pair<unsigned int,unsigned int> pos;
+            if (auto observer = pacmanModel.lock()) {
+                pos = _camera.worldToPixel(observer->getX(),observer->getY());
+            }
             _pacman.setPosition(pos.first,pos.second);
         } else if ( message == notifications::CHANGE_DIRECTION_DOWN) {
             spriteCo = {{846,201},{846,251},{846,201},{846,151}};

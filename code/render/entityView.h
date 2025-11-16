@@ -27,7 +27,7 @@ namespace view {
     class wallView : public entityView {
     protected:
         sf::RectangleShape _wall;
-        std::shared_ptr<logic::wall> wallModel;
+        std::weak_ptr<logic::wall> wallModel;
     public:
         wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::wall>& wallM);
 

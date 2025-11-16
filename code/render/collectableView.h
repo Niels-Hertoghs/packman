@@ -44,7 +44,7 @@ namespace view {
     class coinView : public collectableView {
     private:
         sf::CircleShape _coin; /// De representatie van de coin.
-        std::shared_ptr<logic::coin> coinModel; /// Smart pointer naar de logica van coin.
+        std::weak_ptr<logic::coin> coinModel; /// Smart pointer naar de logica van coin.
     public:
         /**
         * @brief Constructor voor de coin observer.
@@ -69,7 +69,7 @@ namespace view {
     private:
         sf::Texture texture; /// De texture van de fruit.
         sf::RectangleShape _fruit; /// De representatie van de fruit.
-        std::shared_ptr<logic::fruit> fruitModel; /// Smart pointer naar de logica van fruit.
+        std::weak_ptr<logic::fruit> fruitModel; /// Smart pointer naar de logica van fruit.
     public:
         /**
         * @brief Constructor voor de coin observer.
