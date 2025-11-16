@@ -14,4 +14,12 @@ enum notifications {
     DELETE
 };
 
+enum directions {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    EMPTY
+};
+
 #endif //PACKMAN_NOTIFIES_H

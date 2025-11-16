@@ -6,7 +6,7 @@
 #define PACKMAN_MOVABLEENTITY_H
 #include <string>
 #include <vector>
-
+#include "../../render/notifications.h"
 #include "entity.h"
 
 namespace view {
@@ -25,7 +25,7 @@ namespace logic {
      */
     class movableEntity : public entity {
     protected:
-        std::string direction; /// Richting dat het object gaat.
+        directions direction; /// Richting dat het object gaat.
         double speed; /// De snelheid van het object.
         double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
     public:
@@ -48,7 +48,7 @@ namespace logic {
      */
     class Packman : public movableEntity {
     private:
-        std::string nextDirection; /// Volgende richting zodra mogelijk.
+        directions nextDirection; /// Volgende richting zodra mogelijk.
         std::shared_ptr<view::packmanView> packmanObserver;
     public:
         // constructor
@@ -60,7 +60,7 @@ namespace logic {
 
 
         bool standsOnCoin(const std::shared_ptr<entity>& other);
-        void updateDir(const std::string& direction);
+        void updateDir(enum directions);
 
         void pacmanSubscribe(std::shared_ptr<view::packmanView> pacmanObserver);
     };

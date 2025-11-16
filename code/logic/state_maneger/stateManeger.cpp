@@ -5,7 +5,7 @@
 #include <memory>
 #include "stateManeger.h"
 #include <fstream>
-
+#include "../../render/notifications.h"
 #include "../../render/render.h"
 #include "../../world.h"
 
@@ -152,43 +152,17 @@ void LevelState::run(sf::RenderWindow &window, sf::Event &event, stateManeger &m
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
-            wereld->updatePacmanDir("up");
+            wereld->updatePacmanDir(directions::UP);
         } else if (event.key.code == sf::Keyboard::Down) {
-            wereld->updatePacmanDir("down");
+            wereld->updatePacmanDir(directions::DOWN);
         } else if (event.key.code == sf::Keyboard::Left) {
-            wereld->updatePacmanDir("left");
+            wereld->updatePacmanDir(directions::LEFT);
         } else if (event.key.code == sf::Keyboard::Right) {
-            wereld->updatePacmanDir("right");
+            wereld->updatePacmanDir(directions::RIGHT);
         }
     }
 
-
     worldView->draw();
-
-
-
-    // sf::Font Font;
-    // if (!Font.loadFromFile("input_output/packman_font.ttf")) {
-    //     std::cerr << "Kon het lettertype niet laden!" << std::endl;
-    // }
-    //
-    // // alle sprites in een render classe zetten
-    // std::shared_ptr<render::Render> tussen = wereld->render(cam,Font);
-    //
-    // // alle sprites in de window zetten
-    // for (const auto& line:tussen->sprites) {
-    //     window.draw(line);
-    // }
-    //
-    // // alle coins in de window zetten
-    // for (const auto& line:tussen->coins) {
-    //     window.draw(line);
-    // }
-    //
-    // // alle text in de window zetten
-    // for (const auto& text:tussen->text) {
-    //     window.draw(text);
-    // }
 
     wereld->update(deltaTime);
 }

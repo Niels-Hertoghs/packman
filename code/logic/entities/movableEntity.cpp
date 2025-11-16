@@ -11,7 +11,7 @@ namespace logic {
     /// @class movableEntity
     /// ---------------------------------------------------------------------------------------------------------------
 
-    movableEntity::movableEntity(double x, double y, double speed) : entity(x, y), direction("right"), speed(speed) {}
+    movableEntity::movableEntity(double x, double y, double speed) : entity(x, y), direction(directions::RIGHT), speed(speed) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
         return this->wouldCollide(other,x,y);
@@ -41,7 +41,7 @@ namespace logic {
     /// @class Packman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Packman::Packman(double x, double y)  : movableEntity(x,y,1.f), nextDirection("") {}
+    Packman::Packman(double x, double y)  : movableEntity(x,y,1.f), nextDirection(EMPTY) {}
 
     void Packman::render(std::shared_ptr<render::Render> render) {
         render->addPackman(this->getX(),this->getY());
@@ -56,17 +56,17 @@ namespace logic {
         double newY = y;
 
         // zien of pack man die richting uit kan gaan
-        if (direction != nextDirection && !nextDirection.empty()) {
+        if (direction != nextDirection && nextDirection != EMPTY) {
             // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
             // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
             // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/8 van een blokje om te zien of het een muur is.
             // 1/8, is redelijk kklein maar ook niet te klein dat het foutgen geeft, in mijn testen
             double stepX = 0.f, stepY = 0.f;
 
-            if (nextDirection == "right") stepX = 1/80.f;
-            else if (nextDirection == "left") stepX = -1/80.f;
-            else if (nextDirection == "up") stepY = 1.f / 56.f;
-            else if (nextDirection == "down") stepY = -1.f / 56.f;
+            if (nextDirection == directions::RIGHT) stepX = 1/80.f;
+            else if (nextDirection == directions::LEFT) stepX = -1/80.f;
+            else if (nextDirection == directions::UP) stepY = 1.f / 56.f;
+            else if (nextDirection == directions::DOWN) stepY = -1.f / 56.f;
 
             newX = x + stepX;
             newY = y + stepY;
@@ -78,10 +78,10 @@ namespace logic {
         }
         // ga de richting uit
         double dx = 0.f, dy = 0.f;
-        if (direction == "right") dx = 0.2f;
-        else if (direction == "left") dx = -0.2f;
-        else if (direction == "up") dy = 2.f / 7.f;
-        else if (direction == "down") dy = -2.f / 7.f;
+        if (direction == directions::RIGHT) dx = 0.2f;
+        else if (direction == directions::LEFT) dx = -0.2f;
+        else if (direction == directions::UP) dy = 2.f / 7.f;
+        else if (direction == directions::DOWN) dy = -2.f / 7.f;
 
         // Positie updaten
         x += delta * dx * speed;
@@ -98,8 +98,8 @@ namespace logic {
         }
     }
 
-    void Packman::updateDir(const std::string& Direction) {
-        nextDirection = Direction;
+    void Packman::updateDir(enum directions dir) {
+        nextDirection = dir;
     }
 
     bool Packman::standsOnCoin(const std::shared_ptr<entity>& other) {

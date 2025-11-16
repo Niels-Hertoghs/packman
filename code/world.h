@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics/Font.hpp>
-
+#include "render/notifications.h"
 #include "camera.h"
 #include "observer.h"
 #include "render/render.h"
@@ -36,7 +36,7 @@ namespace logic {
 
         std::shared_ptr<render::Render> render( const camera& cam,const sf::Font& pacmanFont);
         void update(float deltaTime);
-        void updatePacmanDir(const std::string& direction);
+        void updatePacmanDir(directions);
 
         void subscribeScore(std::shared_ptr<Score> score);
 

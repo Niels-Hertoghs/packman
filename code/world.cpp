@@ -93,8 +93,8 @@ namespace logic {
         }
     }
 
-    void world::updatePacmanDir(const std::string& direction) {
-        pacman->updateDir(direction);
+    void world::updatePacmanDir(directions dir) {
+        pacman->updateDir(dir);
     }
 
 
