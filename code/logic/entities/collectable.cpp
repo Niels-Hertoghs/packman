@@ -4,7 +4,7 @@
 
 #include "collectable.h"
 
-#include "../../render/render.h"
+
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class collectable
@@ -26,9 +26,6 @@ namespace logic {
 
     coin::coin(double x, double y,double points) : collectable(x,y,points){}
 
-    void coin::render(std::shared_ptr<render::Render> render) {
-        render->addCoin(this->getX(),this->getY());
-    }
 
     void coin::coinSubscribe(std::shared_ptr<view::coinView> CoinObserver) {
         coinObserver = CoinObserver;
@@ -45,10 +42,6 @@ namespace logic {
 
     fruit::fruit(double x, double y,double points) : collectable(x,y,points){}
 
-
-    void fruit::render(std::shared_ptr<render::Render> render) {
-        render->addFruit(this->getX(),this->getY());
-    }
 
     void fruit::fruitSubscribe(std::shared_ptr<view::fruitView> FruitObserver) {
         fruitObserver = FruitObserver;

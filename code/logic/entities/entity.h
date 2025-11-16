@@ -8,9 +8,6 @@
 
 #include "../../render/entityView.h"
 
-namespace render {
-    class Render;
-}
 
 namespace view {
     class wallView;
@@ -28,9 +25,6 @@ namespace logic {
     public:
         // constructor
         entity(double x, double y);
-
-        // pure virtual
-        virtual void render(std::shared_ptr<render::Render> render) = 0;
 
         // methodes
         [[nodiscard]] double getX() const;
@@ -50,7 +44,6 @@ namespace logic {
         std::shared_ptr<view::wallView> _wallObserver;
     public:
         wall(double x,double y);
-        void render(std::shared_ptr<render::Render> render);
         [[nodiscard]] std::pair<double,double> getPosition() const;
 
         void wallSubscribe(std::shared_ptr<view::wallView> wallObserver);

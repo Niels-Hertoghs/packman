@@ -8,10 +8,7 @@
 #include <vector>
 #include "../../render/notifications.h"
 #include "entity.h"
-
-namespace view {
-    class packmanView;
-}
+#include "../../render/movableEntityView.h"
 
 namespace render {
     class Render;
@@ -33,7 +30,6 @@ namespace logic {
         movableEntity(double x,double y,double speed);
 
         // pure virutal
-        virtual void render(std::shared_ptr<render::Render> render) override = 0;
         virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
 
         // methodes
@@ -55,7 +51,6 @@ namespace logic {
         Packman(double x,double y);
 
         // methodes
-        void render(std::shared_ptr<render::Render> render) override;
         void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) override;
 
 

@@ -11,7 +11,6 @@
 #include "render/notifications.h"
 #include "camera.h"
 #include "observer.h"
-#include "render/render.h"
 #include "logic/entities/entity.h"
 #include "logic/entities/collectable.h"
 #include "logic/entities/movableEntity.h"
@@ -34,7 +33,6 @@ namespace logic {
         explicit world(const std::string& inputFile);
         void startWorld();
 
-        std::shared_ptr<render::Render> render( const camera& cam,const sf::Font& pacmanFont);
         void update(float deltaTime);
         void updatePacmanDir(directions);
 

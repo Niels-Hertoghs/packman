@@ -49,11 +49,25 @@ void Score::draw() {
     if (!Font.loadFromFile("input_output/packman_font.ttf")) {
         std::cerr << "Kon het lettertype niet laden!" << std::endl;
     }
+
+    // de score afbeelden
     int currentScore = score;
     sf::Text scoreText = makeText3(Font, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, _camera); //TODO: grote aanpassen + plaats
     sf::FloatRect scoreTextBounds = scoreText.getLocalBounds();
     scoreText.setOrigin(0,scoreTextBounds.height);
     window.draw(scoreText);
+
+    // het level afbeelden
+    int level = 1; //TODO: het huidige level opvragen
+    sf::Text levelText = makeText3(Font, "Level: " + std::to_string(level), 0.16f, sf::Color::Yellow, 0.f, 1.f - 1.f/7.f,_camera);
+    window.draw(levelText);
+
+    // remainings lifes afbeelden (rechts vanonder)
+    int remainingLifes = 3; //TODO: remaining lifes halen uit...
+    sf::Text LifesText = makeText3(Font, "# LIFES REMAINING:" + std::to_string(remainingLifes) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
+    sf::FloatRect LifesBounds = LifesText.getLocalBounds();
+    LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
+    window.draw(LifesText);
 }
 
 void Score::notify(enum notifications message) {

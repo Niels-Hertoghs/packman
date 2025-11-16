@@ -4,9 +4,8 @@
 
 #include "world.h"
 #include <fstream>
+#include <iostream>
 #include <sstream>
-
-#include "render/render.h"
 
 namespace logic {
     world::world(const std::string& inputFile2) {
@@ -48,26 +47,6 @@ namespace logic {
         pacman = std::make_shared<Packman>(0.f, 1 - 19.f/14.f);
     }
 
-
-    std::shared_ptr<render::Render> world::render(const camera& cam,const sf::Font& pacmanFont) {
-        std::shared_ptr<render::Render> render = std::make_shared<render::Render>(cam,score);
-        // render->Leveltekst(cam,pacmanFont);
-        //
-        // // walls
-        // for (const std::shared_ptr<wall>& muur:walls) {
-        //     muur->render(render);
-        // }
-        //
-        // // cons / fruits
-        // for (const std::shared_ptr<collectable>& munt:collectables) {
-        //     munt->render(render);
-        // }
-        //
-        // //pacman
-        // pacman->render(render);
-
-        return render;
-    }
 
 
     void world::update(float deltaTime) {

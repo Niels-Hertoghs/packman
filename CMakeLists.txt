@@ -16,8 +16,6 @@ add_executable(packman main.cpp
         code/world.h
         code/logic/entities/entity.cpp
         code/logic/entities/entity.h
-        code/render/render.cpp
-        code/render/render.h
         code/logic/entities/movableEntity.cpp
         code/logic/entities/movableEntity.h
         code/logic/entities/collectable.cpp

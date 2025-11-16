@@ -3,7 +3,6 @@
 //
 
 #include "entity.h"
-#include "../../render/render.h"
 
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
@@ -25,10 +24,6 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
     wall::wall(double x, double y) : entity(x, y) {}
-
-    void wall::render(std::shared_ptr<render::Render> render) {
-        render->addWall(this->getX(),this->getY());
-    }
 
     std::pair<double,double> wall::getPosition() const {
         return std::pair<double,double>(this->x,this->y);

@@ -4,7 +4,6 @@
 
 #include "movableEntity.h"
 
-#include "../../render/render.h"
 
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
@@ -42,10 +41,6 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
     Packman::Packman(double x, double y)  : movableEntity(x,y,1.f), nextDirection(EMPTY) {}
-
-    void Packman::render(std::shared_ptr<render::Render> render) {
-        render->addPackman(this->getX(),this->getY());
-    }
 
     void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls) {
 
