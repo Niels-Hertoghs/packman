@@ -12,11 +12,17 @@ namespace view {
             _wall->wallSubscribe(wall);
             walls.push_back(wall);
         }
+
+        std::shared_ptr<logic::Packman> Pacman = wereld->get_pacman();
+        std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(stopwatch,window,camera,Pacman);
+        Pacman->pacmanSubscribe(PacmanView);
+        pacman = PacmanView;
     }
 
     void worldView::draw() {
-        for (auto& muur : walls) {
+        for (std::shared_ptr<view::wallView>& muur : walls) {
             muur->draw();
         }
+        pacman->draw();
     }
 }

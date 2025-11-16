@@ -9,6 +9,10 @@
 
 #include "entity.h"
 
+namespace view {
+    class packmanView;
+}
+
 namespace render {
     class Render;
 }
@@ -45,6 +49,7 @@ namespace logic {
     class Packman : public movableEntity {
     private:
         std::string nextDirection; /// Volgende richting zodra mogelijk.
+        std::shared_ptr<view::packmanView> packmanObserver;
     public:
         // constructor
         Packman(double x,double y);
@@ -56,6 +61,8 @@ namespace logic {
 
         bool standsOnCoin(const std::shared_ptr<entity>& other);
         void updateDir(const std::string& direction);
+
+        void pacmanSubscribe(std::shared_ptr<view::packmanView> pacmanObserver);
     };
 
     // class Ghost : public movableEntity {

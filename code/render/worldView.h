@@ -8,6 +8,8 @@
 
 #include "../observer.h"
 #include "entityView.h"
+#include "movableEntityView.h"
+
 namespace logic {
     class world;
 }
@@ -19,7 +21,8 @@ namespace view {
     private:
         std::vector<std::shared_ptr<wallView>> walls;
         // std::vector<std::shared_ptr<collectableView>> collectables;
-        // std::shared_ptr<PackmanView> pacman;
+        // std::vector<std::shared_ptr<view::movableEntityView>> movables;
+        std::shared_ptr<view::packmanView> pacman;
     public:
         worldView(const std::shared_ptr<logic::world>& _wereld,Stopwatch& stopwatch, camera camera, sf::RenderWindow& window);
         void draw();

@@ -1,0 +1,35 @@
+//
+// Created by niels_hertoghs on 11/16/25.
+//
+
+#ifndef PACKMAN_MOVABLEENTITYVIEW_H
+#define PACKMAN_MOVABLEENTITYVIEW_H
+#include "entityView.h"
+
+namespace logic {
+    class Packman;
+}
+
+namespace view {
+    class movableEntityView : public entityView {
+    protected:
+        sf::Texture texture;
+    public:
+        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam);
+        void draw() override = 0;
+        void notify(enum notifications message) override = 0;
+    };
+
+    class packmanView : public movableEntityView {
+    private:
+        sf::RectangleShape _pacman;
+        std::shared_ptr<logic::Packman> pacmanModel;
+    public:
+        packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam, std::shared_ptr<logic::Packman>& pacmanModel);
+        void draw() override;
+        void notify(enum notifications message) override;
+    };
+}
+
+
+#endif //PACKMAN_MOVABLEENTITYVIEW_H

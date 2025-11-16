@@ -40,10 +40,10 @@ namespace logic {
         void subscribeScore(std::shared_ptr<Score> score);
 
         //getters
-        std::vector<std::shared_ptr<wall>> get_walls() const;
-         std::vector<std::shared_ptr<collectable>> get_collectables() const;
+        [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
+        [[nodiscard]] std::vector<std::shared_ptr<collectable>> get_collectables() const;
 
-        std::shared_ptr<Packman> get_pacman() const;
+        [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
     };
 }
 

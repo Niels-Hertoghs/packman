@@ -96,18 +96,18 @@ namespace render {
     }
 
     void Render::addPackman(double x, double y) {
-        int PacmanSizeHeight =  cam.distanceToPixelsHeight(2.f/14.f);
-        int PacmanSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
-        sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
-
-        Packman.setTexture(&texture);
-        Packman.setTextureRect(sf::IntRect(847, 51, 45, 41));
-
-        sf::FloatRect bounds = Packman.getLocalBounds();
-        Packman.setOrigin(bounds.width/2,bounds.height/2);
-
-        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
-        Packman.setPosition(pos.first,pos.second);
-        sprites.push_back(Packman);
+        // int PacmanSizeHeight =  cam.distanceToPixelsHeight(2.f/14.f);
+        // int PacmanSizeWidth = cam.distanceToPixelsWidth(2.f/20.f);
+        // sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
+        //
+        // Packman.setTexture(&texture);
+        // Packman.setTextureRect(sf::IntRect(847, 51, 45, 41));
+        //
+        // sf::FloatRect bounds = Packman.getLocalBounds();
+        // Packman.setOrigin(bounds.width/2,bounds.height/2);
+        //
+        // std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
+        // Packman.setPosition(pos.first,pos.second);
+        // sprites.push_back(Packman);
     };
 }

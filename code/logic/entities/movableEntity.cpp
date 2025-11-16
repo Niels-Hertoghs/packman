@@ -117,6 +117,11 @@ namespace logic {
         return overlapX && overlapY;
     }
 
+    void Packman::pacmanSubscribe(std::shared_ptr<view::packmanView> PacmanObserver) {
+        packmanObserver = PacmanObserver;
+    }
+
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class ghost
     /// ---------------------------------------------------------------------------------------------------------------
