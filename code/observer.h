@@ -10,20 +10,22 @@
 #include "Stopwatch.h"
 #include "render/notifications.h"
 class IObserver {
+public:
+    virtual ~IObserver() = default;
+    virtual void draw() = 0;
 };
 
-class Observer {
+class Observer : public IObserver {
 protected:
     Stopwatch& stopwatch;
     sf::RenderWindow& window;
-    camera _camera;
+    camera& _camera;
 
 public:
     Observer(Stopwatch& stopwatch,sf::RenderWindow& window,camera& camera);
-    virtual ~Observer() = default;
 
     virtual void notify(enum notifications message) = 0;
-    virtual void draw() = 0;
+    void draw() override = 0;
 };
 
 class Score : public Observer {

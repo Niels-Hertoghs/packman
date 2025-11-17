@@ -28,8 +28,8 @@ namespace view {
 
         std::shared_ptr<Score> score;
     public:
-        worldView(const std::shared_ptr<logic::world>& _wereld,Stopwatch& stopwatch, camera camera, sf::RenderWindow& window,std::shared_ptr<Score>& score);
-        void draw();
+        worldView(const std::shared_ptr<logic::world>& _wereld,Stopwatch& stopwatch, camera& camera, sf::RenderWindow& window,std::shared_ptr<Score>& score);
+        void draw() override;
     };
 }
 

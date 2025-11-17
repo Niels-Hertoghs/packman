@@ -9,7 +9,7 @@
 #include "../logic/entities/movableEntity.h"
 
 namespace view {
-    movableEntityView::movableEntityView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam,const std::vector<std::pair<int,int>>& SpriteCo)
+    movableEntityView::movableEntityView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam,const std::vector<std::pair<int,int>>& SpriteCo)
         : entityView(stopwatch, window, cam), spriteCo(SpriteCo), counter(0) {
 
         try {
@@ -24,7 +24,7 @@ namespace view {
         }
     }
 
-    packmanView::packmanView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam,std::shared_ptr<logic::Packman>& pacmanModel)
+    packmanView::packmanView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::Packman>& pacmanModel)
         : movableEntityView(stopwatch, window, cam,{{847,51},{847,101},{847,51},{847,1}}), pacmanModel(pacmanModel) {
 
         int PacmanSizeHeight =  cam.distanceToPixelsHeight(2.f/14.f);
@@ -49,6 +49,10 @@ namespace view {
         if (stopwatch.changeSprite()) {
             counter = (counter + 1) % 4;  // volgende sprite
         }
+
+        int PacmanSizeHeight =  _camera.distanceToPixelsHeight(2.f/14.f);
+        int PacmanSizeWidth = _camera.distanceToPixelsWidth(2.f/20.f);
+        _pacman.setSize(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
     }
 
     void packmanView::notify(enum notifications message) {
@@ -60,16 +64,12 @@ namespace view {
             _pacman.setPosition(pos.first,pos.second);
         } else if ( message == notifications::CHANGE_DIRECTION_DOWN) {
             spriteCo = {{846,201},{846,251},{846,201},{846,151}};
-            counter = 0;
         } else if ( message == notifications::CHANGE_DIRECTION_UP) {
             spriteCo = {{847,500},{847,550},{847,500},{847,450}};
-            counter = 0;
         } else if ( message == notifications::CHANGE_DIRECTION_RIGHT) {
             spriteCo = {{847,51},{847,101},{847,51},{847,1}};
-            counter = 0;
         } else if ( message == notifications::CHANGE_DIRECTION_LEFT) {
             spriteCo = {{846,351},{846,401},{846,351},{846,301}};
-            counter = 0;
         }
     }
 

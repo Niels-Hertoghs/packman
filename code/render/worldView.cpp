@@ -6,7 +6,7 @@
 #include "../world.h"
 
 namespace view {
-    worldView::worldView(const std::shared_ptr<logic::world>& wereld,Stopwatch& _stopwatch, camera camera, sf::RenderWindow& window,std::shared_ptr<Score>& _score)
+    worldView::worldView(const std::shared_ptr<logic::world>& wereld,Stopwatch& _stopwatch, camera& camera, sf::RenderWindow& window,std::shared_ptr<Score>& _score)
         : score(_score)
     {
 

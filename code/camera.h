@@ -10,7 +10,7 @@
  * Class camera
  * brief Zorgt ervoor dat elk object/tekst op de juiste plaatst staat op de window, onafhankelijk van de resolutie grote van de window
  */
-class camera {
+class   camera {
 private:
     unsigned int width; /// Breedte van de window in het aantal pixels.
     unsigned int height; /// Hoogte van de window in het aantal pixels.

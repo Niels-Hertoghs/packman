@@ -9,10 +9,10 @@
 #include "../logic/entities/collectable.h"
 
 namespace view {
-    collectableView::collectableView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam)
+    collectableView::collectableView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam)
         : entityView(stopwatch, window, cam),collected(false) {}
 
-    coinView::coinView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam, std::shared_ptr<logic::coin>& CoinModel)
+    coinView::coinView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::coin>& CoinModel)
         : collectableView(stopwatch, window, cam), coinModel(CoinModel)
 
     {
@@ -30,6 +30,14 @@ namespace view {
     }
 
     void coinView::draw() {
+        std::pair<unsigned int,unsigned int> pos;
+        if (auto observer = coinModel.lock()) {
+            pos = _camera.worldToPixel(observer->getX(),observer->getY());
+        }
+
+        _coin.setRadius(_camera.distanceToPixelsHeight(0.016f));
+        _coin.setPosition(pos.first,pos.second);
+        window.draw(_coin);
         if (!collected) {
             window.draw(_coin);
         }
@@ -44,7 +52,7 @@ namespace view {
     }
 
 
-    fruitView::fruitView(Stopwatch& stopwatch, sf::RenderWindow& window, camera cam, std::shared_ptr<logic::fruit>& FruitModel)
+    fruitView::fruitView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::fruit>& FruitModel)
         : collectableView(stopwatch, window, cam), fruitModel(FruitModel)
 
     {
@@ -78,6 +86,15 @@ namespace view {
     }
 
     void fruitView::draw() {
+        std::pair<unsigned int,unsigned int> pos;
+        if (auto observer = fruitModel.lock()) {
+            pos = _camera.worldToPixel(observer->getX(),observer->getY());
+        }
+        int FruitSizeHeight = _camera.distanceToPixelsHeight(1.f/17.f);
+        int FruitSizeWidth = _camera.distanceToPixelsWidth(1.f/27.f);
+        _fruit.setSize(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
+        _fruit.setPosition(pos.first,pos.second);
+        window.draw(_fruit);
         if (!collected) {
             window.draw(_fruit);
         }

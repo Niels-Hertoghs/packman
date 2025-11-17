@@ -18,7 +18,7 @@ namespace view {
         sf::Texture texture;
         std::vector<std::pair<int,int>> spriteCo;
     public:
-        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,const std::vector<std::pair<int,int>>& spriteCo);
+        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo);
         void draw() override = 0;
         void notify(enum notifications message) override = 0;
     };
@@ -28,7 +28,7 @@ namespace view {
         sf::RectangleShape _pacman;
         std::weak_ptr<logic::Packman> pacmanModel;
     public:
-        packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam, std::shared_ptr<logic::Packman>& pacmanModel);
+        packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Packman>& pacmanModel);
         void draw() override;
         void notify(enum notifications message) override;
     };

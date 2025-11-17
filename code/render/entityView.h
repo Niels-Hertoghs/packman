@@ -20,7 +20,7 @@ namespace view {
     protected:
 
     public:
-        entityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam);
+        entityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam);
         virtual void notify(enum notifications message) = 0;
     };
 
@@ -29,7 +29,7 @@ namespace view {
         sf::RectangleShape _wall;
         std::weak_ptr<logic::wall> wallModel;
     public:
-        wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::wall>& wallM);
+        wallView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::wall>& wallM);
 
         void draw() override;
         void notify(enum notifications message) override;

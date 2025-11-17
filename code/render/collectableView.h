@@ -28,7 +28,7 @@ namespace view {
          * @param window De window waar de collectable afgebeeld met worden.
          * @param cam Camera klasse
          */
-        collectableView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam);
+        collectableView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam);
 
         /**
          * @brief Pure virtual methodes
@@ -52,7 +52,7 @@ namespace view {
         * @param window De window waar de collectable afgebeeld met worden.
         * @param cam Camera klasse
         */
-        coinView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::coin>& coinModel);
+        coinView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::coin>& coinModel);
 
         /**
          * @brief Wanneer opgeroepen wordt coin weergegeven in de window.
@@ -77,7 +77,7 @@ namespace view {
         * @param window De window waar de collectable afgebeeld met worden.
         * @param cam Camera klasse
         */
-        fruitView(Stopwatch& stopwatch,sf::RenderWindow& window,camera cam,std::shared_ptr<logic::fruit>& fruitModel);
+        fruitView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::fruit>& fruitModel);
 
         /**
         * @brief Wanneer opgeroepen wordt coin weergegeven in de window.
