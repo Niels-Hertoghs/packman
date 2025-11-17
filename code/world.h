@@ -14,6 +14,7 @@
 #include "logic/entities/entity.h"
 #include "logic/entities/collectable.h"
 #include "logic/entities/movableEntity.h"
+#include "logic/entities/Ghost.h"
 
 namespace logic {
     /**
@@ -25,6 +26,8 @@ namespace logic {
         std::vector<std::shared_ptr<wall>> walls;
         std::vector<std::shared_ptr<fruit>> fruits;
         std::vector<std::shared_ptr<coin>> coins;
+
+        std::shared_ptr<redGhost> _redGhost;
         std::shared_ptr<Packman> pacman;
         std::string inputFile;
 
@@ -42,7 +45,7 @@ namespace logic {
         [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
         [[nodiscard]] std::vector<std::shared_ptr<fruit>> get_fruits() const;
         [[nodiscard]] std::vector<std::shared_ptr<coin>> get_coins() const;
-
+        std::shared_ptr<redGhost> get_red_ghost() const;
         [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
     };
 }

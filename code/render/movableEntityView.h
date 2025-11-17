@@ -9,38 +9,29 @@
 
 namespace logic {
     class Packman;
-    class Ghost;
 }
 
 namespace view {
     class movableEntityView : public entityView {
-    protected:
+    private:
+        int aantalSprites;
         int counter;
-        sf::Texture texture;
+
+    protected:
         std::vector<std::pair<int,int>> spriteCo;
+        sf::Texture texture;
+        sf::RectangleShape _movable;
     public:
-        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo);
-        void draw() override = 0;
+        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo,int aantalSprites);
+        void draw() override;
         void notify(enum notifications message) override = 0;
     };
 
     class packmanView : public movableEntityView {
     private:
-        sf::RectangleShape _pacman;
         std::weak_ptr<logic::Packman> pacmanModel;
     public:
         packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Packman>& pacmanModel);
-        void draw() override;
-        void notify(enum notifications message) override;
-    };
-
-    class ghostView : public movableEntityView {
-    private:
-        sf::RectangleShape _ghost;
-        std::weak_ptr<logic::Ghost> ghostModel;
-    public:
-        ghostView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Ghost>& ghostModel);
-        void draw() override;
         void notify(enum notifications message) override;
     };
 }

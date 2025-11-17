@@ -37,14 +37,16 @@ namespace logic {
                 } else if (c == 'f') {
                     // points staan op 50 om te beginne, is meer dan coins
                     fruits.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50));
+                } else if (c == 'p') {
+                    //pacman aanmaken, origin = midpunt
+                    pacman = std::make_shared<Packman>(0.f, 1 - 19.f/14.f);
+                } else if (c == 'g') {
+                    _redGhost = std::make_shared<redGhost>(0.f, 1 - 15.f/14.f);
                 }
                 x += 0.1;
             }
             y -= 1.0/7.0;
         }
-
-        //pacman aanmaken, origin = midpunt
-        pacman = std::make_shared<Packman>(0.f, 1 - 19.f/14.f);
     }
 
 
@@ -93,6 +95,10 @@ namespace logic {
 
     std::vector<std::shared_ptr<coin>> world::get_coins() const {
         return coins;
+    }
+
+    std::shared_ptr<redGhost> world::get_red_ghost() const {
+        return _redGhost;
     }
 
     std::shared_ptr<Packman> world::get_pacman() const {

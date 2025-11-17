@@ -10,6 +10,7 @@
 #include "entityView.h"
 #include "movableEntityView.h"
 #include "collectableView.h"
+#include "ghostView.h"
 
 namespace logic {
     class world;
@@ -25,6 +26,8 @@ namespace view {
         std::vector<std::shared_ptr<coinView>> coins;
         // std::vector<std::shared_ptr<view::movableEntityView>> movables;
         std::shared_ptr<view::packmanView> pacman;
+        std::shared_ptr<view::redGhostView> redGhost;
+
 
         std::shared_ptr<Score> score;
     public:

@@ -36,6 +36,11 @@ namespace view {
         std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(_stopwatch,window,camera,Pacman);
         Pacman->pacmanSubscribe(PacmanView);
         pacman = PacmanView;
+
+        std::shared_ptr<logic::redGhost> red_ghost = wereld->get_red_ghost();
+        std::shared_ptr<redGhostView> _redGhostView = std::make_shared<redGhostView>(_stopwatch,window,camera,red_ghost);
+        red_ghost->redGhostSubscribe(_redGhostView);
+        redGhost = _redGhostView;
     }
 
     void worldView::draw() {
@@ -48,6 +53,7 @@ namespace view {
         for (std::shared_ptr<view::coinView>& coin : coins) {
             coin->draw();
         }
+        redGhost->draw();
         pacman->draw();
         score->draw();
     }

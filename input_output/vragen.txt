@@ -15,3 +15,6 @@ score.coinEaten(); iun wereld.cpp, is dit oke voor observer?
 
 hoe werk view observer?
 hoe moet het scale, moet dat met een constante verhouding of ni?
+
+
+TODO: de constructor van pacmanview verplaatsen naar movable entity als mogelijk

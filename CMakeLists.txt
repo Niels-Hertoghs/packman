@@ -32,7 +32,11 @@ add_executable(packman main.cpp
         code/render/movableEntityView.cpp
         code/render/movableEntityView.h
         code/render/collectableView.cpp
-        code/render/collectableView.h)
+        code/render/collectableView.h
+        code/logic/entities/Ghost.cpp
+        code/logic/entities/Ghost.h
+        code/render/ghostView.cpp
+        code/render/ghostView.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

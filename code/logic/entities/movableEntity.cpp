@@ -12,7 +12,7 @@ namespace logic {
     /// @class movableEntity
     /// ---------------------------------------------------------------------------------------------------------------
 
-    movableEntity::movableEntity(double x, double y, double speed) : entity(x, y), direction(directions::RIGHT), speed(speed) {}
+    movableEntity::movableEntity(double x, double y, double speed,directions dir) : entity(x, y), direction(dir), speed(speed) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
         return this->wouldCollide(other,x,y);
@@ -42,7 +42,7 @@ namespace logic {
     /// @class Packman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Packman::Packman(double x, double y)  : movableEntity(x,y,1.f), nextDirection(EMPTY) {}
+    Packman::Packman(double x, double y)  : movableEntity(x,y,1.f,directions::RIGHT), nextDirection(EMPTY) {}
 
     void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls) {
 
@@ -129,17 +129,6 @@ namespace logic {
 
     void Packman::pacmanSubscribe(std::shared_ptr<view::packmanView> PacmanObserver) {
         packmanObserver = std::move(PacmanObserver);
-    }
-
-
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// @class ghost
-    /// ---------------------------------------------------------------------------------------------------------------
-
-    Ghost::Ghost(double x, double y) : movableEntity(x,y,0.95f) {}
-
-    void Ghost::ghostSubscribe(std::shared_ptr<view::ghostView> ghostObserver) {
-        this->ghostObserver = ghostObserver;
     }
 
 

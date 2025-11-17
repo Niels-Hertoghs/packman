@@ -10,11 +10,6 @@
 #include "entity.h"
 #include "../../render/movableEntityView.h"
 
-namespace render {
-    class Render;
-}
-
-
 namespace logic {
     /**
      * Class movableEntity
@@ -27,7 +22,7 @@ namespace logic {
         double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
     public:
         // constructor
-        movableEntity(double x,double y,double speed);
+        movableEntity(double x,double y,double speed,directions direction);
 
         // pure virutal
         virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
@@ -60,27 +55,6 @@ namespace logic {
         void pacmanSubscribe(std::shared_ptr<view::packmanView> pacmanObserver);
     };
 
-    /**
-     * @Class Ghost
-     * @brief De concrete klasse voor de ghost.
-     */
-    class Ghost : public movableEntity {
-    private:
-        std::shared_ptr<view::ghostView> ghostObserver; /// Pointer naar de observer van ghost.
-    public:
-        /**
-         * @brief Constructor voor de Ghost.
-         * @param x De positie van de Ghost op de x-as (relatief tussen -1 en 1).
-         * @param y De positie van de Ghost op de y-as (relatief tussen -1 en 1).
-         */
-        Ghost(double x,double y);
-
-        /**
-         * @brief Initialiseert de observer van de Ghost
-         * @param ghostObserver Pointer naar de observer van Ghost.
-         */
-        void ghostSubscribe(std::shared_ptr<view::ghostView> ghostObserver);
-    };
 }
 
 
