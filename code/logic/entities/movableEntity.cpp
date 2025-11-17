@@ -4,6 +4,8 @@
 
 #include "movableEntity.h"
 
+#include <utility>
+
 
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
@@ -126,11 +128,19 @@ namespace logic {
     }
 
     void Packman::pacmanSubscribe(std::shared_ptr<view::packmanView> PacmanObserver) {
-        packmanObserver = PacmanObserver;
+        packmanObserver = std::move(PacmanObserver);
     }
 
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class ghost
     /// ---------------------------------------------------------------------------------------------------------------
+
+    Ghost::Ghost(double x, double y) : movableEntity(x,y,0.95f) {}
+
+    void Ghost::ghostSubscribe(std::shared_ptr<view::ghostView> ghostObserver) {
+        this->ghostObserver = ghostObserver;
+    }
+
+
 }

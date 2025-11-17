@@ -45,7 +45,7 @@ namespace logic {
     class Packman : public movableEntity {
     private:
         directions nextDirection; /// Volgende richting zodra mogelijk.
-        std::shared_ptr<view::packmanView> packmanObserver;
+        std::shared_ptr<view::packmanView> packmanObserver; /// Pointer naar de observer van pacman.
     public:
         // constructor
         Packman(double x,double y);
@@ -60,9 +60,27 @@ namespace logic {
         void pacmanSubscribe(std::shared_ptr<view::packmanView> pacmanObserver);
     };
 
-    // class Ghost : public movableEntity {
-    //
-    // };
+    /**
+     * @Class Ghost
+     * @brief De concrete klasse voor de ghost.
+     */
+    class Ghost : public movableEntity {
+    private:
+        std::shared_ptr<view::ghostView> ghostObserver; /// Pointer naar de observer van ghost.
+    public:
+        /**
+         * @brief Constructor voor de Ghost.
+         * @param x De positie van de Ghost op de x-as (relatief tussen -1 en 1).
+         * @param y De positie van de Ghost op de y-as (relatief tussen -1 en 1).
+         */
+        Ghost(double x,double y);
+
+        /**
+         * @brief Initialiseert de observer van de Ghost
+         * @param ghostObserver Pointer naar de observer van Ghost.
+         */
+        void ghostSubscribe(std::shared_ptr<view::ghostView> ghostObserver);
+    };
 }
 
 

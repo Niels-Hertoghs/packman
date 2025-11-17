@@ -9,6 +9,7 @@
 
 namespace logic {
     class Packman;
+    class Ghost;
 }
 
 namespace view {
@@ -29,6 +30,16 @@ namespace view {
         std::weak_ptr<logic::Packman> pacmanModel;
     public:
         packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Packman>& pacmanModel);
+        void draw() override;
+        void notify(enum notifications message) override;
+    };
+
+    class ghostView : public movableEntityView {
+    private:
+        sf::RectangleShape _ghost;
+        std::weak_ptr<logic::Ghost> ghostModel;
+    public:
+        ghostView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Ghost>& ghostModel);
         void draw() override;
         void notify(enum notifications message) override;
     };

@@ -32,7 +32,7 @@ namespace view {
         sf::RectangleShape Packman(sf::Vector2f(static_cast<float>(PacmanSizeWidth),static_cast<float>(PacmanSizeHeight)));
 
         Packman.setTexture(&texture);
-        Packman.setTextureRect(sf::IntRect(847, 51, 46, 41));
+        Packman.setTextureRect(sf::IntRect(spriteCo[counter].first,spriteCo[counter].second, 46, 41));
 
         sf::FloatRect bounds = Packman.getLocalBounds();
         Packman.setOrigin(bounds.width/2,bounds.height/2);
