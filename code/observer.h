@@ -17,12 +17,11 @@ public:
 
 class Observer : public IObserver {
 protected:
-    Stopwatch& stopwatch;
     sf::RenderWindow& window;
     camera& _camera;
 
 public:
-    Observer(Stopwatch& stopwatch,sf::RenderWindow& window,camera& camera);
+    Observer(sf::RenderWindow& window,camera& camera);
 
     virtual void notify(enum notifications message) = 0;
     void draw() override = 0;
@@ -34,7 +33,7 @@ private:
     sf::Font font;
 
 public:
-    Score(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam);
+    Score(sf::RenderWindow& window,camera& cam);
     void coinEaten(float coinPoints);
     void notify(enum notifications message) override;
     void draw() override;

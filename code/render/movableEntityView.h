@@ -16,15 +16,14 @@ namespace view {
     private:
         int aantalSprites;
         int counter;
-        std::chrono::time_point<std::chrono::high_resolution_clock> lastTimeChangedSprite;
-        int id;
-        static int nextId;
+        int id; /// de unieke id van deze movableEntityView, (voor het veranderen van de sprite).
+        static int nextId; /// statische variabele voor unieke id's, zodat elke movableEntityView een eigen id heeft.
     protected:
         std::vector<std::pair<int,int>> spriteCo;
         sf::Texture texture;
         sf::RectangleShape _movable;
     public:
-        movableEntityView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo,int aantalSprites);
+        movableEntityView(sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo,int aantalSprites);
         void draw() override;
         void notify(enum notifications message) override = 0;
     };
@@ -33,7 +32,7 @@ namespace view {
     private:
         std::weak_ptr<logic::Packman> pacmanModel;
     public:
-        packmanView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Packman>& pacmanModel);
+        packmanView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::Packman>& pacmanModel);
         void notify(enum notifications message) override;
     };
 }

@@ -10,8 +10,8 @@
 int view::movableEntityView::nextId = 0;  // start bij 0
 
 namespace view {
-    movableEntityView::movableEntityView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam,const std::vector<std::pair<int,int>>& SpriteCo, int _aantalSprites)
-        : entityView(stopwatch, window, cam), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites),lastTimeChangedSprite(std::chrono::high_resolution_clock::now()) {
+    movableEntityView::movableEntityView(sf::RenderWindow& window, camera& cam,const std::vector<std::pair<int,int>>& SpriteCo, int _aantalSprites)
+        : entityView(window, cam), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites) {
 
         try {
             sf::Texture Texture;
@@ -35,14 +35,14 @@ namespace view {
         Movable.setOrigin(bounds.width/2,bounds.height/2);
         _movable = Movable;
 
-        id = nextId++;
+        id = nextId++; // unieke id toewijzen
     }
 
     void movableEntityView::draw() {
         _movable.setTextureRect(sf::IntRect(spriteCo[counter].first,spriteCo[counter].second, 46, 41));
         window.draw(_movable);
 
-        if (stopwatch.changeSprite(id)) {
+        if (Stopwatch::getInstance().changeSprite(id)) {
             counter = (counter + 1) % aantalSprites;  // volgende sprite
         }
 
@@ -52,8 +52,8 @@ namespace view {
     }
 
 
-    packmanView::packmanView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::Packman>& pacmanModel)
-        : movableEntityView(stopwatch, window, cam,{{847,51},{847,101},{847,51},{847,1}},4), pacmanModel(pacmanModel) {
+    packmanView::packmanView(sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::Packman>& pacmanModel)
+        : movableEntityView(window, cam,{{847,51},{847,101},{847,51},{847,1}},4), pacmanModel(pacmanModel) {
 
         std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(pacmanModel->getX(),pacmanModel->getY());
         _movable.setPosition(pos.first,pos.second);

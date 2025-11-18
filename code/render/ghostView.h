@@ -16,7 +16,7 @@ namespace view {
     private:
 
     public:
-        ghostView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo);
+        ghostView(sf::RenderWindow& window,camera& cam,const std::vector<std::pair<int,int>>& spriteCo);
 
         void notify(enum notifications message) override = 0;
     };
@@ -25,7 +25,7 @@ namespace view {
     private:
         std::weak_ptr<logic::redGhost> redGhostModel;
     public:
-        redGhostView(Stopwatch& stopwatch,sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::redGhost>& ghostModel);
+        redGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::redGhost>& ghostModel);
         void notify(enum notifications message) override;
     };
 } // view

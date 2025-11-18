@@ -7,11 +7,11 @@
 #include <iostream>
 #include <utility>
 namespace view {
-    entityView::entityView(Stopwatch& stopwatch, sf::RenderWindow& window,camera& cam) : Observer(stopwatch,window,cam) {
+    entityView::entityView(sf::RenderWindow& window,camera& cam) : Observer(window,cam) {
     }
 
-    wallView::wallView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::wall>& wallM)
-    : entityView(stopwatch,window,cam),wallModel(wallM) {
+    wallView::wallView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::wall>& wallM)
+    : entityView(window,cam),wallModel(wallM) {
 
         int WallSizeHeight = _camera.distanceToPixelsHeight(2.f/14.f);
         int WallSizeWidth = _camera.distanceToPixelsWidth(2.f/20.f);

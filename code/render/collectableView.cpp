@@ -9,11 +9,11 @@
 #include "../logic/entities/collectable.h"
 
 namespace view {
-    collectableView::collectableView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam)
-        : entityView(stopwatch, window, cam),collected(false) {}
+    collectableView::collectableView(sf::RenderWindow& window, camera& cam)
+        : entityView(window, cam),collected(false) {}
 
-    coinView::coinView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::coin>& CoinModel)
-        : collectableView(stopwatch, window, cam), coinModel(CoinModel)
+    coinView::coinView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::coin>& CoinModel)
+        : collectableView(window, cam), coinModel(CoinModel)
 
     {
         int radius = cam.distanceToPixelsHeight(0.016f);
@@ -52,8 +52,8 @@ namespace view {
     }
 
 
-    fruitView::fruitView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::fruit>& FruitModel)
-        : collectableView(stopwatch, window, cam), fruitModel(FruitModel)
+    fruitView::fruitView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::fruit>& FruitModel)
+        : collectableView(window, cam), fruitModel(FruitModel)
 
     {
         try {

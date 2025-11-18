@@ -56,7 +56,7 @@ void game::playGame() {
             }
         }
         window.clear(sf::Color::Black);
-        manager.runTop(window, event, cam,wereld,deltaTime,stopwatch);
+        manager.runTop(window, event, cam,wereld,deltaTime);
 
         window.display();
     }

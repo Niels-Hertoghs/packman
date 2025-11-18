@@ -31,7 +31,7 @@ namespace view {
 
         std::shared_ptr<Score> score;
     public:
-        worldView(const std::shared_ptr<logic::world>& _wereld,Stopwatch& stopwatch, camera& camera, sf::RenderWindow& window,std::shared_ptr<Score>& score);
+        worldView(const std::shared_ptr<logic::world>& _wereld,camera& camera, sf::RenderWindow& window,std::shared_ptr<Score>& score);
         void draw() override;
     };
 }

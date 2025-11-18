@@ -5,6 +5,7 @@
 #include <memory>
 #include "stateManeger.h"
 #include <fstream>
+#include <utility>
 #include "../../render/notifications.h"
 #include "../../world.h"
 
@@ -57,9 +58,8 @@ std::unique_ptr<state> stateManeger::getCurrentState() {
     return std::move(stack.top());
 }
 
-void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime, Stopwatch
-                          & stopwatch) {
-    stack.top().get()->run(window, event,*this,cam,wereld,deltaTime, stopwatch);
+void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
+    stack.top().get()->run(window, event,*this,cam,std::move(wereld),deltaTime);
 }
 
 
@@ -68,7 +68,7 @@ void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, camera& ca
 /// ---------------------------------------------------------------------------------------------------------------
 
 void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
-                    float& deltaTime, Stopwatch& stopwatch) {
+                    float& deltaTime) {
 
     //lettertype inladen
     sf::Font packmanFont;
@@ -127,9 +127,9 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& ma
             // alles in de wereld inladen
             wereld->startWorld();
             // alle view observers linken aan objecten, elk object een observer geven
-            std::shared_ptr<Score> score = std::make_shared<Score>(stopwatch,window,cam); // score observer aanmaken
+            std::shared_ptr<Score> score = std::make_shared<Score>(window,cam); // score observer aanmaken
 
-            std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,stopwatch,cam,window,score);
+            std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
             wereld->subscribeScore(score);
 
             std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
@@ -153,7 +153,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& ma
 /// ---------------------------------------------------------------------------------------------------------------
 
 void LevelState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
-                     float& deltaTime, Stopwatch& stopwatch) {
+                     float& deltaTime) {
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
