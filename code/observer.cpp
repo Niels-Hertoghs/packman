@@ -33,7 +33,7 @@ Observer::Observer(sf::RenderWindow& window2,camera& cam)
 Score::Score(sf::RenderWindow& window,camera& cam) : Observer(window,cam), score(0) {}
 
 void Score::coinEaten(float coinPoints) {
-    float lastEatenTime = Stopwatch::getInstance().eatCollectable();
+    float lastEatenTime = Stopwatch::getInstance()->eatCollectable();
     // aantal coin points komt er bij de score als de collectable gegeten wordt na 1 sec
     // als het sneller wordt gedaan komen er meer punten bij, afhankelijk van hoe snel
     // (0.5 sec -> points verdubbeld, na 2 sec points gehalveerd)

@@ -40,8 +40,8 @@ namespace logic {
                 } else if (c == 'p') {
                     //pacman aanmaken, origin = midpunt
                     pacman = std::make_shared<Packman>(0.f, 1 - 19.f/14.f);
-                } else if (c == 'g') {
-                    _redGhost = std::make_shared<redGhost>(0.f, 1 - 15.f/14.f);
+                } else if (c == 'r') {
+                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f);
                 }
                 x += 0.1;
             }

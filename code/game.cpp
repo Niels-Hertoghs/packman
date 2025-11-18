@@ -11,7 +11,6 @@ game::game() {
 
 void game::playGame() {
     stateManeger manager; // state manager aanmaken
-    Stopwatch& stopwatch = Stopwatch::getInstance(); //stopwatch aanmaken, als singleton
     std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
     // wereld->startWorld();
 
@@ -37,8 +36,8 @@ void game::playGame() {
 
     // main window loop
     while(window.isOpen()) {
-        stopwatch.tick(); //stopwatch updaten
-        double deltaTime = stopwatch.getDeltaTime(); // tijd sinds laatste tick
+        Stopwatch::getInstance()->tick(); //stopwatch updaten
+        double deltaTime = Stopwatch::getInstance()->getDeltaTime(); // tijd sinds laatste tick
 
         sf::Event event{};
         while(window.pollEvent(event)) {

@@ -5,6 +5,7 @@
 #ifndef PACKMAN_STOPWATCH_H
 #define PACKMAN_STOPWATCH_H
 #include <chrono>
+#include <memory>
 #include <set>
 #include <utility>
 
@@ -23,15 +24,16 @@ private:
     float deltaTime; // in seconden
 
     Stopwatch(); // privat econstructor
+    inline static std::shared_ptr<Stopwatch> _instance;
 public:
-    static Stopwatch& getInstance();
+    static std::shared_ptr<Stopwatch> getInstance();
 
     // Verwijder copy constructor en assignment operator, om singleton behouden
     Stopwatch(const Stopwatch&) = delete;
     Stopwatch& operator=(const Stopwatch&) = delete;
 
     void tick();
-    float getDeltaTime() const;
+    [[nodiscard]] float getDeltaTime() const;
     float eatCollectable();
 
     /**

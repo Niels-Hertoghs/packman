@@ -17,7 +17,7 @@ namespace view {
         int aantalSprites;
         int counter;
         int id; /// de unieke id van deze movableEntityView, (voor het veranderen van de sprite).
-        static int nextId; /// statische variabele voor unieke id's, zodat elke movableEntityView een eigen id heeft.
+        inline static int nextId; /// statische variabele voor unieke id's, zodat elke movableEntityView een eigen id heeft.
     protected:
         std::vector<std::pair<int,int>> spriteCo;
         sf::Texture texture;

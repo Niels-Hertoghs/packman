@@ -36,7 +36,9 @@ add_executable(packman main.cpp
         code/logic/entities/Ghost.cpp
         code/logic/entities/Ghost.h
         code/render/ghostView.cpp
-        code/render/ghostView.h)
+        code/render/ghostView.h
+        code/logic/random.h
+        code/logic/random.cpp)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

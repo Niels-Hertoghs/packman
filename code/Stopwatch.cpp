@@ -6,9 +6,11 @@
 
 Stopwatch::Stopwatch() : lastTime(clock::now()), deltaTime(0.0f), lastTimeEaten(clock::now()) {}
 
-Stopwatch& Stopwatch::getInstance() {
-    static Stopwatch instance;
-    return instance;
+std::shared_ptr<Stopwatch> Stopwatch::getInstance() {
+    if (!_instance) {
+        _instance = std::shared_ptr<Stopwatch>(new Stopwatch());
+    }
+    return _instance;
 }
 
 

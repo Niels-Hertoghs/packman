@@ -7,7 +7,6 @@
 #include <iostream>
 
 #include "../logic/entities/movableEntity.h"
-int view::movableEntityView::nextId = 0;  // start bij 0
 
 namespace view {
     movableEntityView::movableEntityView(sf::RenderWindow& window, camera& cam,const std::vector<std::pair<int,int>>& SpriteCo, int _aantalSprites)
@@ -42,7 +41,7 @@ namespace view {
         _movable.setTextureRect(sf::IntRect(spriteCo[counter].first,spriteCo[counter].second, 46, 41));
         window.draw(_movable);
 
-        if (Stopwatch::getInstance().changeSprite(id)) {
+        if (Stopwatch::getInstance()->changeSprite(id)) {
             counter = (counter + 1) % aantalSprites;  // volgende sprite
         }
 
