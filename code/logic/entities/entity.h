@@ -48,6 +48,11 @@ namespace logic {
 
         void wallSubscribe(std::shared_ptr<view::wallView> wallObserver);
     };
+
+    class invisibleWall : public entity {
+    public:
+        invisibleWall(double x,double y);
+    };
 }
 
 

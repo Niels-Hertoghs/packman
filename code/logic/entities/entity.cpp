@@ -33,4 +33,6 @@ namespace logic {
         _wallObserver = wallObserver;
     }
 
+    invisibleWall::invisibleWall(double x, double y) : entity(x, y) {    }
+
 }

@@ -25,7 +25,7 @@ namespace logic {
         movableEntity(double x,double y,double speed,directions direction);
 
         // pure virutal
-        virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) = 0;
+        virtual void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) = 0;
 
         // methodes
         bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
@@ -46,7 +46,7 @@ namespace logic {
         Packman(double x,double y);
 
         // methodes
-        void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls) override;
+        void update(double deltaTime,std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override;
 
 
         bool standsOnCoin(const std::shared_ptr<entity>& other);

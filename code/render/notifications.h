@@ -23,4 +23,10 @@ enum directions {
     EMPTY
 };
 
+enum modes {
+    CHASING_MODE,
+    FEAR_MODE,
+    WAIT
+};
+
 #endif //PACKMAN_NOTIFIES_H

@@ -26,6 +26,7 @@ namespace logic {
         std::vector<std::shared_ptr<wall>> walls;
         std::vector<std::shared_ptr<fruit>> fruits;
         std::vector<std::shared_ptr<coin>> coins;
+        std::vector<std::shared_ptr<invisibleWall>> invisibleWalls;
 
         std::shared_ptr<redGhost> _redGhost;
         std::shared_ptr<Packman> pacman;

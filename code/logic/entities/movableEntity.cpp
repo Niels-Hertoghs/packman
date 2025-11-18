@@ -44,8 +44,8 @@ namespace logic {
 
     Packman::Packman(double x, double y)  : movableEntity(x,y,1.f,directions::RIGHT), nextDirection(EMPTY) {}
 
-    void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls) {
-
+    void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) {
+        //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
         prevX = this->getX();
         prevY = this->getY();
 
@@ -71,7 +71,10 @@ namespace logic {
             bool canMove = std::none_of(walls.begin(), walls.end(),
                 [&](const std::shared_ptr<wall>& w) { return wouldCollide(w, newX, newY); });
 
-            if (canMove) {
+            bool canMove2 = std::none_of(invisibleWalls.begin(), invisibleWalls.end(),
+            [&](const std::shared_ptr<invisibleWall>& w) { return wouldCollide(w, newX, newY); });
+
+            if (canMove && canMove2) {
                 direction = nextDirection;
                 if (direction == directions::RIGHT) {
                     packmanObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);

@@ -31,7 +31,9 @@ namespace logic {
             for (char c : line) {
                 if (c == '#') {
                     walls.push_back(std::make_shared<wall>(x, y));
-                }  else if (c == '-') {
+                }  else if (c == '_') {
+                    invisibleWalls.push_back(std::make_shared<invisibleWall>(x, y));
+                } else if (c == '-') {
                     // points staat op 40 om te beginne
                     coins.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
                 } else if (c == 'f') {
@@ -53,7 +55,9 @@ namespace logic {
 
     void world::update(float deltaTime) {
         // pacman updaten, oa de locatie
-        pacman->update(deltaTime,walls);
+        pacman->update(deltaTime,walls,invisibleWalls);
+
+        _redGhost->update(deltaTime,walls,invisibleWalls);
 
         // zien of pacman niet op een collectable staat
         for (auto it = coins.begin(); it != coins.end(); ) {

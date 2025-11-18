@@ -17,7 +17,13 @@ namespace view {
     }
 
     void redGhostView::notify(enum notifications message) {
-        //yapya
+        if (message == notifications::CHANGE_POSITION) {
+            std::pair<unsigned int,unsigned int> pos;
+            if (auto observer = redGhostModel.lock()) {
+                pos = _camera.worldToPixel(observer->getX(),observer->getY());
+            }
+            _movable.setPosition(pos.first,pos.second);
+        }
     }
 
 

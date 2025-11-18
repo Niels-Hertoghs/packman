@@ -6,6 +6,7 @@
 #define PACKMAN_GHOST_H
 #include "movableEntity.h"
 #include "../../render/ghostView.h"
+#include "../random.h"
 
 namespace logic {
     /**
@@ -13,7 +14,11 @@ namespace logic {
     * @brief De abstrcte klasse voor de ghosts.
     */
     class Ghost : public movableEntity {
-    private:
+    protected:
+        directions prevDirection;
+        enum modes mode;
+        bool canChoseDir; /// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan.
+
     public:
         /**
         * @brief Constructor voor de Ghost.
@@ -22,7 +27,10 @@ namespace logic {
         */
         Ghost(double x,double y);
 
-        void virtual update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls) override = 0;
+        void update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override = 0;
+        virtual void nextDirection(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) = 0;
+
+        std::vector<directions> possibleDirections(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls);
     };
 
     class redGhost : public Ghost {
@@ -37,7 +45,10 @@ namespace logic {
         */
         void redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver);
 
-        void update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls) override;
+        void update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override;
+
+        // past automatich de direction aan en update observer
+        void nextDirection(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override;
     };
 } // logic
 
