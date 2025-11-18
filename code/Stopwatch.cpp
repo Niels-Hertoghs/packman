@@ -30,13 +30,17 @@ float Stopwatch::eatCollectable() {
     return elapsed.count();
 }
 
-bool Stopwatch::changeSprite() {
+bool Stopwatch::changeSprite(int id) {
     auto currentTime = clock::now();
     std::chrono::duration<float> elapsed = currentTime - lastChangedSprite;
     if (elapsed.count() > 0.1f) {
         lastChangedSprite = currentTime;
+        changed.clear();
+    }
+    if (changed.find(id) == changed.end()) {
+        changed.insert(id);
         return true;
     }
+
     return false;
 }
-

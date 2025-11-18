@@ -53,8 +53,8 @@ namespace view {
         for (std::shared_ptr<view::coinView>& coin : coins) {
             coin->draw();
         }
-        redGhost->draw();
         pacman->draw();
+        redGhost->draw();
         score->draw();
     }
 }

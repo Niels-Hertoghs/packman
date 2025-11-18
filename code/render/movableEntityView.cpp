@@ -7,10 +7,11 @@
 #include <iostream>
 
 #include "../logic/entities/movableEntity.h"
+int view::movableEntityView::nextId = 0;  // start bij 0
 
 namespace view {
     movableEntityView::movableEntityView(Stopwatch& stopwatch, sf::RenderWindow& window, camera& cam,const std::vector<std::pair<int,int>>& SpriteCo, int _aantalSprites)
-        : entityView(stopwatch, window, cam), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites) {
+        : entityView(stopwatch, window, cam), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites),lastTimeChangedSprite(std::chrono::high_resolution_clock::now()) {
 
         try {
             sf::Texture Texture;
@@ -34,13 +35,14 @@ namespace view {
         Movable.setOrigin(bounds.width/2,bounds.height/2);
         _movable = Movable;
 
+        id = nextId++;
     }
 
     void movableEntityView::draw() {
         _movable.setTextureRect(sf::IntRect(spriteCo[counter].first,spriteCo[counter].second, 46, 41));
         window.draw(_movable);
 
-        if (stopwatch.changeSprite()) {
+        if (stopwatch.changeSprite(id)) {
             counter = (counter + 1) % aantalSprites;  // volgende sprite
         }
 

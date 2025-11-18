@@ -5,6 +5,8 @@
 #ifndef PACKMAN_STOPWATCH_H
 #define PACKMAN_STOPWATCH_H
 #include <chrono>
+#include <set>
+#include <utility>
 
 /**
  * Class Stopwatch
@@ -15,7 +17,8 @@ private:
     using clock = std::chrono::high_resolution_clock;
     std::chrono::time_point<clock> lastTime; /// tijdspunt van laatste tick
     std::chrono::time_point<clock> lastTimeEaten; /// tijdspunt van laatst gegeten coin
-    std::chrono::time_point<clock> lastChangedSprite; /// tijdspunt van laatst veranderede sprite
+    std::chrono::time_point<clock> lastChangedSprite;
+    std::set<int> changed;
     float deltaTime; // in seconden
 
     Stopwatch(); // privat econstructor
@@ -34,7 +37,7 @@ public:
      *
      * @return Ofdat de sprite moet veranderen.
      */
-    bool changeSprite();
+    bool changeSprite(int id);
 
     ~Stopwatch() = default;
 };

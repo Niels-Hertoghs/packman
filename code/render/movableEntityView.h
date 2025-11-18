@@ -16,7 +16,9 @@ namespace view {
     private:
         int aantalSprites;
         int counter;
-
+        std::chrono::time_point<std::chrono::high_resolution_clock> lastTimeChangedSprite;
+        int id;
+        static int nextId;
     protected:
         std::vector<std::pair<int,int>> spriteCo;
         sf::Texture texture;
