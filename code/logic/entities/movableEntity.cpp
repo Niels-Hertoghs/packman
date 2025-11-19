@@ -37,6 +37,22 @@ namespace logic {
         y = prevY;
     }
 
+    directions movableEntity::oppositeDirection(directions dir) {
+        if (dir == directions::RIGHT) {
+            return directions::LEFT;
+        }
+        if ( dir == directions::LEFT) {
+            return directions::RIGHT;
+        }
+        if (dir == directions::UP) {
+            return directions::DOWN;
+        }
+        if (dir == directions::DOWN) {
+            return directions::UP;
+        }
+    }
+
+
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class Packman
@@ -44,7 +60,7 @@ namespace logic {
 
     Packman::Packman(double x, double y)  : movableEntity(x,y,1.f,directions::RIGHT), nextDirection(EMPTY) {}
 
-    void Packman::update(double delta,std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) {
+    void Packman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
         prevX = this->getX();
         prevY = this->getY();
@@ -69,12 +85,10 @@ namespace logic {
             newY = y + stepY;
 
             bool canMove = std::none_of(walls.begin(), walls.end(),
-                [&](const std::shared_ptr<wall>& w) { return wouldCollide(w, newX, newY); });
+                [&](const std::shared_ptr<entity>& w) { return wouldCollide(w, newX, newY); });
 
-            bool canMove2 = std::none_of(invisibleWalls.begin(), invisibleWalls.end(),
-            [&](const std::shared_ptr<invisibleWall>& w) { return wouldCollide(w, newX, newY); });
 
-            if (canMove && canMove2) {
+            if (canMove) {
                 direction = nextDirection;
                 if (direction == directions::RIGHT) {
                     packmanObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
@@ -101,14 +115,13 @@ namespace logic {
 
 
         // zie of de huidige pos niet op een muur staat
-        for (std::shared_ptr<wall>& w : walls) {
+        for (std::shared_ptr<entity>& w : walls) {
             if (standsOn(w)) {
                 prevLocation();
                 break;
-            } else {
-                packmanObserver->notify(notifications::CHANGE_POSITION);
             }
         }
+        packmanObserver->notify(notifications::CHANGE_POSITION);
     }
 
     void Packman::updateDir(enum directions dir) {

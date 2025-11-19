@@ -55,9 +55,13 @@ namespace logic {
 
     void world::update(float deltaTime) {
         // pacman updaten, oa de locatie
-        pacman->update(deltaTime,walls,invisibleWalls);
+        std::vector<std::shared_ptr<entity>> allWalls;
+        allWalls.insert(allWalls.end(),walls.begin(),walls.end());
+        allWalls.insert(allWalls.end(),invisibleWalls.begin(),invisibleWalls.end());
 
-        _redGhost->update(deltaTime,walls,invisibleWalls);
+        pacman->update(deltaTime,allWalls);
+
+        _redGhost->update(deltaTime,allWalls);
 
         // zien of pacman niet op een collectable staat
         for (auto it = coins.begin(); it != coins.end(); ) {

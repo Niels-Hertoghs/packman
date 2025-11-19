@@ -27,10 +27,10 @@ namespace logic {
         */
         Ghost(double x,double y);
 
-        void update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override = 0;
-        virtual void nextDirection(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) = 0;
+        void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override = 0;
+        virtual void nextDirection(std::vector<std::shared_ptr<entity>>& walls) = 0;
 
-        std::vector<directions> possibleDirections(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls);
+        std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
     };
 
     class redGhost : public Ghost {
@@ -45,10 +45,10 @@ namespace logic {
         */
         void redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver);
 
-        void update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override;
+        void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
 
         // past automatich de direction aan en update observer
-        void nextDirection(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) override;
+        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
     };
 } // logic
 

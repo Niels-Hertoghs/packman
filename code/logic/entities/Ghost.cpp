@@ -12,7 +12,7 @@ namespace logic {
 
     Ghost::Ghost(double x, double y) : movableEntity(x,y,0.95f,directions::UP), canChoseDir(false) {}
 
-    std::vector<directions> Ghost::possibleDirections(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) {
+    std::vector<directions> Ghost::possibleDirections(std::vector<std::shared_ptr<entity>>& walls) {
         std::vector<directions> possibleDirections;
 
         for (directions dir : {UP, DOWN, RIGHT, LEFT}) {
@@ -29,12 +29,9 @@ namespace logic {
             newY = y + stepY;
 
             bool canMove = std::none_of(walls.begin(), walls.end(),
-                [&](const std::shared_ptr<wall>& w) { return wouldCollide(w, newX, newY); });
+                [&](const std::shared_ptr<entity>& w) { return wouldCollide(w, newX, newY); });
 
-            bool canMove2 = std::none_of(invisibleWalls.begin(), invisibleWalls.end(),
-            [&](const std::shared_ptr<invisibleWall>& w) { return wouldCollide(w, newX, newY); });
-
-            if (!canMove && canMove2) {
+            if (!canMove) {
                 possibleDirections.push_back(dir);
             }
         }
@@ -47,7 +44,7 @@ namespace logic {
         this->ghostObserver = redGhostObserver;
     }
 
-    void redGhost::update(double deltaTime, std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) {
+    void redGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
         prevX = this->getX();
         prevY = this->getY();
 
@@ -63,32 +60,34 @@ namespace logic {
         y += deltaTime * dy * speed;
 
 
-        if (this->possibleDirections(walls,invisibleWalls).size() > 2 && canChoseDir) {
-            this->nextDirection(walls,invisibleWalls);
+        if (this->possibleDirections(walls).size() > 2 && canChoseDir) {
+            directions dir = this->direction;
+            this->nextDirection(walls);
+            while (direction == oppositeDirection(dir)) {
+                this->possibleDirections(walls);
+            }
 
         }
 
         // zie of de huidige pos niet op een muur staat
-        for (std::shared_ptr<wall>& w : walls) {
+        for (std::shared_ptr<entity>& w : walls) {
             if (standsOn(w)) {
-                this->nextDirection(walls,invisibleWalls);
+                this->nextDirection(walls);
                 canChoseDir = true;
                 prevLocation();
-
                 break;
             }
-            ghostObserver->notify(notifications::CHANGE_POSITION);
         }
+        ghostObserver->notify(notifications::CHANGE_POSITION);
     }
 
-    void redGhost::nextDirection(std::vector<std::shared_ptr<wall>>& walls,std::vector<std::shared_ptr<invisibleWall>>& invisibleWalls) {
+    void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
         prevDirection = this->direction;
-        std::vector<directions> possibleDirections = this->possibleDirections(walls,invisibleWalls);
+        std::vector<directions> possibleDirections = this->possibleDirections(walls);
 
 
         int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
-
 
 
         direction = possibleDirections[chosenDir];
