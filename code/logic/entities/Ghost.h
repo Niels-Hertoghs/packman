@@ -18,6 +18,7 @@ namespace logic {
         directions prevDirection;
         enum modes mode;
         bool canChoseDir; /// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan.
+        double dt;
 
     public:
         /**
@@ -29,6 +30,7 @@ namespace logic {
 
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override = 0;
         virtual void nextDirection(std::vector<std::shared_ptr<entity>>& walls) = 0;
+
 
         std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
     };

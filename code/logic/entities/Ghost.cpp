@@ -4,6 +4,8 @@
 
 #include "Ghost.h"
 
+#include <iostream>
+
 namespace logic {
 
     /// ---------------------------------------------------------------------------------------------------------------
@@ -15,9 +17,8 @@ namespace logic {
     std::vector<directions> Ghost::possibleDirections(std::vector<std::shared_ptr<entity>>& walls) {
         std::vector<directions> possibleDirections;
 
-        for (directions dir : {UP, DOWN, RIGHT, LEFT}) {
-            double newX = x;
-            double newY = y;
+        for (directions dir : {DOWN, UP, RIGHT, LEFT}) {
+
 
             double stepX = 0.f, stepY = 0.f;
 
@@ -25,19 +26,20 @@ namespace logic {
             else if (dir == directions::LEFT) stepX = -1/80.f;
             else if (dir == directions::UP) stepY = 1.f / 56.f;
             else if (dir == directions::DOWN) stepY = -1.f / 56.f;
-            newX = x + stepX;
-            newY = y + stepY;
+
+            double newX = x + stepX;
+            double newY = y + stepY;
 
             bool canMove = true;
 
             for (const std::shared_ptr<entity>& w : walls) {
-                if (standsOn(w)) {
+                if (wouldCollide(w,newX,newY)) {
                     canMove = false;
                     break;
                 }
             }
 
-            if (!canMove) {
+            if (canMove) {
                 possibleDirections.push_back(dir);
             }
         }
@@ -66,24 +68,27 @@ namespace logic {
         y += deltaTime * dy * speed;
 
 
-        if (this->possibleDirections(walls).size() > 2 && canChoseDir) {
-            directions dir = this->direction;
-            this->nextDirection(walls);
-            while (direction == oppositeDirection(dir)) {
-                this->possibleDirections(walls);
-            }
-
-        }
-
         // zie of de huidige pos niet op een muur staat
         for (std::shared_ptr<entity>& w : walls) {
             if (standsOn(w) ) {
-                this->nextDirection(walls);
-                canChoseDir = true;
                 prevLocation();
+                if (!canChoseDir) {
+                    direction = LEFT;
+                    ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+                    canChoseDir = true;
+                } else {
+                    this->nextDirection(walls);
+                }
                 break;
             }
         }
+
+        if (this->possibleDirections(walls).size() > 2 && canChoseDir) {
+            this->nextDirection(walls);
+        }
+
+
+
         ghostObserver->notify(notifications::CHANGE_POSITION);
     }
 
@@ -93,8 +98,11 @@ namespace logic {
         std::vector<directions> possibleDirections = this->possibleDirections(walls);
 
 
-        int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
+        if (possibleDirections.empty()) {
+            return;
+        }
 
+        int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
 
         direction = possibleDirections[chosenDir];
         if (direction == directions::RIGHT) {
@@ -103,12 +111,8 @@ namespace logic {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
         } else if (direction == directions::UP) {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-        } else {
+        } else if (direction == directions::DOWN) {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
         }
-
     }
-
-
-
 } // logic

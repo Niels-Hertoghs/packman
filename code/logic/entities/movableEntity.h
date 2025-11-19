@@ -30,6 +30,7 @@ namespace logic {
         // methodes
         bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
         bool standsOn(const std::shared_ptr<entity>& other);
+        bool pointInWall(std::shared_ptr<entity> wall,double x,double y);
         void prevLocation();
 
         static directions oppositeDirection(directions dir);

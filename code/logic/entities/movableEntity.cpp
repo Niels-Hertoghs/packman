@@ -30,7 +30,22 @@ namespace logic {
         bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
         bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
         return overlapX && overlapY;
+
     }
+
+    bool movableEntity::pointInWall(std::shared_ptr<entity> wall, double x, double y) {
+        double tileW = 1.0/10.0; // 0.1
+        double tileH = 1.0/7.0;  // ≈0.142857
+
+        double left   = wall->getX();
+        double right  = wall->getX() + tileW;
+        double top    = wall->getY();
+        double bottom = wall->getY() - tileH;
+
+        return (x >= left && x <= right &&
+                y >= bottom && y <= top);
+    }
+
 
     void movableEntity::prevLocation() {
         x = prevX;
