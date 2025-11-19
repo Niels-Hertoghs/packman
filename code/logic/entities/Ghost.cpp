@@ -28,8 +28,14 @@ namespace logic {
             newX = x + stepX;
             newY = y + stepY;
 
-            bool canMove = std::none_of(walls.begin(), walls.end(),
-                [&](const std::shared_ptr<entity>& w) { return wouldCollide(w, newX, newY); });
+            bool canMove = true;
+
+            for (const std::shared_ptr<entity>& w : walls) {
+                if (standsOn(w)) {
+                    canMove = false;
+                    break;
+                }
+            }
 
             if (!canMove) {
                 possibleDirections.push_back(dir);
@@ -71,7 +77,7 @@ namespace logic {
 
         // zie of de huidige pos niet op een muur staat
         for (std::shared_ptr<entity>& w : walls) {
-            if (standsOn(w)) {
+            if (standsOn(w) ) {
                 this->nextDirection(walls);
                 canChoseDir = true;
                 prevLocation();

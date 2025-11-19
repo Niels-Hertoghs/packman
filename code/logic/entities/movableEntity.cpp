@@ -88,6 +88,7 @@ namespace logic {
                 [&](const std::shared_ptr<entity>& w) { return wouldCollide(w, newX, newY); });
 
 
+
             if (canMove) {
                 direction = nextDirection;
                 if (direction == directions::RIGHT) {
