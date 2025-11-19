@@ -3,7 +3,7 @@
 //
 
 #include "movableEntity.h"
-
+#include "Ghost.h"
 #include <utility>
 
 
@@ -53,18 +53,13 @@ namespace logic {
     }
 
     directions movableEntity::oppositeDirection(directions dir) {
-        if (dir == directions::RIGHT) {
-            return directions::LEFT;
+        switch(dir) {
+        case UP: return DOWN;
+        case DOWN: return UP;
+        case LEFT: return RIGHT;
+        case RIGHT: return LEFT;
         }
-        if ( dir == directions::LEFT) {
-            return directions::RIGHT;
-        }
-        if (dir == directions::UP) {
-            return directions::DOWN;
-        }
-        if (dir == directions::DOWN) {
-            return directions::UP;
-        }
+        return UP; // of een default value, om compiler warning te vermijden
     }
 
 
@@ -162,6 +157,12 @@ namespace logic {
     void Packman::pacmanSubscribe(std::shared_ptr<view::packmanView> PacmanObserver) {
         packmanObserver = std::move(PacmanObserver);
     }
+
+    bool Packman::standsOnGhost(std::shared_ptr<Ghost> ghost) {
+        std::shared_ptr<entity> other = std::dynamic_pointer_cast<entity>(ghost);
+        return this->wouldCollide(other,x + 1.f/20.f, y-1.f/14.f);
+    }
+
 
 
 }

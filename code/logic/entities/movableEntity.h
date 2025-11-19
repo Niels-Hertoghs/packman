@@ -11,6 +11,10 @@
 #include "../../render/movableEntityView.h"
 
 namespace logic {
+    class Ghost;
+}
+
+namespace logic {
     /**
      * Class movableEntity
      * brief Abstacte klasse voor de beweegbare objecten.
@@ -56,6 +60,7 @@ namespace logic {
         void updateDir(enum directions);
 
         void pacmanSubscribe(std::shared_ptr<view::packmanView> pacmanObserver);
+        bool standsOnGhost(std::shared_ptr<Ghost> ghost);
     };
 
 }
