@@ -30,7 +30,7 @@ namespace logic {
 
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override = 0;
         virtual void nextDirection(std::vector<std::shared_ptr<entity>>& walls) = 0;
-
+        void died() override = 0;
 
         std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
     };
@@ -48,6 +48,7 @@ namespace logic {
         void redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver);
 
         void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
+        void died() override;
 
         // past automatich de direction aan en update observer
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;

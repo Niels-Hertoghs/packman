@@ -77,11 +77,17 @@ namespace view {
              event.mouseButton.button == sf::Mouse::Left) {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (playButton.getGlobalBounds().contains(mousePos)) {
+                // voor als het programma meerdere keren achter elkaar gerund wordt zonder te sluiten
+                Stopwatch::getInstance()->reset();
+                wereld->clear();
 
                 // alles in de wereld inladen
                 wereld->startWorld();
+
                 // alle view observers linken aan objecten, elk object een observer geven
                 std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
+
+
 
                 std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
                 wereld->subscribeScore(score);

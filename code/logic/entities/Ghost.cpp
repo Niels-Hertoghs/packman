@@ -138,4 +138,18 @@ namespace logic {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
         }
     }
+
+    void redGhost::died() {
+        toSpawnLocation();
+        if (direction == directions::RIGHT) {
+            ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+        } else if (direction == directions::LEFT) {
+            ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+        } else if (direction == directions::UP) {
+            ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
+        } else if (direction == directions::DOWN) {
+            ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+        }
+    }
+
 } // logic

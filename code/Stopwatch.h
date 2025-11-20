@@ -35,6 +35,7 @@ public:
     void tick();
     [[nodiscard]] float getDeltaTime() const;
     float eatCollectable();
+    void reset();
 
     /**
      *

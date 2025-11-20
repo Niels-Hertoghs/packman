@@ -90,8 +90,8 @@ namespace logic {
 
     void world::died() {
         score->liveLost();
-        _redGhost->toSpawnLocation();
-        pacman->toSpawnLocation();
+        _redGhost->died();
+        pacman->died();
     }
 
 
@@ -123,5 +123,13 @@ namespace logic {
     std::shared_ptr<Packman> world::get_pacman() const {
         return pacman;
     }
+
+    void world::clear() {
+        walls.clear();
+        fruits.clear();
+        coins.clear();
+        invisibleWalls.clear();
+    }
+
 
 }

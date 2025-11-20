@@ -12,7 +12,7 @@ namespace logic {
     /// @class movableEntity
     /// ---------------------------------------------------------------------------------------------------------------
 
-    movableEntity::movableEntity(double x, double y, double speed,directions dir) : entity(x, y), direction(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y) {}
+    movableEntity::movableEntity(double x, double y, double speed,directions dir) : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
         return this->wouldCollide(other,x,y);
@@ -81,6 +81,7 @@ namespace logic {
     void movableEntity::toSpawnLocation() {
         x = spwanLocatieX;
         y = spwanLocatiey;
+        direction = originalDirection;
     }
 
 
@@ -178,6 +179,20 @@ namespace logic {
     bool Packman::standsOnGhost(std::shared_ptr<Ghost> ghost) {
         std::shared_ptr<entity> other = std::dynamic_pointer_cast<entity>(ghost);
         return this->wouldCollide(other,x + 1.f/20.f, y-1.f/14.f);
+    }
+
+    void Packman::died() {
+        toSpawnLocation();
+        if (direction == directions::RIGHT) {
+            packmanObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+        } else if (direction == directions::LEFT) {
+            packmanObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+        } else if (direction == directions::UP) {
+            packmanObserver->notify(notifications::CHANGE_DIRECTION_UP);
+        } else {
+            packmanObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+        }
+        nextDirection = EMPTY;
     }
 
 

@@ -42,6 +42,7 @@ namespace logic {
         void updatePacmanDir(directions);
 
         void subscribeScore(std::shared_ptr<logic::Score> score);
+        void clear();
 
         /**
          * Als pacman gestorven is -> alles restart

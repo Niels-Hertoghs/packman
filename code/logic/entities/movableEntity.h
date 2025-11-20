@@ -22,6 +22,7 @@ namespace logic {
     class movableEntity : public entity {
     protected:
         directions direction; /// Richting dat het object gaat.
+        directions originalDirection; /// original direction van object bij het inladen.
         double speed; /// De snelheid van het object.
         double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
         const double spwanLocatieX, spwanLocatiey;  /// Begin locatie van het object, voor als het dood gaat dat het er terug kan spawnen.
@@ -31,6 +32,7 @@ namespace logic {
 
         // pure virutal
         virtual void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) = 0;
+        virtual void died() = 0;
 
         // methodes
         bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
@@ -57,6 +59,7 @@ namespace logic {
 
         // methodes
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override;
+        void died() override;
 
 
         bool standsOnCoin(const std::shared_ptr<entity>& other);

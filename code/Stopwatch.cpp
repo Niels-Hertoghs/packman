@@ -46,3 +46,12 @@ bool Stopwatch::changeSprite(int id) {
 
     return false;
 }
+
+void Stopwatch::reset() {
+    lastTime = clock::now();
+    deltaTime = 0.0f;
+    lastTimeEaten = clock::now();
+    lastChangedSprite = clock::now();
+    changedSprite.clear();
+
+}
