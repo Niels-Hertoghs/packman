@@ -44,7 +44,9 @@ add_executable(packman main.cpp
         code/render/ScoreView.cpp
         code/render/ScoreView.h
         code/logic/state_maneger/state.cpp
-        code/logic/state_maneger/state.h)
+        code/logic/state_maneger/state.h
+        code/logic/state_maneger/make_text.h
+        code/logic/state_maneger/make_text.cpp)
 
 include_directories(${SFML_INDCLUDE_DIR})
 
