@@ -55,6 +55,7 @@ namespace view {
                 if (auto observer = scoreModel.lock()) {
                     currentScore = observer->getScore();
                 }
+                std::cout << currentScore << std::endl;
                 sf::Text ScoreText = makeText(font, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, _camera);
                 sf::FloatRect scoreTextBounds = ScoreText.getLocalBounds();
                 ScoreText.setOrigin(0,scoreTextBounds.height);

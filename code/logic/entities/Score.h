@@ -6,6 +6,8 @@
 #define PACKMAN_SCORE_H
 #include "../../observer.h"
 
+class stateManeger;
+
 namespace view {
     class ScoreView;
 }
@@ -17,8 +19,9 @@ namespace logic {
         int livesLeft;
         int level;
         std::shared_ptr<view::ScoreView> scoreObserver;
+        stateManeger& manager;
     public:
-        Score();
+        Score(stateManeger& manager);
         void coinEaten(float coinPoints);
         void liveLost();
         void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);

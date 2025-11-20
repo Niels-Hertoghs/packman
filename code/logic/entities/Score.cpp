@@ -5,9 +5,10 @@
 #include "Score.h"
 
 #include "../../render/ScoreView.h"
+#include "../state_maneger/stateManeger.h"
 
 namespace logic {
-    Score::Score() : IObserver(), score(0),livesLeft(3),level(1) {}
+    Score::Score(stateManeger& Manager) : IObserver(),manager(Manager),  score(0),livesLeft(1),level(1) {}
 
     void Score::coinEaten(float coinPoints) {
         float lastEatenTime = Stopwatch::getInstance()->eatCollectable();
@@ -21,6 +22,12 @@ namespace logic {
     void Score::liveLost() {
         livesLeft--;
         scoreObserver->notify(notifications::UPDATE_LIVES);
+        if (livesLeft < 0) {
+            manager.prevState();
+
+            std::unique_ptr<view::gameOverState> state = std::make_unique<view::gameOverState>();
+            manager.pushState(std::move(state));
+        }
     }
 
 

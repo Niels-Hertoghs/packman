@@ -33,6 +33,7 @@ sf::Text makeText(const sf::Font& fontF, const std::string& text, double charSiz
 /// ---------------------------------------------------------------------------------------------------------------
 
 stateManeger::stateManeger() {
+
     pushState(std::make_unique<view::menuState>());
 }
 

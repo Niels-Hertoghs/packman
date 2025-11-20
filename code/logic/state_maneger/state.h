@@ -51,9 +51,15 @@ namespace view {
     private:
         std::unique_ptr<view::worldView> worldView;
     public:
-        LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> world);
+        LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> worldV);
         void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
                  float& deltaTime) override;
+    };
+
+    class gameOverState : public state {
+    public:
+        gameOverState() = default;
+        void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
 
 } // view

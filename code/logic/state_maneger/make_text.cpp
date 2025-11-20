@@ -22,4 +22,19 @@ namespace view {
 
         return Text;
     }
+
+    sf::RectangleShape makeButton(float height, float width, sf::Color kleur, const camera& cam,float x, float y) {
+        int buttonHeight = cam.distanceToPixelsHeight(height);
+        int buttonWidth = cam.distanceToPixelsWidth(width);
+        sf::RectangleShape button(sf::Vector2f(static_cast<float>(buttonWidth),static_cast<float>(buttonHeight)));
+        button.setFillColor(kleur);
+
+        sf::FloatRect boundsRect =  button.getLocalBounds();
+        button.setOrigin(boundsRect.width / 2.f, boundsRect.height / 2.f);
+        std::pair<int, int> playButtenPos = cam.worldToPixel(x,y);
+        button.setPosition(static_cast<float>(playButtenPos.first), static_cast<float>(playButtenPos.second));
+
+        return button;
+    }
+
 }

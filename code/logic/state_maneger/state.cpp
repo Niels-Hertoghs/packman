@@ -15,27 +15,38 @@ namespace view {
     /// ---------------------------------------------------------------------------------------------------------------
 
     void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
-                        float& deltaTime) {
+                        float& deltaTime)
+    {
 
         //lettertype inladen
-        sf::Font packmanFont;
-        if (!packmanFont.loadFromFile("input_output/packman_font.ttf")) {
-            std::cerr << "Kon het lettertype niet laden!" << std::endl;
+        sf::Font Font;
+        std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
+        try {
+
+            if (!Font.loadFromFile("input_output/packman_font.ttf")) {
+                throw std::runtime_error("Kon het lettertype niet laden!");
+            }
+            if (!file) {
+                std::cerr << "Kon bestand niet openen.\n";
+            }
+
+        } catch (const std::exception& e) {
+            std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+            throw;
         }
 
+        std::vector<sf::Text> text;
+
         // menu title maken
-        sf::Text menuText = makeText(packmanFont, "Menu", 0.15f, sf::Color::Yellow, 0.f, 0.55f,cam);
+        sf::Text menuText = makeText(Font, "Menu", 0.15f, sf::Color::Yellow, 0.f, 0.55f,cam);
+        text.push_back(menuText);
 
         // De high score tekst
-        sf::Text highscoreText = makeText(packmanFont, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
-
+        sf::Text highscoreText = makeText(Font, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
+        text.push_back(highscoreText);
 
         //De high scores zelf
         //De string maken
-        std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
-        if (!file) {
-            std::cerr << "Kon bestand niet openen.\n";
-        }
         std::string inhoud((std::istreambuf_iterator<char>(file)),
                        std::istreambuf_iterator<char>()); // lees alles
 
@@ -49,32 +60,28 @@ namespace view {
             highScoreText.push_back(c);
         }
 
-        sf::Text highNumbText = makeText(packmanFont, highScoreText, 0.05f, sf::Color::White, 0.f, 0.f,cam);
+        sf::Text highNumbText = makeText(Font, highScoreText, 0.05f, sf::Color::White, 0.f, 0.f,cam);
         sf::FloatRect highNumbBounds = highNumbText.getLocalBounds();
         highNumbText.setOrigin(highNumbBounds.width / 2.f, highNumbBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
+        text.push_back(highNumbText);
 
 
 
         //de play butten
-        int playButtenSizeHeight = cam.distanceToPixelsHeight(0.4f);
-        int playButtenSizeWidth = cam.distanceToPixelsWidth(1.2f);
-        sf::RectangleShape playButton(sf::Vector2f(static_cast<float>(playButtenSizeWidth),static_cast<float>(playButtenSizeHeight)));
-        playButton.setFillColor(sf::Color::Green);
-        sf::FloatRect boundsRect =  playButton.getLocalBounds();
-        playButton.setOrigin(boundsRect.width / 2.f, boundsRect.height / 2.f);
-        std::pair<int, int> playButtenPos = cam.worldToPixel(0.f,-0.5f);
-        playButton.setPosition(static_cast<float>(playButtenPos.first), static_cast<float>(playButtenPos.second));
+        sf::RectangleShape playButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
 
-        sf::Text playText = makeText(packmanFont, "Play", 0.2f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        sf::Text playText = makeText(Font, "Play", 0.2f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        text.push_back(playText);
 
         if (event.type == sf::Event::MouseButtonPressed &&
              event.mouseButton.button == sf::Mouse::Left) {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (playButton.getGlobalBounds().contains(mousePos)) {
+
                 // alles in de wereld inladen
                 wereld->startWorld();
                 // alle view observers linken aan objecten, elk object een observer geven
-                std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(); // score observer aanmaken
+                std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
 
                 std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
                 wereld->subscribeScore(score);
@@ -88,11 +95,11 @@ namespace view {
 
 
         // alles tekenen op de window
-        window.draw(menuText);
-        window.draw(highNumbText);
-        window.draw(highscoreText);
         window.draw(playButton);
-        window.draw(playText);
+        for (auto& Text : text) {
+            window.draw(Text);
+        }
+
     }
 
     /// ---------------------------------------------------------------------------------------------------------------
@@ -100,11 +107,8 @@ namespace view {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    LevelState::LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> world)
-        : worldView(std::move(world))
-    {
-        // wereld.start();
-    }
+    LevelState::LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> worldV)
+        : worldView(std::move(worldV)) {}
 
     void LevelState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
                          float& deltaTime) {
@@ -122,8 +126,61 @@ namespace view {
         }
 
         worldView->draw();
-
         wereld->update(deltaTime);
+    }
+
+    /// --------------------------------------------------------------------------------------------------------------
+    /// @class gameOverState
+    /// --------------------------------------------------------------------------------------------------------------
+
+    void gameOverState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
+        sf::Font Font;
+        sf::Texture Texture;
+        try {
+
+            if (!Font.loadFromFile("input_output/packman_font.ttf")) {
+                throw std::runtime_error("Kon het lettertype niet laden!");
+            }
+            if (!Texture.loadFromFile("input_output/Logo.png")) {
+                throw std::runtime_error("Texture file with name \"input_output/Logo.png\" does not exist");
+            }
+
+        } catch (const std::exception& e) {
+            std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+            throw;
+        }
+        std::vector<sf::Text> text;
+
+        // game over text
+        sf::Text gameOverText = makeText(Font, "GAME OVER", 0.2f, sf::Color::Red,0.f,0.1f,cam);
+        text.push_back(gameOverText);
+
+        // pacman logo
+        sf::RectangleShape logo = makeButton(0.4f,1.2f,sf::Color::White,cam, 0.f, 0.7f);
+        logo.setTexture(&Texture);
+
+        // Back to menu buttom
+        sf::RectangleShape backToMenuButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
+
+        sf::Text playText = makeText(Font, "Back To Menu", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        text.push_back(playText);
+
+        if (event.type == sf::Event::MouseButtonPressed &&
+             event.mouseButton.button == sf::Mouse::Left) {
+            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
+                manager.prevState();
+            }
+        }
+
+        // alles tekenen op de window
+        window.draw(backToMenuButton);
+        window.draw(logo);
+        for (auto& Text : text) {
+            window.draw(Text);
+        }
+
+
     }
 
 
