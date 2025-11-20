@@ -37,10 +37,10 @@ bool Stopwatch::changeSprite(int id) {
     std::chrono::duration<float> elapsed = currentTime - lastChangedSprite;
     if (elapsed.count() > 0.1f) {
         lastChangedSprite = currentTime;
-        changed.clear();
+        changedSprite.clear();
     }
-    if (changed.find(id) == changed.end()) {
-        changed.insert(id);
+    if (changedSprite.find(id) == changedSprite.end()) {
+        changedSprite.insert(id);
         return true;
     }
 

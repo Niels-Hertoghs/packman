@@ -19,7 +19,7 @@ private:
     std::chrono::time_point<clock> lastTime; /// tijdspunt van laatste tick
     std::chrono::time_point<clock> lastTimeEaten; /// tijdspunt van laatst gegeten coin
     std::chrono::time_point<clock> lastChangedSprite; /// tijdspunt van laatst veranderde sprite
-    std::set<int> changed; /// de Id's van de sprites die al veranderd zijn in de huidige frame
+    std::set<int> changedSprite; /// de Id's van de sprites die al veranderd zijn in de huidige frame
 
     float deltaTime; // in seconden
 
@@ -41,6 +41,7 @@ public:
      * @return Ofdat de sprite moet veranderen.
      */
     bool changeSprite(int id);
+
 
     ~Stopwatch() = default;
 };

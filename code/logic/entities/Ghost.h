@@ -19,7 +19,7 @@ namespace logic {
         enum modes mode;
         bool canChoseDir; /// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan.
         double dt;
-
+        bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
     public:
         /**
         * @brief Constructor voor de Ghost.

@@ -53,20 +53,8 @@ namespace logic {
     }
 
     void redGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-        prevX = this->getX();
-        prevY = this->getY();
-
-        // ga de richting uit
-        double dx = 0.f, dy = 0.f;
-        if (direction == directions::RIGHT) dx = 0.2f;
-        else if (direction == directions::LEFT) dx = -0.2f;
-        else if (direction == directions::UP) dy = 2.f / 7.f;
-        else if (direction == directions::DOWN) dy = -2.f / 7.f;
-
-        // Positie updaten
-        x += deltaTime * dx * speed;
-        y += deltaTime * dy * speed;
-
+        // red ghost de richting laten uitgaan
+        this->move(deltaTime);
 
         // zie of de huidige pos niet op een muur staat
         for (std::shared_ptr<entity>& w : walls) {
@@ -83,11 +71,44 @@ namespace logic {
             }
         }
 
-        if (this->possibleDirections(walls).size() > 2 && canChoseDir) {
-            this->nextDirection(walls);
+        std::vector<directions> posDirections = this->possibleDirections(walls);
+
+        // Als we NIET op een kruispunt staan → reset gekozen-flag
+        if (posDirections.size() <= 2) {
+            hasChosenAtIntersection = false;
         }
 
+        // kruispunten detecteren, en eventueel de richting uitgaan (niet terug draaien)
+        if (posDirections.size() > 2 && canChoseDir && !hasChosenAtIntersection) {
+            hasChosenAtIntersection = true; // <<< BELANGRIJK
 
+            prevDirection = this->direction;
+
+            // zorg ervoor dat we niet de omgekeerde richting kiezen
+            std::vector<directions> dirs = this->possibleDirections(walls);
+
+            // verwijder de omgekeerde richting
+            directions forbidden = oppositeDirection(direction);
+            dirs.erase(std::remove(dirs.begin(), dirs.end(), forbidden), dirs.end());
+
+            // als er nog richtingen over zijn, kies een nieuwe
+
+                // stuur de bijhorende notificatie
+            if (!dirs.empty()) {
+                int chosenDir = random::getInstance()->getNumber(0, dirs.size());
+                direction = dirs[chosenDir];
+                for (directions dit : dirs) {
+                    std::cout << dit ;
+                }
+                std::cout << std::endl;
+                // notify
+                if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+                else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+                else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
+                else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+            }
+
+        }
 
         ghostObserver->notify(notifications::CHANGE_POSITION);
     }

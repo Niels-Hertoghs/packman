@@ -36,6 +36,7 @@ namespace logic {
         bool standsOn(const std::shared_ptr<entity>& other);
         bool pointInWall(std::shared_ptr<entity> wall,double x,double y);
         void prevLocation();
+        void move(double delta);
 
         static directions oppositeDirection(directions dir);
     };

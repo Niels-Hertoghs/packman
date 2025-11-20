@@ -62,6 +62,22 @@ namespace logic {
         return UP; // of een default value, om compiler warning te vermijden
     }
 
+    void movableEntity::move(double delta) {
+        // ga de richting uit
+        prevX = this->getX();
+        prevY = this->getY();
+
+        double dx = 0.f, dy = 0.f;
+        if (direction == directions::RIGHT) dx = 0.2f;
+        else if (direction == directions::LEFT) dx = -0.2f;
+        else if (direction == directions::UP) dy = 2.f / 7.f;
+        else if (direction == directions::DOWN) dy = -2.f / 7.f;
+
+        // Positie updaten
+        x += delta * dx * speed;
+        y += delta * dy * speed;
+    }
+
 
 
     /// ---------------------------------------------------------------------------------------------------------------
@@ -72,8 +88,6 @@ namespace logic {
 
     void Packman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
-        prevX = this->getX();
-        prevY = this->getY();
 
         double newX = x;
         double newY = y;
@@ -84,6 +98,8 @@ namespace logic {
             // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
             // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/8 van een blokje om te zien of het een muur is.
             // 1/8, is redelijk kklein maar ook niet te klein dat het foutgen geeft, in mijn testen
+
+            // de positie berekenen
             double stepX = 0.f, stepY = 0.f;
 
             if (nextDirection == directions::RIGHT) stepX = 1/80.f;
@@ -94,10 +110,16 @@ namespace logic {
             newX = x + stepX;
             newY = y + stepY;
 
-            bool canMove = std::none_of(walls.begin(), walls.end(),
-                [&](const std::shared_ptr<entity>& w) { return wouldCollide(w, newX, newY); });
 
+            // kijken of er daar geen wall staat
+            bool canMove = true;
 
+            for (const std::shared_ptr<entity>& w : walls) {
+                if (wouldCollide(w,newX,newY)) {
+                    canMove = false;
+                    break;
+                }
+            }
 
             if (canMove) {
                 direction = nextDirection;
@@ -112,18 +134,9 @@ namespace logic {
                 }
             }
         }
-        // ga de richting uit
-        double dx = 0.f, dy = 0.f;
-        if (direction == directions::RIGHT) dx = 0.2f;
-        else if (direction == directions::LEFT) dx = -0.2f;
-        else if (direction == directions::UP) dy = 2.f / 7.f;
-        else if (direction == directions::DOWN) dy = -2.f / 7.f;
 
-        // Positie updaten
-        x += delta * dx * speed;
-        y += delta * dy * speed;
-
-
+        // De movable laten bewegen in de direction.
+        this->move(delta);
 
         // zie of de huidige pos niet op een muur staat
         for (std::shared_ptr<entity>& w : walls) {
