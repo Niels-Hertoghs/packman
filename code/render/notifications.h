@@ -12,7 +12,10 @@ enum notifications {
     CHANGE_DIRECTION_RIGHT,
     CHANGE_POSITION,
     DELETE,
-    COLLECTED
+    COLLECTED,
+    UPDATE_SCORE,
+    UPDATE_LIVES,
+    UPDATE_LEVEL
 };
 
 enum directions {

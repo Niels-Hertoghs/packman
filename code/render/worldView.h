@@ -11,6 +11,7 @@
 #include "movableEntityView.h"
 #include "collectableView.h"
 #include "ghostView.h"
+#include "ScoreView.h"
 
 namespace logic {
     class world;
@@ -29,10 +30,10 @@ namespace view {
         std::shared_ptr<view::redGhostView> redGhost;
 
 
-        std::shared_ptr<Score> score;
+        std::shared_ptr<view::ScoreView> score;
     public:
-        worldView(const std::shared_ptr<logic::world>& _wereld,camera& camera, sf::RenderWindow& window,std::shared_ptr<Score>& score);
-        void draw() override;
+        worldView(const std::shared_ptr<logic::world>& _wereld,camera& camera, sf::RenderWindow& window,std::shared_ptr<logic::Score>& score);
+        void draw();
     };
 }
 

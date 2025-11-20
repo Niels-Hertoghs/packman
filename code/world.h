@@ -15,6 +15,7 @@
 #include "logic/entities/collectable.h"
 #include "logic/entities/movableEntity.h"
 #include "logic/entities/Ghost.h"
+#include "logic/entities/Score.h"
 
 namespace logic {
     /**
@@ -40,13 +41,13 @@ namespace logic {
         void update(float deltaTime);
         void updatePacmanDir(directions);
 
-        void subscribeScore(std::shared_ptr<Score> score);
+        void subscribeScore(std::shared_ptr<logic::Score> score);
 
         //getters
         [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
         [[nodiscard]] std::vector<std::shared_ptr<fruit>> get_fruits() const;
         [[nodiscard]] std::vector<std::shared_ptr<coin>> get_coins() const;
-        std::shared_ptr<redGhost> get_red_ghost() const;
+        [[nodiscard]] std::shared_ptr<redGhost> get_red_ghost() const;
         [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
     };
 }

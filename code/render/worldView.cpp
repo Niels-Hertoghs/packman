@@ -6,8 +6,8 @@
 #include "../world.h"
 
 namespace view {
-    worldView::worldView(const std::shared_ptr<logic::world>& wereld,camera& camera, sf::RenderWindow& window,std::shared_ptr<Score>& _score)
-        : score(_score)
+    worldView::worldView(const std::shared_ptr<logic::world>& wereld,camera& camera, sf::RenderWindow& window,std::shared_ptr<logic::Score>& _score)
+
     {
 
         // De wall observers worden aangemaakt en gelinkt aan de models.
@@ -41,6 +41,10 @@ namespace view {
         std::shared_ptr<redGhostView> _redGhostView = std::make_shared<redGhostView>(window,camera,red_ghost);
         red_ghost->redGhostSubscribe(_redGhostView);
         redGhost = _redGhostView;
+
+        std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window,camera,_score);
+        _score->subscribeScore(score_view);
+        score = score_view;
     }
 
     void worldView::draw() {

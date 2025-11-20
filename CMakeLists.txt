@@ -38,7 +38,13 @@ add_executable(packman main.cpp
         code/render/ghostView.cpp
         code/render/ghostView.h
         code/logic/random.h
-        code/logic/random.cpp)
+        code/logic/random.cpp
+        code/logic/entities/Score.cpp
+        code/logic/entities/Score.h
+        code/render/ScoreView.cpp
+        code/render/ScoreView.h
+        code/logic/state_maneger/state.cpp
+        code/logic/state_maneger/state.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

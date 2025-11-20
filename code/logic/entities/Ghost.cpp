@@ -126,6 +126,8 @@ namespace logic {
         int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
 
         direction = possibleDirections[chosenDir];
+
+        // observer notfyen
         if (direction == directions::RIGHT) {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
         } else if (direction == directions::LEFT) {

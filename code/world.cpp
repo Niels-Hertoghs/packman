@@ -94,7 +94,7 @@ namespace logic {
     }
 
 
-    void world::subscribeScore(std::shared_ptr<Score> _score) {
+    void world::subscribeScore(std::shared_ptr<logic::Score> _score) {
         score = _score;
     }
 

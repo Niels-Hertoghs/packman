@@ -127,7 +127,7 @@ void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& ma
             // alles in de wereld inladen
             wereld->startWorld();
             // alle view observers linken aan objecten, elk object een observer geven
-            std::shared_ptr<Score> score = std::make_shared<Score>(window,cam); // score observer aanmaken
+            std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(); // score observer aanmaken
 
             std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
             wereld->subscribeScore(score);
