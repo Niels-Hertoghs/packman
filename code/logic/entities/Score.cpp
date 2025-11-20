@@ -30,6 +30,13 @@ namespace logic {
         }
     }
 
+    void Score::nextLevel() {
+        level++;
+        std::unique_ptr<view::VictoryState> state = std::make_unique<view::VictoryState>();
+        manager.prevState();
+        manager.pushState(std::move(state));
+    }
+
 
     void Score::subscribeScore(std::shared_ptr<view::ScoreView> scoreView) {
         scoreObserver = scoreView;

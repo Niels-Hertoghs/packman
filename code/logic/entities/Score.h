@@ -25,6 +25,7 @@ namespace logic {
         void coinEaten(float coinPoints);
         void liveLost();
         void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);
+        void nextLevel();
 
         [[nodiscard]] int getScore() const;
         [[nodiscard]] int getLivesLeft() const;

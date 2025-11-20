@@ -23,9 +23,12 @@ namespace view {
     * brief Abstract base class for different game states.
     */
     class state {
+    protected:
+        sf::Font font;
+        sf::Texture texture;
     public:
 
-        state() = default;
+        state();
         virtual ~state() = default;
 
         virtual void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
@@ -59,6 +62,12 @@ namespace view {
     class gameOverState : public state {
     public:
         gameOverState() = default;
+        void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
+    };
+
+    class VictoryState : public state {
+    public:
+        VictoryState() = default;
         void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
 

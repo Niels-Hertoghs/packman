@@ -29,6 +29,7 @@ private:
 public:
     stateManeger();
     void pushState(std::unique_ptr<view::state> newState);
+    void pushStateAndDelete(std::unique_ptr<view::state> newState);
     void prevState();
     std::unique_ptr<view::state> getCurrentState();
 

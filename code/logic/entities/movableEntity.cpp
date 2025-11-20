@@ -89,7 +89,7 @@ namespace logic {
     /// @class Packman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Packman::Packman(double x, double y)  : movableEntity(x,y,1.f,directions::RIGHT), nextDirection(EMPTY) {}
+    Packman::Packman(double x, double y)  : movableEntity(x,y,3.f,directions::RIGHT), nextDirection(EMPTY) {}
 
     void Packman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)

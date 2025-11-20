@@ -86,6 +86,9 @@ namespace logic {
         if (pacman->standsOnGhost(_redGhost)) {
             died();
         }
+        if (fruits.empty() && coins.empty()) {
+            score->nextLevel();
+        }
     }
 
     void world::died() {
@@ -122,6 +125,10 @@ namespace logic {
 
     std::shared_ptr<Packman> world::get_pacman() const {
         return pacman;
+    }
+
+    std::shared_ptr<Score> world::get_score() const {
+        return score;
     }
 
     void world::clear() {

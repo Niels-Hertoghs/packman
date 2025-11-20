@@ -55,6 +55,7 @@ namespace logic {
         [[nodiscard]] std::vector<std::shared_ptr<coin>> get_coins() const;
         [[nodiscard]] std::shared_ptr<redGhost> get_red_ghost() const;
         [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
+        [[nodiscard]] std::shared_ptr<Score> get_score() const;
     };
 }
 

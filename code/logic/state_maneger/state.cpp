@@ -10,6 +10,26 @@
 #include "stateManeger.h"
 
 namespace view {
+    state::state() {
+        sf::Font Font;
+        sf::Texture Texture;
+        try {
+
+            if (!Font.loadFromFile("input_output/packman_font.ttf")) {
+                throw std::runtime_error("Kon het lettertype niet laden!");
+            }
+            if (!Texture.loadFromFile("input_output/Logo.png")) {
+                throw std::runtime_error("Texture file with name \"input_output/Logo.png\" does not exist");
+            }
+
+        } catch (const std::exception& e) {
+            std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+            throw;
+        }
+        font = Font;
+        texture = Texture;
+    }
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class menuState
     /// ---------------------------------------------------------------------------------------------------------------
@@ -18,14 +38,8 @@ namespace view {
                         float& deltaTime)
     {
 
-        //lettertype inladen
-        sf::Font Font;
         std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
         try {
-
-            if (!Font.loadFromFile("input_output/packman_font.ttf")) {
-                throw std::runtime_error("Kon het lettertype niet laden!");
-            }
             if (!file) {
                 std::cerr << "Kon bestand niet openen.\n";
             }
@@ -38,11 +52,11 @@ namespace view {
         std::vector<sf::Text> text;
 
         // menu title maken
-        sf::Text menuText = makeText(Font, "Menu", 0.15f, sf::Color::Yellow, 0.f, 0.55f,cam);
+        sf::Text menuText = makeText(font, "Menu", 0.15f, sf::Color::Yellow, 0.f, 0.55f,cam);
         text.push_back(menuText);
 
         // De high score tekst
-        sf::Text highscoreText = makeText(Font, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
+        sf::Text highscoreText = makeText(font, "Previous High scores:", 0.1f, sf::Color::White, 0.f, 0.35f,cam);
         text.push_back(highscoreText);
 
         //De high scores zelf
@@ -60,7 +74,7 @@ namespace view {
             highScoreText.push_back(c);
         }
 
-        sf::Text highNumbText = makeText(Font, highScoreText, 0.05f, sf::Color::White, 0.f, 0.f,cam);
+        sf::Text highNumbText = makeText(font, highScoreText, 0.05f, sf::Color::White, 0.f, 0.f,cam);
         sf::FloatRect highNumbBounds = highNumbText.getLocalBounds();
         highNumbText.setOrigin(highNumbBounds.width / 2.f, highNumbBounds.height / 2.f); // het midden van de tekst is de coo waar het staat
         text.push_back(highNumbText);
@@ -70,7 +84,7 @@ namespace view {
         //de play butten
         sf::RectangleShape playButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
 
-        sf::Text playText = makeText(Font, "Play", 0.2f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        sf::Text playText = makeText(font, "Play", 0.2f, sf::Color::Magenta, 0.f, -0.5f,cam);
         text.push_back(playText);
 
         if (event.type == sf::Event::MouseButtonPressed &&
@@ -87,15 +101,13 @@ namespace view {
                 // alle view observers linken aan objecten, elk object een observer geven
                 std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
 
-
-
                 std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
                 wereld->subscribeScore(score);
 
                 std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
                 //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
                 manager.pushState(std::move(level));
-
+                return;
             }
         }
 
@@ -140,35 +152,20 @@ namespace view {
     /// --------------------------------------------------------------------------------------------------------------
 
     void gameOverState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
-        sf::Font Font;
-        sf::Texture Texture;
-        try {
-
-            if (!Font.loadFromFile("input_output/packman_font.ttf")) {
-                throw std::runtime_error("Kon het lettertype niet laden!");
-            }
-            if (!Texture.loadFromFile("input_output/Logo.png")) {
-                throw std::runtime_error("Texture file with name \"input_output/Logo.png\" does not exist");
-            }
-
-        } catch (const std::exception& e) {
-            std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
-            throw;
-        }
         std::vector<sf::Text> text;
 
         // game over text
-        sf::Text gameOverText = makeText(Font, "GAME OVER", 0.2f, sf::Color::Red,0.f,0.1f,cam);
+        sf::Text gameOverText = makeText(font, "GAME OVER", 0.2f, sf::Color::Red,0.f,0.1f,cam);
         text.push_back(gameOverText);
 
         // pacman logo
         sf::RectangleShape logo = makeButton(0.4f,1.2f,sf::Color::White,cam, 0.f, 0.7f);
-        logo.setTexture(&Texture);
+        logo.setTexture(&texture);
 
         // Back to menu buttom
         sf::RectangleShape backToMenuButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
 
-        sf::Text playText = makeText(Font, "Back To Menu", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        sf::Text playText = makeText(font, "Back To Menu", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
         text.push_back(playText);
 
         if (event.type == sf::Event::MouseButtonPressed &&
@@ -176,6 +173,7 @@ namespace view {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
                 manager.prevState();
+                return;
             }
         }
 
@@ -185,9 +183,74 @@ namespace view {
         for (auto& Text : text) {
             window.draw(Text);
         }
-
-
     }
+
+    void VictoryState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
+
+        sf::Texture Texture;
+        try {
+            if (!Texture.loadFromFile("input_output/victoryPacman.png")) {
+                throw std::runtime_error("Texture file with name \"input_output/victoryPacman.png\" does not exist");
+            }
+
+        } catch (const std::exception& e) {
+            std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+            throw;
+        }
+
+        std::vector<sf::Text> text;
+        std::vector<sf::RectangleShape> rechthoeken;
+
+        // pacman logo
+        sf::RectangleShape logo = makeButton(0.4f,1.2f,sf::Color::White,cam, 0.f, 0.7f);
+        logo.setTexture(&texture);
+        rechthoeken.push_back(logo);
+
+        // win afbeelding
+        sf::RectangleShape victory = makeButton(0.7f, 0.7f,sf::Color::White,cam, 0.f, 0.1f);
+        victory.setTexture(&Texture);
+        rechthoeken.push_back(victory);
+
+        // next Level
+        sf::RectangleShape backToMenuButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
+        rechthoeken.push_back(backToMenuButton);
+
+        sf::Text playText = makeText(font, "Next Level", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        text.push_back(playText);
+
+        if (event.type == sf::Event::MouseButtonPressed &&
+             event.mouseButton.button == sf::Mouse::Left) {
+            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
+                // alles ven reseten
+                Stopwatch::getInstance()->reset();
+                wereld->clear();
+
+                // alles opnieuw in de wereld inladen
+                wereld->startWorld();
+
+                // alle view observers linken aan objecten, elk object een observer geven
+                std::shared_ptr<logic::Score> score = wereld->get_score();
+                std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
+
+                std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
+
+                //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
+                manager.pushStateAndDelete(std::move(level));
+                return;
+            }
+        }
+
+
+        // alles op het scherm tekenen
+        for (auto& rechthoek : rechthoeken) {
+            window.draw(rechthoek);
+        }
+        for (auto& Text : text) {
+            window.draw(Text);
+        }
+    }
+
 
 
 } // view
