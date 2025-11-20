@@ -24,6 +24,7 @@ namespace logic {
         directions direction; /// Richting dat het object gaat.
         double speed; /// De snelheid van het object.
         double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
+        const double spwanLocatieX, spwanLocatiey;  /// Begin locatie van het object, voor als het dood gaat dat het er terug kan spawnen.
     public:
         // constructor
         movableEntity(double x,double y,double speed,directions direction);
@@ -37,6 +38,7 @@ namespace logic {
         bool pointInWall(std::shared_ptr<entity> wall,double x,double y);
         void prevLocation();
         void move(double delta);
+        void toSpawnLocation();
 
         static directions oppositeDirection(directions dir);
     };

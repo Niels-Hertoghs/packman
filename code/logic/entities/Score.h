@@ -20,6 +20,7 @@ namespace logic {
     public:
         Score();
         void coinEaten(float coinPoints);
+        void liveLost();
         void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);
 
         [[nodiscard]] int getScore() const;

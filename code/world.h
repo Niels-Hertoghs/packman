@@ -43,6 +43,11 @@ namespace logic {
 
         void subscribeScore(std::shared_ptr<logic::Score> score);
 
+        /**
+         * Als pacman gestorven is -> alles restart
+         */
+        void died();
+
         //getters
         [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
         [[nodiscard]] std::vector<std::shared_ptr<fruit>> get_fruits() const;

@@ -84,10 +84,16 @@ namespace logic {
         }
         std::shared_ptr<Ghost> r = _redGhost;
         if (pacman->standsOnGhost(_redGhost)) {
-            std::cerr << "World has collided" << std::endl;
-            //TODo: lives-1
+            died();
         }
     }
+
+    void world::died() {
+        score->liveLost();
+        _redGhost->toSpawnLocation();
+        pacman->toSpawnLocation();
+    }
+
 
     void world::updatePacmanDir(directions dir) {
         pacman->updateDir(dir);

@@ -50,7 +50,7 @@ namespace view {
 
     void ScoreView::notify(enum notifications message) {
         switch (message) {
-            case UPDATE_SCORE:
+            case UPDATE_SCORE: {
                 int currentScore = 0;
                 if (auto observer = scoreModel.lock()) {
                     currentScore = observer->getScore();
@@ -60,6 +60,18 @@ namespace view {
                 ScoreText.setOrigin(0,scoreTextBounds.height);
                 scoreText = ScoreText;
                 break;
+            }
+
+            case UPDATE_LIVES: {
+                int livesLeft = 0;
+                if (auto observer = scoreModel.lock()) {
+                    livesLeft = observer->getLivesLeft();
+                }
+                sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(livesLeft) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
+                sf::FloatRect LifesBounds = LifesText.getLocalBounds();
+                LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
+                lifesText = LifesText;
+            }
 
         }
     }

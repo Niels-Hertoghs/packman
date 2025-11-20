@@ -18,6 +18,12 @@ namespace logic {
         scoreObserver->notify(notifications::UPDATE_SCORE);
     }
 
+    void Score::liveLost() {
+        livesLeft--;
+        scoreObserver->notify(notifications::UPDATE_LIVES);
+    }
+
+
     void Score::subscribeScore(std::shared_ptr<view::ScoreView> scoreView) {
         scoreObserver = scoreView;
     }

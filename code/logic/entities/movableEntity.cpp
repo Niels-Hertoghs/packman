@@ -12,7 +12,7 @@ namespace logic {
     /// @class movableEntity
     /// ---------------------------------------------------------------------------------------------------------------
 
-    movableEntity::movableEntity(double x, double y, double speed,directions dir) : entity(x, y), direction(dir), speed(speed) {}
+    movableEntity::movableEntity(double x, double y, double speed,directions dir) : entity(x, y), direction(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
         return this->wouldCollide(other,x,y);
@@ -78,6 +78,10 @@ namespace logic {
         y += delta * dy * speed;
     }
 
+    void movableEntity::toSpawnLocation() {
+        x = spwanLocatieX;
+        y = spwanLocatiey;
+    }
 
 
     /// ---------------------------------------------------------------------------------------------------------------
