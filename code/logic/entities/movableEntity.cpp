@@ -58,8 +58,8 @@ namespace logic {
         case DOWN: return UP;
         case LEFT: return RIGHT;
         case RIGHT: return LEFT;
+        default: return EMPTY;
         }
-        return UP; // of een default value, om compiler warning te vermijden
     }
 
     void movableEntity::move(double delta) {

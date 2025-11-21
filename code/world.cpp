@@ -61,7 +61,13 @@ namespace logic {
 
         pacman->update(deltaTime,allWalls);
 
-        _redGhost->update(deltaTime,allWalls);
+        if (_redGhost->hadFirstCollision()) {
+            _redGhost->update(deltaTime,allWalls);
+        } else {
+            std::vector<std::shared_ptr<entity>> w;
+            w.insert(w.end(),walls.begin(),walls.end());
+            _redGhost->update(deltaTime,w);
+        }
 
         // zien of pacman niet op een collectable staat
         for (auto it = coins.begin(); it != coins.end(); ) {
@@ -88,6 +94,7 @@ namespace logic {
         }
         if (fruits.empty() && coins.empty()) {
             score->nextLevel();
+            // nextLevel();
         }
     }
 
@@ -101,7 +108,6 @@ namespace logic {
     void world::updatePacmanDir(directions dir) {
         pacman->updateDir(dir);
     }
-
 
     void world::subscribeScore(std::shared_ptr<logic::Score> _score) {
         score = _score;

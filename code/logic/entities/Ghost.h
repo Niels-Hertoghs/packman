@@ -17,7 +17,7 @@ namespace logic {
     protected:
         directions prevDirection;
         enum modes mode;
-        bool canChoseDir; /// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan.
+        bool canChoseDir;/// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan. Is er ook zodat de ghost de ghost kamer kan verlaten en daarna niet meer door de invisible walls kan.
         double dt;
         bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
     public:
@@ -33,6 +33,8 @@ namespace logic {
         void died() override = 0;
 
         std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
+        bool hadFirstCollision();
+        void changeDirection(directions direction);
     };
 
     class redGhost : public Ghost {

@@ -19,9 +19,9 @@ namespace logic {
 
         for (directions dir : {DOWN, UP, RIGHT, LEFT}) {
 
-
             double stepX = 0.f, stepY = 0.f;
 
+            // zelfde logica a;s bij pacman, om te zien of het die richting uit kan gaan.
             if (dir == directions::RIGHT) stepX = 1/80.f;
             else if (dir == directions::LEFT) stepX = -1/80.f;
             else if (dir == directions::UP) stepY = 1.f / 56.f;
@@ -46,6 +46,17 @@ namespace logic {
         return possibleDirections;
     }
 
+    void Ghost::changeDirection(directions _direction) {
+        prevDirection = direction;
+        this->direction = _direction;
+    }
+
+    bool Ghost::hadFirstCollision() {
+        return canChoseDir;
+    }
+
+
+
     redGhost::redGhost(double x, double y) : Ghost(x,y) {}
 
     void redGhost::redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver) {
@@ -60,13 +71,16 @@ namespace logic {
         for (std::shared_ptr<entity>& w : walls) {
             if (standsOn(w) ) {
                 prevLocation();
+
+                // hardcode voor de eerste botsing tegen een muur (vanboven uit hun hok)
                 if (!canChoseDir) {
-                    direction = LEFT;
+                    changeDirection(LEFT);
                     ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
                     canChoseDir = true;
-                } else {
-                    this->nextDirection(walls);
+                    hasChosenAtIntersection = true;
+                    return;
                 }
+                this->nextDirection(walls);
                 break;
             }
         }
@@ -74,33 +88,35 @@ namespace logic {
         std::vector<directions> posDirections = this->possibleDirections(walls);
 
         // Als we NIET op een kruispunt staan → reset gekozen-flag
+        // zodat de ghost maar 1 keer kan kiezen per kruispunt (door mijn gebruikte logica, kan die soms meerdere keren kiezen per kruispunt, nu niet meer)
         if (posDirections.size() <= 2) {
             hasChosenAtIntersection = false;
         }
 
         // kruispunten detecteren, en eventueel de richting uitgaan (niet terug draaien)
         if (posDirections.size() > 2 && canChoseDir && !hasChosenAtIntersection) {
-            hasChosenAtIntersection = true; // <<< BELANGRIJK
+            hasChosenAtIntersection = true; // zodat die niet meerdere keren kiest aan dit kruispunt
 
-            prevDirection = this->direction;
-
-            // zorg ervoor dat we niet de omgekeerde richting kiezen
-            std::vector<directions> dirs = this->possibleDirections(walls);
-
-            // verwijder de omgekeerde richting
+            // verwijder de omgekeerde richting, zodat het niet kan terug keren op een kruispunt
             directions forbidden = oppositeDirection(direction);
-            dirs.erase(std::remove(dirs.begin(), dirs.end(), forbidden), dirs.end());
+            if (forbidden == EMPTY) {
+                return;
+            }
 
-            // als er nog richtingen over zijn, kies een nieuwe
+            std::vector<directions> filteredDirections;
 
-                // stuur de bijhorende notificatie
-            if (!dirs.empty()) {
-                int chosenDir = random::getInstance()->getNumber(0, dirs.size());
-                direction = dirs[chosenDir];
-                for (directions dit : dirs) {
-                    std::cout << dit ;
+            for (directions d : posDirections) {
+                if (d != forbidden) {
+                    filteredDirections.push_back(d);
                 }
-                std::cout << std::endl;
+            }
+
+            // verander van richting
+            if (!filteredDirections.empty()) {
+                int chosenDir = random::getInstance()->getNumber(0, filteredDirections.size());;
+
+                changeDirection(filteredDirections[chosenDir]);
+
                 // notify
                 if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
                 else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
@@ -115,7 +131,6 @@ namespace logic {
 
     void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
-        prevDirection = this->direction;
         std::vector<directions> possibleDirections = this->possibleDirections(walls);
 
 
@@ -125,7 +140,7 @@ namespace logic {
 
         int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
 
-        direction = possibleDirections[chosenDir];
+        changeDirection(possibleDirections[chosenDir]);
 
         // observer notfyen
         if (direction == directions::RIGHT) {
