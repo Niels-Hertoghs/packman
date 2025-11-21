@@ -7,6 +7,9 @@
 #include "movableEntityView.h"
 
 namespace logic {
+    class blueGhost;
+    class greenGhost;
+    class purpleGhost;
     class redGhost;
     class Ghost;
 }
@@ -28,6 +31,28 @@ namespace view {
         redGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::redGhost>& ghostModel);
         void notify(enum notifications message) override;
     };
+
+    class blueGhostView : public ghostView {
+        std::weak_ptr<logic::blueGhost> blueGhostModel;
+    public:
+        blueGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::blueGhost>& ghostModel);
+        void notify(enum notifications message) override;
+    };
+
+    class greenGhostView : public ghostView {
+        std::weak_ptr<logic::greenGhost> greenGhostModel;
+    public:
+        greenGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::greenGhost>& ghostModel);
+        void notify(enum notifications message) override;
+    };
+
+    class purpleGhostView : public ghostView {
+        std::weak_ptr<logic::purpleGhost> purpleGhostModel;
+    public:
+        purpleGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::purpleGhost>& ghostModel);
+        void notify(enum notifications message) override;
+    };
+
 } // view
 
 #endif //PACKMAN_GHOSTVIEW_H

@@ -55,6 +55,39 @@ namespace logic {
         // past automatich de direction aan en update observer
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
     };
+
+    class blueGhost : public Ghost {
+    private:
+        std::shared_ptr<view::blueGhostView> ghostObserver;
+    public:
+        blueGhost(double x,double y);
+        void blueGhostSubscribe(std::shared_ptr<view::blueGhostView> ghostObserver);
+        void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
+        void died() override;
+        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
+    };
+
+    class greenGhost : public Ghost {
+    private:
+        std::shared_ptr<view::greenGhostView> ghostObserver;
+    public:
+        greenGhost(double x,double y);
+        void greenGhostSubscribe(std::shared_ptr<view::greenGhostView> ghostObserver);
+        void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
+        void died() override;
+        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
+    };
+
+    class purpleGhost : public Ghost {
+    private:
+        std::shared_ptr<view::purpleGhostView> ghostObserver;
+    public:
+        purpleGhost(double x,double y);
+        void purpleGhostSubscribe(std::shared_ptr<view::purpleGhostView> ghostObserver);
+        void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
+        void died() override;
+        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
+    };
 } // logic
 
 #endif //PACKMAN_GHOST_H

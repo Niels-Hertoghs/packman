@@ -30,6 +30,10 @@ namespace logic {
         std::vector<std::shared_ptr<invisibleWall>> invisibleWalls;
 
         std::shared_ptr<redGhost> _redGhost;
+        std::shared_ptr<blueGhost> _blueGhost;
+        std::shared_ptr<purpleGhost> _purpleGhost;
+        std::shared_ptr<greenGhost> _greenGhost;
+
         std::shared_ptr<Packman> pacman;
         std::string inputFile;
 
@@ -53,7 +57,12 @@ namespace logic {
         [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
         [[nodiscard]] std::vector<std::shared_ptr<fruit>> get_fruits() const;
         [[nodiscard]] std::vector<std::shared_ptr<coin>> get_coins() const;
+
         [[nodiscard]] std::shared_ptr<redGhost> get_red_ghost() const;
+        [[nodiscard]] std::shared_ptr<blueGhost> get_blue_ghost() const;
+        [[nodiscard]] std::shared_ptr<purpleGhost> get_purple_ghost() const;
+        [[nodiscard]] std::shared_ptr<greenGhost> get_green_ghost() const;
+
         [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
         [[nodiscard]] std::shared_ptr<Score> get_score() const;
     };

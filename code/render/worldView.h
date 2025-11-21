@@ -27,7 +27,11 @@ namespace view {
         std::vector<std::shared_ptr<coinView>> coins;
         // std::vector<std::shared_ptr<view::movableEntityView>> movables;
         std::shared_ptr<view::packmanView> pacman;
+
         std::shared_ptr<view::redGhostView> redGhost;
+        std::shared_ptr<view::blueGhostView> blueGhost;
+        std::shared_ptr<view::greenGhostView> greenGhost;
+        std::shared_ptr<view::purpleGhostView> purpleGhost;
 
 
         std::shared_ptr<view::ScoreView> score;

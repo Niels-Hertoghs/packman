@@ -55,7 +55,9 @@ namespace logic {
         return canChoseDir;
     }
 
-
+    /// ---------------------------------------------------------------------------------------------------------------
+    /// redGhost
+    /// ---------------------------------------------------------------------------------------------------------------
 
     redGhost::redGhost(double x, double y) : Ghost(x,y) {}
 
@@ -156,6 +158,7 @@ namespace logic {
 
     void redGhost::died() {
         toSpawnLocation();
+        canChoseDir = false;
         if (direction == directions::RIGHT) {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
         } else if (direction == directions::LEFT) {
@@ -166,5 +169,79 @@ namespace logic {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
         }
     }
+
+    /// ---------------------------------------------------------------------------------------------------------------
+    /// blueGhost
+    /// ---------------------------------------------------------------------------------------------------------------
+
+
+    blueGhost::blueGhost(double x, double y)  : Ghost(x,y) {}
+
+    void blueGhost::blueGhostSubscribe(std::shared_ptr<view::blueGhostView> _ghostObserver) {
+        ghostObserver = _ghostObserver;
+    }
+
+    void blueGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
+
+    }
+
+
+    void blueGhost::died() {
+
+    }
+
+
+    void blueGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+    }
+
+    /// ---------------------------------------------------------------------------------------------------------------
+    /// purpleGhost
+    /// ---------------------------------------------------------------------------------------------------------------
+
+
+    purpleGhost::purpleGhost(double x, double y)  : Ghost(x,y) {}
+
+    void purpleGhost::purpleGhostSubscribe(std::shared_ptr<view::purpleGhostView> _ghostObserver) {
+        ghostObserver = _ghostObserver;
+    }
+
+
+    void purpleGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
+
+    }
+
+
+    void purpleGhost::died() {
+
+    }
+
+
+    void purpleGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+    }
+
+    /// ---------------------------------------------------------------------------------------------------------------
+    /// greenGhost
+    /// ---------------------------------------------------------------------------------------------------------------
+
+
+    greenGhost::greenGhost(double x, double y)  : Ghost(x,y) {}
+
+    void greenGhost::greenGhostSubscribe(std::shared_ptr<view::greenGhostView> _ghostObserver) {
+        ghostObserver = _ghostObserver;
+    }
+
+    void greenGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
+
+    }
+
+
+    void greenGhost::died() {
+
+    }
+
+
+    void greenGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+    }
+
 
 } // logic

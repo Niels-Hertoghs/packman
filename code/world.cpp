@@ -8,6 +8,8 @@
 #include <sstream>
 
 namespace logic {
+
+
     world::world(const std::string& inputFile2) {
         try {
             std::ifstream file(inputFile2);
@@ -29,29 +31,45 @@ namespace logic {
         while (std::getline(file, line)) {
             double x = -1.0;
             for (char c : line) {
-                if (c == '#') {
+                switch (c) {
+                case '#':
                     walls.push_back(std::make_shared<wall>(x, y));
-                }  else if (c == '_') {
-                    invisibleWalls.push_back(std::make_shared<invisibleWall>(x, y));
-                } else if (c == '-') {
+                    break;
+                case '-':
                     // points staat op 40 om te beginne
                     coins.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
-                } else if (c == 'f') {
+                    break;
+                case '_' :
+                    invisibleWalls.push_back(std::make_shared<invisibleWall>(x, y));
+                    break;
+                case 'f':
                     // points staan op 50 om te beginne, is meer dan coins
                     fruits.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50));
-                } else if (c == 'p') {
+                    break;
+                case 'p':
                     //pacman aanmaken, origin = midpunt
-                    pacman = std::make_shared<Packman>(0.f, 1 - 19.f/14.f);
-                } else if (c == 'r') {
+                    pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f);
+                    break;
+                case 'r':
                     _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                    break;
+                case 'g':
+                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                    break;
+                case 'b':
+                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                    break;
+                case 'a' :
+                    _purpleGhost = std::make_shared<purpleGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                    break;
+                default:
+                    continue;
                 }
                 x += 0.1;
             }
             y -= 1.0/7.0;
         }
     }
-
-
 
     void world::update(float deltaTime) {
         // pacman updaten, oa de locatie
@@ -135,6 +153,18 @@ namespace logic {
 
     std::shared_ptr<Score> world::get_score() const {
         return score;
+    }
+
+    std::shared_ptr<blueGhost> world::get_blue_ghost() const {
+        return _blueGhost;
+    }
+
+    std::shared_ptr<purpleGhost> world::get_purple_ghost() const {
+        return _purpleGhost;
+    }
+
+    std::shared_ptr<greenGhost> world::get_green_ghost() const {
+        return _greenGhost;
     }
 
     void world::clear() {

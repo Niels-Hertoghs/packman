@@ -42,6 +42,21 @@ namespace view {
         red_ghost->redGhostSubscribe(_redGhostView);
         redGhost = _redGhostView;
 
+        std::shared_ptr<logic::blueGhost> blue_ghost = wereld->get_blue_ghost();
+        std::shared_ptr<blueGhostView> _blueGhostView = std::make_shared<blueGhostView>(window,camera,blue_ghost);
+        blue_ghost->blueGhostSubscribe(_blueGhostView);
+        blueGhost = _blueGhostView;
+
+        std::shared_ptr<logic::greenGhost> green_ghost = wereld->get_green_ghost();
+        std::shared_ptr<greenGhostView> _greenGhostView = std::make_shared<greenGhostView>(window,camera,green_ghost);
+        green_ghost->greenGhostSubscribe(_greenGhostView);
+        greenGhost = _greenGhostView;
+
+        std::shared_ptr<logic::purpleGhost> purple_ghost = wereld->get_purple_ghost();
+        std::shared_ptr<purpleGhostView> _purpleGhostView = std::make_shared<purpleGhostView>(window,camera,purple_ghost);
+        purple_ghost->purpleGhostSubscribe(_purpleGhostView);
+        purpleGhost = _purpleGhostView;
+
         std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window,camera,_score);
         _score->subscribeScore(score_view);
         score = score_view;
@@ -58,7 +73,12 @@ namespace view {
             coin->draw();
         }
         pacman->draw();
+
         redGhost->draw();
+        greenGhost->draw();
+        purpleGhost->draw();
+        blueGhost->draw();
+
         score->draw();
     }
 }
