@@ -182,6 +182,13 @@ namespace logic {
     }
 
     void blueGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
+        this->move(deltaTime);
+
+        std::vector<directions> posDirections = this->possibleDirections(walls);
+
+        for (directions d : posDirections) {
+
+        }
 
     }
 

@@ -18,8 +18,6 @@ namespace logic {
         directions prevDirection;
         enum modes mode;
         bool canChoseDir;/// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan. Is er ook zodat de ghost de ghost kamer kan verlaten en daarna niet meer door de invisible walls kan.
-        double dt;
-        bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
     public:
         /**
         * @brief Constructor voor de Ghost.
@@ -37,9 +35,14 @@ namespace logic {
         void changeDirection(directions direction);
     };
 
+    /**
+     * @class redGhost
+     */
     class redGhost : public Ghost {
     private:
         std::shared_ptr<view::redGhostView> ghostObserver; /// Pointer naar de observer van ghost.
+        bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
+
     public:
         redGhost(double x,double y);
 
@@ -56,6 +59,9 @@ namespace logic {
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
     };
 
+    /**
+     * @class blueGhost
+     */
     class blueGhost : public Ghost {
     private:
         std::shared_ptr<view::blueGhostView> ghostObserver;
@@ -65,8 +71,12 @@ namespace logic {
         void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
         void died() override;
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
+
     };
 
+    /**
+     * @class greenGhost
+     */
     class greenGhost : public Ghost {
     private:
         std::shared_ptr<view::greenGhostView> ghostObserver;
@@ -78,6 +88,10 @@ namespace logic {
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
     };
 
+
+    /**
+     * @class purpleGhost
+     */
     class purpleGhost : public Ghost {
     private:
         std::shared_ptr<view::purpleGhostView> ghostObserver;

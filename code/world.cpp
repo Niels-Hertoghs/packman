@@ -79,12 +79,22 @@ namespace logic {
 
         pacman->update(deltaTime,allWalls);
 
-        if (_redGhost->hadFirstCollision()) {
-            _redGhost->update(deltaTime,allWalls);
-        } else {
-            std::vector<std::shared_ptr<entity>> w;
-            w.insert(w.end(),walls.begin(),walls.end());
-            _redGhost->update(deltaTime,w);
+
+        std::vector<std::shared_ptr<Ghost>> ghosts = {
+            _redGhost,
+            _blueGhost,
+            _greenGhost,
+            _purpleGhost
+        };
+
+        for (std::shared_ptr<Ghost>& ghost : ghosts) {
+            if (ghost->hadFirstCollision()) {
+                ghost->update(deltaTime,allWalls);
+            } else {
+                std::vector<std::shared_ptr<entity>> w;
+                w.insert(w.end(),walls.begin(),walls.end());
+                ghost->update(deltaTime,w);
+            }
         }
 
         // zien of pacman niet op een collectable staat
