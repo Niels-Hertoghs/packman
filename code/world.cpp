@@ -69,6 +69,8 @@ namespace logic {
             }
             y -= 1.0/7.0;
         }
+
+        _blueGhost->givePacman(pacman);
     }
 
     void world::update(float deltaTime) {

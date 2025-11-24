@@ -67,21 +67,50 @@ namespace logic {
         prevX = this->getX();
         prevY = this->getY();
 
+        std::pair<double,double> nextPos = calculateNextPos(delta,direction,x,y);
+
+        x = nextPos.first;
+        y = nextPos.second;
+    }
+
+    std::pair<double,double> movableEntity::calculateNextPos(double delta, directions dir,double _x,double _y) const {
+
         double dx = 0.f, dy = 0.f;
-        if (direction == directions::RIGHT) dx = 0.2f;
-        else if (direction == directions::LEFT) dx = -0.2f;
-        else if (direction == directions::UP) dy = 2.f / 7.f;
-        else if (direction == directions::DOWN) dy = -2.f / 7.f;
+        if (dir == directions::RIGHT) dx = 0.2f;
+        else if (dir == directions::LEFT) dx = -0.2f;
+        else if (dir == directions::UP) dy = 2.f / 7.f;
+        else if (dir == directions::DOWN) dy = -2.f / 7.f;
 
         // Positie updaten
-        x += delta * dx * speed;
-        y += delta * dy * speed;
+        double nextX = (delta * dx * speed) + _x;
+        double nextY = (delta * dy * speed) + _y;
+
+        return {nextX,nextY};
+
     }
+
 
     void movableEntity::toSpawnLocation() {
         x = spwanLocatieX;
         y = spwanLocatiey;
         direction = originalDirection;
+    }
+
+    std::pair<double, double> movableEntity::getFront(directions dir) {
+        std::pair<double, double> pos = {x,y};
+        if (dir == directions::RIGHT || dir == directions::LEFT) {
+            pos.second = y - 1.f / 14.f;
+            if (dir == directions::RIGHT) {
+                pos.first = x + 1.f/10.f;
+            }
+        } else if (dir == directions::UP || dir == directions::DOWN) {
+            pos.first = x + 1.f / 20.f;
+            if (dir == directions::DOWN) {
+                pos.second = y - 1.f / 7.f;
+            }
+        }
+
+        return pos;
     }
 
 

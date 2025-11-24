@@ -65,13 +65,16 @@ namespace logic {
     class blueGhost : public Ghost {
     private:
         std::shared_ptr<view::blueGhostView> ghostObserver;
+        std::shared_ptr<logic::Packman> pacman;
     public:
         blueGhost(double x,double y);
-        void blueGhostSubscribe(std::shared_ptr<view::blueGhostView> ghostObserver);
+        void givePacman(std::shared_ptr<logic::Packman> pacman);
+        void blueGhostSubscribe(std::shared_ptr<view::blueGhostView>& ghostObserver);
         void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
         void died() override;
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
 
+        static double calculateManhatten(double x1, double y1, double x2, double y2) ;
     };
 
     /**

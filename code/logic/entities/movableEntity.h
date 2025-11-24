@@ -40,7 +40,9 @@ namespace logic {
         bool pointInWall(std::shared_ptr<entity> wall,double x,double y);
         void prevLocation();
         void move(double delta);
+        [[nodiscard]] std::pair<double,double> calculateNextPos(double delta,directions dir,double _x,double _y) const;
         void toSpawnLocation();
+        std::pair<double, double> getFront(directions dir);
 
         static directions oppositeDirection(directions dir);
     };
@@ -67,6 +69,7 @@ namespace logic {
 
         void pacmanSubscribe(std::shared_ptr<view::packmanView> pacmanObserver);
         bool standsOnGhost(std::shared_ptr<Ghost> ghost);
+
     };
 
 }

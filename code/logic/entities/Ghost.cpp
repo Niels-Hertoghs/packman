@@ -21,11 +21,11 @@ namespace logic {
 
             double stepX = 0.f, stepY = 0.f;
 
-            // zelfde logica a;s bij pacman, om te zien of het die richting uit kan gaan.
-            if (dir == directions::RIGHT) stepX = 1/80.f;
-            else if (dir == directions::LEFT) stepX = -1/80.f;
-            else if (dir == directions::UP) stepY = 1.f / 56.f;
-            else if (dir == directions::DOWN) stepY = -1.f / 56.f;
+            // zelfde logica als bij pacman, om te zien of het die richting uit kan gaan.
+            if (dir == directions::RIGHT) stepX = 1/160.f;
+            else if (dir == directions::LEFT) stepX = -1/160.f;
+            else if (dir == directions::UP) stepY = 1.f / 112.f;
+            else if (dir == directions::DOWN) stepY = -1.f / 112.f;
 
             double newX = x + stepX;
             double newY = y + stepY;
@@ -177,20 +177,69 @@ namespace logic {
 
     blueGhost::blueGhost(double x, double y)  : Ghost(x,y) {}
 
-    void blueGhost::blueGhostSubscribe(std::shared_ptr<view::blueGhostView> _ghostObserver) {
+    void blueGhost::givePacman(std::shared_ptr<logic::Packman> _pacman) {
+        pacman = std::move(_pacman);
+    }
+
+
+    void blueGhost::blueGhostSubscribe(std::shared_ptr<view::blueGhostView>& _ghostObserver) {
         ghostObserver = _ghostObserver;
     }
 
     void blueGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-        this->move(deltaTime);
+        // this->move(deltaTime);
 
         std::vector<directions> posDirections = this->possibleDirections(walls);
 
-        for (directions d : posDirections) {
+        // "de voorkant" van pacman, op dat moment
+        std::pair<double, double> voorkantPac = pacman->getFront(direction);
 
+        directions nextDirection = direction;
+        double minDistance = std::numeric_limits<double>::max();
+
+        if (canChoseDir) {
+            for (directions d : posDirections) {
+                std::pair<double, double> voorkantGhost = this->getFront(direction);
+                // de pos van het spookje als het direction p op gaat
+                std::pair<double,double> nextPosGhost = calculateNextPos(deltaTime,d,voorkantGhost.first,voorkantGhost.second);
+                double distance = calculateManhatten(voorkantPac.first,voorkantPac.second,nextPosGhost.first,nextPosGhost.second);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nextDirection = d;
+                }
+            }
         }
 
+        direction = nextDirection;
+        this->move(deltaTime);
+
+        for (std::shared_ptr<entity>& w : walls) {
+            if (standsOn(w) ) {
+                prevLocation();
+
+                // hardcode voor de eerste botsing tegen een muur (vanboven uit hun hok)
+                if (!canChoseDir) {
+                    changeDirection(LEFT);
+                    ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+                    canChoseDir = true;
+                    return;
+                }
+            }
+        }
+        // notify
+        if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+        else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+        else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
+        else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+        ghostObserver->notify(notifications::CHANGE_POSITION);
     }
+
+    double blueGhost::calculateManhatten(double x1, double y1, double x2, double y2) {
+        double x = std::abs(x1 - x2);
+        double y = std::abs(y1 - y2);
+        return x + y;
+    }
+
 
 
     void blueGhost::died() {
