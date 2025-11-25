@@ -5,6 +5,7 @@
 #include "Ghost.h"
 
 #include <iostream>
+#include <utility>
 
 namespace logic {
 
@@ -22,10 +23,10 @@ namespace logic {
             double stepX = 0.f, stepY = 0.f;
 
             // zelfde logica als bij pacman, om te zien of het die richting uit kan gaan.
-            if (dir == directions::RIGHT) stepX = 1/160.f;
-            else if (dir == directions::LEFT) stepX = -1/160.f;
-            else if (dir == directions::UP) stepY = 1.f / 112.f;
-            else if (dir == directions::DOWN) stepY = -1.f / 112.f;
+            if (dir == directions::RIGHT) stepX = 1/80.f;
+            else if (dir == directions::LEFT) stepX = -1/80.f;
+            else if (dir == directions::UP) stepY = 1.f / 56.f;
+            else if (dir == directions::DOWN) stepY = -1.f / 56.f;
 
             double newX = x + stepX;
             double newY = y + stepY;
@@ -51,7 +52,7 @@ namespace logic {
         this->direction = _direction;
     }
 
-    bool Ghost::hadFirstCollision() {
+    bool Ghost::hadFirstCollision() const {
         return canChoseDir;
     }
 
@@ -62,7 +63,7 @@ namespace logic {
     redGhost::redGhost(double x, double y) : Ghost(x,y) {}
 
     void redGhost::redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver) {
-        this->ghostObserver = redGhostObserver;
+        this->ghostObserver = std::move(redGhostObserver);
     }
 
     void redGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
@@ -187,30 +188,6 @@ namespace logic {
     }
 
     void blueGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-        // this->move(deltaTime);
-
-        std::vector<directions> posDirections = this->possibleDirections(walls);
-
-        // "de voorkant" van pacman, op dat moment
-        std::pair<double, double> voorkantPac = pacman->getFront(direction);
-
-        directions nextDirection = direction;
-        double minDistance = std::numeric_limits<double>::max();
-
-        if (canChoseDir) {
-            for (directions d : posDirections) {
-                std::pair<double, double> voorkantGhost = this->getFront(direction);
-                // de pos van het spookje als het direction p op gaat
-                std::pair<double,double> nextPosGhost = calculateNextPos(deltaTime,d,voorkantGhost.first,voorkantGhost.second);
-                double distance = calculateManhatten(voorkantPac.first,voorkantPac.second,nextPosGhost.first,nextPosGhost.second);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    nextDirection = d;
-                }
-            }
-        }
-
-        direction = nextDirection;
         this->move(deltaTime);
 
         for (std::shared_ptr<entity>& w : walls) {
@@ -226,6 +203,33 @@ namespace logic {
                 }
             }
         }
+
+        std::vector<directions> posDirections = this->possibleDirections(walls);
+
+        // "de voorkant" van pacman, op dat moment
+        std::pair<double, double> voorkantPac = pacman->getFront(pacman->get_direction());
+
+        // initializatie om de richting te kiezen
+        directions nextDirection = direction;
+        double minDistance = std::numeric_limits<double>::max();
+
+        if (canChoseDir) {
+            for (directions d : posDirections) {
+                // std::pair<double, double> voorkantGhost = this->getFront(direction);
+                // de pos van het spookje als het direction p op gaat
+                std::pair<double,double> nextPosGhost = calculateNextPos(deltaTime,d,x + 1.f/20.f,y - 1.f/14.f);
+                double distance = calculateManhatten(voorkantPac.first,voorkantPac.second,nextPosGhost.first,nextPosGhost.second);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nextDirection = d;
+                }
+            }
+        }
+
+        changeDirection(nextDirection);
+        // this->move(deltaTime);
+
+
         // notify
         if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
         else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);

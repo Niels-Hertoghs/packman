@@ -15,6 +15,7 @@ namespace logic {
     */
     class Ghost : public movableEntity {
     protected:
+        std::shared_ptr<view::ghostView> ghostObserver;
         directions prevDirection;
         enum modes mode;
         bool canChoseDir;/// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan. Is er ook zodat de ghost de ghost kamer kan verlaten en daarna niet meer door de invisible walls kan.
@@ -31,7 +32,7 @@ namespace logic {
         void died() override = 0;
 
         std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
-        bool hadFirstCollision();
+        [[nodiscard]] bool hadFirstCollision() const;
         void changeDirection(directions direction);
     };
 
@@ -64,7 +65,6 @@ namespace logic {
      */
     class blueGhost : public Ghost {
     private:
-        std::shared_ptr<view::blueGhostView> ghostObserver;
         std::shared_ptr<logic::Packman> pacman;
     public:
         blueGhost(double x,double y);

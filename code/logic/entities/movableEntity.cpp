@@ -27,9 +27,13 @@ namespace logic {
 
         double buffer = 0.005f;
 
-        bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
-        bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
-        return overlapX && overlapY;
+        if ( pacX > other->getX() + width || other->getX() > pacX  + width) {
+            return false;
+        }
+        if (  pacY > other->getY() - height || other->getY() > pacY - height) {
+            return false;
+        }
+        return true;
 
     }
 
@@ -60,6 +64,10 @@ namespace logic {
         case RIGHT: return LEFT;
         default: return EMPTY;
         }
+    }
+
+    directions movableEntity::get_direction() const {
+        return direction;
     }
 
     void movableEntity::move(double delta) {
@@ -136,6 +144,7 @@ namespace logic {
             // de positie berekenen
             double stepX = 0.f, stepY = 0.f;
 
+
             if (nextDirection == directions::RIGHT) stepX = 1/80.f;
             else if (nextDirection == directions::LEFT) stepX = -1/80.f;
             else if (nextDirection == directions::UP) stepY = 1.f / 56.f;
@@ -209,6 +218,7 @@ namespace logic {
         std::shared_ptr<entity> other = std::dynamic_pointer_cast<entity>(ghost);
         return this->wouldCollide(other,x + 1.f/20.f, y-1.f/14.f);
     }
+
 
     void Packman::died() {
         toSpawnLocation();

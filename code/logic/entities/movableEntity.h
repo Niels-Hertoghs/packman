@@ -45,6 +45,8 @@ namespace logic {
         std::pair<double, double> getFront(directions dir);
 
         static directions oppositeDirection(directions dir);
+
+        [[nodiscard]] directions get_direction() const;
     };
 
     /**
