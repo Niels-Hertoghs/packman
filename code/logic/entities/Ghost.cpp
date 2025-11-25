@@ -13,7 +13,49 @@ namespace logic {
     /// @class ghost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Ghost::Ghost(double x, double y) : movableEntity(x,y,0.95f,directions::UP), canChoseDir(false) {}
+    Ghost::Ghost(double x, double y)
+        : movableEntity(x,y,0.95f,directions::UP), canChoseDir(false),hasChosenAtIntersection(false), prevDirection(directions::EMPTY), mode(modes::CHASING_MODE){}
+
+    void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> > &walls) {
+        // ghost de richting laten uitgaan
+        this->move(deltaTime);
+
+        // zie of de huidige pos niet op een muur staat
+        for (std::shared_ptr<entity>& w : walls) {
+            if (standsOn(w) ) {
+                prevLocation();
+
+                // hardcode voor de eerste botsing tegen een muur (vanboven uit hun hok)
+                if (!canChoseDir) {
+                    changeDirection(LEFT);
+                    ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+                    canChoseDir = true;
+                    hasChosenAtIntersection = true;
+                    return;
+                }
+                this->nextDirection(walls);
+                break;
+            }
+        }
+
+        std::vector<directions> posDirections = this->possibleDirections(walls);
+
+        // Als we NIET op een kruispunt staan → reset gekozen-flag
+        // zodat de ghost maar 1 keer kan kiezen per kruispunt (door mijn gebruikte logica, kan die soms meerdere keren kiezen per kruispunt, nu niet meer)
+        if (posDirections.size() <= 2) {
+            hasChosenAtIntersection = false;
+        }
+
+        // kruispunten detecteren, en eventueel de richting uitgaan (niet terug draaien)
+        if (posDirections.size() > 2 && canChoseDir && !hasChosenAtIntersection) {
+            hasChosenAtIntersection = true; // zodat die niet meerdere keren kiest aan dit kruispunt
+
+            this->chooseAtIntersection(walls);
+        }
+
+        ghostObserver->notify(CHANGE_POSITION);
+    }
+
 
     std::vector<directions> Ghost::possibleDirections(std::vector<std::shared_ptr<entity>>& walls) {
         std::vector<directions> possibleDirections;
@@ -66,72 +108,6 @@ namespace logic {
         this->ghostObserver = std::move(redGhostObserver);
     }
 
-    void redGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-        // red ghost de richting laten uitgaan
-        this->move(deltaTime);
-
-        // zie of de huidige pos niet op een muur staat
-        for (std::shared_ptr<entity>& w : walls) {
-            if (standsOn(w) ) {
-                prevLocation();
-
-                // hardcode voor de eerste botsing tegen een muur (vanboven uit hun hok)
-                if (!canChoseDir) {
-                    changeDirection(LEFT);
-                    ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-                    canChoseDir = true;
-                    hasChosenAtIntersection = true;
-                    return;
-                }
-                this->nextDirection(walls);
-                break;
-            }
-        }
-
-        std::vector<directions> posDirections = this->possibleDirections(walls);
-
-        // Als we NIET op een kruispunt staan → reset gekozen-flag
-        // zodat de ghost maar 1 keer kan kiezen per kruispunt (door mijn gebruikte logica, kan die soms meerdere keren kiezen per kruispunt, nu niet meer)
-        if (posDirections.size() <= 2) {
-            hasChosenAtIntersection = false;
-        }
-
-        // kruispunten detecteren, en eventueel de richting uitgaan (niet terug draaien)
-        if (posDirections.size() > 2 && canChoseDir && !hasChosenAtIntersection) {
-            hasChosenAtIntersection = true; // zodat die niet meerdere keren kiest aan dit kruispunt
-
-            // verwijder de omgekeerde richting, zodat het niet kan terug keren op een kruispunt
-            directions forbidden = oppositeDirection(direction);
-            if (forbidden == EMPTY) {
-                return;
-            }
-
-            std::vector<directions> filteredDirections;
-
-            for (directions d : posDirections) {
-                if (d != forbidden) {
-                    filteredDirections.push_back(d);
-                }
-            }
-
-            // verander van richting
-            if (!filteredDirections.empty()) {
-                int chosenDir = random::getInstance()->getNumber(0, filteredDirections.size());;
-
-                changeDirection(filteredDirections[chosenDir]);
-
-                // notify
-                if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-                else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-                else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-                else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-            }
-
-        }
-
-        ghostObserver->notify(notifications::CHANGE_POSITION);
-    }
-
     void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
         std::vector<directions> possibleDirections = this->possibleDirections(walls);
@@ -156,6 +132,39 @@ namespace logic {
             ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
         }
     }
+
+    void redGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
+
+        std::vector<directions> posDirections = this->possibleDirections(walls);
+
+        // verwijder de omgekeerde richting, zodat het niet kan terug keren op een kruispunt
+        directions forbidden = oppositeDirection(direction);
+        if (forbidden == EMPTY) {
+            return;
+        }
+
+        std::vector<directions> filteredDirections;
+
+        for (directions d : posDirections) {
+            if (d != forbidden) {
+                filteredDirections.push_back(d);
+            }
+        }
+
+        // verander van richting
+        if (!filteredDirections.empty()) {
+            int chosenDir = random::getInstance()->getNumber(0, filteredDirections.size());;
+
+            changeDirection(filteredDirections[chosenDir]);
+
+            // notify
+            if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+            else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+            else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
+            else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+        }
+    }
+
 
     void redGhost::died() {
         toSpawnLocation();
@@ -187,56 +196,6 @@ namespace logic {
         ghostObserver = _ghostObserver;
     }
 
-    void blueGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-        this->move(deltaTime);
-
-        for (std::shared_ptr<entity>& w : walls) {
-            if (standsOn(w) ) {
-                prevLocation();
-
-                // hardcode voor de eerste botsing tegen een muur (vanboven uit hun hok)
-                if (!canChoseDir) {
-                    changeDirection(LEFT);
-                    ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-                    canChoseDir = true;
-                    return;
-                }
-            }
-        }
-
-        std::vector<directions> posDirections = this->possibleDirections(walls);
-
-        // "de voorkant" van pacman, op dat moment
-        std::pair<double, double> voorkantPac = pacman->getFront(pacman->get_direction());
-
-        // initializatie om de richting te kiezen
-        directions nextDirection = direction;
-        double minDistance = std::numeric_limits<double>::max();
-
-        if (canChoseDir) {
-            for (directions d : posDirections) {
-                // std::pair<double, double> voorkantGhost = this->getFront(direction);
-                // de pos van het spookje als het direction p op gaat
-                std::pair<double,double> nextPosGhost = calculateNextPos(deltaTime,d,x + 1.f/20.f,y - 1.f/14.f);
-                double distance = calculateManhatten(voorkantPac.first,voorkantPac.second,nextPosGhost.first,nextPosGhost.second);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    nextDirection = d;
-                }
-            }
-        }
-
-        changeDirection(nextDirection);
-        // this->move(deltaTime);
-
-
-        // notify
-        if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-        else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-        else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-        else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-        ghostObserver->notify(notifications::CHANGE_POSITION);
-    }
 
     double blueGhost::calculateManhatten(double x1, double y1, double x2, double y2) {
         double x = std::abs(x1 - x2);
@@ -252,6 +211,40 @@ namespace logic {
 
 
     void blueGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+
+        std::vector<directions> posDirections = this->possibleDirections(walls);
+
+        // "de voorkant" van pacman, op dat moment
+        std::pair<double, double> voorkantPac = pacman->getFront(pacman->get_direction());
+
+        // initializatie om de richting te kiezen
+        directions nextDirection = direction;
+        double minDistance = std::numeric_limits<double>::max();
+
+        for (directions d : posDirections) {
+            // std::pair<double, double> voorkantGhost = this->getFront(direction);
+            // de pos van het spookje als het direction p op gaat
+            std::pair<double,double> nextPosGhost = calculateNextPos(1,d,x + 1.f/20.f,y - 1.f/14.f);
+            double distance = calculateManhatten(voorkantPac.first,voorkantPac.second,nextPosGhost.first,nextPosGhost.second);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nextDirection = d;
+            }
+        }
+
+
+        changeDirection(nextDirection);
+
+        // notify
+        if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
+        else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
+        else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
+        else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+
+    }
+
+    void blueGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
+        this->nextDirection(walls);
     }
 
     /// ---------------------------------------------------------------------------------------------------------------
@@ -266,11 +259,6 @@ namespace logic {
     }
 
 
-    void purpleGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-
-    }
-
-
     void purpleGhost::died() {
 
     }
@@ -278,6 +266,11 @@ namespace logic {
 
     void purpleGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
     }
+
+    void purpleGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
+
+    }
+
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// greenGhost
@@ -290,10 +283,6 @@ namespace logic {
         ghostObserver = _ghostObserver;
     }
 
-    void greenGhost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
-
-    }
-
 
     void greenGhost::died() {
 
@@ -301,6 +290,10 @@ namespace logic {
 
 
     void greenGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+    }
+
+    void greenGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
+
     }
 
 

@@ -27,13 +27,9 @@ namespace logic {
 
         double buffer = 0.005f;
 
-        if ( pacX > other->getX() + width || other->getX() > pacX  + width) {
-            return false;
-        }
-        if (  pacY > other->getY() - height || other->getY() > pacY - height) {
-            return false;
-        }
-        return true;
+        bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
+        bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
+        return overlapX && overlapY;
 
     }
 
