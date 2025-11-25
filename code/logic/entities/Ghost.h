@@ -15,7 +15,6 @@ namespace logic {
     */
     class Ghost : public movableEntity {
     protected:
-        std::shared_ptr<view::ghostView> ghostObserver;
         directions prevDirection;
         enum modes mode;
         bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
@@ -32,11 +31,12 @@ namespace logic {
 
         virtual void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) = 0;
         virtual void nextDirection(std::vector<std::shared_ptr<entity>>& walls) = 0;
-        void died() override = 0;
 
         std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
         [[nodiscard]] bool hadFirstCollision() const;
         void changeDirection(directions direction);
+        void died() override;
+
     };
 
     /**
@@ -52,59 +52,16 @@ namespace logic {
         * @brief Initialiseert de observer van de Ghost
         * @param redGhostObserver Pointer naar de observer van Ghost.
         */
-        void redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver);
+        void redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver);
 
-        void died() override;
 
         // past automatich de direction aan en update observer
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
 
-        void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls);
-    };
-
-    /**
-     * @class blueGhost
-     */
-    class blueGhost : public Ghost {
-    private:
-        std::shared_ptr<logic::Packman> pacman;
-    public:
-        blueGhost(double x,double y);
-        void givePacman(std::shared_ptr<logic::Packman> pacman);
-        void blueGhostSubscribe(std::shared_ptr<view::blueGhostView>& ghostObserver);
-        void died() override;
-        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
-
-        static double calculateManhatten(double x1, double y1, double x2, double y2) ;
-        void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls);
-    };
-
-    /**
-     * @class greenGhost
-     */
-    class greenGhost : public Ghost {
-    private:
-    public:
-        greenGhost(double x,double y);
-        void greenGhostSubscribe(std::shared_ptr<view::greenGhostView> ghostObserver);
-        void died() override;
-        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
-        void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls);
+        void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
     };
 
 
-    /**
-     * @class purpleGhost
-     */
-    class purpleGhost : public Ghost {
-    private:
-    public:
-        purpleGhost(double x,double y);
-        void purpleGhostSubscribe(std::shared_ptr<view::purpleGhostView> ghostObserver);
-        void died() override;
-        void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
-        void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls);
-    };
 } // logic
 
 #endif //PACKMAN_GHOST_H

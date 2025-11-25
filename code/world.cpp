@@ -71,6 +71,8 @@ namespace logic {
         }
 
         _blueGhost->givePacman(pacman);
+        _greenGhost->givePacman(pacman);
+        _purpleGhost->givePacman(pacman);
     }
 
     void world::update(float deltaTime) {

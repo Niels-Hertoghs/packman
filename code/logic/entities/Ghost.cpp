@@ -25,12 +25,12 @@ namespace logic {
             if (standsOn(w) ) {
                 prevLocation();
 
-                // hardcode voor de eerste botsing tegen een muur (vanboven uit hun hok)
+                // voor de eerste botsing tegen een muur (vanboven uit hun hok), dan kunnen ze elke kant op gaan
+                // ze kunnen in het begin 1 keer door de invisible wall
                 if (!canChoseDir) {
-                    changeDirection(LEFT);
-                    ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
                     canChoseDir = true;
                     hasChosenAtIntersection = true;
+                    nextDirection(walls);
                     return;
                 }
                 this->nextDirection(walls);
@@ -40,7 +40,7 @@ namespace logic {
 
         std::vector<directions> posDirections = this->possibleDirections(walls);
 
-        // Als we NIET op een kruispunt staan → reset gekozen-flag
+        // Als we niet op een kruispunt staan → reset gekozen-flag
         // zodat de ghost maar 1 keer kan kiezen per kruispunt (door mijn gebruikte logica, kan die soms meerdere keren kiezen per kruispunt, nu niet meer)
         if (posDirections.size() <= 2) {
             hasChosenAtIntersection = false;
@@ -53,7 +53,7 @@ namespace logic {
             this->chooseAtIntersection(walls);
         }
 
-        ghostObserver->notify(CHANGE_POSITION);
+        notifyPos();
     }
 
 
@@ -98,14 +98,20 @@ namespace logic {
         return canChoseDir;
     }
 
+    void Ghost::died() {
+        toSpawnLocation();
+        canChoseDir = false; // prive van ghost
+        notifyDir();
+    }
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// redGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
     redGhost::redGhost(double x, double y) : Ghost(x,y) {}
 
-    void redGhost::redGhostSubscribe(std::shared_ptr<view::redGhostView> redGhostObserver) {
-        this->ghostObserver = std::move(redGhostObserver);
+    void redGhost::redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver) {
+        observer = redGhostObserver;
     }
 
     void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
@@ -121,16 +127,7 @@ namespace logic {
 
         changeDirection(possibleDirections[chosenDir]);
 
-        // observer notfyen
-        if (direction == directions::RIGHT) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-        } else if (direction == directions::LEFT) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-        } else if (direction == directions::UP) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-        } else if (direction == directions::DOWN) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-        }
+        notifyDir();
     }
 
     void redGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
@@ -156,145 +153,10 @@ namespace logic {
             int chosenDir = random::getInstance()->getNumber(0, filteredDirections.size());;
 
             changeDirection(filteredDirections[chosenDir]);
-
-            // notify
-            if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-            else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-            else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-            else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
+            notifyDir();
         }
     }
 
-
-    void redGhost::died() {
-        toSpawnLocation();
-        canChoseDir = false;
-        if (direction == directions::RIGHT) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-        } else if (direction == directions::LEFT) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-        } else if (direction == directions::UP) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-        } else if (direction == directions::DOWN) {
-            ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-        }
-    }
-
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// blueGhost
-    /// ---------------------------------------------------------------------------------------------------------------
-
-
-    blueGhost::blueGhost(double x, double y)  : Ghost(x,y) {}
-
-    void blueGhost::givePacman(std::shared_ptr<logic::Packman> _pacman) {
-        pacman = std::move(_pacman);
-    }
-
-
-    void blueGhost::blueGhostSubscribe(std::shared_ptr<view::blueGhostView>& _ghostObserver) {
-        ghostObserver = _ghostObserver;
-    }
-
-
-    double blueGhost::calculateManhatten(double x1, double y1, double x2, double y2) {
-        double x = std::abs(x1 - x2);
-        double y = std::abs(y1 - y2);
-        return x + y;
-    }
-
-
-
-    void blueGhost::died() {
-
-    }
-
-
-    void blueGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
-
-        std::vector<directions> posDirections = this->possibleDirections(walls);
-
-        // "de voorkant" van pacman, op dat moment
-        std::pair<double, double> voorkantPac = pacman->getFront(pacman->get_direction());
-
-        // initializatie om de richting te kiezen
-        directions nextDirection = direction;
-        double minDistance = std::numeric_limits<double>::max();
-
-        for (directions d : posDirections) {
-            // std::pair<double, double> voorkantGhost = this->getFront(direction);
-            // de pos van het spookje als het direction p op gaat
-            std::pair<double,double> nextPosGhost = calculateNextPos(1,d,x + 1.f/20.f,y - 1.f/14.f);
-            double distance = calculateManhatten(voorkantPac.first,voorkantPac.second,nextPosGhost.first,nextPosGhost.second);
-            if (distance < minDistance) {
-                minDistance = distance;
-                nextDirection = d;
-            }
-        }
-
-
-        changeDirection(nextDirection);
-
-        // notify
-        if (direction == directions::RIGHT)      ghostObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-        else if (direction == directions::LEFT)  ghostObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-        else if (direction == directions::UP)    ghostObserver->notify(notifications::CHANGE_DIRECTION_UP);
-        else if (direction == directions::DOWN)  ghostObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-
-    }
-
-    void blueGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
-        this->nextDirection(walls);
-    }
-
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// purpleGhost
-    /// ---------------------------------------------------------------------------------------------------------------
-
-
-    purpleGhost::purpleGhost(double x, double y)  : Ghost(x,y) {}
-
-    void purpleGhost::purpleGhostSubscribe(std::shared_ptr<view::purpleGhostView> _ghostObserver) {
-        ghostObserver = _ghostObserver;
-    }
-
-
-    void purpleGhost::died() {
-
-    }
-
-
-    void purpleGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
-    }
-
-    void purpleGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
-
-    }
-
-
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// greenGhost
-    /// ---------------------------------------------------------------------------------------------------------------
-
-
-    greenGhost::greenGhost(double x, double y)  : Ghost(x,y) {}
-
-    void greenGhost::greenGhostSubscribe(std::shared_ptr<view::greenGhostView> _ghostObserver) {
-        ghostObserver = _ghostObserver;
-    }
-
-
-    void greenGhost::died() {
-
-    }
-
-
-    void greenGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
-    }
-
-    void greenGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
-
-    }
 
 
 } // logic

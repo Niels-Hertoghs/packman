@@ -15,6 +15,7 @@
 #include "logic/entities/collectable.h"
 #include "logic/entities/movableEntity.h"
 #include "logic/entities/Ghost.h"
+#include "logic/entities/manhattenGhost.h"
 #include "logic/entities/Score.h"
 
 namespace logic {

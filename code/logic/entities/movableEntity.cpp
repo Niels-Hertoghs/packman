@@ -12,7 +12,8 @@ namespace logic {
     /// @class movableEntity
     /// ---------------------------------------------------------------------------------------------------------------
 
-    movableEntity::movableEntity(double x, double y, double speed,directions dir) : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y) {}
+    movableEntity::movableEntity(double x, double y, double speed,directions dir)
+    : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y),prevX(x),prevY(y) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
         return this->wouldCollide(other,x,y);
@@ -33,20 +34,6 @@ namespace logic {
 
     }
 
-    bool movableEntity::pointInWall(std::shared_ptr<entity> wall, double x, double y) {
-        double tileW = 1.0/10.0; // 0.1
-        double tileH = 1.0/7.0;  // ≈0.142857
-
-        double left   = wall->getX();
-        double right  = wall->getX() + tileW;
-        double top    = wall->getY();
-        double bottom = wall->getY() - tileH;
-
-        return (x >= left && x <= right &&
-                y >= bottom && y <= top);
-    }
-
-
     void movableEntity::prevLocation() {
         x = prevX;
         y = prevY;
@@ -62,9 +49,6 @@ namespace logic {
         }
     }
 
-    directions movableEntity::get_direction() const {
-        return direction;
-    }
 
     void movableEntity::move(double delta) {
         // ga de richting uit
@@ -93,23 +77,22 @@ namespace logic {
 
     }
 
-
     void movableEntity::toSpawnLocation() {
         x = spwanLocatieX;
         y = spwanLocatiey;
         direction = originalDirection;
     }
 
-    std::pair<double, double> movableEntity::getFront(directions dir) {
+    std::pair<double, double> movableEntity::getFront() {
         std::pair<double, double> pos = {x,y};
-        if (dir == directions::RIGHT || dir == directions::LEFT) {
+        if (direction == directions::RIGHT || direction == directions::LEFT) {
             pos.second = y - 1.f / 14.f;
-            if (dir == directions::RIGHT) {
+            if (direction == directions::RIGHT) {
                 pos.first = x + 1.f/10.f;
             }
-        } else if (dir == directions::UP || dir == directions::DOWN) {
+        } else if (direction == directions::UP || direction == directions::DOWN) {
             pos.first = x + 1.f / 20.f;
-            if (dir == directions::DOWN) {
+            if (direction == directions::DOWN) {
                 pos.second = y - 1.f / 7.f;
             }
         }
@@ -117,12 +100,33 @@ namespace logic {
         return pos;
     }
 
+    void movableEntity::notifyPos() {
+        observer->notify(notifications::CHANGE_POSITION);
+    }
+
+    void movableEntity::notifyDir() {
+        if (direction == directions::RIGHT) {
+            observer->notify(notifications::CHANGE_DIRECTION_RIGHT);
+        } else if (direction == directions::LEFT) {
+            observer->notify(notifications::CHANGE_DIRECTION_LEFT);
+        } else if (direction == directions::UP) {
+            observer->notify(notifications::CHANGE_DIRECTION_UP);
+        } else {
+            observer->notify(notifications::CHANGE_DIRECTION_DOWN);
+        }
+    }
+
+
+    directions movableEntity::get_direction() const {
+        return direction;
+    }
+
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class Packman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Packman::Packman(double x, double y)  : movableEntity(x,y,3.f,directions::RIGHT), nextDirection(EMPTY) {}
+    Packman::Packman(double x, double y)  : movableEntity(x,y,1.f,directions::RIGHT), nextDirection(EMPTY) {}
 
     void Packman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
@@ -146,8 +150,8 @@ namespace logic {
             else if (nextDirection == directions::UP) stepY = 1.f / 56.f;
             else if (nextDirection == directions::DOWN) stepY = -1.f / 56.f;
 
-            newX = x + stepX;
-            newY = y + stepY;
+            newX += stepX;
+            newY += stepY;
 
 
             // kijken of er daar geen wall staat
@@ -162,15 +166,7 @@ namespace logic {
 
             if (canMove) {
                 direction = nextDirection;
-                if (direction == directions::RIGHT) {
-                    packmanObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-                } else if (direction == directions::LEFT) {
-                    packmanObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-                } else if (direction == directions::UP) {
-                    packmanObserver->notify(notifications::CHANGE_DIRECTION_UP);
-                } else {
-                    packmanObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-                }
+                notifyDir();
             }
         }
 
@@ -184,7 +180,7 @@ namespace logic {
                 break;
             }
         }
-        packmanObserver->notify(notifications::CHANGE_POSITION);
+        notifyPos();
     }
 
     void Packman::updateDir(enum directions dir) {
@@ -206,28 +202,20 @@ namespace logic {
         return overlapX && overlapY;
     }
 
-    void Packman::pacmanSubscribe(std::shared_ptr<view::packmanView> PacmanObserver) {
-        packmanObserver = std::move(PacmanObserver);
+    void Packman::pacmanSubscribe(const std::shared_ptr<view::packmanView>& PacmanObserver) {
+        observer = PacmanObserver;
     }
 
     bool Packman::standsOnGhost(std::shared_ptr<Ghost> ghost) {
-        std::shared_ptr<entity> other = std::dynamic_pointer_cast<entity>(ghost);
+        std::shared_ptr<entity> other = std::move(ghost);
         return this->wouldCollide(other,x + 1.f/20.f, y-1.f/14.f);
     }
 
 
     void Packman::died() {
         toSpawnLocation();
-        if (direction == directions::RIGHT) {
-            packmanObserver->notify(notifications::CHANGE_DIRECTION_RIGHT);
-        } else if (direction == directions::LEFT) {
-            packmanObserver->notify(notifications::CHANGE_DIRECTION_LEFT);
-        } else if (direction == directions::UP) {
-            packmanObserver->notify(notifications::CHANGE_DIRECTION_UP);
-        } else {
-            packmanObserver->notify(notifications::CHANGE_DIRECTION_DOWN);
-        }
-        nextDirection = EMPTY;
+        nextDirection = EMPTY; // is iets prive van pacman.
+        notifyDir();
     }
 
 
