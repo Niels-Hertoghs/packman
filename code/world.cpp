@@ -63,7 +63,7 @@ namespace logic {
                     _purpleGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f);
                     break;
                 default:
-                    continue;
+                    break;
                 }
                 x += 0.1;
             }

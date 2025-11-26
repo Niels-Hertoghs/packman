@@ -44,7 +44,6 @@ namespace logic {
             }
         }
 
-
         changeDirection(nextDirection);
 
         notifyDir();
@@ -101,7 +100,6 @@ namespace logic {
     }
 
 
-
     /// ---------------------------------------------------------------------------------------------------------------
     /// purpleGhost
     /// ---------------------------------------------------------------------------------------------------------------
@@ -114,13 +112,13 @@ namespace logic {
     }
 
     std::pair<double, double> orangeGhost::getFollowSide() {
-        // TODO: veranderen naar back
-        return pacman->getFront();
+        return pacman->getBack();
     }
 
     bool orangeGhost::canMove() {
         return Stopwatch::getInstance()->canStartAfter10Sec();
     }
+
 
 
 } // logic

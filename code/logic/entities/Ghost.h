@@ -59,7 +59,6 @@ namespace logic {
         // past automatich de direction aan en update observer
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
         bool canMove() override;
-
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
     };
 

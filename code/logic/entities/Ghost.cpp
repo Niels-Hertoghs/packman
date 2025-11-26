@@ -21,6 +21,8 @@ namespace logic {
         // als het als mag vertrekken (green na 5 sec, orange na 10 sec)
         if (canMove()) {
             this->move(deltaTime);
+        } else {
+            return;
         }
 
         // zie of de huidige pos niet op een muur staat
@@ -163,8 +165,6 @@ namespace logic {
     bool redGhost::canMove() {
         return true;
     }
-
-
 
 
 } // logic

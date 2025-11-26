@@ -45,6 +45,8 @@ namespace logic {
         [[nodiscard]] std::pair<double,double> calculateNextPos(double delta,directions dir,double _x,double _y) const;
         void toSpawnLocation();
         std::pair<double, double> getFront();
+        std::pair<double, double> getBack();
+        std::pair<double,double> getCoSide(directions dir);
 
         static directions oppositeDirection(directions dir);
 

@@ -26,7 +26,7 @@ namespace logic {
     };
 
     /**
-    * @class manhattenGhost
+    * @class frontManhattenGhost
     */
     class frontManhattenGhost : public manhattenGhost {
     public:

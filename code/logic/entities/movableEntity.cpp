@@ -84,15 +84,23 @@ namespace logic {
     }
 
     std::pair<double, double> movableEntity::getFront() {
+        return getCoSide(direction);
+    }
+
+    std::pair<double,double> movableEntity::getBack() {
+        return getCoSide(oppositeDirection(direction));
+    }
+
+    std::pair<double,double> movableEntity::getCoSide(directions dir) {
         std::pair<double, double> pos = {x,y};
-        if (direction == directions::RIGHT || direction == directions::LEFT) {
+        if (dir == directions::RIGHT || dir == directions::LEFT) {
             pos.second = y - 1.f / 14.f;
-            if (direction == directions::RIGHT) {
+            if (dir == directions::RIGHT) {
                 pos.first = x + 1.f/10.f;
             }
-        } else if (direction == directions::UP || direction == directions::DOWN) {
+        } else if (dir == directions::UP || dir == directions::DOWN) {
             pos.first = x + 1.f / 20.f;
-            if (direction == directions::DOWN) {
+            if (dir == directions::DOWN) {
                 pos.second = y - 1.f / 7.f;
             }
         }
