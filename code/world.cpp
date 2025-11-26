@@ -60,7 +60,7 @@ namespace logic {
                     _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f);
                     break;
                 case 'a' :
-                    _purpleGhost = std::make_shared<purpleGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                    _purpleGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f);
                     break;
                 default:
                     continue;
@@ -173,7 +173,7 @@ namespace logic {
         return _blueGhost;
     }
 
-    std::shared_ptr<purpleGhost> world::get_purple_ghost() const {
+    std::shared_ptr<orangeGhost> world::get_purple_ghost() const {
         return _purpleGhost;
     }
 

@@ -31,7 +31,7 @@ namespace view {
         std::shared_ptr<view::redGhostView> redGhost;
         std::shared_ptr<view::blueGhostView> blueGhost;
         std::shared_ptr<view::greenGhostView> greenGhost;
-        std::shared_ptr<view::purpleGhostView> purpleGhost;
+        std::shared_ptr<view::orangeGhostView> orangeGhost;
 
 
         std::shared_ptr<view::ScoreView> score;

@@ -53,5 +53,17 @@ void Stopwatch::reset() {
     lastTimeEaten = clock::now();
     lastChangedSprite = clock::now();
     changedSprite.clear();
+    startTime = clock::now();
+}
 
+bool Stopwatch::canStartAfter5Sec() const {
+    auto currentTime = clock::now();
+    std::chrono::duration<float> elapsed = currentTime - startTime;
+    return elapsed.count() >= 5.0f;
+}
+
+bool Stopwatch::canStartAfter10Sec() const {
+    auto currentTime = clock::now();
+    std::chrono::duration<float> elapsed = currentTime - startTime;
+    return elapsed.count() >= 10.0f;
 }

@@ -100,11 +100,11 @@ namespace logic {
         return pos;
     }
 
-    void movableEntity::notifyPos() {
+    void movableEntity::notifyPos() const {
         observer->notify(notifications::CHANGE_POSITION);
     }
 
-    void movableEntity::notifyDir() {
+    void movableEntity::notifyDir() const {
         if (direction == directions::RIGHT) {
             observer->notify(notifications::CHANGE_DIRECTION_RIGHT);
         } else if (direction == directions::LEFT) {

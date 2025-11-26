@@ -51,12 +51,12 @@ namespace logic {
         /**
          * @brief Laat de observer weten dat de movable van positie is veranderd.
          */
-        void notifyPos();
+        void notifyPos() const;
 
         /**
          * @brief Laat de observer weten dat de movable van richting is veranderd, met de correcte richting.
          */
-        void notifyDir();
+        void notifyDir() const;
 
 
 

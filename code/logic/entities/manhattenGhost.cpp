@@ -78,6 +78,9 @@ namespace logic {
         observer = _ghostObserver;
     }
 
+    bool blueGhost::canMove() {
+        return true;
+    }
 
 
 
@@ -93,21 +96,30 @@ namespace logic {
         observer = std::move(_ghostObserver);
     }
 
+    bool greenGhost::canMove() {
+        return Stopwatch::getInstance()->canStartAfter5Sec();
+    }
+
+
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// purpleGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    purpleGhost::purpleGhost(double x, double y)  : manhattenGhost(x,y) {}
+    orangeGhost::orangeGhost(double x, double y)  : manhattenGhost(x,y) {}
 
-    void purpleGhost::purpleGhostSubscribe(std::shared_ptr<view::purpleGhostView> _ghostObserver) {
+    void orangeGhost::purpleGhostSubscribe(std::shared_ptr<view::orangeGhostView> _ghostObserver) {
         observer = std::move(_ghostObserver);
     }
 
-    std::pair<double, double> purpleGhost::getFollowSide() {
+    std::pair<double, double> orangeGhost::getFollowSide() {
         // TODO: veranderen naar back
         return pacman->getFront();
+    }
+
+    bool orangeGhost::canMove() {
+        return Stopwatch::getInstance()->canStartAfter10Sec();
     }
 
 

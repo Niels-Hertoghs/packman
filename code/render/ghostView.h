@@ -9,7 +9,7 @@
 namespace logic {
     class blueGhost;
     class greenGhost;
-    class purpleGhost;
+    class orangeGhost;
     class redGhost;
     class Ghost;
 }
@@ -46,10 +46,10 @@ namespace view {
         void notify(enum notifications message) override;
     };
 
-    class purpleGhostView : public ghostView {
-        std::weak_ptr<logic::purpleGhost> purpleGhostModel;
+    class orangeGhostView : public ghostView {
+        std::weak_ptr<logic::orangeGhost> purpleGhostModel;
     public:
-        purpleGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::purpleGhost>& ghostModel);
+        orangeGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::orangeGhost>& ghostModel);
         void notify(enum notifications message) override;
     };
 

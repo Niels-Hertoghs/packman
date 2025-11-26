@@ -52,10 +52,10 @@ namespace view {
         green_ghost->greenGhostSubscribe(_greenGhostView);
         greenGhost = _greenGhostView;
 
-        std::shared_ptr<logic::purpleGhost> purple_ghost = wereld->get_purple_ghost();
-        std::shared_ptr<purpleGhostView> _purpleGhostView = std::make_shared<purpleGhostView>(window,camera,purple_ghost);
-        purple_ghost->purpleGhostSubscribe(_purpleGhostView);
-        purpleGhost = _purpleGhostView;
+        std::shared_ptr<logic::orangeGhost> purple_ghost = wereld->get_purple_ghost();
+        std::shared_ptr<orangeGhostView> _orangeGhostView = std::make_shared<orangeGhostView>(window,camera,purple_ghost);
+        purple_ghost->purpleGhostSubscribe(_orangeGhostView);
+        orangeGhost = _orangeGhostView;
 
         std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window,camera,_score);
         _score->subscribeScore(score_view);
@@ -76,7 +76,7 @@ namespace view {
 
         redGhost->draw();
         greenGhost->draw();
-        purpleGhost->draw();
+        orangeGhost->draw();
         blueGhost->draw();
 
         score->draw();

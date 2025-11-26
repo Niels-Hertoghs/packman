@@ -85,14 +85,14 @@ namespace view {
         }
     }
 
-    purpleGhostView::purpleGhostView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::purpleGhost>& ghostModel)
+    orangeGhostView::orangeGhostView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::orangeGhost>& ghostModel)
         : ghostView(window, cam, {{145,300},{145,350}}),purpleGhostModel(ghostModel)
     {
         std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(ghostModel->getX(),ghostModel->getY());
         _movable.setPosition(pos.first,pos.second);
     }
 
-    void purpleGhostView::notify(enum notifications message) {
+    void orangeGhostView::notify(enum notifications message) {
         if (message == notifications::CHANGE_POSITION) {
             std::pair<unsigned int,unsigned int> pos;
             if (auto observer = purpleGhostModel.lock()) {

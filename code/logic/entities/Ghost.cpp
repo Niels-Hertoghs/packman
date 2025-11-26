@@ -18,7 +18,10 @@ namespace logic {
 
     void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> > &walls) {
         // ghost de richting laten uitgaan
-        this->move(deltaTime);
+        // als het als mag vertrekken (green na 5 sec, orange na 10 sec)
+        if (canMove()) {
+            this->move(deltaTime);
+        }
 
         // zie of de huidige pos niet op een muur staat
         for (std::shared_ptr<entity>& w : walls) {
@@ -156,6 +159,11 @@ namespace logic {
             notifyDir();
         }
     }
+
+    bool redGhost::canMove() {
+        return true;
+    }
+
 
 
 

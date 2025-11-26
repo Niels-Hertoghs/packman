@@ -22,6 +22,7 @@ namespace logic {
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
 
         virtual std::pair<double, double> getFollowSide() = 0;
+        bool canMove() override = 0;
     };
 
     /**
@@ -32,7 +33,7 @@ namespace logic {
         frontManhattenGhost(double x,double y);
 
         std::pair<double, double> getFollowSide() override;
-
+        bool canMove() override = 0;
     };
 
     /**
@@ -43,30 +44,30 @@ namespace logic {
     public:
         blueGhost(double x,double y);
         void blueGhostSubscribe(const std::shared_ptr<view::blueGhostView>& ghostObserver);
-
+        bool canMove() override;
     };
 
     /**
      * @class greenGhost
      */
     class greenGhost : public frontManhattenGhost {
-    private:
     public:
         greenGhost(double x,double y);
         void greenGhostSubscribe(std::shared_ptr<view::greenGhostView> ghostObserver);
-
+        bool canMove() override;
     };
 
 
     /**
-     * @class purpleGhost
+     * @class orangeGhost
      */
-    class purpleGhost : public manhattenGhost {
+    class orangeGhost : public manhattenGhost {
     private:
     public:
-        purpleGhost(double x,double y);
-        void purpleGhostSubscribe(std::shared_ptr<view::purpleGhostView> ghostObserver);
+        orangeGhost(double x,double y);
+        void purpleGhostSubscribe(std::shared_ptr<view::orangeGhostView> ghostObserver);
         std::pair<double, double> getFollowSide() override;
+        bool canMove() override;
     };
 } // logic
 
