@@ -31,22 +31,35 @@ namespace logic {
 
         // initializatie om de richting te kiezen
         directions nextDirection = direction;
-        double minDistance = std::numeric_limits<double>::max();
+        double edgeDistance = 0;
+        if (mode == CHASING_MODE) {
+            edgeDistance = std::numeric_limits<double>::max();
+        } else if (mode == FEAR_MODE) {
+            edgeDistance = std::numeric_limits<double>::min();
+        }
+
 
         for (directions d : posDirections) {
             // std::pair<double, double> voorkantGhost = this->getFront(direction);
             // de pos van het spookje als het direction p op gaat
             std::pair<double,double> nextPosGhost = calculateNextPos(1,d,x + 1.f/20.f,y - 1.f/14.f);
             double distance = calculateManhatten(kantPac.first,kantPac.second,nextPosGhost.first,nextPosGhost.second);
-            if (distance < minDistance) {
-                minDistance = distance;
-                nextDirection = d;
+            if (mode == CHASING_MODE) {
+                // zoek de kleinste distance
+                if (distance < edgeDistance) {
+                    edgeDistance = distance;
+                    nextDirection = d;
+                }
+            } else if (mode == FEAR_MODE) {
+                if (distance > edgeDistance) {
+                    // zoek de grootste distance
+                    edgeDistance = distance;
+                    nextDirection = d;
+                }
             }
         }
 
         changeDirection(nextDirection);
-
-        notifyDir();
 
     }
 

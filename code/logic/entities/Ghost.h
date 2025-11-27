@@ -15,11 +15,13 @@ namespace logic {
     */
     class Ghost : public movableEntity {
     protected:
+        enum modes mode;  /// De mode van de Ghost.
         directions prevDirection;
-        enum modes mode;
         bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
         bool canChoseDir;/// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan. Is er ook zodat de ghost de ghost kamer kan verlaten en daarna niet meer door de invisible walls kan.
         bool outsideCage; /// Of de ghost al uit de cage is
+
+        bool originalOutsideCage; /// als de ghost woordt her spawned moet die terug uit zijn kot kunnen.
     public:
         /**
         * @brief Constructor voor de Ghost.
@@ -37,6 +39,7 @@ namespace logic {
         std::vector<directions> possibleDirections(std::vector<std::shared_ptr<entity>>& walls);
         [[nodiscard]] bool hadFirstCollision() const;
         void changeDirection(directions direction);
+        void startFearMode();
         void died() override;
 
     };

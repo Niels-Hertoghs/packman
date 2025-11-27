@@ -5,12 +5,10 @@
 #ifndef PACKMAN_COLLECTABLE_H
 #define PACKMAN_COLLECTABLE_H
 #include "entity.h"
+#include "Score.h"
 #include "../../render/collectableView.h"
 
 
-namespace render {
-     class Render;
-}
 
 namespace logic {
 
@@ -21,14 +19,31 @@ namespace logic {
      class collectable : public entity {
      private:
           int points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
+     protected:
+          std::shared_ptr<view::collectableView> collectableObserver;
+          std::shared_ptr<Score> score; /// pointer naar de score observer
      public:
           // constructor
           collectable(double x, double y,int points);
 
+          /**
+           * @brief Laat de observer weten dat het gegeten is + of de movables in chasing mode moeten.
+           * @return True als het een fruit gegeten heeft en in chasing mode moet gaan.
+           */
+          [[nodiscard]] virtual bool collected() const = 0;
+
+          /**
+           * @return Of de collectable en fruit is.
+           */
+          [[nodiscard]] virtual bool isFruit() const = 0;
+
 
           // methods
-          int getPoints() const;
+          [[nodiscard]] int getPoints() const;
           void setPoints(int newPoints);
+          void collectableSubscribe(std::shared_ptr<view::collectableView> collectableObserver);
+          void subscribeScore(const std::shared_ptr<Score>& score);
+
      };
 
      /**
@@ -37,23 +52,38 @@ namespace logic {
       */
      class coin : public collectable {
      private:
-          std::shared_ptr<view::coinView> coinObserver;
-
      public:
           coin(double x, double y, int points);
-          void coinSubscribe(std::shared_ptr<view::coinView> coinObserver);
 
-          void collected() const;
+          /**
+           * @brief Laat de observer weten dat het gegeten is + of de movables in chasing mode moeten.
+           * @return True als het een fruit gegeten heeft en in chasing mode moet gaan.
+           */
+          [[nodiscard]] bool collected() const override;
+
+          /**
+          * @return Of de collectable en fruit is.
+          */
+          [[nodiscard]] bool isFruit() const override;
      };
 
      class fruit : public collectable {
      private:
-          std::shared_ptr<view::fruitView> fruitObserver;
 
      public:
           fruit(double x, double y,int points);
-          void fruitSubscribe(std::shared_ptr<view::fruitView> fruitObserver);
-          void collected() const;
+
+
+          /**
+          * @brief Laat de observer weten dat het gegeten is + of de movables in chasing mode moeten.
+          * @return True als het een fruit gegeten heeft en in chasing mode moet gaan.
+          */
+          [[nodiscard]] bool collected() const override;
+
+          /**
+          * @return Of de collectable en fruit is.
+          */
+          [[nodiscard]] bool isFruit() const override;
 
      };
 }

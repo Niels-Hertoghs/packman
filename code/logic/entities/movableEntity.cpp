@@ -16,7 +16,7 @@ namespace logic {
     : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y),prevX(x),prevY(y) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
-        return this->wouldCollide(other,x,y);
+        return wouldCollide(other,x,y);
     }
 
     bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, double nextX, double nextY) {
@@ -81,6 +81,9 @@ namespace logic {
         x = spwanLocatieX;
         y = spwanLocatiey;
         direction = originalDirection;
+        notifyDir();
+        notifyPos();
+
     }
 
     std::pair<double, double> movableEntity::getFront() {
@@ -214,9 +217,21 @@ namespace logic {
         observer = PacmanObserver;
     }
 
-    bool Packman::standsOnGhost(std::shared_ptr<Ghost> ghost) {
-        std::shared_ptr<entity> other = std::move(ghost);
-        return this->wouldCollide(other,x, y);
+    bool Packman::standsOnGhost(const std::shared_ptr<Ghost>& ghost) {
+        double width = 1.f / 10.f;
+        double height = 1.f / 7.f;
+
+        double pacX = x - 1.f/20.f;
+        double pacY = y + 1.f/14.f;
+
+        double ghostX = ghost->getX() - 1.f/20.f;
+        double ghostY = ghost->getY() + 1.f/14.f;
+
+        double buffer = 0.005f;
+
+        bool overlapX = pacX < ghostX + width - buffer && pacX + width > ghostX + buffer;
+        bool overlapY = pacY > ghostY - height + buffer && pacY - height < ghostY - buffer;
+        return overlapX && overlapY;
     }
 
 
@@ -224,6 +239,7 @@ namespace logic {
         toSpawnLocation();
         nextDirection = EMPTY; // is iets prive van pacman.
         notifyDir();
+        notifyPos();
     }
 
 

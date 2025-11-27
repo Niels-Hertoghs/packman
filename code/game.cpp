@@ -26,6 +26,7 @@ void game::playGame() {
 
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
+    window.setVerticalSyncEnabled(true);
 
 
     // Plaats het venster in het midden van het scherm
@@ -59,6 +60,4 @@ void game::playGame() {
 
         window.display();
     }
-    // max 60 fps
-    std::this_thread::sleep_for(std::chrono::milliseconds(16));
 }

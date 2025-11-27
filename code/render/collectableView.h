@@ -9,8 +9,7 @@
 #include "entityView.h"
 
 namespace logic {
-    class fruit;
-    class coin;
+    class collectable;
 }
 
 namespace view {
@@ -21,13 +20,14 @@ namespace view {
     class collectableView : public entityView {
     protected:
         bool collected;
+        std::weak_ptr<logic::collectable> Model; /// Weak pointer naar de logica van collectable.
     public:
         /**
          * @brief Constructor voor de collectable observer.
          * @param window De window waar de collectable afgebeeld met worden.
          * @param cam Camera klasse
          */
-        collectableView(sf::RenderWindow& window,camera& cam);
+        collectableView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::collectable>& model);
 
         /**
          * @brief Pure virtual methodes
@@ -43,14 +43,13 @@ namespace view {
     class coinView : public collectableView {
     private:
         sf::CircleShape _coin; /// De representatie van de coin.
-        std::weak_ptr<logic::coin> coinModel; /// Smart pointer naar de logica van coin.
     public:
         /**
         * @brief Constructor voor de coin observer.
         * @param window De window waar de collectable afgebeeld met worden.
         * @param cam Camera klasse
         */
-        coinView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::coin>& coinModel);
+        coinView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::collectable>& coinModel);
 
         /**
          * @brief Wanneer opgeroepen wordt coin weergegeven in de window.
@@ -67,14 +66,13 @@ namespace view {
     private:
         sf::Texture texture; /// De texture van de fruit.
         sf::RectangleShape _fruit; /// De representatie van de fruit.
-        std::weak_ptr<logic::fruit> fruitModel; /// Smart pointer naar de logica van fruit.
     public:
         /**
         * @brief Constructor voor de coin observer.
         * @param window De window waar de collectable afgebeeld met worden.
         * @param cam Camera klasse
         */
-        fruitView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::fruit>& fruitModel);
+        fruitView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::collectable>& fruitModel);
 
         /**
         * @brief Wanneer opgeroepen wordt coin weergegeven in de window.

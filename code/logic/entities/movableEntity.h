@@ -38,7 +38,7 @@ namespace logic {
         virtual void died() = 0;
 
         // methodes
-        bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
+        static bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
         bool standsOn(const std::shared_ptr<entity>& other);
         void prevLocation();
         void move(double delta);
@@ -85,7 +85,7 @@ namespace logic {
         void updateDir(enum directions);
 
         void pacmanSubscribe(const std::shared_ptr<view::packmanView>& pacmanObserver);
-        bool standsOnGhost(std::shared_ptr<Ghost> ghost);
+        bool standsOnGhost(const std::shared_ptr<Ghost>& ghost);
 
     };
 

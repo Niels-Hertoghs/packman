@@ -14,7 +14,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
     Ghost::Ghost(double x, double y, bool outsideCage, directions direction,double speed)
-        : movableEntity(x,y,speed,direction), canChoseDir(false),hasChosenAtIntersection(false), prevDirection(directions::EMPTY), mode(modes::CHASING_MODE), outsideCage(outsideCage){}
+        : movableEntity(x,y,speed,direction), canChoseDir(false),hasChosenAtIntersection(false), prevDirection(directions::EMPTY), mode(modes::CHASING_MODE), outsideCage(outsideCage),originalOutsideCage(outsideCage){}
 
     void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> > &walls) {
         // ghost de richting laten uitgaan
@@ -106,16 +106,23 @@ namespace logic {
     void Ghost::changeDirection(directions _direction) {
         prevDirection = direction;
         this->direction = _direction;
+        notifyDir();
     }
 
     bool Ghost::hadFirstCollision() const {
         return canChoseDir && outsideCage;
     }
 
+    void Ghost::startFearMode() {
+        mode = modes::FEAR_MODE;
+        observer->notify(notifications::TO_FEAR_MODE);
+    }
+
+
     void Ghost::died() {
         toSpawnLocation();
         canChoseDir = false; // prive van ghost
-        notifyDir();
+        outsideCage = originalOutsideCage;
     }
 
     /// ---------------------------------------------------------------------------------------------------------------
@@ -140,8 +147,6 @@ namespace logic {
         int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
 
         changeDirection(possibleDirections[chosenDir]);
-
-        notifyDir();
     }
 
     void redGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
@@ -167,7 +172,6 @@ namespace logic {
             int chosenDir = random::getInstance()->getNumber(0, filteredDirections.size());;
 
             changeDirection(filteredDirections[chosenDir]);
-            notifyDir();
         }
     }
 

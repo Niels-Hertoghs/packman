@@ -26,8 +26,7 @@ namespace logic {
     class world {
     private:
         std::vector<std::shared_ptr<wall>> walls;
-        std::vector<std::shared_ptr<fruit>> fruits;
-        std::vector<std::shared_ptr<coin>> coins;
+        std::vector<std::shared_ptr<collectable>> collectables;
         std::vector<std::shared_ptr<invisibleWall>> invisibleWalls;
 
         std::shared_ptr<redGhost> _redGhost;
@@ -46,19 +45,23 @@ namespace logic {
         void update(float deltaTime);
         void updatePacmanDir(directions) const;
 
-        void subscribeScore(std::shared_ptr<logic::Score> score);
+        void subscribeScore(const std::shared_ptr<logic::Score>& score);
         void clear();
-        void nextLevel();
 
         /**
          * Als pacman gestorven is -> alles restart
          */
-        void died();
+        void died() const;
+
+        /**
+         * @brief Laat alle objecten (die het moeten weten) weten dat chase mode is gestart.
+         */
+        void startFearMode();
+
 
         //getters
         [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
-        [[nodiscard]] std::vector<std::shared_ptr<fruit>> get_fruits() const;
-        [[nodiscard]] std::vector<std::shared_ptr<coin>> get_coins() const;
+        [[nodiscard]] std::vector<std::shared_ptr<collectable>> get_collectables() const;
 
         [[nodiscard]] std::shared_ptr<redGhost> get_red_ghost() const;
         [[nodiscard]] std::shared_ptr<blueGhost> get_blue_ghost() const;

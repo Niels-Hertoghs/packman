@@ -4,12 +4,14 @@
 
 #include "collectable.h"
 
+#include <utility>
+
 
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class collectable
     /// ---------------------------------------------------------------------------------------------------------------
-    ///
+
     collectable::collectable(double x, double y,int Points) : entity(x,y ), points(Points) {}
 
     int collectable::getPoints() const {
@@ -20,6 +22,16 @@ namespace logic {
         points = newPoints;
     }
 
+    void collectable::collectableSubscribe(std::shared_ptr<view::collectableView> _collectableObserver) {
+        collectableObserver = std::move(_collectableObserver);
+    }
+
+    void collectable::subscribeScore(const std::shared_ptr<Score>& Score) {
+        score = Score;
+    }
+
+
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class coin
     /// ---------------------------------------------------------------------------------------------------------------
@@ -27,12 +39,14 @@ namespace logic {
     coin::coin(double x, double y,int points) : collectable(x,y,points){}
 
 
-    void coin::coinSubscribe(std::shared_ptr<view::coinView> CoinObserver) {
-        coinObserver = std::move(CoinObserver);
+    bool coin::collected() const {
+        score->coinEaten(getPoints());
+        collectableObserver->notify(notifications::COLLECTED);
+        return false;
     }
 
-    void coin::collected() const {
-        coinObserver->notify(notifications::COLLECTED);
+    bool coin::isFruit() const {
+        return false;
     }
 
 
@@ -40,16 +54,19 @@ namespace logic {
     /// @class fruit
     /// ---------------------------------------------------------------------------------------------------------------
 
-    fruit::fruit(double x, double y,int points) : collectable(x,y,points){}
-
-
-    void fruit::fruitSubscribe(std::shared_ptr<view::fruitView> FruitObserver) {
-        fruitObserver = std::move(FruitObserver);
+    fruit::fruit(double x, double y, int points) : collectable(
+        x, y, points) {
     }
 
-    void fruit::collected() const {
-        fruitObserver->notify(notifications::COLLECTED);
+
+    bool fruit::collected() const {
+        score->coinEaten(getPoints());
+        collectableObserver->notify(notifications::COLLECTED);
+        return true;
     }
 
+    bool fruit::isFruit() const {
+        return true;
+    }
 
 }

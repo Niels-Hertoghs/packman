@@ -18,18 +18,19 @@ namespace view {
         }
 
         // De fruit observers worden aangemaakt en gelinkt aan de models.
-        for (std::shared_ptr<logic::fruit>& _fruit : wereld->get_fruits()) {
-            std::shared_ptr<fruitView> fruit = std::make_shared<fruitView>(window,camera,_fruit);
-            _fruit->fruitSubscribe(fruit);
-            fruits.push_back(fruit);
+        for (std::shared_ptr<logic::collectable>& _collectable : wereld->get_collectables()) {
+            if (_collectable->isFruit()) {
+                std::shared_ptr<fruitView> fruit = std::make_shared<fruitView>(window,camera,_collectable);
+                _collectable->collectableSubscribe(fruit);
+                fruits.push_back(fruit);
+            } else {
+                std::shared_ptr<coinView> coin = std::make_shared<coinView>(window,camera,_collectable);
+                _collectable->collectableSubscribe(coin);
+                coins.push_back(coin);
+            }
+
         }
 
-        // De wall observers worden aangemaakt en gelinkt aan de models.
-        for (std::shared_ptr<logic::coin>& _coin : wereld->get_coins()) {
-            std::shared_ptr<coinView> coin = std::make_shared<coinView>(window,camera,_coin);
-            _coin->coinSubscribe(coin);
-            coins.push_back(coin);
-        }
 
         // pacman observer wordt aangemaakt en gelinkt aan pacman model.
         std::shared_ptr<logic::Packman> Pacman = wereld->get_pacman();

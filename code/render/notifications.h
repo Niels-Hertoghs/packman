@@ -15,7 +15,9 @@ enum notifications {
     COLLECTED,
     UPDATE_SCORE,
     UPDATE_LIVES,
-    UPDATE_LEVEL
+    UPDATE_LEVEL,
+    TO_CHASING_MODE,
+    TO_FEAR_MODE,
 };
 
 enum directions {
@@ -28,8 +30,7 @@ enum directions {
 
 enum modes {
     CHASING_MODE,
-    FEAR_MODE,
-    WAIT
+    FEAR_MODE
 };
 
 #endif //PACKMAN_NOTIFIES_H

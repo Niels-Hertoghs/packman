@@ -9,17 +9,17 @@
 #include "../logic/entities/collectable.h"
 
 namespace view {
-    collectableView::collectableView(sf::RenderWindow& window, camera& cam)
-        : entityView(window, cam),collected(false) {}
+    collectableView::collectableView(sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::collectable>& model)
+        : entityView(window, cam),collected(false),Model(model) {}
 
-    coinView::coinView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::coin>& CoinModel)
-        : collectableView(window, cam), coinModel(CoinModel)
+    coinView::coinView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& CoinModel)
+        : collectableView(window, cam,CoinModel)
 
     {
         int radius = cam.distanceToPixelsHeight(0.016f);
         sf::CircleShape coinShape(radius);
         std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = coinModel.lock()) {
+        if (auto observer = Model.lock()) {
             pos = cam.worldToPixel(observer->getX(),observer->getY());
         }
         coinShape.setPosition(pos.first,pos.second);
@@ -31,7 +31,7 @@ namespace view {
 
     void coinView::draw() {
         std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = coinModel.lock()) {
+        if (auto observer = Model.lock()) {
             pos = _camera.worldToPixel(observer->getX(),observer->getY());
         }
 
@@ -46,14 +46,14 @@ namespace view {
     void coinView::notify(enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
-            coinModel.reset();
+            Model.reset();
         }
 
     }
 
 
-    fruitView::fruitView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::fruit>& FruitModel)
-        : collectableView(window, cam), fruitModel(FruitModel)
+    fruitView::fruitView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& FruitModel)
+        : collectableView(window, cam,FruitModel)
 
     {
         try {
@@ -78,7 +78,7 @@ namespace view {
         Fruit.setOrigin(bounds.width/2,bounds.height/2);
 
         std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = fruitModel.lock()) {
+        if (auto observer = Model.lock()) {
             pos = cam.worldToPixel(observer->getX(),observer->getY());
         }
         Fruit.setPosition(pos.first,pos.second);
@@ -87,7 +87,7 @@ namespace view {
 
     void fruitView::draw() {
         std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = fruitModel.lock()) {
+        if (auto observer = Model.lock()) {
             pos = _camera.worldToPixel(observer->getX(),observer->getY());
         }
         int FruitSizeHeight = _camera.distanceToPixelsHeight(1.f/17.f);
@@ -103,7 +103,7 @@ namespace view {
     void fruitView::notify(enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
-            fruitModel.reset();
+            Model.reset();
         }
 
     }

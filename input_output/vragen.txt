@@ -20,3 +20,5 @@ hoe moet het scale, moet dat met een constante verhouding of ni?
 TODO: de constructor van pacmanview verplaatsen naar movable entity als mogelijk
 stopwatch nooit doorgeven mar -> get insstance doen
 TODO: code opruimen en checken op const enz ovceral ook methodes + nodiscard
+TODO: overal destructors zetten = default
+TODO: alles met een return [[nodisxcrd]]

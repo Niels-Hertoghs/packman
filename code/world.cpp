@@ -37,18 +37,18 @@ namespace logic {
                     break;
                 case '-':
                     // points staat op 40 om te beginnen, daarna 10 extra per level
-                    coins.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40 + (level * 10)));
+                    collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40 + (level * 10)));
                     break;
                 case '_' :
                     invisibleWalls.push_back(std::make_shared<invisibleWall>(x, y));
                     break;
                 case 'f':
                     // points staan op 50 om te beginne, is meer dan coins, daarna 10 extra per level
-                    fruits.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50+ (level * 10)));
+                    collectables.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50+ (level * 10)));
                     break;
                 case 'p':
                     //pacman aanmaken, origin = midpunt
-                        // speed  = 1 en plus 0.5 voor elke hoger level
+                        // speed = 1 en plus 0.5 voor elke hoger level
                     pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f, 1.f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'r':
@@ -107,59 +107,36 @@ namespace logic {
         }
 
         // zien of pacman niet op een collectable staat
-        for (auto it = coins.begin(); it != coins.end(); ) {
+        for (auto it = collectables.begin(); it != collectables.end(); ) {
             if (pacman->standsOnCoin(*it)) {
-                it->get()->collected();
-                score->coinEaten(it->get()->getPoints());
-                it = coins.erase(it); // erase retourneert de volgende iterator
+                if (it->get()->collected()) {
+                    startFearMode();
+                }
+                it = collectables.erase(it); // erase retourneert de volgende iterator
             } else {
                 ++it;
             }
         }
-        for (auto it = fruits.begin(); it != fruits.end(); ) {
-            if (pacman->standsOnCoin(*it)) {
-                it->get()->collected();
-                score->coinEaten(it->get()->getPoints());
-                it = fruits.erase(it); // erase retourneert de volgende iterator
-            } else {
-                ++it;
-            }
-        }
-        //
-        // for (std::shared_ptr<Ghost>& ghost:ghosts) {
-        //     if (pacman->standsOnGhost(ghost)) {
-        //         died();
-        //     }
-        // }
-
-        if (fruits.empty() && coins.empty()) {
-            score->nextLevel();
-            nextLevel();
-        }
-    }
-
-    void world::nextLevel() {
-        std::vector<std::shared_ptr<Ghost>> ghosts = {
-            _redGhost,
-            _blueGhost,
-            _greenGhost,
-            _orangeGhost
-        };
 
         for (std::shared_ptr<Ghost>& ghost:ghosts) {
-            // ghost->nextLevel();
+            if (pacman->standsOnGhost(ghost)) {
+                died();
+            }
         }
 
-        // pacman->nextLevel();
+        if (collectables.empty()) {
+            score->nextLevel();
+        }
     }
 
-    void world::died() {
+    void world::died() const {
         score->liveLost();
         _redGhost->died();
         _blueGhost->died();
         _greenGhost->died();
         _orangeGhost->died();
         pacman->died();
+        Stopwatch::getInstance()->reset();
     }
 
 
@@ -167,20 +144,19 @@ namespace logic {
         pacman->updateDir(dir);
     }
 
-    void world::subscribeScore(std::shared_ptr<logic::Score> _score) {
-        score = std::move(_score);
+    void world::subscribeScore(const std::shared_ptr<logic::Score>& _score) {
+        score = _score;
+        for (const std::shared_ptr<collectable>& collectable : collectables) {
+            collectable->subscribeScore(_score);
+        }
     }
 
     std::vector<std::shared_ptr<wall>> world::get_walls() const {
         return walls;
     }
 
-    std::vector<std::shared_ptr<fruit>> world::get_fruits() const {
-        return fruits;
-    }
-
-    std::vector<std::shared_ptr<coin>> world::get_coins() const {
-        return coins;
+    std::vector<std::shared_ptr<collectable>> world::get_collectables() const {
+        return collectables;
     }
 
     std::shared_ptr<redGhost> world::get_red_ghost() const {
@@ -209,10 +185,21 @@ namespace logic {
 
     void world::clear() {
         walls.clear();
-        fruits.clear();
-        coins.clear();
+        collectables.clear();
         invisibleWalls.clear();
     }
 
+    void world::startFearMode() {
+        std::vector<std::shared_ptr<Ghost>> ghosts = {
+            _redGhost,
+            _blueGhost,
+            _greenGhost,
+            _orangeGhost
+        };
+
+        for (const std::shared_ptr<Ghost>& ghost : ghosts) {
+            ghost->startFearMode();
+        }
+    }
 
 }

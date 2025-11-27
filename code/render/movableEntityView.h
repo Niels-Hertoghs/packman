@@ -13,14 +13,13 @@ namespace logic {
 
 namespace view {
     class movableEntityView : public entityView {
-    private:
         int aantalSprites;
         int counter;
-        int id; /// de unieke id van deze movableEntityView, (voor het veranderen van de sprite).
-        inline static int nextId; /// statische variabele voor unieke id's, zodat elke movableEntityView een eigen id heeft.
+        int id; /// De unieke id van deze movableEntityView, (voor het veranderen van de sprite).
+        inline static int nextId; /// Statische variabele voor unieke id's, zodat elke movableEntityView een eigen id heeft.
         std::weak_ptr<logic::movableEntity> Model;
     protected:
-        std::vector<std::vector<std::pair<int,int>>> allSprites;
+        std::vector<std::vector<std::pair<int,int>>> allSprites;  /// Alle sprites van dit object, in de volgorde down, up, right, left.
         std::vector<std::pair<int,int>> spriteCo;
         sf::Texture texture;
         sf::RectangleShape _movable;
