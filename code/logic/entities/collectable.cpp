@@ -10,13 +10,13 @@ namespace logic {
     /// @class collectable
     /// ---------------------------------------------------------------------------------------------------------------
     ///
-    collectable::collectable(double x, double y,double Points) : entity(x,y ), points(Points) {}
+    collectable::collectable(double x, double y,int Points) : entity(x,y ), points(Points) {}
 
-    double collectable::getPoints() {
+    int collectable::getPoints() const {
         return points;
     }
 
-    void collectable::setPoints(double newPoints) {
+    void collectable::setPoints(int newPoints) {
         points = newPoints;
     }
 
@@ -24,14 +24,14 @@ namespace logic {
     /// @class coin
     /// ---------------------------------------------------------------------------------------------------------------
 
-    coin::coin(double x, double y,double points) : collectable(x,y,points){}
+    coin::coin(double x, double y,int points) : collectable(x,y,points){}
 
 
     void coin::coinSubscribe(std::shared_ptr<view::coinView> CoinObserver) {
-        coinObserver = CoinObserver;
+        coinObserver = std::move(CoinObserver);
     }
 
-    void coin::collected() {
+    void coin::collected() const {
         coinObserver->notify(notifications::COLLECTED);
     }
 
@@ -40,14 +40,14 @@ namespace logic {
     /// @class fruit
     /// ---------------------------------------------------------------------------------------------------------------
 
-    fruit::fruit(double x, double y,double points) : collectable(x,y,points){}
+    fruit::fruit(double x, double y,int points) : collectable(x,y,points){}
 
 
     void fruit::fruitSubscribe(std::shared_ptr<view::fruitView> FruitObserver) {
-        fruitObserver = FruitObserver;
+        fruitObserver = std::move(FruitObserver);
     }
 
-    void fruit::collected() {
+    void fruit::collected() const {
         fruitObserver->notify(notifications::COLLECTED);
     }
 

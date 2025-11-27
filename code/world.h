@@ -32,7 +32,7 @@ namespace logic {
 
         std::shared_ptr<redGhost> _redGhost;
         std::shared_ptr<blueGhost> _blueGhost;
-        std::shared_ptr<orangeGhost> _purpleGhost;
+        std::shared_ptr<orangeGhost> _orangeGhost;
         std::shared_ptr<greenGhost> _greenGhost;
 
         std::shared_ptr<Packman> pacman;
@@ -41,13 +41,14 @@ namespace logic {
         std::shared_ptr<Score> score;
     public:
         explicit world(const std::string& inputFile);
-        void startWorld();
+        void startWorld(int level);
 
         void update(float deltaTime);
-        void updatePacmanDir(directions);
+        void updatePacmanDir(directions) const;
 
         void subscribeScore(std::shared_ptr<logic::Score> score);
         void clear();
+        void nextLevel();
 
         /**
          * Als pacman gestorven is -> alles restart
@@ -61,7 +62,7 @@ namespace logic {
 
         [[nodiscard]] std::shared_ptr<redGhost> get_red_ghost() const;
         [[nodiscard]] std::shared_ptr<blueGhost> get_blue_ghost() const;
-        [[nodiscard]] std::shared_ptr<orangeGhost> get_purple_ghost() const;
+        [[nodiscard]] std::shared_ptr<orangeGhost> get_orange_ghost() const;
         [[nodiscard]] std::shared_ptr<greenGhost> get_green_ghost() const;
 
         [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;

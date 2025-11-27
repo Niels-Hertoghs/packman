@@ -61,7 +61,7 @@ namespace view {
     }
 
     greenGhostView::greenGhostView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::greenGhost>& ghostModel)
-        : ghostView(window, cam, {{195,300},{195,350}}),greenGhostModel(ghostModel)
+        : ghostView(window, cam, {{195,0},{195,50}}),greenGhostModel(ghostModel)
     {
         std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(ghostModel->getX(),ghostModel->getY());
         _movable.setPosition(pos.first,pos.second);
@@ -79,14 +79,14 @@ namespace view {
         } else if ( message == notifications::CHANGE_DIRECTION_UP) {
             spriteCo = {{195,300},{195,350}};
         } else if ( message == notifications::CHANGE_DIRECTION_RIGHT) {
-            spriteCo = {{195,0},{195,50},};
+            spriteCo = {{195,0},{195,50}};
         } else if ( message == notifications::CHANGE_DIRECTION_LEFT) {
             spriteCo = {{195,200},{195,250}};
         }
     }
 
     orangeGhostView::orangeGhostView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::orangeGhost>& ghostModel)
-        : ghostView(window, cam, {{145,300},{145,350}}),purpleGhostModel(ghostModel)
+        : ghostView(window, cam, {{145,200},{145,250}}),purpleGhostModel(ghostModel)
     {
         std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(ghostModel->getX(),ghostModel->getY());
         _movable.setPosition(pos.first,pos.second);

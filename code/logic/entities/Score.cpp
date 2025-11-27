@@ -4,18 +4,21 @@
 
 #include "Score.h"
 
+#include <cmath>
+
 #include "../../render/ScoreView.h"
 #include "../state_maneger/stateManeger.h"
 
 namespace logic {
-    Score::Score(stateManeger& Manager) : IObserver(),manager(Manager),  score(0),livesLeft(1),level(1) {}
+    Score::Score(stateManeger& Manager) : IObserver(),manager(Manager),  score(0),livesLeft(2),level(1) {}
 
-    void Score::coinEaten(float coinPoints) {
+    void Score::coinEaten(int coinPoints) {
         float lastEatenTime = Stopwatch::getInstance()->eatCollectable();
         // aantal coin points komt er bij de score als de collectable gegeten wordt na 1 sec
         // als het sneller wordt gedaan komen er meer punten bij, afhankelijk van hoe snel
         // (0.5 sec -> points verdubbeld, na 2 sec points gehalveerd)
-        score += coinPoints/lastEatenTime;
+        auto points = static_cast<float>(coinPoints);
+        score += static_cast<int>(std::round(points/lastEatenTime));
         scoreObserver->notify(notifications::UPDATE_SCORE);
     }
 
@@ -40,7 +43,7 @@ namespace logic {
 
 
     void Score::subscribeScore(std::shared_ptr<view::ScoreView> scoreView) {
-        scoreObserver = scoreView;
+        scoreObserver = std::move(scoreView);
     }
 
     int Score::getScore() const {

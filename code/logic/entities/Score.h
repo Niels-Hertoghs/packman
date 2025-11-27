@@ -21,8 +21,8 @@ namespace logic {
         std::shared_ptr<view::ScoreView> scoreObserver;
         stateManeger& manager;
     public:
-        Score(stateManeger& manager);
-        void coinEaten(float coinPoints);
+        explicit Score(stateManeger& manager);
+        void coinEaten(int coinPoints);
         void liveLost();
         void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);
         void nextLevel();

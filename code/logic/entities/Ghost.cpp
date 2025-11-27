@@ -13,14 +13,22 @@ namespace logic {
     /// @class ghost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Ghost::Ghost(double x, double y)
-        : movableEntity(x,y,0.95f,directions::UP), canChoseDir(false),hasChosenAtIntersection(false), prevDirection(directions::EMPTY), mode(modes::CHASING_MODE){}
+    Ghost::Ghost(double x, double y, bool outsideCage, directions direction,double speed)
+        : movableEntity(x,y,speed,direction), canChoseDir(false),hasChosenAtIntersection(false), prevDirection(directions::EMPTY), mode(modes::CHASING_MODE), outsideCage(outsideCage){}
 
     void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> > &walls) {
         // ghost de richting laten uitgaan
         // als het als mag vertrekken (green na 5 sec, orange na 10 sec)
         if (canMove()) {
             this->move(deltaTime);
+            if (!outsideCage) {
+                std::vector<directions> possibleDirections = this->possibleDirections(walls);
+                if (std::find(possibleDirections.begin(), possibleDirections.end(), UP) != possibleDirections.end()) {
+                    direction = UP;
+                    outsideCage = true;
+                    notifyDir();
+                }
+            }
         } else {
             return;
         }
@@ -35,6 +43,7 @@ namespace logic {
                 if (!canChoseDir) {
                     canChoseDir = true;
                     hasChosenAtIntersection = true;
+                    outsideCage = true;
                     nextDirection(walls);
                     return;
                 }
@@ -78,8 +87,8 @@ namespace logic {
             double newX = x + stepX;
             double newY = y + stepY;
 
-            bool canMove = true;
 
+            bool canMove = true;
             for (const std::shared_ptr<entity>& w : walls) {
                 if (wouldCollide(w,newX,newY)) {
                     canMove = false;
@@ -100,7 +109,7 @@ namespace logic {
     }
 
     bool Ghost::hadFirstCollision() const {
-        return canChoseDir;
+        return canChoseDir && outsideCage;
     }
 
     void Ghost::died() {
@@ -113,7 +122,7 @@ namespace logic {
     /// redGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    redGhost::redGhost(double x, double y) : Ghost(x,y) {}
+    redGhost::redGhost(double x, double y,double speed) : Ghost(x,y, true,UP,speed) {}
 
     void redGhost::redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver) {
         observer = redGhostObserver;

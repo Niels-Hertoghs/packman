@@ -95,11 +95,13 @@ namespace view {
                 Stopwatch::getInstance()->reset();
                 wereld->clear();
 
-                // alles in de wereld inladen
-                wereld->startWorld();
-
                 // alle view observers linken aan objecten, elk object een observer geven
                 std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
+
+
+                // alles in de wereld inladen
+                wereld->startWorld(score->getLevel());
+
 
                 std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
                 wereld->subscribeScore(score);
@@ -227,10 +229,11 @@ namespace view {
                 wereld->clear();
 
                 // alles opnieuw in de wereld inladen
-                wereld->startWorld();
+                std::shared_ptr<logic::Score> score = wereld->get_score();
+
+                wereld->startWorld(score->getLevel());
 
                 // alle view observers linken aan objecten, elk object een observer geven
-                std::shared_ptr<logic::Score> score = wereld->get_score();
                 std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld,cam,window,score);
 
                 std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));

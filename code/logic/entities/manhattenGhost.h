@@ -14,7 +14,7 @@ namespace logic {
     protected:
         std::shared_ptr<logic::Packman> pacman;
     public:
-        manhattenGhost(double x,double y);
+        manhattenGhost(double x,double y,bool outsideCage,directions direction,double speed);
         void givePacman(std::shared_ptr<logic::Packman> pacman);
         static double calculateManhatten(double x1, double y1, double x2, double y2) ;
 
@@ -30,7 +30,7 @@ namespace logic {
     */
     class frontManhattenGhost : public manhattenGhost {
     public:
-        frontManhattenGhost(double x,double y);
+        frontManhattenGhost(double x,double y,bool outsideCage,directions direction,double speed);
 
         std::pair<double, double> getFollowSide() override;
         bool canMove() override = 0;
@@ -42,7 +42,7 @@ namespace logic {
     class blueGhost : public frontManhattenGhost {
 
     public:
-        blueGhost(double x,double y);
+        blueGhost(double x,double y,double speed);
         void blueGhostSubscribe(const std::shared_ptr<view::blueGhostView>& ghostObserver);
         bool canMove() override;
     };
@@ -52,7 +52,7 @@ namespace logic {
      */
     class greenGhost : public frontManhattenGhost {
     public:
-        greenGhost(double x,double y);
+        greenGhost(double x,double y,double speed);
         void greenGhostSubscribe(std::shared_ptr<view::greenGhostView> ghostObserver);
         bool canMove() override;
     };
@@ -64,8 +64,8 @@ namespace logic {
     class orangeGhost : public manhattenGhost {
     private:
     public:
-        orangeGhost(double x,double y);
-        void purpleGhostSubscribe(std::shared_ptr<view::orangeGhostView> ghostObserver);
+        orangeGhost(double x,double y,double speed);
+        void orangeGhostSubscribe(std::shared_ptr<view::orangeGhostView> ghostObserver);
         std::pair<double, double> getFollowSide() override;
         bool canMove() override;
     };

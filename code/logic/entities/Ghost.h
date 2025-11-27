@@ -19,13 +19,14 @@ namespace logic {
         enum modes mode;
         bool hasChosenAtIntersection; /// zodat die niet meerdere keren kan kiezen aan een intersectie
         bool canChoseDir;/// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan. Is er ook zodat de ghost de ghost kamer kan verlaten en daarna niet meer door de invisible walls kan.
+        bool outsideCage; /// Of de ghost al uit de cage is
     public:
         /**
         * @brief Constructor voor de Ghost.
         * @param x De positie van de Ghost op de x-as (relatief tussen -1 en 1).
         * @param y De positie van de Ghost op de y-as (relatief tussen -1 en 1).
         */
-        Ghost(double x,double y);
+        Ghost(double x,double y, bool outsideCage,directions direction,double speed);
 
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override;
 
@@ -47,7 +48,7 @@ namespace logic {
     private:
 
     public:
-        redGhost(double x,double y);
+        redGhost(double x,double y,double speed);
 
         /**
         * @brief Initialiseert de observer van de Ghost

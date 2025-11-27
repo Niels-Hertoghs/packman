@@ -9,7 +9,7 @@ namespace logic {
     /// manhattenGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    manhattenGhost::manhattenGhost(double x,double y) : Ghost(x,y) {}
+    manhattenGhost::manhattenGhost(double x,double y,bool outsideCage,directions direction,double speed) : Ghost(x,y,outsideCage,direction,speed) {}
 
     void manhattenGhost::givePacman(std::shared_ptr<logic::Packman> _pacman) {
         pacman = std::move(_pacman);
@@ -58,7 +58,7 @@ namespace logic {
     /// frontManhattenGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    frontManhattenGhost::frontManhattenGhost(double x, double y) : manhattenGhost(x,y) {}
+    frontManhattenGhost::frontManhattenGhost(double x, double y,bool outsideCage,directions direction,double speed) : manhattenGhost(x,y,outsideCage,direction,speed) {}
 
     std::pair<double, double> frontManhattenGhost::getFollowSide() {
         std::pair<double, double> voorkantPac = pacman->getFront();
@@ -70,7 +70,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    blueGhost::blueGhost(double x, double y)  : frontManhattenGhost(x,y) {}
+    blueGhost::blueGhost(double x, double y,double speed)  : frontManhattenGhost(x,y,true,UP,speed) {}
 
 
     void blueGhost::blueGhostSubscribe(const std::shared_ptr<view::blueGhostView>& _ghostObserver) {
@@ -89,7 +89,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    greenGhost::greenGhost(double x, double y)  : frontManhattenGhost(x,y) {}
+    greenGhost::greenGhost(double x, double y,double speed)  : frontManhattenGhost(x,y,false,RIGHT,speed) {}
 
     void greenGhost::greenGhostSubscribe(std::shared_ptr<view::greenGhostView> _ghostObserver) {
         observer = std::move(_ghostObserver);
@@ -101,13 +101,13 @@ namespace logic {
 
 
     /// ---------------------------------------------------------------------------------------------------------------
-    /// purpleGhost
+    /// orangeGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    orangeGhost::orangeGhost(double x, double y)  : manhattenGhost(x,y) {}
+    orangeGhost::orangeGhost(double x, double y,double speed)  : manhattenGhost(x,y,false,LEFT,speed) {}
 
-    void orangeGhost::purpleGhostSubscribe(std::shared_ptr<view::orangeGhostView> _ghostObserver) {
+    void orangeGhost::orangeGhostSubscribe(std::shared_ptr<view::orangeGhostView> _ghostObserver) {
         observer = std::move(_ghostObserver);
     }
 

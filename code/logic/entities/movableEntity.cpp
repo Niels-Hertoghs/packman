@@ -134,7 +134,7 @@ namespace logic {
     /// @class Packman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Packman::Packman(double x, double y)  : movableEntity(x,y,2.f,directions::RIGHT), nextDirection(EMPTY) {}
+    Packman::Packman(double x, double y,double speed)  : movableEntity(x,y,speed,directions::RIGHT), nextDirection(EMPTY) {}
 
     void Packman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
@@ -216,7 +216,7 @@ namespace logic {
 
     bool Packman::standsOnGhost(std::shared_ptr<Ghost> ghost) {
         std::shared_ptr<entity> other = std::move(ghost);
-        return this->wouldCollide(other,x + 1.f/20.f, y-1.f/14.f);
+        return this->wouldCollide(other,x, y);
     }
 
 

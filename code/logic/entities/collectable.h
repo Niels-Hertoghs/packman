@@ -20,15 +20,15 @@ namespace logic {
       */
      class collectable : public entity {
      private:
-          double points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
+          int points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
      public:
           // constructor
-          collectable(double x, double y,double points);
+          collectable(double x, double y,int points);
 
 
           // methods
-          double getPoints();
-          void setPoints(double newPoints);
+          int getPoints() const;
+          void setPoints(int newPoints);
      };
 
      /**
@@ -40,10 +40,10 @@ namespace logic {
           std::shared_ptr<view::coinView> coinObserver;
 
      public:
-          coin(double x, double y, double points);
+          coin(double x, double y, int points);
           void coinSubscribe(std::shared_ptr<view::coinView> coinObserver);
 
-          void collected();
+          void collected() const;
      };
 
      class fruit : public collectable {
@@ -51,9 +51,9 @@ namespace logic {
           std::shared_ptr<view::fruitView> fruitObserver;
 
      public:
-          fruit(double x, double y, double points);
+          fruit(double x, double y,int points);
           void fruitSubscribe(std::shared_ptr<view::fruitView> fruitObserver);
-          void collected();
+          void collected() const;
 
      };
 }

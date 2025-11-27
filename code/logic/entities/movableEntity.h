@@ -74,7 +74,7 @@ namespace logic {
         directions nextDirection; /// Volgende richting zodra mogelijk.
     public:
         // constructor
-        Packman(double x,double y);
+        Packman(double x,double y,double speed);
 
         // methodes
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override;

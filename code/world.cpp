@@ -23,7 +23,7 @@ namespace logic {
         }
     }
 
-    void world::startWorld() {
+    void world::startWorld(int level) {
         std::ifstream file(inputFile); // bestand openen
 
         std::string line;
@@ -36,31 +36,36 @@ namespace logic {
                     walls.push_back(std::make_shared<wall>(x, y));
                     break;
                 case '-':
-                    // points staat op 40 om te beginne
-                    coins.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40));
+                    // points staat op 40 om te beginnen, daarna 10 extra per level
+                    coins.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40 + (level * 10)));
                     break;
                 case '_' :
                     invisibleWalls.push_back(std::make_shared<invisibleWall>(x, y));
                     break;
                 case 'f':
-                    // points staan op 50 om te beginne, is meer dan coins
-                    fruits.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50));
+                    // points staan op 50 om te beginne, is meer dan coins, daarna 10 extra per level
+                    fruits.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50+ (level * 10)));
                     break;
                 case 'p':
                     //pacman aanmaken, origin = midpunt
-                    pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f);
+                        // speed  = 1 en plus 0.5 voor elke hoger level
+                    pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f, 1.f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'r':
-                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                        // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
+                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'g':
-                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                        // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
+                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'b':
-                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                        // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
+                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'a' :
-                    _purpleGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f);
+                        // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
+                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
                     break;
                 default:
                     break;
@@ -72,7 +77,7 @@ namespace logic {
 
         _blueGhost->givePacman(pacman);
         _greenGhost->givePacman(pacman);
-        _purpleGhost->givePacman(pacman);
+        _orangeGhost->givePacman(pacman);
     }
 
     void world::update(float deltaTime) {
@@ -88,7 +93,7 @@ namespace logic {
             _redGhost,
             _blueGhost,
             _greenGhost,
-            _purpleGhost
+            _orangeGhost
         };
 
         for (std::shared_ptr<Ghost>& ghost : ghosts) {
@@ -120,29 +125,50 @@ namespace logic {
                 ++it;
             }
         }
-        std::shared_ptr<Ghost> r = _redGhost;
-        if (pacman->standsOnGhost(_redGhost)) {
-            died();
-        }
+        //
+        // for (std::shared_ptr<Ghost>& ghost:ghosts) {
+        //     if (pacman->standsOnGhost(ghost)) {
+        //         died();
+        //     }
+        // }
+
         if (fruits.empty() && coins.empty()) {
             score->nextLevel();
-            // nextLevel();
+            nextLevel();
         }
+    }
+
+    void world::nextLevel() {
+        std::vector<std::shared_ptr<Ghost>> ghosts = {
+            _redGhost,
+            _blueGhost,
+            _greenGhost,
+            _orangeGhost
+        };
+
+        for (std::shared_ptr<Ghost>& ghost:ghosts) {
+            // ghost->nextLevel();
+        }
+
+        // pacman->nextLevel();
     }
 
     void world::died() {
         score->liveLost();
         _redGhost->died();
+        _blueGhost->died();
+        _greenGhost->died();
+        _orangeGhost->died();
         pacman->died();
     }
 
 
-    void world::updatePacmanDir(directions dir) {
+    void world::updatePacmanDir(directions dir) const {
         pacman->updateDir(dir);
     }
 
     void world::subscribeScore(std::shared_ptr<logic::Score> _score) {
-        score = _score;
+        score = std::move(_score);
     }
 
     std::vector<std::shared_ptr<wall>> world::get_walls() const {
@@ -173,8 +199,8 @@ namespace logic {
         return _blueGhost;
     }
 
-    std::shared_ptr<orangeGhost> world::get_purple_ghost() const {
-        return _purpleGhost;
+    std::shared_ptr<orangeGhost> world::get_orange_ghost() const {
+        return _orangeGhost;
     }
 
     std::shared_ptr<greenGhost> world::get_green_ghost() const {
