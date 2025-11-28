@@ -43,6 +43,8 @@ namespace logic {
         void startFearMode();
         void startChaseMode();
         [[nodiscard]] int getGhostPoints() const;
+
+
         void died() override;
         [[nodiscard]] enum modes get_mode() const;
     };

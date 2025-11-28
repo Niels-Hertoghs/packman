@@ -140,6 +140,10 @@ namespace logic {
         toSpawnLocation();
         canChoseDir = false; // prive van ghost
         outsideCage = originalOutsideCage;
+        if (mode == FEAR_MODE) {
+            // moet terug naar chasing mode gaan en de snelheid moet terug naar originele gaan.
+            startChaseMode();
+        }
     }
 
     enum modes Ghost::get_mode() const {

@@ -23,7 +23,7 @@ namespace logic {
     }
 
     void Score::GhostEaten(int ghostPoints) {
-
+        score += ghostPoints;
     }
 
 
