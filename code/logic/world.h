@@ -9,14 +9,14 @@
 #include <vector>
 #include <SFML/Graphics/Font.hpp>
 #include "../view/notifications.h"
-#include "../camera.h"
+#include "../view/camera.h"
 #include "../observer.h"
 #include "entities/entity.h"
 #include "entities/collectable.h"
 #include "entities/movableEntity.h"
 #include "entities/Ghost.h"
 #include "entities/manhattenGhost.h"
-#include "entities/Score.h"
+#include "Score.h"
 
 namespace logic {
     /**

@@ -6,17 +6,17 @@
 #define PACKMAN_STATE_H
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "../../camera.h"
-#include "../Stopwatch.h"
+#include "../camera.h"
+#include "../../logic/Stopwatch.h"
 #include "../../view/worldView.h"
 
 namespace logic {
     class world;
 }
-class stateManeger;
+
 
 namespace view {
-
+    class stateManeger;
     class worldView;
     /**
     * class state

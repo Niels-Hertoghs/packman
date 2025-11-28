@@ -6,11 +6,11 @@
 
 #include <cmath>
 
-#include "../../view/ScoreView.h"
-#include "../state_maneger/stateManeger.h"
+#include "../view/ScoreView.h"
+#include "../view/state_maneger/stateManeger.h"
 
 namespace logic {
-    Score::Score(stateManeger& Manager) : IObserver(),manager(Manager),  score(0),livesLeft(2),level(1) {}
+    Score::Score(view::stateManeger& Manager) : IObserver(),manager(Manager),  score(0),livesLeft(2),level(1) {}
 
     void Score::coinEaten(int coinPoints) {
         float lastEatenTime = Stopwatch::getInstance()->eatCollectable();

@@ -6,10 +6,10 @@
 #define PACKMAN_ENTITYVIEW_H
 #include <SFML/Graphics.hpp>
 
-#include "../observer.h"
-#include "notifications.h"
+#include "../../observer.h"
+#include "../notifications.h"
 #include "../camera.h"
-#include "../logic/entities/entity.h"
+#include "../../logic/entities/entity.h"
 
 namespace logic {
     class wall;

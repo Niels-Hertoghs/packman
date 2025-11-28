@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#include "../logic/entities/collectable.h"
+#include "../../logic/entities/collectable.h"
 
 namespace view {
     collectableView::collectableView(sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::collectable>& model)

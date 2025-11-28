@@ -5,7 +5,7 @@
 #ifndef PACKMAN_SCOREVIEW_H
 #define PACKMAN_SCOREVIEW_H
 #include "../observer.h"
-#include "../logic/entities/Score.h"
+#include "../logic/Score.h"
 
 namespace view {
     class ScoreView : public Observer {

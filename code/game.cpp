@@ -10,7 +10,7 @@ game::game() {
 }
 
 void game::playGame() {
-    stateManeger manager; // state manager aanmaken
+    view::stateManeger manager; // state manager aanmaken
     std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
     // wereld->startWorld();
 
@@ -22,7 +22,7 @@ void game::playGame() {
     double scale = 0.8f;
     unsigned int width = desktop.width * scale;
     unsigned int height = desktop.height * scale;
-    camera cam(width, height);
+    view::camera cam(width, height);
 
     // window aanmaken
     sf::RenderWindow window(sf::VideoMode(width,height), "window", sf::Style::Default);
@@ -60,4 +60,4 @@ void game::playGame() {
 
         window.display();
     }
-}
+};

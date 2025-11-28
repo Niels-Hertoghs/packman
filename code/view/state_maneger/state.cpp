@@ -3,7 +3,7 @@
 //
 
 #include "state.h"
-#include "../world.h"
+#include "../../logic/world.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>

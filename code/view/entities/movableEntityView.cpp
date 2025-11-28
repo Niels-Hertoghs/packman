@@ -7,7 +7,7 @@
 #include <iostream>
 #include <utility>
 
-#include "../logic/entities/movableEntity.h"
+#include "../../logic/entities/movableEntity.h"
 
 namespace view {
     movableEntityView::movableEntityView(sf::RenderWindow &window, camera &cam, std::shared_ptr<logic::movableEntity>& model,

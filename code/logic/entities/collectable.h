@@ -5,8 +5,8 @@
 #ifndef PACKMAN_COLLECTABLE_H
 #define PACKMAN_COLLECTABLE_H
 #include "entity.h"
-#include "Score.h"
-#include "../../view/collectableView.h"
+#include "../Score.h"
+#include "../../view/entities/collectableView.h"
 
 
 

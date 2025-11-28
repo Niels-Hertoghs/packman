@@ -4,11 +4,12 @@
 
 #ifndef PACKMAN_SCORE_H
 #define PACKMAN_SCORE_H
-#include "../../observer.h"
+#include "../observer.h"
 
-class stateManeger;
+
 
 namespace view {
+    class stateManeger;
     class ScoreView;
 }
 
@@ -19,9 +20,9 @@ namespace logic {
         int livesLeft;
         int level;
         std::shared_ptr<view::ScoreView> scoreObserver;
-        stateManeger& manager;
+        view::stateManeger& manager;
     public:
-        explicit Score(stateManeger& manager);
+        explicit Score( view::stateManeger& manager);
         void coinEaten(int coinPoints);
         void liveLost();
         void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);

@@ -5,7 +5,7 @@
 #ifndef PACKMAN_MOVABLEENTITYVIEW_H
 #define PACKMAN_MOVABLEENTITYVIEW_H
 #include "entityView.h"
-#include "notifications.h"
+#include "../notifications.h"
 
 namespace logic {
     class movableEntity;

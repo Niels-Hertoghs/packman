@@ -6,8 +6,8 @@
 
 #include <fstream>
 
-#include "../logic/state_maneger/state.h"
-#include "../logic/state_maneger/make_text.h"
+#include "state_maneger/state.h"
+#include "state_maneger/make_text.h"
 #include <iostream>
 
 namespace view {

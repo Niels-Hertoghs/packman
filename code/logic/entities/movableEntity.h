@@ -8,7 +8,7 @@
 #include <vector>
 #include "../../view/notifications.h"
 #include "entity.h"
-#include "../../view/movableEntityView.h"
+#include "../../view/entities/movableEntityView.h"
 
 namespace logic {
     class Ghost;

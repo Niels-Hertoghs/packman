@@ -7,10 +7,10 @@
 #include <memory>
 
 #include "../observer.h"
-#include "entityView.h"
-#include "movableEntityView.h"
-#include "collectableView.h"
-#include "ghostView.h"
+#include "entities/entityView.h"
+#include "entities/movableEntityView.h"
+#include "entities/collectableView.h"
+#include "entities/ghostView.h"
 #include "ScoreView.h"
 
 namespace logic {
