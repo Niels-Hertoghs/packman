@@ -81,6 +81,9 @@ namespace logic {
         _blueGhost->givePacman(pacman);
         _greenGhost->givePacman(pacman);
         _orangeGhost->givePacman(pacman);
+        for (const std::shared_ptr<collectable>& collectable : collectables) {
+            collectable->subscribeScore(score);
+        }
     }
 
     void world::update(float deltaTime) {

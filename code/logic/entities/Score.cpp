@@ -43,8 +43,7 @@ namespace logic {
         level++;
         scoreObserver->notify(notifications::UPDATE_LEVEL);
         std::unique_ptr<view::VictoryState> state = std::make_unique<view::VictoryState>();
-        manager.prevState();
-        manager.pushState(std::move(state));
+        manager.pushStateAndDelete(std::move(state));
     }
 
 
