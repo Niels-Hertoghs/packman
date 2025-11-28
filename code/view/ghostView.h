@@ -22,6 +22,8 @@ namespace view {
         ghostView(sf::RenderWindow &window, camera &cam, std::shared_ptr<logic::movableEntity>& ghostModel,
                   const std::vector<std::pair<int, int> > &spriteCo,
                   const std::vector<std::vector<std::pair<int, int> > > &allSprites);
+
+        bool isGhost() override;
     };
 
     class redGhostView : public ghostView {

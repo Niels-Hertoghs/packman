@@ -8,7 +8,7 @@
 
 #include "camera.h"
 #include "Stopwatch.h"
-#include "render/notifications.h"
+#include "view/notifications.h"
 class IObserver {
 public:
     virtual ~IObserver() = default;

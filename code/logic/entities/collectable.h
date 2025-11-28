@@ -6,7 +6,7 @@
 #define PACKMAN_COLLECTABLE_H
 #include "entity.h"
 #include "Score.h"
-#include "../../render/collectableView.h"
+#include "../../view/collectableView.h"
 
 
 

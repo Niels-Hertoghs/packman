@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics/Font.hpp>
-#include "render/notifications.h"
+#include "view/notifications.h"
 #include "camera.h"
 #include "observer.h"
 #include "logic/entities/entity.h"

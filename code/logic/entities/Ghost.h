@@ -5,7 +5,7 @@
 #ifndef PACKMAN_GHOST_H
 #define PACKMAN_GHOST_H
 #include "movableEntity.h"
-#include "../../render/ghostView.h"
+#include "../../view/ghostView.h"
 #include "../random.h"
 
 namespace logic {

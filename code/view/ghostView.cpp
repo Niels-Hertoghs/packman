@@ -12,6 +12,10 @@ namespace view {
                          const std::vector<std::vector<std::pair<int, int> > > &allSprites)
     : movableEntityView(window, cam,ghostModel,spriteCo,2,allSprites) {}
 
+    bool ghostView::isGhost() {
+        return true;
+    }
+
     redGhostView::redGhostView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::movableEntity> ghostModel)
         : ghostView(window, cam,ghostModel, {{-5,300},{-5,350}},
             {{{-5,100},{-5,150}},

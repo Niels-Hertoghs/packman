@@ -14,7 +14,7 @@
 #include "logic/state_maneger/stateManeger.h"
 #include "world.h"
 #include "Stopwatch.h"
-#include "render/worldView.h"
+#include "view/worldView.h"
 
 
 class game {

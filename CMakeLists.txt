@@ -24,25 +24,25 @@ add_executable(packman main.cpp
         code/Stopwatch.h
         code/observer.cpp
         code/observer.h
-        code/render/entityView.cpp
-        code/render/entityView.h
-        code/render/notifications.h
-        code/render/worldView.cpp
-        code/render/worldView.h
-        code/render/movableEntityView.cpp
-        code/render/movableEntityView.h
-        code/render/collectableView.cpp
-        code/render/collectableView.h
+        code/view/entityView.cpp
+        code/view/entityView.h
+        code/view/notifications.h
+        code/view/worldView.cpp
+        code/view/worldView.h
+        code/view/movableEntityView.cpp
+        code/view/movableEntityView.h
+        code/view/collectableView.cpp
+        code/view/collectableView.h
         code/logic/entities/Ghost.cpp
         code/logic/entities/Ghost.h
-        code/render/ghostView.cpp
-        code/render/ghostView.h
+        code/view/ghostView.cpp
+        code/view/ghostView.h
         code/logic/random.h
         code/logic/random.cpp
         code/logic/entities/Score.cpp
         code/logic/entities/Score.h
-        code/render/ScoreView.cpp
-        code/render/ScoreView.h
+        code/view/ScoreView.cpp
+        code/view/ScoreView.h
         code/logic/state_maneger/state.cpp
         code/logic/state_maneger/state.h
         code/logic/state_maneger/make_text.h

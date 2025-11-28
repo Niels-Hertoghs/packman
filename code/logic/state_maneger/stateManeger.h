@@ -10,7 +10,7 @@
 #include <vector>
 #include "../../camera.h"
 #include "../../Stopwatch.h"
-#include "../../render/worldView.h"
+#include "../../view/worldView.h"
 #include "state.h"
 
 namespace logic {

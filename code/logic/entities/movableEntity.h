@@ -6,9 +6,9 @@
 #define PACKMAN_MOVABLEENTITY_H
 #include <string>
 #include <vector>
-#include "../../render/notifications.h"
+#include "../../view/notifications.h"
 #include "entity.h"
-#include "../../render/movableEntityView.h"
+#include "../../view/movableEntityView.h"
 
 namespace logic {
     class Ghost;

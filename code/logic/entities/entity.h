@@ -6,7 +6,7 @@
 #define PACKMAN_ENTITY_H
 #include <memory>
 
-#include "../../render/entityView.h"
+#include "../../view/entityView.h"
 
 
 namespace view {

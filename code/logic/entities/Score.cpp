@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-#include "../../render/ScoreView.h"
+#include "../../view/ScoreView.h"
 #include "../state_maneger/stateManeger.h"
 
 namespace logic {

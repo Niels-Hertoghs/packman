@@ -53,19 +53,19 @@ namespace logic {
                     break;
                 case 'r':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
+                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'g':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
+                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'b':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
+                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
                     break;
                 case 'a' :
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,0.95f + (static_cast<float>(level) * 0.5f));
+                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
                     break;
                 default:
                     break;

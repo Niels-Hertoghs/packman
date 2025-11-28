@@ -57,20 +57,39 @@ namespace view {
     }
 
     void movableEntityView::notify(notifications message) {
-        if (message == notifications::CHANGE_POSITION) {
+        switch (message) {
+        case CHANGE_POSITION: {
             std::pair<unsigned int,unsigned int> pos;
             if (auto observer = Model.lock()) {
                 pos = _camera.worldToPixel(observer->getX(),observer->getY());
             }
             _movable.setPosition(pos.first,pos.second);
-        } else if ( message == notifications::CHANGE_DIRECTION_DOWN) {
+            break;
+        }
+        case CHANGE_DIRECTION_DOWN: {
             spriteCo = allSprites[0];
-        } else if ( message == notifications::CHANGE_DIRECTION_UP) {
+            break;
+        }
+        case CHANGE_DIRECTION_UP: {
             spriteCo = allSprites[1];
-        } else if ( message == notifications::CHANGE_DIRECTION_RIGHT) {
+            break;
+        }
+        case CHANGE_DIRECTION_RIGHT: {
             spriteCo = allSprites[2];
-        } else if ( message == notifications::CHANGE_DIRECTION_LEFT) {
+            break;
+        }
+        case CHANGE_DIRECTION_LEFT: {
             spriteCo = allSprites[3];
+            break;
+        }
+        case TO_FEAR_MODE: {
+            if (isGhost()) {
+                allSprites = {{{-5,550},{-5,600}}};
+                aantalSprites = 2;
+            }
+            break;
+        }
+        default: return;
         }
     }
 
@@ -81,6 +100,10 @@ namespace view {
                 {{847,500},{847,550},{847,500},{847,450}},
                 {{847,51},{847,101},{847,51},{847,1}},
                 {{846,351},{846,401},{846,351},{846,301}}}) {
+    }
+
+    bool packmanView::isGhost() {
+        return false;
     }
 
 }

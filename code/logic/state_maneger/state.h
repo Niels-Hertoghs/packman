@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include "../../camera.h"
 #include "../../Stopwatch.h"
-#include "../../render/worldView.h"
+#include "../../view/worldView.h"
 
 namespace logic {
     class world;

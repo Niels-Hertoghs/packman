@@ -6,7 +6,7 @@
 #include "stateManeger.h"
 #include <fstream>
 #include <utility>
-#include "../../render/notifications.h"
+#include "../../view/notifications.h"
 #include "../../world.h"
 
 /// ---------------------------------------------------------------------------------------------------------------
