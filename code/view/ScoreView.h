@@ -19,7 +19,7 @@ namespace view {
         ScoreView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::Score>& Score);
         void notify(enum notifications message) override;
         void draw() override;
-
+        static void gameEnded(int score);
     };
 } // view
 

@@ -6,6 +6,8 @@
 #include "../world.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
+
 #include "make_text.h"
 #include "stateManeger.h"
 
@@ -64,14 +66,16 @@ namespace view {
         std::string inhoud((std::istreambuf_iterator<char>(file)),
                        std::istreambuf_iterator<char>()); // lees alles
 
-        std::string highScoreText = "1: ";
+        // score inlezen uit file, elke score op een aparte lijn
+        std::string highScoreText;
+        std::stringstream ss(inhoud);
+        std::string lijn;
+
         int teller = 1;
-        for (char c : inhoud) {
-             if (c == ' ') {
-                 highScoreText += '\n' +std::to_string(teller) + ":";
-                 teller++;
-             }
-            highScoreText.push_back(c);
+
+        while (std::getline(ss, lijn) && teller <= 5) {
+            highScoreText += std::to_string(teller) + ": " + lijn + "\n";
+            teller++;
         }
 
         sf::Text highNumbText = makeText(font, highScoreText, 0.05f, sf::Color::White, 0.f, 0.f,cam);

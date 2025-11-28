@@ -18,6 +18,7 @@ enum notifications {
     UPDATE_LEVEL,
     TO_CHASING_MODE,
     TO_FEAR_MODE,
+    END_GAME
 };
 
 enum directions {

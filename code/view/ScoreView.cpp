@@ -3,6 +3,9 @@
 //
 
 #include "ScoreView.h"
+
+#include <fstream>
+
 #include "../logic/state_maneger/state.h"
 #include "../logic/state_maneger/make_text.h"
 #include <iostream>
@@ -71,8 +74,60 @@ namespace view {
                 sf::FloatRect LifesBounds = LifesText.getLocalBounds();
                 LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
                 lifesText = LifesText;
+                break;
             }
+            case END_GAME: {
+                int score = 0;
+                if (auto observer = scoreModel.lock()) {
+                    score = observer->getScore();
+                }
+                gameEnded(score);
+                break;
+            }
+        default: return;
         }
+    }
+
+    void ScoreView::gameEnded(int score) {
+        std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
+        try {
+            if (!file) {
+                std::cerr << "Kon bestand niet openen.\n";
+            }
+
+        } catch (const std::exception& e) {
+            std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+            throw;
+        }
+
+        std::vector<int> highscores;
+        int value;
+        bool insertOneTime = false;
+
+        // Lees de bestaande highscores in
+        while (file >> value) {
+            if (score >= value && !insertOneTime) {
+                highscores.push_back(score);
+                insertOneTime = true;
+            }
+            highscores.push_back(value);
+        }
+        file.clear();
+        file.close();
+
+        if (insertOneTime) {
+            highscores.pop_back();
+        }
+
+
+        // Schrijf terug naar het bestand
+        std::ofstream out("input_output/HighScores.txt");
+        for (int sc : highscores) {
+            out << sc << "\n";
+        }
+        out.close();
+
+
     }
 
 } // view

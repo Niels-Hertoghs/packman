@@ -26,14 +26,12 @@ namespace logic {
         score += ghostPoints;
     }
 
-
-
     void Score::liveLost() {
         livesLeft--;
         scoreObserver->notify(notifications::UPDATE_LIVES);
         if (livesLeft < 0) {
             manager.prevState();
-
+            scoreObserver->notify(notifications::END_GAME);
             std::unique_ptr<view::gameOverState> state = std::make_unique<view::gameOverState>();
             manager.pushState(std::move(state));
         }
