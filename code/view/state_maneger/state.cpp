@@ -36,7 +36,7 @@ namespace view {
     /// @class menuState
     /// ---------------------------------------------------------------------------------------------------------------
 
-    void menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+    std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> menuState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
                         float& deltaTime)
     {
 
@@ -52,6 +52,7 @@ namespace view {
         }
 
         std::vector<sf::Text> text;
+        std::vector<sf::RectangleShape> rectangles;
 
         // menu title maken
         sf::Text menuText = makeText(font, "Menu", 0.15f, sf::Color::Yellow, 0.f, 0.55f,cam);
@@ -87,6 +88,7 @@ namespace view {
 
         //de play butten
         sf::RectangleShape playButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
+        rectangles.push_back(playButton);
 
         sf::Text playText = makeText(font, "Play", 0.2f, sf::Color::Magenta, 0.f, -0.5f,cam);
         text.push_back(playText);
@@ -113,16 +115,10 @@ namespace view {
                 std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
                 //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
                 manager.pushState(std::move(level));
-                return;
+                return {};
             }
         }
-
-
-        // alles tekenen op de window
-        window.draw(playButton);
-        for (auto& Text : text) {
-            window.draw(Text);
-        }
+        return {text,rectangles};
 
     }
 
@@ -134,7 +130,7 @@ namespace view {
     LevelState::LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> worldV)
         : worldView(std::move(worldV)) {}
 
-    void LevelState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+    std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> LevelState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
                          float& deltaTime) {
 
         if (event.type == sf::Event::KeyPressed) {
@@ -146,19 +142,23 @@ namespace view {
                 wereld->updatePacmanDir(directions::LEFT);
             } else if (event.key.code == sf::Keyboard::Right) {
                 wereld->updatePacmanDir(directions::RIGHT);
+            } else if (event.key.code == sf::Keyboard::Escape) {
+                manager.pushState(std::make_unique<pausedState>());
             }
         }
 
         worldView->draw();
         wereld->update(deltaTime);
+        return {};
     }
 
     /// --------------------------------------------------------------------------------------------------------------
     /// @class gameOverState
     /// --------------------------------------------------------------------------------------------------------------
 
-    void gameOverState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
+    std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> gameOverState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
         std::vector<sf::Text> text;
+        std::vector<sf::RectangleShape> rectangles;
 
         // game over text
         sf::Text gameOverText = makeText(font, "GAME OVER", 0.2f, sf::Color::Red,0.f,0.1f,cam);
@@ -167,9 +167,11 @@ namespace view {
         // pacman logo
         sf::RectangleShape logo = makeButton(0.4f,1.2f,sf::Color::White,cam, 0.f, 0.7f);
         logo.setTexture(&texture);
+        rectangles.push_back(logo);
 
         // Back to menu buttom
         sf::RectangleShape backToMenuButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
+        rectangles.push_back(backToMenuButton);
 
         sf::Text playText = makeText(font, "Back To Menu", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
         text.push_back(playText);
@@ -179,19 +181,14 @@ namespace view {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
                 manager.prevState();
-                return;
+                return {};
             }
         }
 
-        // alles tekenen op de window
-        window.draw(backToMenuButton);
-        window.draw(logo);
-        for (auto& Text : text) {
-            window.draw(Text);
-        }
+    return {text,rectangles};
     }
 
-    void VictoryState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
+    std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> VictoryState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
 
         sf::Texture Texture;
         try {
@@ -217,7 +214,7 @@ namespace view {
         victory.setTexture(&Texture);
         rechthoeken.push_back(victory);
 
-        // next Level
+        // next Level button
         sf::RectangleShape backToMenuButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
         rechthoeken.push_back(backToMenuButton);
 
@@ -244,20 +241,41 @@ namespace view {
 
                 //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
                 manager.pushStateAndDelete(std::move(level));
-                return;
+                return {};
             }
         }
 
-
-        // alles op het scherm tekenen
-        for (auto& rechthoek : rechthoeken) {
-            window.draw(rechthoek);
-        }
-        for (auto& Text : text) {
-            window.draw(Text);
-        }
+        return {text,rechthoeken};
     }
 
+    /// --------------------------------------------------------------------------------------------------------------
+    /// @class pausedState
+    /// --------------------------------------------------------------------------------------------------------------
 
+    std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> pausedState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
+
+        std::vector<sf::Text> text;
+        std::vector<sf::RectangleShape> rechthoeken;
+
+        // continue playing button
+        sf::RectangleShape continuePlayingButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
+        rechthoeken.push_back(continuePlayingButton);
+
+            //text
+        sf::Text playText = makeText(font, "continue playing", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
+        text.push_back(playText);
+
+
+        if (event.type == sf::Event::MouseButtonPressed &&
+                event.mouseButton.button == sf::Mouse::Left) {
+            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            if (continuePlayingButton.getGlobalBounds().contains(mousePos)) {
+                manager.prevState();
+            }
+        }
+
+        // alles op het scherm tekenen
+        return {text,rechthoeken};
+    }
 
 } // view

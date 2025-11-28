@@ -31,7 +31,9 @@ namespace view {
         state();
         virtual ~state() = default;
 
-        virtual void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+        virtual std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+            sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
+            std::shared_ptr<logic::world> wereld, const
                          float& deltaTime) = 0;
     };
 
@@ -42,7 +44,9 @@ namespace view {
     class menuState : public state {
     public:
         menuState() = default;
-        void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+            sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
+            std::shared_ptr<logic::world> wereld, const
                  float& deltaTime) override;
     };
 
@@ -55,20 +59,34 @@ namespace view {
         std::unique_ptr<view::worldView> worldView;
     public:
         LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> worldV);
-        void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
+        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+            sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
+            std::shared_ptr<logic::world> wereld, const
                  float& deltaTime) override;
     };
 
     class gameOverState : public state {
     public:
         gameOverState() = default;
-        void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
+        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+            sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
+            std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
 
     class VictoryState : public state {
     public:
         VictoryState() = default;
-        void run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
+        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+            sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
+            std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
+    };
+
+    class pausedState : public state {
+    public:
+        pausedState() = default;
+        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+            sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
+            std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
 
 } // view

@@ -34,7 +34,13 @@ namespace view {
     }
 
     void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, view::camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime) {
-        stack.top().get()->run(window, event,*this,cam,std::move(wereld),deltaTime);
+        std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> result = stack.top().get()->run(window, event,*this,cam,std::move(wereld),deltaTime);
+        for (auto& rechthoek : result.second) {
+            window.draw(rechthoek);
+        }
+        for (auto& Text : result.first) {
+            window.draw(Text);
+        }
     }
 
     void stateManeger::pushStateAndDelete(std::unique_ptr<view::state> newState) {
