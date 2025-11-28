@@ -7,7 +7,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "../../camera.h"
-#include "../../Stopwatch.h"
+#include "../Stopwatch.h"
 #include "../../view/worldView.h"
 
 namespace logic {

@@ -13,7 +13,7 @@ namespace view {
     movableEntityView::movableEntityView(sf::RenderWindow &window, camera &cam, std::shared_ptr<logic::movableEntity>& model,
                                          const std::vector<std::pair<int, int> > &SpriteCo, int _aantalSprites,
                                          const std::vector<std::vector<std::pair<int, int> > > &allSprites)
-        : entityView(window, cam),Model(model), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites), allSprites(allSprites) {
+        : entityView(window, cam),Model(model), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites), allSprites(allSprites),originalAllSprites(allSprites) {
 
         try {
             sf::Texture Texture;
@@ -47,7 +47,7 @@ namespace view {
         _movable.setTextureRect(sf::IntRect(spriteCo[counter].first,spriteCo[counter].second, 46, 41));
         window.draw(_movable);
 
-        if (Stopwatch::getInstance()->changeSprite(id)) {
+        if (logic::Stopwatch::getInstance()->changeSprite(id)) {
             counter = (counter + 1) % aantalSprites;  // volgende sprite
         }
 
@@ -58,38 +58,45 @@ namespace view {
 
     void movableEntityView::notify(notifications message) {
         switch (message) {
-        case CHANGE_POSITION: {
-            std::pair<unsigned int,unsigned int> pos;
-            if (auto observer = Model.lock()) {
-                pos = _camera.worldToPixel(observer->getX(),observer->getY());
+            case CHANGE_POSITION: {
+                std::pair<unsigned int,unsigned int> pos;
+                if (auto observer = Model.lock()) {
+                    pos = _camera.worldToPixel(observer->getX(),observer->getY());
+                }
+                _movable.setPosition(pos.first,pos.second);
+                break;
             }
-            _movable.setPosition(pos.first,pos.second);
-            break;
-        }
-        case CHANGE_DIRECTION_DOWN: {
-            spriteCo = allSprites[0];
-            break;
-        }
-        case CHANGE_DIRECTION_UP: {
-            spriteCo = allSprites[1];
-            break;
-        }
-        case CHANGE_DIRECTION_RIGHT: {
-            spriteCo = allSprites[2];
-            break;
-        }
-        case CHANGE_DIRECTION_LEFT: {
-            spriteCo = allSprites[3];
-            break;
-        }
-        case TO_FEAR_MODE: {
-            if (isGhost()) {
-                allSprites = {{{-5,550},{-5,600}}};
-                aantalSprites = 2;
+            case CHANGE_DIRECTION_DOWN: {
+                spriteCo = allSprites[0];
+                break;
             }
-            break;
-        }
-        default: return;
+            case CHANGE_DIRECTION_UP: {
+                spriteCo = allSprites[1];
+                break;
+            }
+            case CHANGE_DIRECTION_RIGHT: {
+                spriteCo = allSprites[2];
+                break;
+            }
+            case CHANGE_DIRECTION_LEFT: {
+                spriteCo = allSprites[3];
+                break;
+            }
+            case TO_FEAR_MODE: {
+                if (isGhost()) {
+                    allSprites = {{{-5,550},{-5,600}},{{-5,550},{-5,600}},{{-5,550},{-5,600}},{{-5,550},{-5,600}}};
+                    spriteCo = {{-5,550},{-5,600}};
+                }
+                break;
+            }
+            case TO_CHASING_MODE: {
+                if (isGhost()) {
+                    allSprites = originalAllSprites;
+
+                }
+                break;
+            }
+            default: return;
         }
     }
 

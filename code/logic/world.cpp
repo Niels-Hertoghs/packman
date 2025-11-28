@@ -26,6 +26,9 @@ namespace logic {
     void world::startWorld(int level) {
         std::ifstream file(inputFile); // bestand openen
 
+        // bij level 1 is het eten van een ghost 100 punten waart, daarna 50 punten er bij voor elk level
+        int ghostPoints = 90 + (50*level);
+
         std::string line;
         double y = 1.0 - 2.0/7.0;
         while (std::getline(file, line)) {
@@ -37,14 +40,14 @@ namespace logic {
                     break;
                 case '-':
                     // points staat op 40 om te beginnen, daarna 10 extra per level
-                    collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 40 + (level * 10)));
+                    collectables.push_back(std::make_shared<coin>(x + 1.f/20.f, y - 1.f/14.f, 30 + (level * 10)));
                     break;
                 case '_' :
                     invisibleWalls.push_back(std::make_shared<invisibleWall>(x, y));
                     break;
                 case 'f':
                     // points staan op 50 om te beginne, is meer dan coins, daarna 10 extra per level
-                    collectables.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,50+ (level * 10)));
+                    collectables.push_back(std::make_shared<fruit>(x + 1.f/20.f, y - 1.f/14.f,40 + (level * 10)));
                     break;
                 case 'p':
                     //pacman aanmaken, origin = midpunt
@@ -53,19 +56,19 @@ namespace logic {
                     break;
                 case 'r':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
+                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
                     break;
                 case 'g':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
+                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
                     break;
                 case 'b':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
+                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
                     break;
                 case 'a' :
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f));
+                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
                     break;
                 default:
                     break;
@@ -120,12 +123,21 @@ namespace logic {
 
         for (std::shared_ptr<Ghost>& ghost:ghosts) {
             if (pacman->standsOnGhost(ghost)) {
-                died();
+                if (ghost->get_mode() == CHASING_MODE) {
+                    died();
+                } else if (ghost->get_mode() == FEAR_MODE) {
+                    ghost->died();
+                    score->GhostEaten(ghost->getGhostPoints());
+                }
             }
         }
 
         if (collectables.empty()) {
             score->nextLevel();
+        }
+
+        if (_blueGhost->get_mode() == FEAR_MODE && Stopwatch::getInstance()->isFearDone(score->getLevel())) { // kan eender welke ghost zijn
+            startChaseMode();
         }
     }
 
@@ -189,7 +201,7 @@ namespace logic {
         invisibleWalls.clear();
     }
 
-    void world::startFearMode() {
+    void world::startFearMode() const {
         std::vector<std::shared_ptr<Ghost>> ghosts = {
             _redGhost,
             _blueGhost,
@@ -199,6 +211,20 @@ namespace logic {
 
         for (const std::shared_ptr<Ghost>& ghost : ghosts) {
             ghost->startFearMode();
+        }
+        Stopwatch::getInstance()->startFearMode();
+    }
+
+    void world::startChaseMode() const {
+        std::vector<std::shared_ptr<Ghost>> ghosts = {
+            _redGhost,
+            _blueGhost,
+            _greenGhost,
+            _orangeGhost
+        };
+
+        for (const std::shared_ptr<Ghost>& ghost : ghosts) {
+            ghost->startChaseMode();
         }
     }
 

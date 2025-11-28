@@ -22,6 +22,12 @@ namespace logic {
         scoreObserver->notify(notifications::UPDATE_SCORE);
     }
 
+    void Score::GhostEaten(int ghostPoints) {
+
+    }
+
+
+
     void Score::liveLost() {
         livesLeft--;
         scoreObserver->notify(notifications::UPDATE_LIVES);
@@ -57,5 +63,7 @@ namespace logic {
     int Score::getLevel() const {
         return level;
     }
+
+
 
 } // logic

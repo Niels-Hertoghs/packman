@@ -3,7 +3,7 @@
 //
 
 #include "worldView.h"
-#include "../world.h"
+#include "../logic/world.h"
 
 namespace view {
     worldView::worldView(const std::shared_ptr<logic::world>& wereld,camera& camera, sf::RenderWindow& window,std::shared_ptr<logic::Score>& _score)

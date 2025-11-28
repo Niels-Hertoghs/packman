@@ -3,7 +3,7 @@
 //
 
 #include "state.h"
-#include "../../world.h"
+#include "../world.h"
 #include <fstream>
 #include <iostream>
 #include "make_text.h"
@@ -92,7 +92,7 @@ namespace view {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (playButton.getGlobalBounds().contains(mousePos)) {
                 // voor als het programma meerdere keren achter elkaar gerund wordt zonder te sluiten
-                Stopwatch::getInstance()->reset();
+                logic::Stopwatch::getInstance()->reset();
                 wereld->clear();
 
                 // alle view observers linken aan objecten, elk object een observer geven
@@ -225,7 +225,7 @@ namespace view {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
                 // alles ven reseten
-                Stopwatch::getInstance()->reset();
+                logic::Stopwatch::getInstance()->reset();
                 wereld->clear();
 
                 // alles opnieuw in de wereld inladen

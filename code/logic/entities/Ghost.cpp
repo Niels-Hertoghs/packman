@@ -10,11 +10,14 @@
 namespace logic {
 
     /// ---------------------------------------------------------------------------------------------------------------
-    /// @class ghost
+    /// @class Ghost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Ghost::Ghost(double x, double y, bool outsideCage, directions direction,double speed)
-        : movableEntity(x,y,speed,direction), canChoseDir(false),hasChosenAtIntersection(false), prevDirection(directions::EMPTY), mode(modes::CHASING_MODE), outsideCage(outsideCage),originalOutsideCage(outsideCage){}
+    Ghost::Ghost(double x, double y, bool outsideCage, directions direction,double speed,int _points)
+        : movableEntity(x, y, speed, direction), canChoseDir(false), hasChosenAtIntersection(false),
+          prevDirection(directions::EMPTY), mode(modes::CHASING_MODE), outsideCage(outsideCage),
+          originalOutsideCage(outsideCage),points(_points) {
+    }
 
     void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> > &walls) {
         // ghost de richting laten uitgaan
@@ -103,19 +106,33 @@ namespace logic {
         return possibleDirections;
     }
 
+    bool Ghost::hadFirstCollision() const {
+        return canChoseDir && outsideCage;
+    }
+
     void Ghost::changeDirection(directions _direction) {
         prevDirection = direction;
         this->direction = _direction;
         notifyDir();
     }
 
-    bool Ghost::hadFirstCollision() const {
-        return canChoseDir && outsideCage;
-    }
-
     void Ghost::startFearMode() {
         mode = modes::FEAR_MODE;
         observer->notify(notifications::TO_FEAR_MODE);
+        // snelheid van de ghost wordt gehalveerd in fearMode
+        speed *= 0.5f;
+    }
+
+    void Ghost::startChaseMode() {
+        mode = CHASING_MODE;
+        observer->notify(notifications::TO_CHASING_MODE);
+        notifyDir();
+        // snelheid van de ghost gaat terug naar de originele snelheid (was gehalveerd dus nu keer 2).
+        speed *= 2.f;
+    }
+
+    int Ghost::getGhostPoints() const {
+        return points;
     }
 
 
@@ -125,11 +142,16 @@ namespace logic {
         outsideCage = originalOutsideCage;
     }
 
+    enum modes Ghost::get_mode() const {
+        return mode;
+    }
+
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// redGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    redGhost::redGhost(double x, double y,double speed) : Ghost(x,y, true,UP,speed) {}
+    redGhost::redGhost(double x, double y,double speed,int points) : Ghost(x,y, true,UP,speed,points) {}
 
     void redGhost::redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver) {
         observer = redGhostObserver;

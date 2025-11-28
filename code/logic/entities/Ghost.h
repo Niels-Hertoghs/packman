@@ -14,6 +14,7 @@ namespace logic {
     * @brief De abstrcte klasse voor de ghosts.
     */
     class Ghost : public movableEntity {
+        int points; /// Het aantal points dat er bij de score komen als er een ghost opgegeten worden.
     protected:
         enum modes mode;  /// De mode van de Ghost.
         directions prevDirection;
@@ -28,7 +29,7 @@ namespace logic {
         * @param x De positie van de Ghost op de x-as (relatief tussen -1 en 1).
         * @param y De positie van de Ghost op de y-as (relatief tussen -1 en 1).
         */
-        Ghost(double x,double y, bool outsideCage,directions direction,double speed);
+        Ghost(double x,double y, bool outsideCage,directions direction,double speed,int points);
 
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override;
 
@@ -40,8 +41,10 @@ namespace logic {
         [[nodiscard]] bool hadFirstCollision() const;
         void changeDirection(directions direction);
         void startFearMode();
+        void startChaseMode();
+        [[nodiscard]] int getGhostPoints() const;
         void died() override;
-
+        [[nodiscard]] enum modes get_mode() const;
     };
 
     /**
@@ -51,7 +54,7 @@ namespace logic {
     private:
 
     public:
-        redGhost(double x,double y,double speed);
+        redGhost(double x,double y,double speed,int points);
 
         /**
         * @brief Initialiseert de observer van de Ghost

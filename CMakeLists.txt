@@ -12,16 +12,16 @@ add_executable(packman main.cpp
         code/game.cpp
         code/logic/state_maneger/stateManeger.cpp
         code/camera.cpp
-        code/world.cpp
-        code/world.h
+        code/logic/world.cpp
+        code/logic/world.h
         code/logic/entities/entity.cpp
         code/logic/entities/entity.h
         code/logic/entities/movableEntity.cpp
         code/logic/entities/movableEntity.h
         code/logic/entities/collectable.cpp
         code/logic/entities/collectable.h
-        code/Stopwatch.cpp
-        code/Stopwatch.h
+        code/logic/Stopwatch.cpp
+        code/logic/Stopwatch.h
         code/observer.cpp
         code/observer.h
         code/view/entityView.cpp

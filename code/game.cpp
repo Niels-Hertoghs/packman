@@ -37,8 +37,8 @@ void game::playGame() {
 
     // main window loop
     while(window.isOpen()) {
-        Stopwatch::getInstance()->tick(); //stopwatch updaten
-        double deltaTime = Stopwatch::getInstance()->getDeltaTime(); // tijd sinds laatste tick
+        logic::Stopwatch::getInstance()->tick(); //stopwatch updaten
+        double deltaTime = logic::Stopwatch::getInstance()->getDeltaTime(); // tijd sinds laatste tick
 
         sf::Event event{};
         while(window.pollEvent(event)) {

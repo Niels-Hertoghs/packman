@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "camera.h"
-#include "Stopwatch.h"
+#include "logic/Stopwatch.h"
 #include "view/notifications.h"
 class IObserver {
 public:

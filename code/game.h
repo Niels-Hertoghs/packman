@@ -12,8 +12,8 @@
 
 #include "observer.h"
 #include "logic/state_maneger/stateManeger.h"
-#include "world.h"
-#include "Stopwatch.h"
+#include "logic/world.h"
+#include "logic/Stopwatch.h"
 #include "view/worldView.h"
 
 

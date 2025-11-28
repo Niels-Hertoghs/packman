@@ -8,15 +8,15 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics/Font.hpp>
-#include "view/notifications.h"
-#include "camera.h"
-#include "observer.h"
-#include "logic/entities/entity.h"
-#include "logic/entities/collectable.h"
-#include "logic/entities/movableEntity.h"
-#include "logic/entities/Ghost.h"
-#include "logic/entities/manhattenGhost.h"
-#include "logic/entities/Score.h"
+#include "../view/notifications.h"
+#include "../camera.h"
+#include "../observer.h"
+#include "entities/entity.h"
+#include "entities/collectable.h"
+#include "entities/movableEntity.h"
+#include "entities/Ghost.h"
+#include "entities/manhattenGhost.h"
+#include "entities/Score.h"
 
 namespace logic {
     /**
@@ -54,9 +54,14 @@ namespace logic {
         void died() const;
 
         /**
-         * @brief Laat alle objecten (die het moeten weten) weten dat chase mode is gestart.
+         * @brief Laat alle objecten (die het moeten weten) weten dat Fear mode is gestart.
          */
-        void startFearMode();
+        void startFearMode() const;
+
+        /**
+         * @brief Laat alle objecten (die het moeten weten) weten dat fear mode gedaan is en dat ze terug meten gaan naar chase Mode.
+         */
+        void startChaseMode() const;
 
 
         //getters

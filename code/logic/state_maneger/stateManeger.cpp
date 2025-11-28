@@ -7,7 +7,7 @@
 #include <fstream>
 #include <utility>
 #include "../../view/notifications.h"
-#include "../../world.h"
+#include "../world.h"
 
 /// ---------------------------------------------------------------------------------------------------------------
 /// @class stateManeger

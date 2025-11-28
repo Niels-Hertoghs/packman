@@ -23,3 +23,4 @@ TODO: code opruimen en checken op const enz ovceral ook methodes + nodiscard
 TODO: overal destructors zetten = default
 TODO: alles met een return [[nodisxcrd]]
 wat doet de re ghost in fear mode?
+mag static cas wel om van int -> float te gaan

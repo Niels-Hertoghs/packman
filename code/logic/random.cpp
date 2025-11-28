@@ -15,7 +15,7 @@ namespace logic {
     }
 
     int random::getNumber(int min, int max) {
-        std::uniform_int_distribution<int> dist(min, max);
+        std::uniform_int_distribution<int> dist(min, max-1);
         return dist(mt);
     }
 

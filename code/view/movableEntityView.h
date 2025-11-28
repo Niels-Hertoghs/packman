@@ -18,8 +18,10 @@ namespace view {
         int id; /// De unieke id van deze movableEntityView, (voor het veranderen van de sprite).
         inline static int nextId; /// Statische variabele voor unieke id's, zodat elke movableEntityView een eigen id heeft.
         std::weak_ptr<logic::movableEntity> Model;
-    protected:
         std::vector<std::vector<std::pair<int,int>>> allSprites;  /// Alle sprites van dit object, in de volgorde down, up, right, left.
+        std::vector<std::vector<std::pair<int,int>>> originalAllSprites;  /// Alle sprites van dit object, in de volgorde down, up, right, left.
+
+    protected:
         std::vector<std::pair<int,int>> spriteCo;  /// Alle sprites van het object in een bepaalde richting
         sf::Texture texture;
         sf::RectangleShape _movable;

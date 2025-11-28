@@ -26,6 +26,7 @@ namespace logic {
         void liveLost();
         void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);
         void nextLevel();
+        void GhostEaten(int GhostPoints);
 
         [[nodiscard]] int getScore() const;
         [[nodiscard]] int getLivesLeft() const;

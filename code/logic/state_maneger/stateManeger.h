@@ -9,7 +9,7 @@
 #include <stack>
 #include <vector>
 #include "../../camera.h"
-#include "../../Stopwatch.h"
+#include "../Stopwatch.h"
 #include "../../view/worldView.h"
 #include "state.h"
 
