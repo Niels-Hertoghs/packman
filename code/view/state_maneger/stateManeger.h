@@ -33,6 +33,7 @@ namespace view {
         void pushState(std::unique_ptr<view::state> newState);
         void pushStateAndDelete(std::unique_ptr<view::state> newState);
         void prevState();
+        void pop2State();
         std::unique_ptr<view::state> getCurrentState();
 
         void runTop(sf::RenderWindow& window, sf::Event& event, view::camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime);

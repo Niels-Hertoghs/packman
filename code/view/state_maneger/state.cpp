@@ -258,12 +258,27 @@ namespace view {
         std::vector<sf::RectangleShape> rechthoeken;
 
         // continue playing button
-        sf::RectangleShape continuePlayingButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,-0.5f);
+        sf::RectangleShape continuePlayingButton = makeButton(0.4f,1.2f,sf::Color::Green,cam,0.f,0.f);
         rechthoeken.push_back(continuePlayingButton);
 
-            //text
-        sf::Text playText = makeText(font, "continue playing", 0.15f, sf::Color::Magenta, 0.f, -0.5f,cam);
+            // continue playing text
+        sf::Text playText = makeText(font, "continue playing", 0.11f, sf::Color::Magenta, 0.f, 0.f,cam);
         text.push_back(playText);
+
+        // back to menu button
+        // een zwarte butten rond de tekst zodat je daar op kan klikken om terug naar menu te gaan, je ziet de butten niet
+        // voordeel: je kan rond de tekst klikken en het werkt (In de buurt)
+        // (om te zien waar de button ligt, verander de kleur zwart naar een andere kleur)
+        sf::RectangleShape backToMenuButton = makeButton(0.2f,1.0f,sf::Color::Black,cam,-0.97f,0.87f);
+        backToMenuButton.setOrigin(0,0); // de linker boven hoek van de buttom altijd in de linkerbovenhoek van het scherm zetten
+        rechthoeken.push_back(backToMenuButton);
+
+            // back to menu text
+        sf::Text backToMenuText = makeText(font, "< Back to menu", 0.11f, sf::Color::Yellow, -0.95f, 0.85f,cam);
+
+        // de linker boven hoek van de text altijd in de linkerbovenhoek van het scherm zetten
+        backToMenuText.setOrigin(0,0);
+        text.push_back(backToMenuText);
 
 
         if (event.type == sf::Event::MouseButtonPressed &&
@@ -271,6 +286,9 @@ namespace view {
             sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
             if (continuePlayingButton.getGlobalBounds().contains(mousePos)) {
                 manager.prevState();
+            } else if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
+                // de paused state poppen en de level state poppen -> in menu state
+                manager.pop2State();
             }
         }
 
