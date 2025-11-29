@@ -11,7 +11,7 @@
 
 
 
-namespace logic {\
+namespace logic {
     // forward declaration
     class Ghost;
 
