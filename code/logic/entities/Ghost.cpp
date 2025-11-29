@@ -4,16 +4,13 @@
 
 #include "Ghost.h"
 
-#include <iostream>
-#include <utility>
-
 namespace logic {
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class Ghost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Ghost::Ghost(double x, double y, bool outsideCage, directions direction,double speed,int _points)
+    Ghost::Ghost(const double x, const double y, const bool outsideCage, const directions direction, const double speed, const int _points)
         : movableEntity(x, y, speed, direction), canChoseDir(false), hasChosenAtIntersection(false),
           prevDirection(directions::EMPTY), mode(modes::CHASING_MODE), outsideCage(outsideCage),
           originalOutsideCage(outsideCage),points(_points) {
@@ -24,6 +21,8 @@ namespace logic {
         // als het als mag vertrekken (green na 5 sec, orange na 10 sec)
         if (canMove()) {
             this->move(deltaTime);
+
+            // als die nog in de cage zit, eerst omhoog laten gaan, als het gaat, om er zo uit te gaan
             if (!outsideCage) {
                 std::vector<directions> possibleDirections = this->possibleDirections(walls);
                 if (std::find(possibleDirections.begin(), possibleDirections.end(), UP) != possibleDirections.end()) {
@@ -42,7 +41,7 @@ namespace logic {
                 prevLocation();
 
                 // voor de eerste botsing tegen een muur (vanboven uit hun hok), dan kunnen ze elke kant op gaan
-                // ze kunnen in het begin 1 keer door de invisible wall
+                // ze kunnen in het begin 1 keer door de invisible wall, daarna niet meer
                 if (!canChoseDir) {
                     canChoseDir = true;
                     hasChosenAtIntersection = true;
@@ -55,7 +54,7 @@ namespace logic {
             }
         }
 
-        std::vector<directions> posDirections = this->possibleDirections(walls);
+        const std::vector<directions> posDirections = this->possibleDirections(walls);
 
         // Als we niet op een kruispunt staan → reset gekozen-flag
         // zodat de ghost maar 1 keer kan kiezen per kruispunt (door mijn gebruikte logica, kan die soms meerdere keren kiezen per kruispunt, nu niet meer)
@@ -63,18 +62,16 @@ namespace logic {
             hasChosenAtIntersection = false;
         }
 
-        // kruispunten detecteren, en eventueel de richting uitgaan (niet terug draaien)
+        // kruispunten detecteren
         if (posDirections.size() > 2 && canChoseDir && !hasChosenAtIntersection) {
             hasChosenAtIntersection = true; // zodat die niet meerdere keren kiest aan dit kruispunt
-
             this->chooseAtIntersection(walls);
         }
-
         notifyPos();
     }
 
 
-    std::vector<directions> Ghost::possibleDirections(std::vector<std::shared_ptr<entity>>& walls) {
+    std::vector<directions> Ghost::possibleDirections(const std::vector<std::shared_ptr<entity>>& walls) const {
         std::vector<directions> possibleDirections;
 
         for (directions dir : {DOWN, UP, RIGHT, LEFT}) {
@@ -124,6 +121,7 @@ namespace logic {
     }
 
     void Ghost::startChaseMode() {
+        // als het al eens opgegeten was, is alles al veranderd
         if (mode == CHASING_MODE) {
             return;
         }
@@ -142,7 +140,8 @@ namespace logic {
     void Ghost::died() {
         toSpawnLocation();
         canChoseDir = false; // prive van ghost
-        outsideCage = originalOutsideCage;
+        outsideCage = originalOutsideCage;\
+
         if (mode == FEAR_MODE) {
             // moet terug naar chasing mode gaan en de snelheid moet terug naar originele gaan.
             startChaseMode();
@@ -158,7 +157,7 @@ namespace logic {
     /// redGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    redGhost::redGhost(double x, double y,double speed,int points) : Ghost(x,y, true,UP,speed,points) {}
+    redGhost::redGhost(const double x, const double y, const double speed, const int points) : Ghost(x,y, true,UP,speed,points) {}
 
     void redGhost::redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver) {
         observer = redGhostObserver;
@@ -166,21 +165,18 @@ namespace logic {
 
     void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
-        std::vector<directions> possibleDirections = this->possibleDirections(walls);
-
+        const std::vector<directions> possibleDirections = this->possibleDirections(walls);
 
         if (possibleDirections.empty()) {
             return;
         }
-
-        int chosenDir = random::getInstance()->getNumber(0, possibleDirections.size());
-
+        int chosenDir = random::getInstance()->getNumber(0, static_cast<int>(possibleDirections.size()));
         changeDirection(possibleDirections[chosenDir]);
     }
 
     void redGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
 
-        std::vector<directions> posDirections = this->possibleDirections(walls);
+        const std::vector<directions> posDirections = this->possibleDirections(walls);
 
         // verwijder de omgekeerde richting, zodat het niet kan terug keren op een kruispunt
         directions forbidden = oppositeDirection(direction);
@@ -188,8 +184,8 @@ namespace logic {
             return;
         }
 
+        // haalt de kant waar het vandaan komt eruit, zodat het niet terug in die richting kan gaan.
         std::vector<directions> filteredDirections;
-
         for (directions d : posDirections) {
             if (d != forbidden) {
                 filteredDirections.push_back(d);
@@ -198,7 +194,7 @@ namespace logic {
 
         // verander van richting
         if (!filteredDirections.empty()) {
-            int chosenDir = random::getInstance()->getNumber(0, filteredDirections.size());;
+            int chosenDir = random::getInstance()->getNumber(0, static_cast<int>(filteredDirections.size()));;
 
             changeDirection(filteredDirections[chosenDir]);
         }
@@ -207,6 +203,4 @@ namespace logic {
     bool redGhost::canMove() {
         return true;
     }
-
-
 } // logic

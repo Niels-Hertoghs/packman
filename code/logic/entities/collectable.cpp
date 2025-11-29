@@ -3,7 +3,6 @@
 //
 
 #include "collectable.h"
-
 #include <utility>
 
 
@@ -16,10 +15,6 @@ namespace logic {
 
     int collectable::getPoints() const {
         return points;
-    }
-
-    void collectable::setPoints(int newPoints) {
-        points = newPoints;
     }
 
     void collectable::collectableSubscribe(std::shared_ptr<view::collectableView> _collectableObserver) {
@@ -36,7 +31,7 @@ namespace logic {
     /// @class coin
     /// ---------------------------------------------------------------------------------------------------------------
 
-    coin::coin(double x, double y,int points) : collectable(x,y,points){}
+    coin::coin(const double x, const double y, const int points) : collectable(x,y,points){}
 
 
     bool coin::collected() const {
@@ -54,8 +49,8 @@ namespace logic {
     /// @class fruit
     /// ---------------------------------------------------------------------------------------------------------------
 
-    fruit::fruit(double x, double y, int points) : collectable(
-        x, y, points) {
+    fruit::fruit(const double x, const double y, const int points)
+        : collectable(x, y, points) {
     }
 
 

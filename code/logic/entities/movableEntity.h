@@ -16,8 +16,9 @@ namespace logic {
 
 namespace logic {
     /**
-     * Class movableEntity
-     * brief Abstacte klasse voor de beweegbare objecten.
+     * @Class movableEntity
+     * @brief Abstacte klasse voor de beweegbare objecten.
+     * @brief De positie x,y is het midden van het object.
      */
     class movableEntity : public entity {
     protected:
