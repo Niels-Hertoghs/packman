@@ -34,7 +34,7 @@ namespace logic {
         std::shared_ptr<orangeGhost> _orangeGhost;
         std::shared_ptr<greenGhost> _greenGhost;
 
-        std::shared_ptr<Packman> pacman;
+        std::shared_ptr<Pacman> pacman;
         std::string inputFile;
 
         std::shared_ptr<Score> score;
@@ -73,7 +73,7 @@ namespace logic {
         [[nodiscard]] std::shared_ptr<orangeGhost> get_orange_ghost() const;
         [[nodiscard]] std::shared_ptr<greenGhost> get_green_ghost() const;
 
-        [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
+        [[nodiscard]] std::shared_ptr<Pacman> get_pacman() const;
         [[nodiscard]] std::shared_ptr<Score> get_score() const;
     };
 }

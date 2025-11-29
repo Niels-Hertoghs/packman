@@ -32,7 +32,7 @@ namespace view {
 
 
         // pacman observer wordt aangemaakt en gelinkt aan pacman model.
-        std::shared_ptr<logic::Packman> Pacman = wereld->get_pacman();
+        std::shared_ptr<logic::Pacman> Pacman = wereld->get_pacman();
         std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(window,camera,Pacman);
         Pacman->subscribe(PacmanView);
         pacman = PacmanView;

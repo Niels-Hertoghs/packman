@@ -96,6 +96,11 @@ namespace logic {
          * @return De huidige mode van de ghost (FEAR_MODE of CHASING_MODE).
          */
         [[nodiscard]] enum modes get_mode() const;
+
+        /**
+         * @brief default destructor.
+         */
+        ~Ghost() override = default;
     };
 
     /**
@@ -117,6 +122,11 @@ namespace logic {
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
         [[nodiscard]] bool canMove() override;
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
+
+        /**
+        * @brief default destructor.
+        */
+        ~redGhost() override = default;
     };
 
 

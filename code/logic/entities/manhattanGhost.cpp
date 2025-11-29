@@ -11,11 +11,11 @@ namespace logic {
 
     manhattanGhost::manhattanGhost(double x,double y,bool outsideCage,directions direction,double speed,int points) : Ghost(x,y,outsideCage,direction,speed,points) {}
 
-    void manhattanGhost::givePacman(std::shared_ptr<logic::Packman> _pacman) {
+    void manhattanGhost::givePacman(std::shared_ptr<logic::Pacman> _pacman) {
         pacman = std::move(_pacman);
     }
 
-    double manhattanGhost::calculateManhatten(double x1, double y1, double x2, double y2) {
+    double manhattanGhost::calculateManhattan(double x1, double y1, double x2, double y2) {
         double x = std::abs(x1 - x2);
         double y = std::abs(y1 - y2);
         return x + y;
@@ -43,7 +43,7 @@ namespace logic {
             // std::pair<double, double> voorkantGhost = this->getFront(direction);
             // de pos van het spookje als het direction p op gaat
             std::pair<double,double> nextPosGhost = calculateNextPos(1,d,x + 1.f/20.f,y - 1.f/14.f);
-            double distance = calculateManhatten(kantPac.first,kantPac.second,nextPosGhost.first,nextPosGhost.second);
+            double distance = calculateManhattan(kantPac.first,kantPac.second,nextPosGhost.first,nextPosGhost.second);
             if (mode == CHASING_MODE) {
                 // zoek de kleinste distance
                 if (distance < edgeDistance) {
@@ -68,12 +68,12 @@ namespace logic {
     }
 
     /// ---------------------------------------------------------------------------------------------------------------
-    /// frontManhattenGhost
+    /// frontManhattanGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    frontManhattenGhost::frontManhattenGhost(double x, double y,bool outsideCage,directions direction,double speed,int points) : manhattanGhost(x,y,outsideCage,direction,speed,points) {}
+    frontManhattanGhost::frontManhattanGhost(double x, double y,bool outsideCage,directions direction,double speed,int points) : manhattanGhost(x,y,outsideCage,direction,speed,points) {}
 
-    std::pair<double, double> frontManhattenGhost::getFollowSide() {
+    std::pair<double, double> frontManhattanGhost::getFollowSide() {
         std::pair<double, double> voorkantPac = pacman->getFront();
         return voorkantPac;
     }
@@ -83,7 +83,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    blueGhost::blueGhost(double x, double y,double speed,int points)  : frontManhattenGhost(x,y,true,UP,speed,points) {}
+    blueGhost::blueGhost(double x, double y,double speed,int points)  : frontManhattanGhost(x,y,true,UP,speed,points) {}
 
     bool blueGhost::canMove() {
         return true;
@@ -97,7 +97,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    greenGhost::greenGhost(double x, double y,double speed,int points)  : frontManhattenGhost(x,y,false,RIGHT,speed,points) {}
+    greenGhost::greenGhost(double x, double y,double speed,int points)  : frontManhattanGhost(x,y,false,RIGHT,speed,points) {}
 
     bool greenGhost::canMove() {
         return Stopwatch::getInstance()->canStartAfter5Sec();
