@@ -227,7 +227,7 @@ namespace logic {
         double ghostX = ghost->getX() - 1.f/20.f;
         double ghostY = ghost->getY() + 1.f/14.f;
 
-        double buffer = 0.005f;
+        double buffer = 0.015f;
 
         bool overlapX = pacX < ghostX + width - buffer && pacX + width > ghostX + buffer;
         bool overlapY = pacY > ghostY - height + buffer && pacY - height < ghostY - buffer;

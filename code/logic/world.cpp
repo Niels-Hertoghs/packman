@@ -28,6 +28,8 @@ namespace logic {
 
         // bij level 1 is het eten van een ghost 100 punten waart, daarna 50 punten er bij voor elk level
         int ghostPoints = 90 + (50*level);
+        // speed = 1 en plus 0.25 voor elke hoger level
+        float ghostSpeed = 0.75f + (static_cast<float>(level) * 0.25f);
 
         std::string line;
         double y = 1.0 - 2.0/7.0;
@@ -51,24 +53,23 @@ namespace logic {
                     break;
                 case 'p':
                     //pacman aanmaken, origin = midpunt
-                        // speed = 1 en plus 0.5 voor elke hoger level
-                    pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f, 1.f + (static_cast<float>(level) * 0.5f));
+                    pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f, 1.f + (static_cast<float>(level) * 0.25f));
                     break;
                 case 'r':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
+                    _redGhost = std::make_shared<redGhost>(x + 1.f/20.f, y - 1.f/14.f,ghostSpeed,ghostPoints);
                     break;
                 case 'g':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
+                    _greenGhost = std::make_shared<greenGhost>(x + 1.f/20.f, y - 1.f/14.f,ghostSpeed,ghostPoints);
                     break;
                 case 'b':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
+                    _blueGhost = std::make_shared<blueGhost>(x + 1.f/20.f, y - 1.f/14.f,ghostSpeed,ghostPoints);
                     break;
                 case 'a' :
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
-                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,0.9f + (static_cast<float>(level) * 0.5f),ghostPoints);
+                    _orangeGhost = std::make_shared<orangeGhost>(x + 1.f/20.f, y - 1.f/14.f,ghostSpeed,ghostPoints);
                     break;
                 default:
                     break;
@@ -81,6 +82,7 @@ namespace logic {
         _blueGhost->givePacman(pacman);
         _greenGhost->givePacman(pacman);
         _orangeGhost->givePacman(pacman);
+
         for (const std::shared_ptr<collectable>& collectable : collectables) {
             collectable->subscribeScore(score);
         }

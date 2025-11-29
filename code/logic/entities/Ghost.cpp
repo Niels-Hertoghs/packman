@@ -124,6 +124,9 @@ namespace logic {
     }
 
     void Ghost::startChaseMode() {
+        if (mode == CHASING_MODE) {
+            return;
+        }
         mode = CHASING_MODE;
         observer->notify(notifications::TO_CHASING_MODE);
         notifyDir();

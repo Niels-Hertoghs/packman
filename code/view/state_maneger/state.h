@@ -74,6 +74,7 @@ namespace view {
     };
 
     class VictoryState : public state {
+        sf::Texture victoryTexture;
     public:
         VictoryState() = default;
         std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(

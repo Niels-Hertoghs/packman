@@ -200,6 +200,7 @@ namespace view {
             std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
             throw;
         }
+        victoryTexture = Texture;
 
         std::vector<sf::Text> text;
         std::vector<sf::RectangleShape> rechthoeken;
@@ -211,7 +212,7 @@ namespace view {
 
         // win afbeelding
         sf::RectangleShape victory = makeButton(0.7f, 0.7f,sf::Color::White,cam, 0.f, 0.1f);
-        victory.setTexture(&Texture);
+        victory.setTexture(&victoryTexture);
         rechthoeken.push_back(victory);
 
         // next Level button
