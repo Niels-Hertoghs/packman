@@ -64,7 +64,7 @@ namespace logic {
          * @param walls De muren in de wereld, om te zien dat de ghost er niet door kan bewegen.
          * @return Vector met alle mogelijke richtingen waar de ghost naartoe kan bewegen.
          */
-        std::vector<directions> possibleDirections(const std::vector<std::shared_ptr<entity>>& walls) const;
+        [[nodiscard]] std::vector<directions> possibleDirections(const std::vector<std::shared_ptr<entity>>& walls) const;
 
         /**
          * @return Bool of de ghost al uit de cage is.
@@ -115,15 +115,8 @@ namespace logic {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
-        bool canMove() override;
+        [[nodiscard]] bool canMove() override;
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
-
-        // methodes
-        /**
-        * @brief Initialiseert de observer van de Ghost
-        * @param redGhostObserver Pointer naar de observer van Ghost.
-        */
-        void redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver);
     };
 
 

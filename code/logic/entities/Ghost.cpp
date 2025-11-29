@@ -159,10 +159,6 @@ namespace logic {
 
     redGhost::redGhost(const double x, const double y, const double speed, const int points) : Ghost(x,y, true,UP,speed,points) {}
 
-    void redGhost::redGhostSubscribe(const std::shared_ptr<view::redGhostView>& redGhostObserver) {
-        observer = redGhostObserver;
-    }
-
     void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
         const std::vector<directions> possibleDirections = this->possibleDirections(walls);

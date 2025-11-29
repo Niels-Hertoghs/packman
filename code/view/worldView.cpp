@@ -34,27 +34,27 @@ namespace view {
         // pacman observer wordt aangemaakt en gelinkt aan pacman model.
         std::shared_ptr<logic::Packman> Pacman = wereld->get_pacman();
         std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(window,camera,Pacman);
-        Pacman->pacmanSubscribe(PacmanView);
+        Pacman->subscribe(PacmanView);
         pacman = PacmanView;
 
         std::shared_ptr<logic::redGhost> red_ghost = wereld->get_red_ghost();
         std::shared_ptr<redGhostView> _redGhostView = std::make_shared<redGhostView>(window,camera,red_ghost);
-        red_ghost->redGhostSubscribe(_redGhostView);
+        red_ghost->subscribe(_redGhostView);
         redGhost = _redGhostView;
 
         std::shared_ptr<logic::blueGhost> blue_ghost = wereld->get_blue_ghost();
         std::shared_ptr<blueGhostView> _blueGhostView = std::make_shared<blueGhostView>(window,camera,blue_ghost);
-        blue_ghost->blueGhostSubscribe(_blueGhostView);
+        blue_ghost->subscribe(_blueGhostView);
         blueGhost = _blueGhostView;
 
         std::shared_ptr<logic::greenGhost> green_ghost = wereld->get_green_ghost();
         std::shared_ptr<greenGhostView> _greenGhostView = std::make_shared<greenGhostView>(window,camera,green_ghost);
-        green_ghost->greenGhostSubscribe(_greenGhostView);
+        green_ghost->subscribe(_greenGhostView);
         greenGhost = _greenGhostView;
 
         std::shared_ptr<logic::orangeGhost> purple_ghost = wereld->get_orange_ghost();
         std::shared_ptr<orangeGhostView> _orangeGhostView = std::make_shared<orangeGhostView>(window,camera,purple_ghost);
-        purple_ghost->orangeGhostSubscribe(_orangeGhostView);
+        purple_ghost->subscribe(_orangeGhostView);
         orangeGhost = _orangeGhostView;
 
         std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window,camera,_score);

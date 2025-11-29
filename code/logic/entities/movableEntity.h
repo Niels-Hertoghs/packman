@@ -28,8 +28,7 @@ namespace logic {
         double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
         const double spwanLocatieX, spwanLocatiey;  /// Begin locatie van het object, voor als het dood gaat dat het er terug kan spawnen.
 
-        std::shared_ptr<view::movableEntityView> observer;  /// De observer van de movableENtity.
-
+        std::shared_ptr<view::movableEntityView> observer;  /// De observer van de movableEntity.
     public:
         // constructor
         movableEntity(double x,double y,double speed,directions direction);
@@ -50,6 +49,9 @@ namespace logic {
         std::pair<double,double> getCoSide(directions dir);
 
         static directions oppositeDirection(directions dir);
+
+        void subscribe(const std::shared_ptr<view::movableEntityView>& observer);
+
 
         /**
          * @brief Laat de observer weten dat de movable van positie is veranderd.
@@ -85,7 +87,6 @@ namespace logic {
         bool standsOnCoin(const std::shared_ptr<entity>& other);
         void updateDir(enum directions);
 
-        void pacmanSubscribe(const std::shared_ptr<view::packmanView>& pacmanObserver);
         bool standsOnGhost(const std::shared_ptr<Ghost>& ghost);
 
     };

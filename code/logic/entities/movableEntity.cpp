@@ -132,6 +132,10 @@ namespace logic {
         return direction;
     }
 
+    void movableEntity::subscribe(const std::shared_ptr<view::movableEntityView>& Observer) {
+        observer = Observer;
+    }
+
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class Packman
@@ -213,10 +217,6 @@ namespace logic {
         return overlapX && overlapY;
     }
 
-    void Packman::pacmanSubscribe(const std::shared_ptr<view::packmanView>& PacmanObserver) {
-        observer = PacmanObserver;
-    }
-
     bool Packman::standsOnGhost(const std::shared_ptr<Ghost>& ghost) {
         double width = 1.f / 10.f;
         double height = 1.f / 7.f;
@@ -241,7 +241,6 @@ namespace logic {
         notifyDir();
         notifyPos();
     }
-
 
 
 }

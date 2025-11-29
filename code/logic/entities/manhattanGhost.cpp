@@ -2,27 +2,27 @@
 // Created by niels_hertoghs on 11/25/25.
 //
 
-#include "manhattenGhost.h"
+#include "manhattanGhost.h"
 
 namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
-    /// manhattenGhost
+    /// manhattanGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    manhattenGhost::manhattenGhost(double x,double y,bool outsideCage,directions direction,double speed,int points) : Ghost(x,y,outsideCage,direction,speed,points) {}
+    manhattanGhost::manhattanGhost(double x,double y,bool outsideCage,directions direction,double speed,int points) : Ghost(x,y,outsideCage,direction,speed,points) {}
 
-    void manhattenGhost::givePacman(std::shared_ptr<logic::Packman> _pacman) {
+    void manhattanGhost::givePacman(std::shared_ptr<logic::Packman> _pacman) {
         pacman = std::move(_pacman);
     }
 
-    double manhattenGhost::calculateManhatten(double x1, double y1, double x2, double y2) {
+    double manhattanGhost::calculateManhatten(double x1, double y1, double x2, double y2) {
         double x = std::abs(x1 - x2);
         double y = std::abs(y1 - y2);
         return x + y;
     }
 
 
-    void manhattenGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+    void manhattanGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
         std::vector<directions> posDirections = this->possibleDirections(walls);
 
@@ -63,7 +63,7 @@ namespace logic {
 
     }
 
-    void manhattenGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
+    void manhattanGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
         this->nextDirection(walls);
     }
 
@@ -71,7 +71,7 @@ namespace logic {
     /// frontManhattenGhost
     /// ---------------------------------------------------------------------------------------------------------------
 
-    frontManhattenGhost::frontManhattenGhost(double x, double y,bool outsideCage,directions direction,double speed,int points) : manhattenGhost(x,y,outsideCage,direction,speed,points) {}
+    frontManhattenGhost::frontManhattenGhost(double x, double y,bool outsideCage,directions direction,double speed,int points) : manhattanGhost(x,y,outsideCage,direction,speed,points) {}
 
     std::pair<double, double> frontManhattenGhost::getFollowSide() {
         std::pair<double, double> voorkantPac = pacman->getFront();
@@ -84,11 +84,6 @@ namespace logic {
 
 
     blueGhost::blueGhost(double x, double y,double speed,int points)  : frontManhattenGhost(x,y,true,UP,speed,points) {}
-
-
-    void blueGhost::blueGhostSubscribe(const std::shared_ptr<view::blueGhostView>& _ghostObserver) {
-        observer = _ghostObserver;
-    }
 
     bool blueGhost::canMove() {
         return true;
@@ -104,10 +99,6 @@ namespace logic {
 
     greenGhost::greenGhost(double x, double y,double speed,int points)  : frontManhattenGhost(x,y,false,RIGHT,speed,points) {}
 
-    void greenGhost::greenGhostSubscribe(std::shared_ptr<view::greenGhostView> _ghostObserver) {
-        observer = std::move(_ghostObserver);
-    }
-
     bool greenGhost::canMove() {
         return Stopwatch::getInstance()->canStartAfter5Sec();
     }
@@ -118,11 +109,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    orangeGhost::orangeGhost(double x, double y,double speed,int points)  : manhattenGhost(x,y,false,LEFT,speed,points) {}
-
-    void orangeGhost::orangeGhostSubscribe(std::shared_ptr<view::orangeGhostView> _ghostObserver) {
-        observer = std::move(_ghostObserver);
-    }
+    orangeGhost::orangeGhost(double x, double y,double speed,int points)  : manhattanGhost(x,y,false,LEFT,speed,points) {}
 
     std::pair<double, double> orangeGhost::getFollowSide() {
         return pacman->getBack();
