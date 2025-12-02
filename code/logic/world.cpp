@@ -5,7 +5,6 @@
 #include "world.h"
 #include <fstream>
 #include <iostream>
-#include <sstream>
 
 namespace logic {
 

@@ -4,7 +4,6 @@
 
 #include "ghostView.h"
 #include "../../logic/entities/Ghost.h"
-#include "../../logic/entities/manhattanGhost.h"
 
 namespace view {
     ghostView::ghostView(sf::RenderWindow &window, camera &cam, std::shared_ptr<logic::movableEntity>& ghostModel,

@@ -3,9 +3,9 @@
 //
 
 #include "entityView.h"
-
-#include <iostream>
 #include <utility>
+
+
 namespace view {
     entityView::entityView(sf::RenderWindow& window,camera& cam) : Observer(window,cam) {
     }

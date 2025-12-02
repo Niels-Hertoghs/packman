@@ -7,10 +7,7 @@
 #include <fstream>
 #include <memory>
 #include <vector>
-#include <SFML/Graphics/Font.hpp>
 #include "../view/notifications.h"
-#include "../view/camera.h"
-#include "../observer.h"
 #include "entities/entity.h"
 #include "entities/collectable.h"
 #include "entities/movableEntity.h"
