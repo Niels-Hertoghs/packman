@@ -59,7 +59,7 @@ namespace logic {
          * @param newY De y coordinate van de movable.
          * @return Of dat other en de gegeven coordinaten zouden botsen (in elkar liggen).
          */
-        static bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
+        [[nodiscard]] static bool wouldCollide(const std::shared_ptr<entity>& other, double newX, double newY);
 
         /**
          * @brief Kijkt of de movable (daarvan moet het opgeroepen worden) en het andere entity object zouden botsen als de movable naar de gegeven coordinaten zou gaan.
@@ -67,7 +67,7 @@ namespace logic {
          * @param other Pointer naar het andere entity object.
          * @return Of dat other en de gegeven coordinaten zouden botsen (in elkar liggen).
          */
-        bool standsOn(const std::shared_ptr<entity>& other);
+        [[nodiscard]] bool standsOn(const std::shared_ptr<entity>& other);
 
         /**
          * @brief Zet de positie van de movable terug naar de vorige locatie (voor als die op een muur is beland).
@@ -141,6 +141,11 @@ namespace logic {
          * @return De direction van de movable entity.
          */
         [[nodiscard]] directions get_direction() const;
+
+        /**
+         * @brief default destructor.
+         */
+        ~movableEntity()  override = default;
     };
 
     /**
@@ -152,18 +157,40 @@ namespace logic {
         directions nextDirection; /// Volgende richting zodra mogelijk.
     public:
         // constructor
+        /**
+        * @param x De positie van de Ghost op de x-as (relatief tussen -1 en 1).
+        * @param y De positie van de Ghost op de y-as (relatief tussen -1 en 1).
+        * @param speed De snelheid van de ghost.
+        */
         Pacman(double x,double y,double speed);
 
-        // methodes
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void update(double deltaTime,std::vector<std::shared_ptr<entity>>& walls) override;
         void died() override;
 
+        // methodes
+        /**
+         * @param other De pointer naar de coin om te checken of pacman erop staat.
+         * @return Bool, of dat pacman op de coin staat.
+         */
+        [[nodiscard]] bool standsOnCoin(const std::shared_ptr<entity>& other);
 
-        bool standsOnCoin(const std::shared_ptr<entity>& other);
-        void updateDir(enum directions);
+        /**
+         * @brief Update de volgende richting van pacman.
+         * @param direction De nieuwe richting waar pacman naartoe moet gaan zodra mogelijk.
+         */
+        void updateDir(enum directions direction);
 
-        bool standsOnGhost(const std::shared_ptr<Ghost>& ghost);
+        /**
+         * @param ghost De pionter naar de ghost om te checken of pacman erop staat.
+         * @return Bool, of dat pacman op de ghost staat.
+         */
+        [[nodiscard]] bool standsOnGhost(const std::shared_ptr<Ghost>& ghost);
 
+        /**
+         * @brief Default destructor.
+         */
+        ~Pacman() override = default;
     };
 
 }

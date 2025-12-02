@@ -202,6 +202,7 @@ namespace logic {
     }
 
     bool Pacman::standsOnCoin(const std::shared_ptr<entity>& other) {
+        // de radius van de coin, moet hetzelfde zijn als in de collectableView
         double radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
         double radiusy = 0.016f + 1/15.f;
 
@@ -226,7 +227,8 @@ namespace logic {
         double ghostX = ghost->getX() - 1.f/20.f;
         double ghostY = ghost->getY() + 1.f/14.f;
 
-        double buffer = 0.015f;
+        // hoe hoger ghoe dichter bij het centrum van pacman de ghost moet zijn voor het er op staat.
+        double buffer = 0.035f;
 
         bool overlapX = pacX < ghostX + width - buffer && pacX + width > ghostX + buffer;
         bool overlapY = pacY > ghostY - height + buffer && pacY - height < ghostY - buffer;

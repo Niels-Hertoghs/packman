@@ -141,7 +141,7 @@ namespace logic {
             score->nextLevel();
         }
 
-        if (_blueGhost->get_mode() == FEAR_MODE && Stopwatch::getInstance()->isFearDone(score->getLevel())) { // kan eender welke ghost zijn
+        if (_redGhost->get_mode() == FEAR_MODE && Stopwatch::getInstance()->isFearDone(score->getLevel())) { // kan eender welke ghost zijn
             startChaseMode();
         }
     }

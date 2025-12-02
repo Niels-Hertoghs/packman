@@ -77,7 +77,7 @@ namespace logic {
 
      /**
       * @class coin
-      * @brief Een concrete klasse voor de coins.
+      * @brief Een concrete klasse voor de coins, positie is het midden van de coin.
       */
      class coin : public collectable {
      public:
@@ -99,11 +99,14 @@ namespace logic {
           ~coin() override = default;
      };
 
+     /**
+      * @class fruit
+      * @brief Een concrete klasse voor de fruit, positie is de linkerbovenhoek van de fruit.
+      */
      class fruit : public collectable {
      public:
           // constructor
           /**
-           *
            * @param x De positie van de collectable op de x-as (relatief tussen -1 en 1).
            * @param y De positie van de collectable op de y-as (relatief tussen -1 en 1).
            * @param points Het aantal punten dat er bij de score komen als de collectable wordt opgegeten (na 1 seconde).

@@ -55,7 +55,7 @@ namespace logic {
          * @brief Zien of de ghost mag bewegen (na de start van de game, sommige ghosts moeten even wachten).
          * @return Of de ghost mag bewegen.
          */
-        virtual bool canMove() = 0;
+        [[nodiscard]] virtual bool canMove() = 0;
 
 
         // methodes

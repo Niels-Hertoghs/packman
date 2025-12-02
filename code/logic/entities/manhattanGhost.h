@@ -29,14 +29,14 @@ namespace logic {
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
-        bool canMove() override = 0;
+        [[nodiscard]] bool canMove() override = 0;
 
         // pure virtual methodes
         /**
          * @brief Haalt de kant van pacman op die de ghost moet volgen (voorkant of achterkant).
          * @return Pair van de x en y coordinaat van de kant van pacman die de ghost moet volgen.
          */
-        virtual std::pair<double, double> getFollowSide() = 0;
+        [[nodiscard]] virtual std::pair<double, double> getFollowSide() = 0;
 
         /**
          * @param pacman Pointer naar pacman, om zijn positie te weten (voor manhattan).
@@ -51,7 +51,7 @@ namespace logic {
          * @param y2 De y coordinaat van het tweede punt.
          * @return De manhattan afstand tussen de 2 punten.
          */
-        static double calculateManhattan(double x1, double y1, double x2, double y2) ;
+        [[nodiscard]] static double calculateManhattan(double x1, double y1, double x2, double y2) ;
 
         /**
         * @brief default destructor.
@@ -77,8 +77,8 @@ namespace logic {
         frontManhattanGhost(double x,double y,bool outsideCage,directions direction,double speed,int points);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-        std::pair<double, double> getFollowSide() override;
-        bool canMove() override = 0;
+        [[nodiscard]] std::pair<double, double> getFollowSide() override;
+        [[nodiscard]] bool canMove() override = 0;
 
         /**
         * @brief default destructor.
@@ -102,7 +102,7 @@ namespace logic {
         blueGhost(double x,double y,double speed,int points);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-        bool canMove() override;
+        [[nodiscard]] bool canMove() override;
 
         /**
         * @brief default destructor.
@@ -126,7 +126,7 @@ namespace logic {
         greenGhost(double x,double y,double speed,int points);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-        bool canMove() override;
+        [[nodiscard]] bool canMove() override;
 
         /**
         * @brief default destructor.
@@ -152,7 +152,7 @@ namespace logic {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         std::pair<double, double> getFollowSide() override;
-        bool canMove() override;
+        [[nodiscard]] bool canMove() override;
 
         /**
          * @brief default destructor.

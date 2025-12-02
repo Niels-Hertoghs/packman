@@ -17,10 +17,7 @@ hoe werk view observer?
 hoe moet het scale, moet dat met een constante verhouding of ni?
 
 
-TODO: de constructor van pacmanview verplaatsen naar movable entity als mogelijk
-stopwatch nooit doorgeven mar -> get insstance doen
-TODO: code opruimen en checken op const enz ovceral ook methodes + nodiscard
-TODO: overal destructors zetten = default
 TODO: alles met een return [[nodisxcrd]]
+TODO: rescaling beter testen en oplossen.
 wat doet de re ghost in fear mode?
 mag static cas wel om van int -> float te gaan
