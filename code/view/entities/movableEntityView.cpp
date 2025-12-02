@@ -54,6 +54,9 @@ namespace view {
         int MovableSizeHeight =  _camera.distanceToPixelsHeight(2.f/14.f);
         int MovableSizeWidth = _camera.distanceToPixelsWidth(2.f/20.f);
         _movable.setSize(sf::Vector2f(static_cast<float>(MovableSizeWidth),static_cast<float>(MovableSizeHeight)));
+
+        sf::FloatRect bounds = _movable.getLocalBounds();
+        _movable.setOrigin(bounds.width/2,bounds.height/2);
     }
 
     void movableEntityView::notify(notifications message) {
@@ -63,7 +66,7 @@ namespace view {
                 if (auto observer = Model.lock()) {
                     pos = _camera.worldToPixel(observer->getX(),observer->getY());
                 }
-                _movable.setPosition(pos.first,pos.second);
+                _movable.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
                 break;
             }
             case CHANGE_DIRECTION_DOWN: {

@@ -8,6 +8,7 @@
 
 #include "entityView.h"
 
+// Forward declarations
 namespace logic {
     class collectable;
 }
@@ -19,70 +20,76 @@ namespace view {
      */
     class collectableView : public entityView {
     protected:
-        bool collected;
+        bool collected; /// Of de collectable al is opgegeten.
         std::weak_ptr<logic::collectable> Model; /// Weak pointer naar de logica van collectable.
     public:
         /**
          * @brief Constructor voor de collectable observer.
-         * @param window De window waar de collectable afgebeeld met worden.
+         * @param window Waar de collectable afgebeeld met worden.
          * @param cam Camera klasse
+         * @param model Pointer naar de logica van collectable.
          */
-        collectableView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::collectable>& model);
+        collectableView(sf::RenderWindow& window,camera& cam, const std::shared_ptr<logic::collectable>& model);
 
-        /**
-         * @brief Pure virtual methodes
-         */
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override = 0;
         void notify(enum notifications message) override = 0;
+
+        /**
+         * @brief Default destructor.
+         */
+        ~collectableView() override = default;
     };
 
     /**
      * @class coinView
      * @brief De concrete klasse van een coin observer.
      */
-    class coinView : public collectableView {
-    private:
+    class coinView final : public collectableView {
         sf::CircleShape _coin; /// De representatie van de coin.
     public:
         /**
         * @brief Constructor voor de coin observer.
-        * @param window De window waar de collectable afgebeeld met worden.
+        * @param window Waar de collectable afgebeeld met worden.
         * @param cam Camera klasse
+        * @param coinModel Pointer naar de logica van de coin.
         */
         coinView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::collectable>& coinModel);
 
-        /**
-         * @brief Wanneer opgeroepen wordt coin weergegeven in de window.
-         */
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
+        void notify(enum notifications message) override;
 
         /**
-         * @param message De verandering van het object.
+         * @brief Default destructor.
          */
-        void notify(enum notifications message) override;
+        ~coinView() override = default;
     };
 
-    class fruitView : public collectableView {
-    private:
+    /**
+    * @class fruitView
+    * @brief De concrete klasse van een fruit observer.
+    */
+    class fruitView final : public collectableView {
         sf::Texture texture; /// De texture van de fruit.
         sf::RectangleShape _fruit; /// De representatie van de fruit.
     public:
         /**
         * @brief Constructor voor de coin observer.
-        * @param window De window waar de collectable afgebeeld met worden.
+        * @param window Waar de collectable afgebeeld met worden.
         * @param cam Camera klasse
+        * @param fruitModel Pointer naar de logica van de fruit.
         */
         fruitView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::collectable>& fruitModel);
 
-        /**
-        * @brief Wanneer opgeroepen wordt coin weergegeven in de window.
-        */
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
+        void notify(enum notifications message) override;
 
         /**
-        * @param message De verandering van het object.
+        * @brief Default destructor.
         */
-        void notify(enum notifications message) override;
+        ~fruitView() override = default;
     };
 }
 
