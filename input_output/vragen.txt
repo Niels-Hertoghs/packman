@@ -24,3 +24,4 @@ TODO: overal destructors zetten = default
 TODO: alles met een return [[nodisxcrd]]
 wat doet de re ghost in fear mode?
 mag static cas wel om van int -> float te gaan
+in collectabel isFruit(); mag dit? om te weten voor fear mode
