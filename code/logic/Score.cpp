@@ -10,20 +10,20 @@
 #include "../view/state_maneger/stateManeger.h"
 
 namespace logic {
-    Score::Score(view::stateManeger& Manager) : IObserver(),manager(Manager),  score(0),livesLeft(2),level(1) {}
+    Score::Score(view::stateManeger& manager) : IObserver(),score(0),  livesLeft(2),level(1),manager(manager) {}
 
-    void Score::coinEaten(int coinPoints) {
-        float lastEatenTime = Stopwatch::getInstance()->eatCollectable();
+    void Score::coinEaten(const int coinPoints) {
+        const float lastEatenTime = Stopwatch::getInstance()->eatCollectable();
         // aantal coin points komt er bij de score als de collectable gegeten wordt na 1 sec
         // als het sneller wordt gedaan komen er meer punten bij, afhankelijk van hoe snel
         // (0.5 sec -> points verdubbeld, na 2 sec points gehalveerd)
-        auto points = static_cast<float>(coinPoints);
+        const auto points = static_cast<float>(coinPoints);
         score += static_cast<int>(std::round(points/lastEatenTime));
         scoreObserver->notify(notifications::UPDATE_SCORE);
     }
 
-    void Score::GhostEaten(int ghostPoints) {
-        score += ghostPoints;
+    void Score::GhostEaten(const int GhostPoints) {
+        score += GhostPoints;
     }
 
     void Score::liveLost() {

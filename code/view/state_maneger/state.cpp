@@ -144,6 +144,7 @@ namespace view {
                 wereld->updatePacmanDir(directions::RIGHT);
             } else if (event.key.code == sf::Keyboard::Escape) {
                 manager.pushState(std::make_unique<pausedState>());
+                return {};
             }
         }
 

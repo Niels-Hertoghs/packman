@@ -13,7 +13,7 @@ namespace logic {
     /// ---------------------------------------------------------------------------------------------------------------
 
     movableEntity::movableEntity(double x, double y, double speed,directions dir)
-    : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spwanLocatieX(x),spwanLocatiey(y),prevX(x),prevY(y) {}
+    : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spawnLocatieX(x),spawnLocatieY(y),prevX(x),prevY(y) {}
 
     bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
         return wouldCollide(other,x,y);
@@ -62,7 +62,6 @@ namespace logic {
     }
 
     std::pair<double,double> movableEntity::calculateNextPos(double delta, directions dir,double _x,double _y) const {
-
         double dx = 0.f, dy = 0.f;
         if (dir == directions::RIGHT) dx = 0.2f;
         else if (dir == directions::LEFT) dx = -0.2f;
@@ -78,8 +77,8 @@ namespace logic {
     }
 
     void movableEntity::toSpawnLocation() {
-        x = spwanLocatieX;
-        y = spwanLocatiey;
+        x = spawnLocatieX;
+        y = spawnLocatieY;
         direction = originalDirection;
         notifyDir();
         notifyPos();
@@ -132,14 +131,18 @@ namespace logic {
         return direction;
     }
 
+    void movableEntity::subscribe(const std::shared_ptr<view::movableEntityView>& Observer) {
+        observer = Observer;
+    }
+
 
     /// ---------------------------------------------------------------------------------------------------------------
-    /// @class Packman
+    /// @class Pacman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Packman::Packman(double x, double y,double speed)  : movableEntity(x,y,speed,directions::RIGHT), nextDirection(EMPTY) {}
+    Pacman::Pacman(double x, double y,double speed)  : movableEntity(x,y,speed,directions::RIGHT), nextDirection(EMPTY) {}
 
-    void Packman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
+    void Pacman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
 
         double newX = x;
@@ -194,11 +197,12 @@ namespace logic {
         notifyPos();
     }
 
-    void Packman::updateDir(enum directions dir) {
+    void Pacman::updateDir(enum directions dir) {
         nextDirection = dir;
     }
 
-    bool Packman::standsOnCoin(const std::shared_ptr<entity>& other) {
+    bool Pacman::standsOnCoin(const std::shared_ptr<entity>& other) {
+        // de radius van de coin, moet hetzelfde zijn als in de collectableView
         double radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
         double radiusy = 0.016f + 1/15.f;
 
@@ -213,11 +217,7 @@ namespace logic {
         return overlapX && overlapY;
     }
 
-    void Packman::pacmanSubscribe(const std::shared_ptr<view::packmanView>& PacmanObserver) {
-        observer = PacmanObserver;
-    }
-
-    bool Packman::standsOnGhost(const std::shared_ptr<Ghost>& ghost) {
+    bool Pacman::standsOnGhost(const std::shared_ptr<Ghost>& ghost) {
         double width = 1.f / 10.f;
         double height = 1.f / 7.f;
 
@@ -227,7 +227,8 @@ namespace logic {
         double ghostX = ghost->getX() - 1.f/20.f;
         double ghostY = ghost->getY() + 1.f/14.f;
 
-        double buffer = 0.015f;
+        // hoe hoger ghoe dichter bij het centrum van pacman de ghost moet zijn voor het er op staat.
+        double buffer = 0.035f;
 
         bool overlapX = pacX < ghostX + width - buffer && pacX + width > ghostX + buffer;
         bool overlapY = pacY > ghostY - height + buffer && pacY - height < ghostY - buffer;
@@ -235,13 +236,12 @@ namespace logic {
     }
 
 
-    void Packman::died() {
+    void Pacman::died() {
         toSpawnLocation();
         nextDirection = EMPTY; // is iets prive van pacman.
         notifyDir();
         notifyPos();
     }
-
 
 
 }

@@ -47,8 +47,8 @@ add_executable(packman main.cpp
         code/view/state_maneger/state.h
         code/view/state_maneger/make_text.h
         code/view/state_maneger/make_text.cpp
-        code/logic/entities/manhattenGhost.cpp
-        code/logic/entities/manhattenGhost.h)
+        code/logic/entities/manhattanGhost.cpp
+        code/logic/entities/manhattanGhost.h)
 
 include_directories(${SFML_INDCLUDE_DIR})
 

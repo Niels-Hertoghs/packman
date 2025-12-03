@@ -5,7 +5,6 @@
 #include "world.h"
 #include <fstream>
 #include <iostream>
-#include <sstream>
 
 namespace logic {
 
@@ -53,7 +52,7 @@ namespace logic {
                     break;
                 case 'p':
                     //pacman aanmaken, origin = midpunt
-                    pacman = std::make_shared<Packman>(x + 1.f/20.f, y - 1.f/14.f, 1.f + (static_cast<float>(level) * 0.25f));
+                    pacman = std::make_shared<Pacman>(x + 1.f/20.f, y - 1.f/14.f, 1.f + (static_cast<float>(level) * 0.25f));
                     break;
                 case 'r':
                         // speed is iets trager dan pacman, elke hoger level wordt er 0.5 bij de speed gedaan
@@ -141,7 +140,7 @@ namespace logic {
             score->nextLevel();
         }
 
-        if (_blueGhost->get_mode() == FEAR_MODE && Stopwatch::getInstance()->isFearDone(score->getLevel())) { // kan eender welke ghost zijn
+        if (_redGhost->get_mode() == FEAR_MODE && Stopwatch::getInstance()->isFearDone(score->getLevel())) { // kan eender welke ghost zijn
             startChaseMode();
         }
     }
@@ -180,7 +179,7 @@ namespace logic {
         return _redGhost;
     }
 
-    std::shared_ptr<Packman> world::get_pacman() const {
+    std::shared_ptr<Pacman> world::get_pacman() const {
         return pacman;
     }
 

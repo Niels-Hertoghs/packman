@@ -9,7 +9,7 @@ namespace logic {
     /// @class entity
     /// ---------------------------------------------------------------------------------------------------------------
 
-    entity::entity(double x,double y) : x(x), y(y) {}
+    entity::entity(const double x, const double y) : x(x), y(y) {}
 
     double entity::getX() const {
         return x;
@@ -19,20 +19,16 @@ namespace logic {
         return y;
     }
 
+    std::pair<double,double> entity::getPosition() const {
+        return {x,y};
+    }
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class wall
     /// ---------------------------------------------------------------------------------------------------------------
 
     wall::wall(double x, double y) : entity(x, y) {}
 
-    std::pair<double,double> wall::getPosition() const {
-        return std::pair<double,double>(this->x,this->y);
-    }
-
-    void wall::wallSubscribe(std::shared_ptr<view::wallView> wallObserver) {
-        _wallObserver = wallObserver;
-    }
-
-    invisibleWall::invisibleWall(double x, double y) : entity(x, y) {    }
+    invisibleWall::invisibleWall(const double x, const double y) : entity(x, y) {    }
 
 }

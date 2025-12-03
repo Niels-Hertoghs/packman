@@ -8,7 +8,7 @@
 
 #include "../../view/entities/entityView.h"
 
-
+// Forward declarations
 namespace view {
     class wallView;
 }
@@ -24,34 +24,73 @@ namespace logic {
         double y; /// Positie op de y as.
     public:
         // constructor
+        /**
+         * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
+         * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
+         */
         entity(double x, double y);
 
         // methodes
+
+        /**
+         * @return De positie van het object op de x-as.
+         */
         [[nodiscard]] double getX() const;
+
+        /**
+         * @return De positie van het object op de y-as.
+         */
         [[nodiscard]] double getY() const;
 
+        /**
+         * @return De positie van het object als een pair {x,y}.
+         */
+        [[nodiscard]] std::pair<double,double> getPosition() const;
+
+        /**
+        * @brief Default destructor.
+        */
         virtual ~entity() = default;
     };
 
-
-
     /**
      * @class wall
-     * @brief Concrete klasse die een muur representeert.
+     * @brief Concrete klasse die een muur representeert, positie x,y is de linkerbovenhoek.
      */
-    class wall : public entity {
-    private:
-        std::shared_ptr<view::wallView> _wallObserver;
+    class wall final : public entity {
     public:
+        // constructor
+        /**
+         * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
+         * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
+         */
         wall(double x,double y);
-        [[nodiscard]] std::pair<double,double> getPosition() const;
 
-        void wallSubscribe(std::shared_ptr<view::wallView> wallObserver);
+
+        /**
+        * @brief Default destructor.
+        */
+        ~wall() override = default;
     };
 
-    class invisibleWall : public entity {
+    /**
+    * @class invisibleWall
+    * @brief Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window, maar de objecten kunnen er niet door gaan (enkel de ghosts om uit hun cage te gaan).
+    * @brief Positie x,y is de linkerbovenhoek.
+    */
+    class invisibleWall final : public entity {
     public:
+        /**
+         *
+         * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
+         * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
+         */
         invisibleWall(double x,double y);
+
+        /**
+        * @brief Default destructor.
+        */
+        ~invisibleWall() override = default;
     };
 }
 

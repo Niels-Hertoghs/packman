@@ -7,15 +7,12 @@
 #include <fstream>
 #include <memory>
 #include <vector>
-#include <SFML/Graphics/Font.hpp>
 #include "../view/notifications.h"
-#include "../view/camera.h"
-#include "../observer.h"
 #include "entities/entity.h"
 #include "entities/collectable.h"
 #include "entities/movableEntity.h"
 #include "entities/Ghost.h"
-#include "entities/manhattenGhost.h"
+#include "entities/manhattanGhost.h"
 #include "Score.h"
 
 namespace logic {
@@ -34,7 +31,7 @@ namespace logic {
         std::shared_ptr<orangeGhost> _orangeGhost;
         std::shared_ptr<greenGhost> _greenGhost;
 
-        std::shared_ptr<Packman> pacman;
+        std::shared_ptr<Pacman> pacman;
         std::string inputFile;
 
         std::shared_ptr<Score> score;
@@ -73,7 +70,7 @@ namespace logic {
         [[nodiscard]] std::shared_ptr<orangeGhost> get_orange_ghost() const;
         [[nodiscard]] std::shared_ptr<greenGhost> get_green_ghost() const;
 
-        [[nodiscard]] std::shared_ptr<Packman> get_pacman() const;
+        [[nodiscard]] std::shared_ptr<Pacman> get_pacman() const;
         [[nodiscard]] std::shared_ptr<Score> get_score() const;
     };
 }

@@ -9,20 +9,20 @@
 #include "../../logic/entities/collectable.h"
 
 namespace view {
-    collectableView::collectableView(sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::collectable>& model)
+    collectableView::collectableView(sf::RenderWindow& window, camera& cam, const std::shared_ptr<logic::collectable>& model)
         : entityView(window, cam),collected(false),Model(model) {}
 
-    coinView::coinView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& CoinModel)
-        : collectableView(window, cam,CoinModel)
+    coinView::coinView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& coinModel)
+        : collectableView(window, cam,coinModel)
 
     {
-        int radius = cam.distanceToPixelsHeight(0.016f);
-        sf::CircleShape coinShape(radius);
+        int radius = std::min(_camera.distanceToPixelsHeight(0.016f),_camera.distanceToPixelsWidth(0.016f));
+        sf::CircleShape coinShape(static_cast<float>(radius));
         std::pair<unsigned int,unsigned int> pos;
         if (auto observer = Model.lock()) {
             pos = cam.worldToPixel(observer->getX(),observer->getY());
         }
-        coinShape.setPosition(pos.first,pos.second);
+        coinShape.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
         sf::FloatRect bounds = coinShape.getLocalBounds();
         coinShape.setOrigin(bounds.width/2,bounds.height/2);
         coinShape.setFillColor(sf::Color::White);
@@ -30,20 +30,22 @@ namespace view {
     }
 
     void coinView::draw() {
+        if (collected) {
+            return;
+        }
         std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = Model.lock()) {
+        if (const auto observer = Model.lock()) {
             pos = _camera.worldToPixel(observer->getX(),observer->getY());
         }
 
-        _coin.setRadius(_camera.distanceToPixelsHeight(0.016f));
-        _coin.setPosition(pos.first,pos.second);
+        _coin.setRadius(static_cast<float>(std::min(_camera.distanceToPixelsHeight(0.016f),_camera.distanceToPixelsWidth(0.016f))));
+        _coin.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
+        const sf::FloatRect bounds = _coin.getLocalBounds();
+        _coin.setOrigin(bounds.width/2,bounds.height/2);
         window.draw(_coin);
-        if (!collected) {
-            window.draw(_coin);
-        }
     }
 
-    void coinView::notify(enum notifications message) {
+    void coinView::notify(const enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
             Model.reset();
@@ -52,8 +54,8 @@ namespace view {
     }
 
 
-    fruitView::fruitView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& FruitModel)
-        : collectableView(window, cam,FruitModel)
+    fruitView::fruitView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& fruitModel)
+        : collectableView(window, cam,fruitModel)
 
     {
         try {
@@ -81,34 +83,37 @@ namespace view {
         if (auto observer = Model.lock()) {
             pos = cam.worldToPixel(observer->getX(),observer->getY());
         }
-        Fruit.setPosition(pos.first,pos.second);
+        Fruit.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
         _fruit = Fruit;
     }
 
     void fruitView::draw() {
+        if (collected) {
+            return;
+        }
+
         std::pair<unsigned int,unsigned int> pos;
         if (auto observer = Model.lock()) {
             pos = _camera.worldToPixel(observer->getX(),observer->getY());
         }
-        int FruitSizeHeight = _camera.distanceToPixelsHeight(1.f/17.f);
-        int FruitSizeWidth = _camera.distanceToPixelsWidth(1.f/27.f);
+        const int FruitSizeHeight = _camera.distanceToPixelsHeight(1.f/17.f);
+        const int FruitSizeWidth = _camera.distanceToPixelsWidth(1.f/27.f);
         _fruit.setSize(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
-        _fruit.setPosition(pos.first,pos.second);
+        _fruit.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
+
+        const sf::FloatRect bounds = _fruit.getLocalBounds();
+        _fruit.setOrigin(bounds.width/2,bounds.height/2);
+
         window.draw(_fruit);
-        if (!collected) {
-            window.draw(_fruit);
-        }
     }
 
-    void fruitView::notify(enum notifications message) {
+    void fruitView::notify(const enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
             Model.reset();
         }
 
     }
-
-
 }
 
 

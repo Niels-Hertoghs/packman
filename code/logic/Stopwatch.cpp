@@ -4,7 +4,7 @@
 
 #include "Stopwatch.h"
 namespace logic {
-    Stopwatch::Stopwatch() : lastTime(clock::now()), deltaTime(0.0f), lastTimeEaten(clock::now()) {}
+    Stopwatch::Stopwatch() : lastTime(clock::now()), lastTimeEaten(clock::now()), deltaTime(0.0f) {}
 
     std::shared_ptr<Stopwatch> Stopwatch::getInstance() {
         if (!_instance) {
@@ -15,8 +15,8 @@ namespace logic {
 
 
     void Stopwatch::tick() {
-        auto currentTime = clock::now();
-        std::chrono::duration<float> elapsed = currentTime - lastTime;
+        const auto currentTime = clock::now();
+        const std::chrono::duration<float> elapsed = currentTime - lastTime;
         deltaTime = elapsed.count();
         lastTime = currentTime;
     }
@@ -26,13 +26,13 @@ namespace logic {
     }
 
     float Stopwatch::eatCollectable() {
-        auto currentEaten = clock::now();
-        std::chrono::duration<float> elapsed = currentEaten - lastTimeEaten;
+        const auto currentEaten = clock::now();
+        const std::chrono::duration<float> elapsed = currentEaten - lastTimeEaten;
         lastTimeEaten = currentEaten;
         return elapsed.count();
     }
 
-    bool Stopwatch::changeSprite(int id) {
+    bool Stopwatch::changeSprite(const int id) {
         auto currentTime = clock::now();
         std::chrono::duration<float> elapsed = currentTime - lastChangedSprite;
         if (elapsed.count() > 0.1f) {
@@ -58,13 +58,13 @@ namespace logic {
 
     bool Stopwatch::canStartAfter5Sec() const {
         auto currentTime = clock::now();
-        std::chrono::duration<float> elapsed = currentTime - startTime;
+        const std::chrono::duration<float> elapsed = currentTime - startTime;
         return elapsed.count() >= 5.0f;
     }
 
     bool Stopwatch::canStartAfter10Sec() const {
         auto currentTime = clock::now();
-        std::chrono::duration<float> elapsed = currentTime - startTime;
+        const std::chrono::duration<float> elapsed = currentTime - startTime;
         return elapsed.count() >= 10.0f;
     }
 
@@ -72,9 +72,9 @@ namespace logic {
         _startFearMode = clock::now();
     }
 
-    bool Stopwatch::isFearDone(int level) {
+    bool Stopwatch::isFearDone(int level) const {
         auto currentTime = clock::now();
-        // Met deze formule duurt de fearmode op level 1, 10 seconden
+        // Met deze formule duurt de fear mode op level 1, 10 seconden
         // hoe hoger het level hoe korter de fearMode, het is een hyperbolische daling, zodat het nooit 0 is of negatief
         // level 2 = 8.3 sec, ... level 10 = 3.6 ,...
         float lengthOfFear = 10.f / ( 1.f + ((0.2f) * static_cast<float>(level - 1)));
