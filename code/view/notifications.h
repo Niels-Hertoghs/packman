@@ -5,6 +5,9 @@
 #ifndef PACKMAN_NOTIFIES_H
 #define PACKMAN_NOTIFIES_H
 
+/**
+ * @brief Alle mogelijke notificaties die een observer kan ontvangen van zijn subject.
+ */
 enum notifications {
     CHANGE_DIRECTION_UP,
     CHANGE_DIRECTION_DOWN,
@@ -21,6 +24,10 @@ enum notifications {
     END_GAME
 };
 
+
+/**
+ * @brief Alle mogelijke richtingen die een movableEntity kan hebben.
+ */
 enum directions {
     UP,
     DOWN,
@@ -29,6 +36,9 @@ enum directions {
     EMPTY
 };
 
+/**
+ * @brief Alle mogelijke modes van een ghost.
+ */
 enum modes {
     CHASING_MODE,
     FEAR_MODE

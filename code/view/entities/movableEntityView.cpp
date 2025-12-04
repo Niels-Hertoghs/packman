@@ -3,17 +3,15 @@
 //
 
 #include "movableEntityView.h"
-
 #include <iostream>
 #include <utility>
-
 #include "../../logic/entities/movableEntity.h"
 
 namespace view {
     movableEntityView::movableEntityView(sf::RenderWindow &window, camera &cam, std::shared_ptr<logic::movableEntity>& model,
                                          const std::vector<std::pair<int, int> > &SpriteCo, int _aantalSprites,
                                          const std::vector<std::vector<std::pair<int, int> > > &allSprites)
-        : entityView(window, cam),Model(model), spriteCo(SpriteCo), counter(0),aantalSprites(_aantalSprites), allSprites(allSprites),originalAllSprites(allSprites) {
+        : entityView(window, cam),aantalSprites(_aantalSprites), counter(0), allSprites(allSprites),originalAllSprites(allSprites), Model(model),spriteCo(SpriteCo) {
 
         try {
             sf::Texture Texture;
@@ -51,19 +49,19 @@ namespace view {
             counter = (counter + 1) % aantalSprites;  // volgende sprite
         }
 
-        int MovableSizeHeight =  _camera.distanceToPixelsHeight(2.f/14.f);
-        int MovableSizeWidth = _camera.distanceToPixelsWidth(2.f/20.f);
+        const int MovableSizeHeight =  _camera.distanceToPixelsHeight(2.f/14.f);
+        const int MovableSizeWidth = _camera.distanceToPixelsWidth(2.f/20.f);
         _movable.setSize(sf::Vector2f(static_cast<float>(MovableSizeWidth),static_cast<float>(MovableSizeHeight)));
 
-        sf::FloatRect bounds = _movable.getLocalBounds();
+        const sf::FloatRect bounds = _movable.getLocalBounds();
         _movable.setOrigin(bounds.width/2,bounds.height/2);
     }
 
-    void movableEntityView::notify(notifications message) {
+    void movableEntityView::notify(const notifications message) {
         switch (message) {
             case CHANGE_POSITION: {
                 std::pair<unsigned int,unsigned int> pos;
-                if (auto observer = Model.lock()) {
+                if (const auto observer = Model.lock()) {
                     pos = _camera.worldToPixel(observer->getX(),observer->getY());
                 }
                 _movable.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));

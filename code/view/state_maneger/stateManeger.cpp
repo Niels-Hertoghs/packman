@@ -6,7 +6,6 @@
 #include "stateManeger.h"
 #include <fstream>
 #include <utility>
-#include "../../view/notifications.h"
 #include "../../logic/world.h"
 
 namespace view {

@@ -9,8 +9,8 @@
 class camera;
 
 namespace view {
-    Observer::Observer(sf::RenderWindow& window2,camera& cam)
-        : window(window2), _camera(cam) {}
+    Observer::Observer(sf::RenderWindow& window,camera& camera)
+        : window(window), _camera(camera) {}
 }
 
 

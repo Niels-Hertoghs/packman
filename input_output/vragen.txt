@@ -19,5 +19,6 @@ hoe moet het scale, moet dat met een constante verhouding of ni?
 
 TODO: alles met een return [[nodisxcrd]]
 TODO: rescaling beter testen en oplossen.
+TODO: ghosts in cage uopdaten niet waneer rescalen
 wat doet de re ghost in fear mode?
 mag static cas wel om van int -> float te gaan

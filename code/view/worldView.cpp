@@ -63,13 +63,13 @@ namespace view {
     }
 
     void worldView::draw() {
-        for (std::shared_ptr<view::wallView>& muur : walls) {
+        for (const std::shared_ptr<view::wallView>& muur : walls) {
             muur->draw();
         }
-        for (std::shared_ptr<view::fruitView>& fruit : fruits) {
+        for (const std::shared_ptr<view::fruitView>& fruit : fruits) {
             fruit->draw();
         }
-        for (std::shared_ptr<view::coinView>& coin : coins) {
+        for (const std::shared_ptr<view::coinView>& coin : coins) {
             coin->draw();
         }
         pacman->draw();

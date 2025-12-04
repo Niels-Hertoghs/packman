@@ -5,10 +5,6 @@
 #include "game.h"
 
 
-game::game() {
-
-}
-
 void game::playGame() {
     view::stateManeger manager; // state manager aanmaken
     std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
@@ -20,8 +16,8 @@ void game::playGame() {
 
     // Stel de gewenste schaal in (80% van de schermgrootte)
     double scale = 0.8f;
-    unsigned int width = desktop.width * scale;
-    unsigned int height = desktop.height * scale;
+    unsigned int width = desktop.width * static_cast<unsigned int>(std::round(scale));
+    unsigned int height = desktop.height * static_cast<unsigned int>(std::round(scale));
     view::camera cam(width, height);
 
     // window aanmaken
@@ -31,8 +27,8 @@ void game::playGame() {
 
     // Plaats het venster in het midden van het scherm
     window.setPosition(sf::Vector2i(
-        (desktop.width - width) / 2,
-        (desktop.height - height) / 2
+        (static_cast<int>(desktop.width - width)) / 2,
+        (static_cast<int>(desktop.height - height)) / 2
     ));
 
     // main window loop
@@ -48,7 +44,7 @@ void game::playGame() {
 
             if (event.type == sf::Event::Resized) {
                 // centreert de inhoud terug
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                sf::FloatRect visibleArea(0, 0, static_cast<float>(event.size.width), static_cast<float>(event.size.height));
                 window.setView(sf::View(visibleArea));
 
                 // Update camera dimensions on window resize
@@ -56,7 +52,7 @@ void game::playGame() {
             }
         }
         window.clear(sf::Color::Black);
-        manager.runTop(window, event, cam,wereld,deltaTime);
+        manager.runTop(window, event, cam,wereld,static_cast<float>(deltaTime));
 
         window.display();
     }

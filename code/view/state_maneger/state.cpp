@@ -7,7 +7,6 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
 #include "make_text.h"
 #include "stateManeger.h"
 
@@ -95,7 +94,7 @@ namespace view {
 
         if (event.type == sf::Event::MouseButtonPressed &&
              event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            sf::Vector2f mousePos(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
             if (playButton.getGlobalBounds().contains(mousePos)) {
                 // voor als het programma meerdere keren achter elkaar gerund wordt zonder te sluiten
                 logic::Stopwatch::getInstance()->reset();
@@ -113,7 +112,7 @@ namespace view {
                 wereld->subscribeScore(score);
 
                 std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
-                //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
+                //unique maken en in de private zetten, dan eventuele argumenten verwijderen
                 manager.pushState(std::move(level));
                 return {};
             }
@@ -127,7 +126,7 @@ namespace view {
     /// ---------------------------------------------------------------------------------------------------------------
 
 
-    LevelState::LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> worldV)
+    LevelState::LevelState(const std::shared_ptr<logic::world>& wereld,std::unique_ptr<view::worldView> worldV)
         : worldView(std::move(worldV)) {}
 
     std::pair<std::vector<sf::Text>,std::vector<sf::RectangleShape>> LevelState::run(sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam, std::shared_ptr<logic::world> wereld, const
@@ -179,7 +178,7 @@ namespace view {
 
         if (event.type == sf::Event::MouseButtonPressed &&
              event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            sf::Vector2f mousePos(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
             if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
                 manager.prevState();
                 return {};
@@ -225,7 +224,7 @@ namespace view {
 
         if (event.type == sf::Event::MouseButtonPressed &&
              event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            sf::Vector2f mousePos(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
             if (backToMenuButton.getGlobalBounds().contains(mousePos)) {
                 // alles ven reseten
                 logic::Stopwatch::getInstance()->reset();
@@ -241,7 +240,7 @@ namespace view {
 
                 std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld,std::move(wereldView));
 
-                //unique maken en in de private zetten, dan eventuele arhumenten verwijderen
+                //unique maken en in de private zetten, dan eventuele argumenten verwijderen
                 manager.pushStateAndDelete(std::move(level));
                 return {};
             }
@@ -285,7 +284,7 @@ namespace view {
 
         if (event.type == sf::Event::MouseButtonPressed &&
                 event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+            sf::Vector2f mousePos(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
             if (continuePlayingButton.getGlobalBounds().contains(mousePos)) {
                 manager.prevState();
             } else if (backToMenuButton.getGlobalBounds().contains(mousePos)) {

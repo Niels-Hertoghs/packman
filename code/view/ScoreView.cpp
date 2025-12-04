@@ -42,13 +42,30 @@ namespace view {
         sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(remainingLifes) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
         sf::FloatRect LifesBounds = LifesText.getLocalBounds();
         LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
-        lifesText = LifesText;
+        livesText = LifesText;
     }
 
     void ScoreView::draw() {
+        const std::pair<unsigned int, unsigned int> scorepos = _camera.worldToPixel(-0.95f, -0.95f);
+        scoreText.setCharacterSize(_camera.distanceToPixelsHeight(0.05f));
+        scoreText.setPosition(static_cast<float>(scorepos.first), static_cast<float>(scorepos.second));
+        const sf::FloatRect scoreTextBounds = scoreText.getLocalBounds();
+        scoreText.setOrigin(0,scoreTextBounds.height);
         window.draw(scoreText);
+
+        const std::pair<unsigned int, unsigned int> levelpos = _camera.worldToPixel(-0.f, 1.f - 1.f/7.f);
+        levelText.setCharacterSize(_camera.distanceToPixelsHeight(0.16f));
+        levelText.setPosition(static_cast<float>(levelpos.first), static_cast<float>(levelpos.second));
+        const sf::FloatRect levelTextBounds = levelText.getLocalBounds();
+        levelText.setOrigin(levelTextBounds.width/2,levelTextBounds.height/2);
         window.draw(levelText);
-        window.draw(lifesText);
+
+        const std::pair<unsigned int, unsigned int> livespos = _camera.worldToPixel(0.95f, -0.95f);
+        livesText.setCharacterSize(_camera.distanceToPixelsHeight(0.05f));
+        livesText.setPosition(static_cast<float>(livespos.first), static_cast<float>(livespos.second));
+        const sf::FloatRect livesTextBounds = livesText.getLocalBounds();
+        livesText.setOrigin(livesTextBounds.width,livesTextBounds.height);
+        window.draw(livesText);
     }
 
     void ScoreView::notify(enum notifications message) {
@@ -73,7 +90,7 @@ namespace view {
                 sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(livesLeft) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
                 sf::FloatRect LifesBounds = LifesText.getLocalBounds();
                 LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
-                lifesText = LifesText;
+                livesText = LifesText;
                 break;
             }
             case END_GAME: {

@@ -7,85 +7,142 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "../camera.h"
-#include "../../logic/Stopwatch.h"
 #include "../../view/worldView.h"
 
+// Forward declarations
 namespace logic {
     class world;
 }
 
 
 namespace view {
+// Forward declarations
     class stateManeger;
     class worldView;
+
     /**
-    * class state
-    * brief Abstract base class for different game states.
+    * @class state
+    * @brief Abstracte basis klasse voor alle staten van de game.
     */
     class state {
     protected:
-        sf::Font font;
-        sf::Texture texture;
+        sf::Font font; /// Font voor de tekst in deze state.
+        sf::Texture texture; /// Texture voor de achtergrond of andere elementen in deze state.
     public:
-
+        /**
+         * @brief Constructor
+         */
         state();
-        virtual ~state() = default;
 
+        // Pure virtual methodes
+        /**
+         * @brief Laat de staat draaien, print het op het window.
+         * @param window De window waar alles op getekend moet worden.
+         * @param event Om eventuate evenementen te verwerken.
+         * @param manager De state manager om van state te veranderen indien nodig.
+         * @param cam Camera voor het omzetten van wereld naar pixel coordinaten.
+         * @param wereld Pointer naar de wereld logica, om het eventueel te laten lopen.
+         * @param deltaTime Het verschil in tijd sinds de laatste update.
+         * @return Pair van vectoren met text en rechthoeken die getekend moeten worden.
+         */
         virtual std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
             sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
             std::shared_ptr<logic::world> wereld, const
                          float& deltaTime) = 0;
+
+        /**
+         * @brief Destructor
+         */
+        virtual ~state() = default;
     };
 
     /**
-     * class menuState
-     * brief Represents the menu state of the game.
+     * @class menuState
+     * @brief Concrete klasse voor de menu staat van de game.
      */
-    class menuState : public state {
+    class menuState final : public state {
     public:
+        /**
+         * @brief Default constructor.
+         */
         menuState() = default;
-        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
+        [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
             sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
             std::shared_ptr<logic::world> wereld, const
                  float& deltaTime) override;
     };
 
     /**
-     * class LevelState
-     * brief Represents the level state of the game.
+     * @class LevelState
+     * @brief Concrete klasse voor de level staat van de game.
      */
-    class LevelState : public state {
-    private:
-        std::unique_ptr<view::worldView> worldView;
+    class LevelState final : public state {
+        std::unique_ptr<view::worldView> worldView; /// Pointer naar de representatie van de wereld.
     public:
-        LevelState(std::shared_ptr<logic::world> wereld,std::unique_ptr<view::worldView> worldV);
-        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+        /**
+         * @brief Constructor
+         * @param wereld Pointer naar de logica van de wereld.
+         * @param worldV Pointer naar de representatie van de wereld.
+         */
+        LevelState(const std::shared_ptr<logic::world>& wereld,std::unique_ptr<view::worldView> worldV);
+
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
+        [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
             sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
             std::shared_ptr<logic::world> wereld, const
                  float& deltaTime) override;
     };
 
-    class gameOverState : public state {
+    /**
+     * @class gameOverState
+     * @brief Concrete klasse voor de game over staat van de game (als de player dood is).
+     */
+    class gameOverState final : public state {
     public:
+        /**
+         * @brief Default constructor.
+         */
         gameOverState() = default;
-        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
+        [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
             sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
             std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
 
-    class VictoryState : public state {
+    /**
+    * @class VictoryState
+    * @brief Concrete klasse voor de virctory staat van de game (voor het naar een volgend level gaat).
+    */
+    class VictoryState final : public state {
         sf::Texture victoryTexture;
     public:
+        /**
+         * @brief Default constructor.
+         */
         VictoryState() = default;
-        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
+        [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
             sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
             std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
 
-    class pausedState : public state {
+    /**
+    * @class pausedState
+    * @brief Concrete klasse voor paused staat inj de game (als de esc knop ingedrukt wordt tijdens het spelen).
+    */
+    class pausedState final : public state {
     public:
+        /**
+         * @brief Default constructor.
+         */
         pausedState() = default;
-        std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
+
+        // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
+        [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> run(
             sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
             std::shared_ptr<logic::world> wereld, const float& deltaTime) override;
     };
