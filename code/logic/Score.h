@@ -4,6 +4,8 @@
 
 #ifndef PACKMAN_SCORE_H
 #define PACKMAN_SCORE_H
+#include <memory>
+
 #include "../observer.h"
 
 // Forward declarations
