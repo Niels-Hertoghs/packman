@@ -59,12 +59,13 @@ namespace view {
     }
 
     void movableEntityView::notify(const notifications message) {
+        notify(message,0,0);
+    }
+
+    void movableEntityView::notify(const notifications message, double xPos, double yPos) {
         switch (message) {
             case CHANGE_POSITION: {
-                std::pair<unsigned int,unsigned int> pos;
-                if (const auto observer = Model.lock()) {
-                    pos = _camera.worldToPixel(observer->getX(),observer->getY());
-                }
+                std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(xPos,yPos);
                 _movable.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
                 break;
             }

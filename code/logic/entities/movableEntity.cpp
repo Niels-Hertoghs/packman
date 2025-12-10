@@ -111,7 +111,7 @@ namespace logic {
     }
 
     void movableEntity::notifyPos() const {
-        observer->notify(notifications::CHANGE_POSITION);
+        observer->notify(notifications::CHANGE_POSITION,x,y);
     }
 
     void movableEntity::notifyDir() const {

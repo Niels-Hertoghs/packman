@@ -47,6 +47,14 @@ namespace view {
         void draw() override;
         void notify(enum notifications message) override ;
 
+        /**
+         * @brief Update de movable, als er geen nieuwe positie is gegeven, wordt de wrapper opgeroepen en worden deze waarden niet gebruikt.
+         * @param message De notificatie die is verzonden.
+         * @param xPos de x positie van de movableEntity in wereld coordinaten.
+         * @param yPos De y positie van de movableEntity in wereld coordinaten.
+         */
+        void notify(notifications message, double xPos, double yPos);
+
         // Pure virtual methodes
         /**
          * @return Bool, of dat deze movableEntityView een ghost is.
