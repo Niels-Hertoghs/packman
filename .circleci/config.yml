@@ -4,11 +4,17 @@ jobs:
   build:
     resource_class: small
     docker:
-      - image: ubuntu:22.04
+      - image: ubuntu:20.04
     steps:
       - checkout
       - run: apt update
-      - run: DEBIAN_FRONTEND=noninteractive TZ=Europe/Brussels apt install -y gcc g++ libsfml-dev cmake git
+      - run: DEBIAN_FRONTEND=noninteractive TZ=Europe/Brussels apt install -y gcc g++ cmake git doxygen
       - run: mkdir -p build
       - run: cd build && cmake ..
       - run: cd build && make
+      - run: cd build && make install
+      - run: cd build && make doc
+      - store_artifacts:
+          path: build/installed
+      - store_artifacts:
+          path: build/doc
