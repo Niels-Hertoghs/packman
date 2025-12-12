@@ -55,7 +55,10 @@ add_executable(packman main.cpp
         code/logic/LogicFactory.h
         code/logic/LogicFactory.cpp)
 
-include_directories(${SFML_INDCLUDE_DIR})
+include_directories(${SFML_INCLUDE_DIR})
 
 # Link de SFML-libraries
 target_link_libraries(packman sfml-graphics sfml-window sfml-system)
+
+# Install the executable in /usr/local/bin
+install(TARGETS packman DESTINATION bin)

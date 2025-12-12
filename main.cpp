@@ -3,7 +3,6 @@
 #include "code/game.h"
 
 int main() {
-    std::unique_ptr<game> Game(new game);
-    Game->playGame();
+    game::playGame();
     return 0;
 };

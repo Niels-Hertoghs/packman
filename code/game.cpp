@@ -8,16 +8,14 @@
 void game::playGame() {
     view::stateManeger manager; // state manager aanmaken
     std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
-    // wereld->startWorld();
-
 
     // Vraag de resolutie van het primaire scherm op
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
     // Stel de gewenste schaal in (80% van de schermgrootte)
     double scale = 0.8f;
-    unsigned int width = desktop.width * static_cast<unsigned int>(std::round(scale));
-    unsigned int height = desktop.height * static_cast<unsigned int>(std::round(scale));
+    unsigned int width = desktop.width * scale;
+    unsigned int height = desktop.height * scale;
     view::camera cam(width, height);
 
     // window aanmaken
