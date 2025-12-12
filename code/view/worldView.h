@@ -25,14 +25,10 @@ namespace view {
     class worldView final : public IObserver {
     private:
         std::vector<std::shared_ptr<wallView>> walls; /// Alle wall observers in de wereld.
-        std::vector<std::shared_ptr<fruitView>> fruits; /// Alle fruit observers in de wereld.
-        std::vector<std::shared_ptr<coinView>> coins; /// Alle coin observers in de wereld.
+        std::vector<std::shared_ptr<collectableView>> collectables; /// Alle collectable observers in de wereld.
         std::shared_ptr<view::packmanView> pacman; /// De pacman observer.
 
-        std::shared_ptr<view::redGhostView> redGhost; /// De red ghost observer.
-        std::shared_ptr<view::blueGhostView> blueGhost; /// De blue ghost observer.
-        std::shared_ptr<view::greenGhostView> greenGhost; /// De green ghost observer.
-        std::shared_ptr<view::orangeGhostView> orangeGhost; /// De orange ghost observer.
+        std::vector<std::shared_ptr<ghostView>> ghosts;
 
         std::shared_ptr<view::ScoreView> score; /// De score observer.
     public:
@@ -48,7 +44,7 @@ namespace view {
         /**
          * @brief Laat alle observers tekenen in de window, indien nodig.
          */
-        void draw();
+        void draw() const;
     };
 }
 

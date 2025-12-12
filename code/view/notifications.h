@@ -8,7 +8,7 @@
 /**
  * @brief Alle mogelijke notificaties die een observer kan ontvangen van zijn subject.
  */
-enum notifications {
+enum class notifications {
     CHANGE_DIRECTION_UP,
     CHANGE_DIRECTION_DOWN,
     CHANGE_DIRECTION_LEFT,
@@ -28,7 +28,7 @@ enum notifications {
 /**
  * @brief Alle mogelijke richtingen die een movableEntity kan hebben.
  */
-enum directions {
+enum class directions {
     UP,
     DOWN,
     LEFT,
@@ -39,9 +39,19 @@ enum directions {
 /**
  * @brief Alle mogelijke modes van een ghost.
  */
-enum modes {
+enum class modes {
     CHASING_MODE,
     FEAR_MODE
+};
+
+/**
+ * @brief Alle mogelijke types van ghosts.
+ */
+enum class ghostTypes {
+    RED,
+    BLUE,
+    GREEN,
+    ORANGE
 };
 
 #endif //PACKMAN_NOTIFIES_H

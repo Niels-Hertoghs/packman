@@ -30,6 +30,9 @@ namespace logic {
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
         [[nodiscard]] bool canMove() override = 0;
+        void givePacman(std::shared_ptr<Pacman> pacman) override;
+        ghostTypes getType() override = 0;
+
 
         // pure virtual methodes
         /**
@@ -37,11 +40,6 @@ namespace logic {
          * @return Pair van de x en y coordinaat van de kant van pacman die de ghost moet volgen.
          */
         [[nodiscard]] virtual std::pair<double, double> getFollowSide() = 0;
-
-        /**
-         * @param pacman Pointer naar pacman, om zijn positie te weten (voor manhattan).
-         */
-        void givePacman(std::shared_ptr<Pacman> pacman);
 
         /**
          * @brief Berekent de manhattan afstand tussen 2 punten.
@@ -79,6 +77,7 @@ namespace logic {
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         [[nodiscard]] std::pair<double, double> getFollowSide() override;
         [[nodiscard]] bool canMove() override = 0;
+        ghostTypes getType() override = 0;
 
         /**
         * @brief default destructor.
@@ -103,6 +102,7 @@ namespace logic {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         [[nodiscard]] bool canMove() override;
+        ghostTypes getType() override;
 
         /**
         * @brief default destructor.
@@ -127,6 +127,7 @@ namespace logic {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         [[nodiscard]] bool canMove() override;
+        ghostTypes getType() override;
 
         /**
         * @brief default destructor.
@@ -153,6 +154,7 @@ namespace logic {
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         std::pair<double, double> getFollowSide() override;
         [[nodiscard]] bool canMove() override;
+        ghostTypes getType() override;
 
         /**
          * @brief default destructor.

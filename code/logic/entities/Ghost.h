@@ -57,6 +57,18 @@ namespace logic {
          */
         [[nodiscard]] virtual bool canMove() = 0;
 
+        /**
+         * @param pacman Pointer naar pacman, om zijn positie te weten (voor manhattan).
+         */
+        virtual void givePacman(std::shared_ptr<Pacman> pacman) = 0;
+
+        /**
+         * @brief Geeft het type van de ghost terug.
+         * @return Type van de ghost (RED, BLUE, GREEN, ORANGE).
+         */
+        virtual ghostTypes getType() = 0;
+
+
 
         // methodes
         /**
@@ -122,6 +134,8 @@ namespace logic {
         void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
         [[nodiscard]] bool canMove() override;
         void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
+        void givePacman(std::shared_ptr<Pacman> pacman) override;
+        ghostTypes getType() override;
 
         /**
         * @brief default destructor.

@@ -64,35 +64,35 @@ namespace view {
 
     void movableEntityView::notify(const notifications message, double xPos, double yPos) {
         switch (message) {
-            case CHANGE_POSITION: {
+            case notifications::CHANGE_POSITION: {
                 std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(xPos,yPos);
                 _movable.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
                 break;
             }
-            case CHANGE_DIRECTION_DOWN: {
+            case notifications::CHANGE_DIRECTION_DOWN: {
                 spriteCo = allSprites[0];
                 break;
             }
-            case CHANGE_DIRECTION_UP: {
+            case notifications::CHANGE_DIRECTION_UP: {
                 spriteCo = allSprites[1];
                 break;
             }
-            case CHANGE_DIRECTION_RIGHT: {
+            case notifications::CHANGE_DIRECTION_RIGHT: {
                 spriteCo = allSprites[2];
                 break;
             }
-            case CHANGE_DIRECTION_LEFT: {
+            case notifications::CHANGE_DIRECTION_LEFT: {
                 spriteCo = allSprites[3];
                 break;
             }
-            case TO_FEAR_MODE: {
+            case notifications::TO_FEAR_MODE: {
                 if (isGhost()) {
                     allSprites = {{{-5,550},{-5,600}},{{-5,550},{-5,600}},{{-5,550},{-5,600}},{{-5,550},{-5,600}}};
                     spriteCo = {{-5,550},{-5,600}};
                 }
                 break;
             }
-            case TO_CHASING_MODE: {
+            case notifications::TO_CHASING_MODE: {
                 if (isGhost()) {
                     allSprites = originalAllSprites;
 

@@ -41,11 +41,11 @@ namespace logic {
 
     directions movableEntity::oppositeDirection(directions dir) {
         switch(dir) {
-        case UP: return DOWN;
-        case DOWN: return UP;
-        case LEFT: return RIGHT;
-        case RIGHT: return LEFT;
-        default: return EMPTY;
+        case directions::UP: return directions::DOWN;
+        case directions::DOWN: return directions::UP;
+        case directions::LEFT: return directions::RIGHT;
+        case directions::RIGHT: return directions::LEFT;
+        default: return directions::EMPTY;
         }
     }
 
@@ -140,7 +140,7 @@ namespace logic {
     /// @class Pacman
     /// ---------------------------------------------------------------------------------------------------------------
 
-    Pacman::Pacman(double x, double y,double speed)  : movableEntity(x,y,speed,directions::RIGHT), nextDirection(EMPTY) {}
+    Pacman::Pacman(double x, double y,double speed)  : movableEntity(x,y,speed,directions::RIGHT), nextDirection(directions::EMPTY) {}
 
     void Pacman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
         //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
@@ -149,7 +149,7 @@ namespace logic {
         double newY = y;
 
         // zien of pack man die richting uit kan gaan
-        if (direction != nextDirection && nextDirection != EMPTY) {
+        if (direction != nextDirection && nextDirection != directions::EMPTY) {
             // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
             // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
             // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/8 van een blokje om te zien of het een muur is.
@@ -238,7 +238,7 @@ namespace logic {
 
     void Pacman::died() {
         toSpawnLocation();
-        nextDirection = EMPTY; // is iets prive van pacman.
+        nextDirection = directions::EMPTY; // is iets prive van pacman.
         notifyDir();
         notifyPos();
     }
