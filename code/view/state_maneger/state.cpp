@@ -291,7 +291,6 @@ namespace view {
                 manager.pop2State();
             }
         }
-
         // alles op het scherm tekenen
         return {text,rechthoeken};
     }
