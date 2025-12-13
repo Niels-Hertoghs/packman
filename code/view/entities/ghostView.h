@@ -26,11 +26,12 @@ namespace view {
          * @brief Constructor
          * @param window Waar het op moet worden afgebeeld.
          * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
-         * @param ghostModel Pointer naar de logica van de ghost.
+        * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
+        * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
          * @param spriteCo De coordinaten van de sprites voor deze ghost in de gegeven richting.
          * @param allSprites Alle coordinaten van de sprites voor deze ghost in alle richtingen (volgorde: down, up, right, left).
          */
-        ghostView(sf::RenderWindow &window, camera &cam, std::shared_ptr<logic::movableEntity>& ghostModel,
+        ghostView(sf::RenderWindow &window, camera &cam, double x, double y,
                   const std::vector<std::pair<int, int> > &spriteCo,
                   const std::vector<std::vector<std::pair<int, int> > > &allSprites);
 
@@ -53,9 +54,10 @@ namespace view {
          * @brief Constructor
          * @param window Waar het op moet worden afgebeeld.
          * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
-         * @param ghostModel Pointer naar de logica van de ghost.
+        * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
+        * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
          */
-        redGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::movableEntity> ghostModel);
+        redGhostView(sf::RenderWindow& window,camera& cam, double x, double y);
 
         /**
          * @brief Default destructor.
@@ -73,9 +75,10 @@ namespace view {
         * @brief Constructor
         * @param window Waar het op moet worden afgebeeld.
         * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
-        * @param ghostModel Pointer naar de logica van de ghost.
+        * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
+        * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
         */
-        blueGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::movableEntity> ghostModel);
+        blueGhostView(sf::RenderWindow& window,camera& cam, double x, double y);
 
         /**
          * @brief Default destructor.
@@ -93,9 +96,10 @@ namespace view {
         * @brief Constructor
         * @param window Waar het op moet worden afgebeeld.
         * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
-        * @param ghostModel Pointer naar de logica van de ghost.
+        * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
+        * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
         */
-        greenGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::movableEntity> ghostModel);
+        greenGhostView(sf::RenderWindow& window,camera& cam, double x, double y);
 
         /**
         * @brief Default destructor.
@@ -113,9 +117,10 @@ namespace view {
         * @brief Constructor
         * @param window Waar het op moet worden afgebeeld.
         * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
-        * @param ghostModel Pointer naar de logica van de ghost.
+        * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
+        * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
         */
-        orangeGhostView(sf::RenderWindow& window,camera& cam, std::shared_ptr<logic::movableEntity> ghostModel);
+        orangeGhostView(sf::RenderWindow& window,camera& cam, double x, double y);
 
         /**
          * @brief Default destructor.

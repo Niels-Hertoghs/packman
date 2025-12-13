@@ -15,22 +15,22 @@ std::shared_ptr<ghostView> ConcreteViewFactory::createGhostView(std::shared_ptr<
 
     switch (ghostTypes type = Model->getType()) {
     case ghostTypes::RED: {
-        std::shared_ptr<ghostView> Ghost = std::make_shared<redGhostView>(window, _camera, Model);
+        std::shared_ptr<ghostView> Ghost = std::make_shared<redGhostView>(window, _camera, Model->getX(),Model->getY());
         Model->subscribe(Ghost);
         return Ghost;
     }
     case ghostTypes::GREEN: {
-        std::shared_ptr<greenGhostView> Ghost = std::make_shared<greenGhostView>(window, _camera, Model);
+        std::shared_ptr<greenGhostView> Ghost = std::make_shared<greenGhostView>(window, _camera, Model->getX(),Model->getY());
         Model->subscribe(Ghost);
         return Ghost;
     }
     case ghostTypes::BLUE: {
-        std::shared_ptr<blueGhostView> Ghost = std::make_shared<blueGhostView>(window, _camera, Model);
+        std::shared_ptr<blueGhostView> Ghost = std::make_shared<blueGhostView>(window, _camera, Model->getX(),Model->getY());
         Model->subscribe(Ghost);
         return Ghost;
     }
     case ghostTypes::ORANGE: {
-        std::shared_ptr<orangeGhostView> Ghost = std::make_shared<orangeGhostView>(window, _camera, Model);
+        std::shared_ptr<orangeGhostView> Ghost = std::make_shared<orangeGhostView>(window, _camera, Model->getX(),Model->getY());
         Model->subscribe(Ghost);
         return Ghost;
     }
@@ -40,7 +40,7 @@ std::shared_ptr<ghostView> ConcreteViewFactory::createGhostView(std::shared_ptr<
 }
 
 std::shared_ptr<packmanView> ConcreteViewFactory::createPacmanView(std::shared_ptr<logic::movableEntity> pacmanModel) {
-    std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(window, _camera, pacmanModel);
+    std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(window, _camera, pacmanModel->getX(),pacmanModel->getY());
     pacmanModel->subscribe(PacmanView);
     return std::move(PacmanView);
 }

@@ -191,6 +191,8 @@ void world::clear() {
     walls.clear();
     collectables.clear();
     invisibleWalls.clear();
+    ghosts.clear();
+    pacman = nullptr;
 }
 
 void world::startFearMode() const {
