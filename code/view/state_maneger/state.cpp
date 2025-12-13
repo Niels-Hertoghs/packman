@@ -146,14 +146,8 @@ namespace view {
                 return {};
             }
         }
-        wereld->update(deltaTime);
-
-        // wereld moet niet getekend worden als het verwijderd is, segmentation error (helft is al verwijderd)
-        if (wereld->get_score()->getLivesLeft() < 0) {
-            return {};
-        }
         worldView->draw();
-
+        wereld->update(deltaTime);
         return {};
     }
 

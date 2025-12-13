@@ -135,6 +135,7 @@ void world::update(float deltaTime) {
 
     if (collectables.empty()) {
         score->nextLevel();
+        return;
     }
 
     for (const std::shared_ptr<Ghost>& ghost : ghosts) {
