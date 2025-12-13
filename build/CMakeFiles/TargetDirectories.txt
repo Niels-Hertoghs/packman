@@ -1,3 +1,0 @@
-/home/runner/work/packman/packman/build/CMakeFiles/packman.dir
-/home/runner/work/packman/packman/build/CMakeFiles/edit_cache.dir
-/home/runner/work/packman/packman/build/CMakeFiles/rebuild_cache.dir
