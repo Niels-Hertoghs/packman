@@ -22,13 +22,15 @@ namespace view {
      * @brief Abstracte klasse voor alle entity observers.
      */
     class entityView : public Observer {
+    protected:
+        double x, y; /// de positie van van de entity
     public:
         /**
          * @brief Constructor
          * @param window Waar het op moet worden afgebeeld.
          * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
          */
-        entityView(sf::RenderWindow& window,camera& cam);
+        entityView(sf::RenderWindow& window,camera& cam,double x, double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void notify(enum notifications message) override = 0;
@@ -47,7 +49,6 @@ namespace view {
     class wallView final : public entityView {
     protected:
         sf::RectangleShape _wall; /// Representatie van de muur.
-        std::weak_ptr<logic::wall> wallModel;  /// Pointer naar de logica van de muur.
     public:
         /**
         * @brief Constructor
@@ -55,7 +56,7 @@ namespace view {
         * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
         * @param wallM Pointer naar de logica van de muur.
         */
-        wallView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::wall>& wallM);
+        wallView(sf::RenderWindow& window,camera& cam,double x, double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;

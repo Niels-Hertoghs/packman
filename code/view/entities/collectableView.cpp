@@ -9,19 +9,16 @@
 #include "../../logic/entities/collectable.h"
 
 namespace view {
-    collectableView::collectableView(sf::RenderWindow& window, camera& cam, const std::shared_ptr<logic::collectable>& model)
-        : entityView(window, cam),collected(false),Model(model) {}
+    collectableView::collectableView(sf::RenderWindow& window, camera& cam, double x, double y)
+        : entityView(window, cam,x,y),collected(false) {}
 
-    coinView::coinView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& coinModel)
-        : collectableView(window, cam,coinModel)
+    coinView::coinView(sf::RenderWindow& window, camera& cam, double x, double y)
+        : collectableView(window, cam,x,y)
 
     {
         int radius = std::min(_camera.distanceToPixelsHeight(0.016f),_camera.distanceToPixelsWidth(0.016f));
         sf::CircleShape coinShape(static_cast<float>(radius));
-        std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = Model.lock()) {
-            pos = cam.worldToPixel(observer->getX(),observer->getY());
-        }
+        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
         coinShape.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
         sf::FloatRect bounds = coinShape.getLocalBounds();
         coinShape.setOrigin(bounds.width/2,bounds.height/2);
@@ -33,11 +30,7 @@ namespace view {
         if (collected) {
             return;
         }
-        std::pair<unsigned int,unsigned int> pos;
-        if (const auto observer = Model.lock()) {
-            pos = _camera.worldToPixel(observer->getX(),observer->getY());
-        }
-
+        std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(x,y);
         _coin.setRadius(static_cast<float>(std::min(_camera.distanceToPixelsHeight(0.016f),_camera.distanceToPixelsWidth(0.016f))));
         _coin.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
         const sf::FloatRect bounds = _coin.getLocalBounds();
@@ -48,14 +41,13 @@ namespace view {
     void coinView::notify(const enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
-            Model.reset();
         }
 
     }
 
 
-    fruitView::fruitView(sf::RenderWindow& window, camera& cam, std::shared_ptr<logic::collectable>& fruitModel)
-        : collectableView(window, cam,fruitModel)
+    fruitView::fruitView(sf::RenderWindow& window, camera& cam, double x, double y)
+        : collectableView(window, cam,x,y)
 
     {
         try {
@@ -79,10 +71,7 @@ namespace view {
         sf::FloatRect bounds = Fruit.getLocalBounds();
         Fruit.setOrigin(bounds.width/2,bounds.height/2);
 
-        std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = Model.lock()) {
-            pos = cam.worldToPixel(observer->getX(),observer->getY());
-        }
+        std::pair<unsigned int,unsigned int> pos = cam.worldToPixel(x,y);
         Fruit.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
         _fruit = Fruit;
     }
@@ -92,10 +81,7 @@ namespace view {
             return;
         }
 
-        std::pair<unsigned int,unsigned int> pos;
-        if (auto observer = Model.lock()) {
-            pos = _camera.worldToPixel(observer->getX(),observer->getY());
-        }
+        std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(x,y);
         const int FruitSizeHeight = _camera.distanceToPixelsHeight(1.f/17.f);
         const int FruitSizeWidth = _camera.distanceToPixelsWidth(1.f/27.f);
         _fruit.setSize(sf::Vector2f(static_cast<float>(FruitSizeWidth),static_cast<float>(FruitSizeHeight)));
@@ -110,9 +96,7 @@ namespace view {
     void fruitView::notify(const enum notifications message) {
         if (message == notifications::COLLECTED) {
             collected = true;
-            Model.reset();
         }
-
     }
 }
 

@@ -21,7 +21,6 @@ namespace view {
     class collectableView : public entityView {
     protected:
         bool collected; /// Of de collectable al is opgegeten.
-        std::weak_ptr<logic::collectable> Model; /// Weak pointer naar de logica van collectable.
     public:
         /**
          * @brief Constructor voor de collectable observer.
@@ -29,7 +28,7 @@ namespace view {
          * @param cam Camera klasse
          * @param model Pointer naar de logica van collectable.
          */
-        collectableView(sf::RenderWindow& window,camera& cam, const std::shared_ptr<logic::collectable>& model);
+        collectableView(sf::RenderWindow& window,camera& cam, double x,double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override = 0;
@@ -54,7 +53,7 @@ namespace view {
         * @param cam Camera klasse
         * @param coinModel Pointer naar de logica van de coin.
         */
-        coinView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::collectable>& coinModel);
+        coinView(sf::RenderWindow& window,camera& cam,double x,double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
@@ -80,7 +79,7 @@ namespace view {
         * @param cam Camera klasse
         * @param fruitModel Pointer naar de logica van de fruit.
         */
-        fruitView(sf::RenderWindow& window,camera& cam,std::shared_ptr<logic::collectable>& fruitModel);
+        fruitView(sf::RenderWindow& window,camera& cam,double x,double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;

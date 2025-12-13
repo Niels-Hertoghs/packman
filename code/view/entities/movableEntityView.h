@@ -77,8 +77,8 @@ namespace view {
          * @brief Constructor
          * @param window Waar het op moet worden afgebeeld.
          * @param cam Camera klasse voor het omzetten naar pixel coordinaten.
-        * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
-        * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
+         * @param x De x coo van de start locatie van de movable. (relatief tussen -1, en 1)
+         * @param y De y coo van de start locatie van de movable. (relatief tussen -1, en 1)
          */
         packmanView(sf::RenderWindow& window,camera& cam, double x, double y);
 

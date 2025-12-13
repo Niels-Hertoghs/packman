@@ -12,7 +12,7 @@ namespace view {
     movableEntityView::movableEntityView(sf::RenderWindow &window, camera &cam, double x, double y,
                                          const std::vector<std::pair<int, int> > &SpriteCo, int _aantalSprites,
                                          const std::vector<std::vector<std::pair<int, int> > > &allSprites)
-        : entityView(window, cam),aantalSprites(_aantalSprites), counter(0), allSprites(allSprites),originalAllSprites(allSprites),spriteCo(SpriteCo) {
+        : entityView(window, cam,x,y),aantalSprites(_aantalSprites), counter(0), allSprites(allSprites),originalAllSprites(allSprites),spriteCo(SpriteCo) {
 
         try {
             sf::Texture Texture;
@@ -54,6 +54,9 @@ namespace view {
         const int MovableSizeWidth = _camera.distanceToPixelsWidth(2.f/20.f);
         _movable.setSize(sf::Vector2f(static_cast<float>(MovableSizeWidth),static_cast<float>(MovableSizeHeight)));
 
+        std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(x,y);
+        _movable.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
+
         const sf::FloatRect bounds = _movable.getLocalBounds();
         _movable.setOrigin(bounds.width/2,bounds.height/2);
     }
@@ -65,8 +68,8 @@ namespace view {
     void movableEntityView::notify(const notifications message, double xPos, double yPos) {
         switch (message) {
             case notifications::CHANGE_POSITION: {
-                std::pair<unsigned int,unsigned int> pos = _camera.worldToPixel(xPos,yPos);
-                _movable.setPosition(static_cast<float>(pos.first),static_cast<float>(pos.second));
+                x = xPos;
+                y = yPos;
                 break;
             }
             case notifications::CHANGE_DIRECTION_DOWN: {
