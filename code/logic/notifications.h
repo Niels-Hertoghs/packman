@@ -8,7 +8,7 @@
 /**
  * @brief Alle mogelijke notificaties die een observer kan ontvangen van zijn subject.
  */
-enum class notifications {
+enum class notificationTypes {
     CHANGE_DIRECTION_UP,
     CHANGE_DIRECTION_DOWN,
     CHANGE_DIRECTION_LEFT,
@@ -22,6 +22,14 @@ enum class notifications {
     TO_CHASING_MODE,
     TO_FEAR_MODE,
     END_GAME
+};
+
+class notifications {
+public:
+    explicit notifications(const notificationTypes notification) : type(notification) {}
+    notifications(notificationTypes notification,double x, double y) : type(notification), x(x), y(y) {}
+    notificationTypes type;
+    double x{}, y{};
 };
 
 

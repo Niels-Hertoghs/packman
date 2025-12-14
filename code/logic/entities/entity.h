@@ -5,8 +5,8 @@
 #ifndef PACKMAN_ENTITY_H
 #define PACKMAN_ENTITY_H
 #include <memory>
-
-#include "../../view/entities/entityView.h"
+#include "../Observer.h"
+#include "../notifications.h"
 
 // Forward declarations
 namespace view {
@@ -20,6 +20,7 @@ namespace logic {
      */
     class entity {
     protected:
+        std::shared_ptr<Observer<notifications>> observer;  /// De observer van de movableEntity.
         double x; /// Positie op de x as.
         double y; /// Positie op de y as.
     public:

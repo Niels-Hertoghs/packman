@@ -5,7 +5,7 @@
 #ifndef PACKMAN_MOVABLEENTITYVIEW_H
 #define PACKMAN_MOVABLEENTITYVIEW_H
 #include "entityView.h"
-#include "../notifications.h"
+#include "../../logic/notifications.h"
 
 // Forward declarations
 namespace logic {
@@ -45,15 +45,8 @@ namespace view {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
-        void notify(enum notifications message) override ;
+        void notify(const notifications& message) override ;
 
-        /**
-         * @brief Update de movable, als er geen nieuwe positie is gegeven, wordt de wrapper opgeroepen en worden deze waarden niet gebruikt.
-         * @param message De notificatie die is verzonden.
-         * @param xPos de x positie van de movableEntity in wereld coordinaten.
-         * @param yPos De y positie van de movableEntity in wereld coordinaten.
-         */
-        void notify(notifications message, double xPos, double yPos);
 
         // Pure virtual methodes
         /**

@@ -22,8 +22,8 @@ add_executable(packman main.cpp
         code/logic/entities/collectable.h
         code/logic/Stopwatch.cpp
         code/logic/Stopwatch.h
-        code/observer.cpp
-        code/observer.h
+        code/observerView.cpp
+        code/observerView.h
         code/view/entities/entityView.cpp
         code/view/entities/entityView.h
         code/view/notifications.h
@@ -53,7 +53,11 @@ add_executable(packman main.cpp
         code/view/ViewFactory.h
         code/view/ViewFactory.cpp
         code/logic/LogicFactory.h
-        code/logic/LogicFactory.cpp)
+        code/logic/LogicFactory.cpp
+        code/logic/Observer.cpp
+        code/logic/Observer.h
+        code/view/observerView.cpp
+        code/view/observerView.h)
 
 include_directories(${SFML_INCLUDE_DIR})
 

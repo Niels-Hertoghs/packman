@@ -5,7 +5,7 @@
 #ifndef PACKMAN_MOVABLEENTITY_H
 #define PACKMAN_MOVABLEENTITY_H
 #include <vector>
-#include "../../view/notifications.h"
+#include "../notifications.h"
 #include "entity.h"
 #include "../../view/entities/movableEntityView.h"
 
@@ -26,8 +26,6 @@ namespace logic {
         double speed; /// De snelheid van het object.
         double prevX, prevY; /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
         const double spawnLocatieX, spawnLocatieY;  /// Begin locatie van het object, voor als het dood gaat dat het er terug kan spawnen.
-
-        std::shared_ptr<view::movableEntityView> observer;  /// De observer van de movableEntity.
     public:
         // constructor
         /**

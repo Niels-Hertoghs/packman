@@ -10,7 +10,7 @@
 #include <iostream>
 #include <thread>
 #include <SFML/Graphics.hpp>
-#include "observer.h"
+#include "observerView.h"
 #include "view/state_maneger/stateManeger.h"
 #include "logic/world.h"
 #include "logic/Stopwatch.h"

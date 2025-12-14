@@ -4,7 +4,7 @@
 
 #ifndef PACKMAN_SCOREVIEW_H
 #define PACKMAN_SCOREVIEW_H
-#include "../observer.h"
+#include "../observerView.h"
 #include "../logic/Score.h"
 
 namespace view {

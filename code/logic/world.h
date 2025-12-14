@@ -7,7 +7,7 @@
 #include <fstream>
 #include <memory>
 #include <vector>
-#include "../view/notifications.h"
+#include "notifications.h"
 #include "entities/entity.h"
 #include "entities/collectable.h"
 #include "entities/movableEntity.h"

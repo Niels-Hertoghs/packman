@@ -61,41 +61,37 @@ namespace view {
         _movable.setOrigin(bounds.width/2,bounds.height/2);
     }
 
-    void movableEntityView::notify(const notifications message) {
-        notify(message,0,0);
-    }
-
-    void movableEntityView::notify(const notifications message, double xPos, double yPos) {
-        switch (message) {
-            case notifications::CHANGE_POSITION: {
-                x = xPos;
-                y = yPos;
+    void movableEntityView::notify(const notifications& message) {
+        switch (message.type) {
+            case notificationTypes::CHANGE_POSITION: {
+                x = message.x;
+                y = message.y;
                 break;
             }
-            case notifications::CHANGE_DIRECTION_DOWN: {
+            case notificationTypes::CHANGE_DIRECTION_DOWN: {
                 spriteCo = allSprites[0];
                 break;
             }
-            case notifications::CHANGE_DIRECTION_UP: {
+            case notificationTypes::CHANGE_DIRECTION_UP: {
                 spriteCo = allSprites[1];
                 break;
             }
-            case notifications::CHANGE_DIRECTION_RIGHT: {
+            case notificationTypes::CHANGE_DIRECTION_RIGHT: {
                 spriteCo = allSprites[2];
                 break;
             }
-            case notifications::CHANGE_DIRECTION_LEFT: {
+            case notificationTypes::CHANGE_DIRECTION_LEFT: {
                 spriteCo = allSprites[3];
                 break;
             }
-            case notifications::TO_FEAR_MODE: {
+            case notificationTypes::TO_FEAR_MODE: {
                 if (isGhost()) {
                     allSprites = {{{-5,550},{-5,600}},{{-5,550},{-5,600}},{{-5,550},{-5,600}},{{-5,550},{-5,600}}};
                     spriteCo = {{-5,550},{-5,600}};
                 }
                 break;
             }
-            case notifications::TO_CHASING_MODE: {
+            case notificationTypes::TO_CHASING_MODE: {
                 if (isGhost()) {
                     allSprites = originalAllSprites;
 

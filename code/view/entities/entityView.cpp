@@ -8,7 +8,7 @@
 
 namespace view {
 entityView::entityView(sf::RenderWindow& window, camera& cam, double x, double y)
-    : Observer(window, cam), x(x), y(y) {
+    : ObserverView(window, cam), x(x), y(y) {
 }
 
 wallView::wallView(sf::RenderWindow& window, camera& cam, double x, double y)
@@ -35,6 +35,6 @@ void wallView::draw() {
     window.draw(_wall);
 }
 
-void wallView::notify(enum notifications message) {
+void wallView::notify(const notifications& message) {
 }
 }

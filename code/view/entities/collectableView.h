@@ -32,7 +32,7 @@ namespace view {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override = 0;
-        void notify(enum notifications message) override = 0;
+        void notify(const notifications& message) override = 0;
 
         /**
          * @brief Default destructor.
@@ -57,7 +57,7 @@ namespace view {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
-        void notify(enum notifications message) override;
+        void notify(const notifications& message) override;
 
         /**
          * @brief Default destructor.
@@ -83,7 +83,7 @@ namespace view {
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
-        void notify(enum notifications message) override;
+        void notify(const notifications& message) override;
 
         /**
         * @brief Default destructor.

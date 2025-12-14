@@ -38,8 +38,8 @@ namespace view {
         window.draw(_coin);
     }
 
-    void coinView::notify(const enum notifications message) {
-        if (message == notifications::COLLECTED) {
+    void coinView::notify(const notifications& message) {
+        if (message.type == notificationTypes::COLLECTED) {
             collected = true;
         }
 
@@ -93,8 +93,8 @@ namespace view {
         window.draw(_fruit);
     }
 
-    void fruitView::notify(const enum notifications message) {
-        if (message == notifications::COLLECTED) {
+    void fruitView::notify(const notifications& message) {
+        if (message.type == notificationTypes::COLLECTED) {
             collected = true;
         }
     }

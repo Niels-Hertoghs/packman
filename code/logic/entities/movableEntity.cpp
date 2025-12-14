@@ -111,18 +111,18 @@ namespace logic {
     }
 
     void movableEntity::notifyPos() const {
-        observer->notify(notifications::CHANGE_POSITION,x,y);
+        observer->notify(notifications(notificationTypes::CHANGE_POSITION,x,y));
     }
 
     void movableEntity::notifyDir() const {
         if (direction == directions::RIGHT) {
-            observer->notify(notifications::CHANGE_DIRECTION_RIGHT);
+            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_RIGHT));
         } else if (direction == directions::LEFT) {
-            observer->notify(notifications::CHANGE_DIRECTION_LEFT);
+            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_LEFT));
         } else if (direction == directions::UP) {
-            observer->notify(notifications::CHANGE_DIRECTION_UP);
+            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_UP));
         } else {
-            observer->notify(notifications::CHANGE_DIRECTION_DOWN);
+            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_DOWN));
         }
     }
 
