@@ -20,7 +20,6 @@ namespace logic {
           int points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
      protected:
           std::shared_ptr<view::collectableView> collectableObserver;  /// Pointer naar de observer van de collectable.
-          std::shared_ptr<Score> score; /// Pointer naar de score observer
      public:
 
           // constructor
@@ -63,12 +62,6 @@ namespace logic {
           void collectableSubscribe(std::shared_ptr<view::collectableView> collectableObserver);
 
           /**
-           * @brief Om de score observer te "subscriben" aan de collectable, als het gegeten wordt dat de er punten bij de score kunnen komen.
-           * @param score De score observer.
-           */
-          void subscribeScore(const std::shared_ptr<Score>& score);
-
-          /**
            * @brief Default destructor.
            */
           ~collectable() override = default;
@@ -79,7 +72,7 @@ namespace logic {
       * @class coin
       * @brief Een concrete klasse voor de coins, positie is het midden van de coin.
       */
-     class coin : public collectable {
+     class coin final : public collectable {
      public:
           // constructor
           /**
@@ -103,7 +96,7 @@ namespace logic {
       * @class fruit
       * @brief Een concrete klasse voor de fruit, positie is de linkerbovenhoek van de fruit.
       */
-     class fruit : public collectable {
+     class fruit final : public collectable {
      public:
           // constructor
           /**

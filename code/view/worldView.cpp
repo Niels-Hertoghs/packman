@@ -29,13 +29,9 @@ worldView::worldView(const std::shared_ptr<logic::world>& wereld, camera& camera
     std::shared_ptr<logic::Pacman> Pacman = wereld->get_pacman();
     pacman = factory->createPacmanView(Pacman);
 
-    std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window, camera, _score);
-    _score->subscribeScore(score_view);
+    std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window, camera, _score->getScore(),_score->getLevel(), _score->getLivesLeft());
+    wereld->subscribeObserver(score_view);
     score = score_view;
-}
-
-void worldView::notify(const notifications& message) {
-
 }
 
 

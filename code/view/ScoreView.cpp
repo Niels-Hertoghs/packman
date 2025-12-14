@@ -12,7 +12,7 @@
 
 namespace view {
 
-    ScoreView::ScoreView(sf::RenderWindow& window, camera& cam,std::shared_ptr<logic::Score>& Score) : Observer(window,cam), scoreModel(Score) {
+    ScoreView::ScoreView(sf::RenderWindow& window, camera& cam,int score, int level, int lives) : ObserverView(window,cam) {
         try {
             sf::Font Font;
             if (!Font.loadFromFile("input_output/packman_font.ttf")) {
@@ -26,20 +26,17 @@ namespace view {
         }
 
         // de score afbeelden
-        int currentScore = Score->getScore();
-        sf::Text ScoreText = makeText(font, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, _camera);
+        sf::Text ScoreText = makeText(font, "SCORE: " + std::to_string(score) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, _camera);
         sf::FloatRect scoreTextBounds = ScoreText.getLocalBounds();
         ScoreText.setOrigin(0,scoreTextBounds.height);
         scoreText = ScoreText;
 
         // het level afbeelden
-        int level = Score->getLevel();
         sf::Text LevelText = makeText(font, "Level: " + std::to_string(level), 0.16f, sf::Color::Yellow, 0.f, 1.f - 1.f/7.f,_camera);
         levelText = LevelText;
 
         // remainings lifes afbeelden (rechts vanonder)
-        int remainingLifes = Score->getLivesLeft();
-        sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(remainingLifes) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
+        sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(lives) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
         sf::FloatRect LifesBounds = LifesText.getLocalBounds();
         LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
         livesText = LifesText;
@@ -68,13 +65,10 @@ namespace view {
         window.draw(livesText);
     }
 
-    void ScoreView::notify(const notifications& message) {
+    void ScoreView::notify(const scoreViewNotifications& message) {
         switch (message.type) {
-            case notificationTypes::UPDATE_SCORE: {
-                int currentScore = 0;
-                if (auto observer = scoreModel.lock()) {
-                    currentScore = observer->getScore();
-                }
+            case scoreViewTypes::UPDATE_SCORE: {
+                int currentScore = message.score;
                 sf::Text ScoreText = makeText(font, "SCORE: " + std::to_string(currentScore) , 0.05, sf::Color::Yellow, -0.95f, -0.95f, _camera);
                 sf::FloatRect scoreTextBounds = ScoreText.getLocalBounds();
                 ScoreText.setOrigin(0,scoreTextBounds.height);
@@ -82,22 +76,16 @@ namespace view {
                 break;
             }
 
-            case notificationTypes::UPDATE_LIVES: {
-                int livesLeft = 0;
-                if (auto observer = scoreModel.lock()) {
-                    livesLeft = observer->getLivesLeft();
-                }
+            case scoreViewTypes::UPDATE_LIVES: {
+                int livesLeft = message.lives;
                 sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(livesLeft) , 0.05, sf::Color::Yellow, 0.95f, -0.95f, _camera);
                 sf::FloatRect LifesBounds = LifesText.getLocalBounds();
                 LifesText.setOrigin(LifesBounds.width,LifesBounds.height);
                 livesText = LifesText;
                 break;
             }
-            case notificationTypes::END_GAME: {
-                int score = 0;
-                if (auto observer = scoreModel.lock()) {
-                    score = observer->getScore();
-                }
+            case scoreViewTypes::END_GAME: {
+                int score = message.score;
                 gameEnded(score);
                 break;
             }

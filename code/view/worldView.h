@@ -19,19 +19,11 @@ class world;
 
 
 namespace view {
-enum class world_view_type {
-    DRAW
-};
-
-class worldViewNotifications : logic::Notification<world_view_type>{
-};
-
-
 /**
  * @class worldView
  * @brief De wereld observer, die alle entity observers bevat en aanstuurt.
  */
-class worldView final : public logic::Observer<worldViewNotifications> {
+class worldView final {
 private:
     std::vector<std::shared_ptr<wallView>> walls;               /// Alle wall observers in de wereld.
     std::vector<std::shared_ptr<collectableView>> collectables; /// Alle collectable observers in de wereld.
@@ -51,7 +43,6 @@ public:
     worldView(const std::shared_ptr<logic::world>& _wereld, camera& camera, sf::RenderWindow& window,
               std::shared_ptr<logic::Score>& score);
 
-    void notify(const worldViewNotifications& message) override;
 
     /**
      * @brief Laat alle observers tekenen in de window, indien nodig.

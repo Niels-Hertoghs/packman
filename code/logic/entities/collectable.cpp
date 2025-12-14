@@ -21,9 +21,6 @@ namespace logic {
         collectableObserver = std::move(_collectableObserver);
     }
 
-    void collectable::subscribeScore(const std::shared_ptr<Score>& Score) {
-        score = Score;
-    }
 
 
 
@@ -35,8 +32,7 @@ namespace logic {
 
 
     bool coin::collected() const {
-        score->coinEaten(getPoints());
-        collectableObserver->notify(notifications::COLLECTED);
+        collectableObserver->notify(notifications(notificationTypes::COLLECTED));
         return false;
     }
 
@@ -55,8 +51,7 @@ namespace logic {
 
 
     bool fruit::collected() const {
-        score->coinEaten(getPoints());
-        collectableObserver->notify(notifications::COLLECTED);
+        collectableObserver->notify(notifications(notificationTypes::COLLECTED));
         return true;
     }
 

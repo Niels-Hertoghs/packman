@@ -6,12 +6,6 @@
 #define PACKMAN_OBSERVER_H
 
 namespace logic {
-template <typename possibleNotifications>
-class Notification {
-public:
-    possibleNotifications type;
-};
-
 /**
  * @class Observer
  * @brief Basis klasse voor alle observers.

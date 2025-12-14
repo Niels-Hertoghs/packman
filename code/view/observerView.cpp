@@ -7,6 +7,5 @@
 class camera;
 
 namespace view {
-ObserverView::ObserverView(sf::RenderWindow& window,camera& camera)
-    : window(window), _camera(camera) {}
+
 }

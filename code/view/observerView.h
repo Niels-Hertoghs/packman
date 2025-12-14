@@ -29,7 +29,8 @@ public:
      * @param window Waar het op moet worden afgebeeld.
      * @param camera Camera klasse voor het omzetten naar pixel coordinaten.
      */
-    ObserverView(sf::RenderWindow& window, camera& camera);
+    ObserverView(sf::RenderWindow& window, camera& camera)
+        : window(window), _camera(camera) {};
 
     void notify(const notification& message) override = 0;
 

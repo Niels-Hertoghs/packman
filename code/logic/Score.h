@@ -5,7 +5,7 @@
 #ifndef PACKMAN_SCORE_H
 #define PACKMAN_SCORE_H
 #include "Observer.h"
-
+#include "../view/ScoreView.h"
 #include <memory>
 
 #include "Observer.h"
@@ -16,21 +16,8 @@ class stateManeger;
 class ScoreView;
 }
 
+
 namespace logic {
-
-enum class scoreNotificationsType {
-    ENTITY_EATEN,
-    LIVE_LOST,
-    NEXT_lEVEL
-
-};
-
-class scoreNotifications : public logic::Notification<scoreNotificationsType> {
-public:
-    explicit scoreNotifications(scoreNotificationsType type);
-    int points;
-    bool isGhost;
-};
 
 /**
  * @class Score
@@ -40,7 +27,6 @@ class Score : public Observer<scoreNotifications> {
     int score;                                      /// de huidige score van de speler.
     int livesLeft;                                  /// Het aantal levens dat de speler nog over heeft.
     int level;                                      /// Het huidige level van de speler.
-    std::shared_ptr<Observer<scoreNotifications>> scoreObserver; /// Pointer naar de score observer.
     view::stateManeger& manager;
     //TODO: maak een methode in maneger, of laat ergens anders oproepen
     /// Reference naar de state manager, om states te kunnen veranderen bij game over of level up.
@@ -51,12 +37,6 @@ public:
      * @param manager Reference naar de state manager, om states te kunnen veranderen bij game over of level up.
      */
     explicit Score(view::stateManeger& manager);
-
-    /**
-     * @brief Laat de score view observer subscriben aan de score.
-     * @param scoreView Pointer naar de score view observer om te subscriben.
-     */
-    void subscribeScore(std::shared_ptr<view::ScoreView> scoreView);
 
     // getters
     /**

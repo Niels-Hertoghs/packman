@@ -21,17 +21,27 @@ enum class notificationTypes {
     END_GAME
 };
 
-class notifications {
+template <typename notifications>
+class NotificationsBase {
+public:
+    explicit NotificationsBase(notifications notif)
+        : type(notif) {
+
+    }
+
+    notifications type;
+};
+
+class notifications : public NotificationsBase<notificationTypes> {
 public:
     explicit notifications(const notificationTypes notification)
-        : type(notification) {
+        : NotificationsBase(notification) {
     }
 
     notifications(notificationTypes notification, double x, double y)
-        : type(notification), x(x), y(y) {
+        : NotificationsBase(notification), x(x), y(y) {
     }
 
-    notificationTypes type;
     double x{}, y{};
 };
 
@@ -39,17 +49,48 @@ enum class scoreViewTypes {
     UPDATE_SCORE,
     UPDATE_LIVES,
     UPDATE_LEVEL,
+    END_GAME,
+    EMPTY
 };
 
-class scoreViewNotifications {
+class scoreViewNotifications : public NotificationsBase<scoreViewTypes> {
 public:
+    scoreViewNotifications()
+        : NotificationsBase(scoreViewTypes::EMPTY) {
+    };
+
     explicit scoreViewNotifications(const scoreViewTypes notification)
-        : type(notification) {
+        : NotificationsBase(notification) {
     }
 
-    scoreViewTypes type;
-    int lives, level, score;
+    int lives{}, level{}, score{};
 
+};
+
+
+enum class scoreNotificationsType {
+    ENTITY_EATEN,
+    LIVE_LOST,
+    NEXT_lEVEL
+
+};
+
+class scoreNotifications : public NotificationsBase<scoreNotificationsType> {
+public:
+    explicit scoreNotifications(scoreNotificationsType type)
+        : NotificationsBase(type) {
+    }
+
+    scoreNotifications(scoreNotificationsType type, int points, bool isGhost)
+        : NotificationsBase(type), points(points), isGhost(isGhost) {
+    }
+
+    scoreNotifications(scoreNotificationsType type, int points)
+    : NotificationsBase(type), points(points) {
+    }
+
+    int points{};
+    bool isGhost = false;
 };
 
 
