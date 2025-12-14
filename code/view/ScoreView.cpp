@@ -68,9 +68,9 @@ namespace view {
         window.draw(livesText);
     }
 
-    void ScoreView::notify(enum notifications message) {
-        switch (message) {
-            case notifications::UPDATE_SCORE: {
+    void ScoreView::notify(const notifications& message) {
+        switch (message.type) {
+            case notificationTypes::UPDATE_SCORE: {
                 int currentScore = 0;
                 if (auto observer = scoreModel.lock()) {
                     currentScore = observer->getScore();
@@ -82,7 +82,7 @@ namespace view {
                 break;
             }
 
-            case notifications::UPDATE_LIVES: {
+            case notificationTypes::UPDATE_LIVES: {
                 int livesLeft = 0;
                 if (auto observer = scoreModel.lock()) {
                     livesLeft = observer->getLivesLeft();
@@ -93,7 +93,7 @@ namespace view {
                 livesText = LifesText;
                 break;
             }
-            case notifications::END_GAME: {
+            case notificationTypes::END_GAME: {
                 int score = 0;
                 if (auto observer = scoreModel.lock()) {
                     score = observer->getScore();

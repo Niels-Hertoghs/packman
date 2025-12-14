@@ -16,9 +16,6 @@ enum class notificationTypes {
     CHANGE_POSITION,
     DELETE,
     COLLECTED,
-    UPDATE_SCORE,
-    UPDATE_LIVES,
-    UPDATE_LEVEL,
     TO_CHASING_MODE,
     TO_FEAR_MODE,
     END_GAME
@@ -26,10 +23,33 @@ enum class notificationTypes {
 
 class notifications {
 public:
-    explicit notifications(const notificationTypes notification) : type(notification) {}
-    notifications(notificationTypes notification,double x, double y) : type(notification), x(x), y(y) {}
+    explicit notifications(const notificationTypes notification)
+        : type(notification) {
+    }
+
+    notifications(notificationTypes notification, double x, double y)
+        : type(notification), x(x), y(y) {
+    }
+
     notificationTypes type;
     double x{}, y{};
+};
+
+enum class scoreViewTypes {
+    UPDATE_SCORE,
+    UPDATE_LIVES,
+    UPDATE_LEVEL,
+};
+
+class scoreViewNotifications {
+public:
+    explicit scoreViewNotifications(const scoreViewTypes notification)
+        : type(notification) {
+    }
+
+    scoreViewTypes type;
+    int lives, level, score;
+
 };
 
 
@@ -61,5 +81,6 @@ enum class ghostTypes {
     GREEN,
     ORANGE
 };
+
 
 #endif //PACKMAN_NOTIFIES_H

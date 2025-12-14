@@ -118,13 +118,6 @@ namespace logic {
         static directions oppositeDirection(directions dir);
 
         /**
-         * @brief Laat de observer "subscriben" aan de movableEntity.
-         * @param observer POinter naar de observer van de movableEntity.
-         */
-        void subscribe(const std::shared_ptr<view::movableEntityView>& observer);
-
-
-        /**
          * @brief Laat de observer weten dat de movable van positie is veranderd.
          */
         void notifyPos() const;

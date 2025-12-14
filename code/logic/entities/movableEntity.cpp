@@ -131,10 +131,6 @@ namespace logic {
         return direction;
     }
 
-    void movableEntity::subscribe(const std::shared_ptr<view::movableEntityView>& Observer) {
-        observer = Observer;
-    }
-
 
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class Pacman

@@ -49,6 +49,12 @@ namespace logic {
         [[nodiscard]] std::pair<double,double> getPosition() const;
 
         /**
+        * @brief Laat de observer "subscriben" aan de entity.
+        * @param observer POinter naar de observer van de movableEntity.
+        */
+        void subscribe(std::shared_ptr<Observer<notifications>> observer);
+
+        /**
         * @brief Default destructor.
         */
         virtual ~entity() = default;

@@ -16,6 +16,8 @@ class stateManeger;
 class ScoreView;
 }
 
+namespace logic {
+
 enum class scoreNotificationsType {
     ENTITY_EATEN,
     LIVE_LOST,
@@ -30,8 +32,6 @@ public:
     bool isGhost;
 };
 
-
-namespace logic {
 /**
  * @class Score
  * @brief Klasse die de score, levens en level bijhoudt.
@@ -40,7 +40,7 @@ class Score : public Observer<scoreNotifications> {
     int score;                                      /// de huidige score van de speler.
     int livesLeft;                                  /// Het aantal levens dat de speler nog over heeft.
     int level;                                      /// Het huidige level van de speler.
-    std::shared_ptr<view::ScoreView> scoreObserver; /// Pointer naar de score observer.
+    std::shared_ptr<Observer<scoreNotifications>> scoreObserver; /// Pointer naar de score observer.
     view::stateManeger& manager;
     //TODO: maak een methode in maneger, of laat ergens anders oproepen
     /// Reference naar de state manager, om states te kunnen veranderen bij game over of level up.

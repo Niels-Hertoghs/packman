@@ -23,7 +23,7 @@ namespace view {
  * @class entityView
  * @brief Abstracte klasse voor alle entity observers.
  */
-class entityView : public ObserverView {
+class entityView : public ObserverView<notifications> {
 protected:
     double x, y; /// de positie van van de entity
 public:

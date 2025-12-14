@@ -4,7 +4,7 @@
 
 #ifndef PACKMAN_SCOREVIEW_H
 #define PACKMAN_SCOREVIEW_H
-#include "../observerView.h"
+#include "observerView.h"
 #include "../logic/Score.h"
 
 namespace view {
@@ -12,7 +12,7 @@ namespace view {
      * @class ScoreView
      * @brief Concrete klasse voor de score observer.
      */
-    class ScoreView final : public Observer {
+    class ScoreView final : public ObserverView<scoreViewNotifications> {
         sf::Font font;  /// Font voor de score tekst.
         std::weak_ptr<logic::Score> scoreModel; /// Pointer naar de logica van de score.
         sf::Text scoreText; /// Tekst voor de score.
@@ -31,7 +31,7 @@ namespace view {
          * @brief Waarschuwing dat er iets is veranderd in de score logica.
          * @param message De notificatie die is verzonden.
          */
-        void notify(enum notifications message) override;
+        void notify(const notifications& message) override;
 
         /**
          * @brief Tekent de score, level en levens op de juiste plaats in de window.

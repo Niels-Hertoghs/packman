@@ -16,10 +16,12 @@ namespace view {
  * @class ObserverView
  * @brief Abstracte klasse voor alle view observers.
  */
-    class ObserverView : public logic::Observer<notifications> {
+template <typename notification>
+class ObserverView : public logic::Observer<notification> {
 protected:
     sf::RenderWindow& window; /// Reference naar de window waar het op getekend moet worden.
-    camera& _camera; /// Reference naar de camera klasse voor het omzetten van wereld coordinaten naar pixel coordinaten.
+    camera& _camera;
+    /// Reference naar de camera klasse voor het omzetten van wereld coordinaten naar pixel coordinaten.
 
 public:
     /**
@@ -27,9 +29,9 @@ public:
      * @param window Waar het op moet worden afgebeeld.
      * @param camera Camera klasse voor het omzetten naar pixel coordinaten.
      */
-    ObserverView(sf::RenderWindow& window,camera& camera);
+    ObserverView(sf::RenderWindow& window, camera& camera);
 
-    void notify(const notifications& message) override = 0;
+    void notify(const notification& message) override = 0;
 
     /**
      * @brief Methode om de observer te tekenen op de window.
