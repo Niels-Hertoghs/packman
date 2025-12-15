@@ -56,6 +56,8 @@ namespace view {
          */
         void pop2State();
 
+        void startVictory();
+
         /**
          * @return Unique pointer naar de huidige staat.
          */

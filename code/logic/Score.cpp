@@ -39,8 +39,7 @@ void Score::notify(const scoreNotifications& message) {
     }
     case scoreNotificationsType::NEXT_lEVEL: {
         level++;
-        std::unique_ptr<view::VictoryState> state = std::make_unique<view::VictoryState>();
-        manager.pushStateAndDelete(std::move(state));
+        manager.startVictory();
         break;
     }
 
