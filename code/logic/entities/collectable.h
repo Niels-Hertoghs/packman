@@ -6,7 +6,6 @@
 #define PACKMAN_COLLECTABLE_H
 #include "entity.h"
 #include "../Score.h"
-#include "../../view/entities/collectableView.h"
 
 
 
@@ -18,8 +17,6 @@ namespace logic {
       */
      class collectable : public entity {
           int points; /// Hoeveel punten er bij de score worden toegevoegd als het object na 1 seconde wordt opgegeten.
-     protected:
-          std::shared_ptr<view::collectableView> collectableObserver;  /// Pointer naar de observer van de collectable.
      public:
 
           // constructor
@@ -41,7 +38,8 @@ namespace logic {
           [[nodiscard]] virtual bool collected() const = 0;
 
           /**
-          * @brief Wordt gebruikt door de observer om te weten wat het moet tekenen in de window (false = coin, true = fruit).
+          * @brief Wordt gebruikt door de obser#include "../../view/entities/ghostView.h"
+ver om te weten wat het moet tekenen in de window (false = coin, true = fruit).
           * @return Of de collectable en fruit is.
           */
           [[nodiscard]] virtual bool isFruit() const = 0;
@@ -55,11 +53,6 @@ namespace logic {
           [[nodiscard]] int getPoints() const;
 
 
-          /**
-           * @brief Laat de observer "subscriben" aan de collectable.
-           * @param collectableObserver De observer van de collectable.
-           */
-          void collectableSubscribe(std::shared_ptr<view::collectableView> collectableObserver);
 
           /**
            * @brief Default destructor.

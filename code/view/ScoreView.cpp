@@ -105,24 +105,19 @@ namespace view {
             throw;
         }
 
-        std::vector<int> highscores;
+        std::vector<int> highscores = {score};
         int value;
-        bool insertOneTime = false;
 
         // Lees de bestaande highscores in
         while (file >> value) {
-            if (score >= value && !insertOneTime) {
-                highscores.push_back(score);
-                insertOneTime = true;
-            }
             highscores.push_back(value);
         }
+
         file.clear();
         file.close();
 
-        if (insertOneTime) {
-            highscores.pop_back();
-        }
+        std::sort(highscores.begin(), highscores.end(),std::greater<>());
+        highscores.pop_back();
 
 
         // Schrijf terug naar het bestand

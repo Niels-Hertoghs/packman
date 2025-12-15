@@ -31,14 +31,14 @@ void Score::notify(const scoreNotifications& message) {
     case scoreNotificationsType::LIVE_LOST: {
         livesLeft--;
         if (livesLeft < 0) {
-            manager.prevState();
-            std::unique_ptr<view::gameOverState> state = std::make_unique<view::gameOverState>();
-            manager.pushState(std::move(state));
+            manager.gameOverState();
+
         }
         break;
     }
     case scoreNotificationsType::NEXT_lEVEL: {
         level++;
+        score += 100; // Standaard extra punten voor het halen van een level
         manager.startVictory();
         break;
     }

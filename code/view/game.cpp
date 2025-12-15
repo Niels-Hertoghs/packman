@@ -4,7 +4,7 @@
 
 #include "game.h"
 
-
+namespace view {
 void game::playGame() {
     view::stateManeger manager; // state manager aanmaken
     std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
@@ -55,3 +55,4 @@ void game::playGame() {
         window.display();
     }
 };
+}

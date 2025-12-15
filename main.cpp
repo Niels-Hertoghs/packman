@@ -1,8 +1,8 @@
 #include <iostream>
 #include <memory>
-#include "code/game.h"
+#include "code/view/game.h"
 
 int main() {
-    game::playGame();
+    view::game::playGame();
     return 0;
 };

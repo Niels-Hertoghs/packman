@@ -58,6 +58,8 @@ namespace view {
 
         void startVictory();
 
+        void gameOverState();
+
         /**
          * @return Unique pointer naar de huidige staat.
          */

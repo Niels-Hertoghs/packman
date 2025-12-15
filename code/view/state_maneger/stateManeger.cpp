@@ -68,4 +68,11 @@ void stateManeger::startVictory() {
     std::unique_ptr<view::VictoryState> state = std::make_unique<view::VictoryState>();
     pushStateAndDelete(std::move(state));
 }
+
+void stateManeger::gameOverState() {
+    prevState();
+    std::unique_ptr<view::gameOverState> state = std::make_unique<view::gameOverState>();
+    pushState(std::move(state));
+}
+
 }

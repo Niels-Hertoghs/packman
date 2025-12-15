@@ -7,7 +7,6 @@
 #include <vector>
 #include "../notifications.h"
 #include "entity.h"
-#include "../../view/entities/movableEntityView.h"
 
 
 
@@ -94,7 +93,7 @@ namespace logic {
         void toSpawnLocation();
 
         /**
-         * @return Pair van de x en y coordinaat van de voorkant van de movable, afhankelijk van zijn direction.
+         * @return Pair van de x en y coopackman_logicrdinaat van de voorkant van de movable, afhankelijk van zijn direction.
          */
         std::pair<double, double> getFront();
 

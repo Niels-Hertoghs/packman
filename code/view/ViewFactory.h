@@ -5,7 +5,7 @@
 #ifndef PACKMAN_VIEWFACTORY_H
 #define PACKMAN_VIEWFACTORY_H
 
-#include "../BaseFactory.h"
+#include "BaseFactory.h"
 #include "entities/collectableView.h"
 #include "entities/ghostView.h"
 #include "entities/movableEntityView.h"

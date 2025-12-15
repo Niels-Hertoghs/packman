@@ -17,13 +17,6 @@ namespace logic {
         return points;
     }
 
-    void collectable::collectableSubscribe(std::shared_ptr<view::collectableView> _collectableObserver) {
-        collectableObserver = std::move(_collectableObserver);
-    }
-
-
-
-
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class coin
     /// ---------------------------------------------------------------------------------------------------------------
@@ -32,7 +25,7 @@ namespace logic {
 
 
     bool coin::collected() const {
-        collectableObserver->notify(notifications(notificationTypes::COLLECTED));
+        observer->notify(notifications(notificationTypes::COLLECTED));
         return false;
     }
 
@@ -51,7 +44,7 @@ namespace logic {
 
 
     bool fruit::collected() const {
-        collectableObserver->notify(notifications(notificationTypes::COLLECTED));
+        observer->notify(notifications(notificationTypes::COLLECTED));
         return true;
     }
 

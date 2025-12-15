@@ -52,11 +52,11 @@ std::shared_ptr<wallView> ConcreteViewFactory::createWallView(std::shared_ptr<lo
 std::shared_ptr<collectableView> ConcreteViewFactory::createCollectableView(std::shared_ptr<logic::collectable> _collectable) {
     if (_collectable->isFruit()) {
         std::shared_ptr<fruitView> fruit = std::make_shared<fruitView>(window,_camera,_collectable->getX(),_collectable->getY());
-        _collectable->collectableSubscribe(fruit);
+        _collectable->subscribe(fruit);
         return fruit;
     }
     std::shared_ptr<coinView> coin = std::make_shared<coinView>(window,_camera,_collectable->getX(),_collectable->getY());
-    _collectable->collectableSubscribe(coin);
+    _collectable->subscribe(coin);
     return coin;
 
 }

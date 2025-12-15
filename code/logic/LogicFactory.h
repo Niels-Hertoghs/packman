@@ -6,7 +6,7 @@
 #define PACKMAN_LOGICFACTORY_H
 
 #include "entities/movableEntity.h"
-#include "../BaseFactory.h"
+#include "../view/BaseFactory.h"
 #include "entities/collectable.h"
 #include "entities/Ghost.h"
 #include "entities/manhattanGhost.h"
