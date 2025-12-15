@@ -110,19 +110,19 @@ namespace logic {
         return pos;
     }
 
-    void movableEntity::notifyPos() const {
-        observer->notify(notifications(notificationTypes::CHANGE_POSITION,x,y));
+    void movableEntity::notifyPos() {
+        notifyObservers(notifications(notificationTypes::CHANGE_POSITION,x,y));
     }
 
-    void movableEntity::notifyDir() const {
+    void movableEntity::notifyDir() {
         if (direction == directions::RIGHT) {
-            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_RIGHT));
+            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_RIGHT));
         } else if (direction == directions::LEFT) {
-            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_LEFT));
+            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_LEFT));
         } else if (direction == directions::UP) {
-            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_UP));
+            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_UP));
         } else {
-            observer->notify(notifications(notificationTypes::CHANGE_DIRECTION_DOWN));
+            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_DOWN));
         }
     }
 

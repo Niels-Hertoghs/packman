@@ -17,17 +17,17 @@ namespace logic {
         return points;
     }
 
+    void collectable::collected() {
+        notifyObservers(notifications(notificationTypes::COLLECTED));
+    }
+
+
     /// ---------------------------------------------------------------------------------------------------------------
     /// @class coin
     /// ---------------------------------------------------------------------------------------------------------------
 
     coin::coin(const double x, const double y, const int points) : collectable(x,y,points){}
 
-
-    bool coin::collected() const {
-        observer->notify(notifications(notificationTypes::COLLECTED));
-        return false;
-    }
 
     bool coin::isFruit() const {
         return false;
@@ -40,12 +40,6 @@ namespace logic {
 
     fruit::fruit(const double x, const double y, const int points)
         : collectable(x, y, points) {
-    }
-
-
-    bool fruit::collected() const {
-        observer->notify(notifications(notificationTypes::COLLECTED));
-        return true;
     }
 
     bool fruit::isFruit() const {

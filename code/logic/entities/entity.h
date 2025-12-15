@@ -8,6 +8,8 @@
 #include "../Observer.h"
 #include "../notifications.h"
 
+#include <vector>
+
 // Forward declarations
 namespace view {
     class wallView;
@@ -20,7 +22,7 @@ namespace logic {
      */
     class entity {
     protected:
-        std::shared_ptr<Observer<notifications>> observer;  /// De observer van de movableEntity.
+        std::vector<std::shared_ptr<Observer<notifications>>> observers;  /// De observer van de movableEntity.
         double x; /// Positie op de x as.
         double y; /// Positie op de y as.
     public:
@@ -32,6 +34,8 @@ namespace logic {
         entity(double x, double y);
 
         // methodes
+        virtual void notifyObservers(const notifications& notification);
+
 
         /**
          * @return De positie van het object op de x-as.
@@ -72,7 +76,6 @@ namespace logic {
          * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
          */
         wall(double x,double y);
-
 
         /**
         * @brief Default destructor.

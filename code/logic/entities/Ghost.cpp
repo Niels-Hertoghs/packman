@@ -121,7 +121,7 @@ void Ghost::changeDirection(directions _direction) {
 
 void Ghost::startFearMode() {
     mode = modes::FEAR_MODE;
-    observer->notify(notifications(notificationTypes::TO_FEAR_MODE));
+    notifyObservers(notifications(notificationTypes::TO_FEAR_MODE));
     // snelheid van de ghost wordt gehalveerd in fearMode
     speed *= 0.5f;
 }
@@ -132,7 +132,7 @@ void Ghost::startChaseMode() {
         return;
     }
     mode = modes::CHASING_MODE;
-    observer->notify(notifications(notificationTypes::TO_CHASING_MODE));
+    notifyObservers(notifications(notificationTypes::TO_CHASING_MODE));
     notifyDir();
     // snelheid van de ghost gaat terug naar de originele snelheid (was gehalveerd dus nu keer 2).
     speed *= 2.f;

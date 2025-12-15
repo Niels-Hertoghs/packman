@@ -109,7 +109,8 @@ void world::update(float deltaTime) {
     for (auto it = collectables.begin(); it != collectables.end();) {
         if (pacman->standsOnCoin(*it)) {
             notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN,it->get()->getPoints()));
-            if (it->get()->collected()) {
+            it->get()->collected();
+            if (it->get()->isFruit()) {
                 startFearMode();
             }
             it = collectables.erase(it); // erase retourneert de volgende iterator
