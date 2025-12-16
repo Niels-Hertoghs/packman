@@ -21,10 +21,14 @@ namespace logic {
      * @brief Een abstracte klasse voor alle objecten in de game.
      */
     class entity {
+
     protected:
         std::vector<std::shared_ptr<Observer<notifications> > > observers; /// De observer van de movableEntity.
         double x; /// Positie op de x as.
         double y; /// Positie op de y as.
+
+        virtual void notifyObservers(const notifications &notification);
+
     public:
         // constructor
         /**
@@ -34,7 +38,6 @@ namespace logic {
         entity(double x, double y);
 
         // methodes
-        virtual void notifyObservers(const notifications &notification);
 
 
         /**

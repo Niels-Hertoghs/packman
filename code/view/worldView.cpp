@@ -31,7 +31,7 @@ worldView::worldView(const std::shared_ptr<logic::world>& wereld, camera& camera
 
     std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window, camera, _score->getScore(),
                                                                         _score->getLevel(), _score->getLivesLeft());
-    wereld->subscribeObserver(score_view);
+    _score->subscribe(score_view);
     score = score_view;
 }
 

@@ -31,6 +31,9 @@ class Score : public Observer<scoreNotifications> {
     std::vector<std::shared_ptr<Observer<scoreViewNotifications>>> observers;
     //TODO: maak een methode in maneger, of laat ergens anders oproepen
     /// Reference naar de state manager, om states te kunnen veranderen bij game over of level up.
+    ///
+    void notifyObservers(scoreViewTypes notification) const;
+
 public:
     void notify(const scoreNotifications& message) override;
 
@@ -57,7 +60,6 @@ public:
     [[nodiscard]] int getLevel() const;
 
     void subscribe(std::shared_ptr<Observer<scoreViewNotifications>>);
-    void notifyObservers(scoreViewTypes notification) const;
 
     /**
      * @brief Default destructor.
