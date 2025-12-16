@@ -28,11 +28,12 @@ namespace view {
          * @param cam Camera klasse
          * @param model Pointer naar de logica van collectable.
          */
-        collectableView(sf::RenderWindow& window,camera& cam, double x,double y);
+        collectableView(sf::RenderWindow &window, camera &cam, double x, double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override = 0;
-        void notify(const notifications& message) override = 0;
+
+        void notify(const notifications &message) override = 0;
 
         /**
          * @brief Default destructor.
@@ -53,11 +54,12 @@ namespace view {
         * @param cam Camera klasse
         * @param coinModel Pointer naar de logica van de coin.
         */
-        coinView(sf::RenderWindow& window,camera& cam,double x,double y);
+        coinView(sf::RenderWindow &window, camera &cam, double x, double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
-        void notify(const notifications& message) override;
+
+        void notify(const notifications &message) override;
 
         /**
          * @brief Default destructor.
@@ -79,11 +81,12 @@ namespace view {
         * @param cam Camera klasse
         * @param fruitModel Pointer naar de logica van de fruit.
         */
-        fruitView(sf::RenderWindow& window,camera& cam,double x,double y);
+        fruitView(sf::RenderWindow &window, camera &cam, double x, double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
-        void notify(const notifications& message) override;
+
+        void notify(const notifications &message) override;
 
         /**
         * @brief Default destructor.

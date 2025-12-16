@@ -24,14 +24,15 @@ namespace logic {
  * @brief Klasse die de score, levens en level bijhoudt.
  */
 class Score : public Observer<scoreNotifications> {
-    int score;                                      /// de huidige score van de speler.
-    int livesLeft;                                  /// Het aantal levens dat de speler nog over heeft.
-    int level;                                      /// Het huidige level van de speler.
+    int score;     /// de huidige score van de speler.
+    int livesLeft; /// Het aantal levens dat de speler nog over heeft.
+    int level;     /// Het huidige level van de speler.
     view::stateManeger& manager;
     //TODO: maak een methode in maneger, of laat ergens anders oproepen
     /// Reference naar de state manager, om states te kunnen veranderen bij game over of level up.
 public:
     void notify(const scoreNotifications& message) override;
+
     /**
      * @brief Constructor voor de score.
      * @param manager Reference naar de state manager, om states te kunnen veranderen bij game over of level up.

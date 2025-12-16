@@ -25,11 +25,11 @@ namespace view {
  */
 class worldView final {
 private:
-    std::vector<std::shared_ptr<wallView>> walls;               /// Alle wall observers in de wereld.
-    std::vector<std::shared_ptr<collectableView>> collectables; /// Alle collectable observers in de wereld.
-    std::shared_ptr<view::packmanView> pacman;                  /// De pacman observer.
+    std::vector<std::shared_ptr<wallView> > walls;               /// Alle wall observers in de wereld.
+    std::vector<std::shared_ptr<collectableView> > collectables; /// Alle collectable observers in de wereld.
+    std::shared_ptr<view::packmanView> pacman;                   /// De pacman observer.
 
-    std::vector<std::shared_ptr<ghostView>> ghosts;
+    std::vector<std::shared_ptr<ghostView> > ghosts;
 
     std::shared_ptr<view::ScoreView> score; /// De score observer.
 public:

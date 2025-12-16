@@ -89,7 +89,7 @@ void world::startWorld(int level) {
 
 void world::update(float deltaTime) {
     // pacman updaten, oa de locatie
-    std::vector<std::shared_ptr<entity>> allWalls;
+    std::vector<std::shared_ptr<entity> > allWalls;
     allWalls.insert(allWalls.end(), walls.begin(), walls.end());
     allWalls.insert(allWalls.end(), invisibleWalls.begin(), invisibleWalls.end());
 
@@ -99,7 +99,7 @@ void world::update(float deltaTime) {
         if (ghost->hadFirstCollision()) {
             ghost->update(deltaTime, allWalls);
         } else {
-            std::vector<std::shared_ptr<entity>> w;
+            std::vector<std::shared_ptr<entity> > w;
             w.insert(w.end(), walls.begin(), walls.end());
             ghost->update(deltaTime, w);
         }
@@ -108,7 +108,7 @@ void world::update(float deltaTime) {
     // zien of pacman niet op een collectable staat
     for (auto it = collectables.begin(); it != collectables.end();) {
         if (pacman->standsOnCoin(*it)) {
-            notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN,it->get()->getPoints()));
+            notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN, it->get()->getPoints()));
             it->get()->collected();
             if (it->get()->isFruit()) {
                 startFearMode();
@@ -125,7 +125,8 @@ void world::update(float deltaTime) {
                 died();
             } else if (ghost->get_mode() == modes::FEAR_MODE) {
                 ghost->died();
-                notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN,ghost->getGhostPoints(),true));
+                notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN, ghost->getGhostPoints(),
+                                                   true));
             }
         }
     }
@@ -161,7 +162,7 @@ void world::subscribeScore(std::shared_ptr<Score> score_) {
     score = std::move(score_);
 }
 
-void world::subscribeObserver(std::shared_ptr<Observer<scoreViewNotifications>> observer) {
+void world::subscribeObserver(std::shared_ptr<Observer<scoreViewNotifications> > observer) {
     observers.push_back(std::move(observer));
 }
 
@@ -180,7 +181,7 @@ void world::notifyObservers(const scoreNotifications& notification) {
             viewNotification.score = score->getScore();
         } else {
             viewNotification.type = scoreViewTypes::UPDATE_LIVES;
-            viewNotification.lives = score->getLivesLeft()-1;
+            viewNotification.lives = score->getLivesLeft() - 1;
         }
 
         break;
@@ -188,7 +189,7 @@ void world::notifyObservers(const scoreNotifications& notification) {
     default:
         break;
     }
-    for (std::shared_ptr<Observer<scoreViewNotifications>>& observer : observers) {
+    for (std::shared_ptr<Observer<scoreViewNotifications> >& observer : observers) {
         observer->notify(viewNotification);
     }
 
@@ -196,11 +197,11 @@ void world::notifyObservers(const scoreNotifications& notification) {
 }
 
 
-std::vector<std::shared_ptr<wall>> world::get_walls() const {
+std::vector<std::shared_ptr<wall> > world::get_walls() const {
     return walls;
 }
 
-std::vector<std::shared_ptr<collectable>> world::get_collectables() const {
+std::vector<std::shared_ptr<collectable> > world::get_collectables() const {
     return collectables;
 }
 
@@ -212,7 +213,7 @@ std::shared_ptr<Score> world::get_score() const {
     return score;
 }
 
-std::vector<std::shared_ptr<Ghost>> world::get_ghosts() const {
+std::vector<std::shared_ptr<Ghost> > world::get_ghosts() const {
     return ghosts;
 }
 

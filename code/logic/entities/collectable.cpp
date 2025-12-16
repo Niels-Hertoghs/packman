@@ -11,7 +11,8 @@ namespace logic {
     /// @class collectable
     /// ---------------------------------------------------------------------------------------------------------------
 
-    collectable::collectable(double x, double y,int Points) : entity(x,y ), points(Points) {}
+    collectable::collectable(double x, double y, int Points) : entity(x, y), points(Points) {
+    }
 
     int collectable::getPoints() const {
         return points;
@@ -26,7 +27,8 @@ namespace logic {
     /// @class coin
     /// ---------------------------------------------------------------------------------------------------------------
 
-    coin::coin(const double x, const double y, const int points) : collectable(x,y,points){}
+    coin::coin(const double x, const double y, const int points) : collectable(x, y, points) {
+    }
 
 
     bool coin::isFruit() const {
@@ -45,5 +47,4 @@ namespace logic {
     bool fruit::isFruit() const {
         return true;
     }
-
 }

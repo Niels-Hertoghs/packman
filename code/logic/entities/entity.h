@@ -22,7 +22,7 @@ namespace logic {
      */
     class entity {
     protected:
-        std::vector<std::shared_ptr<Observer<notifications>>> observers;  /// De observer van de movableEntity.
+        std::vector<std::shared_ptr<Observer<notifications> > > observers; /// De observer van de movableEntity.
         double x; /// Positie op de x as.
         double y; /// Positie op de y as.
     public:
@@ -34,7 +34,7 @@ namespace logic {
         entity(double x, double y);
 
         // methodes
-        virtual void notifyObservers(const notifications& notification);
+        virtual void notifyObservers(const notifications &notification);
 
 
         /**
@@ -50,13 +50,13 @@ namespace logic {
         /**
          * @return De positie van het object als een pair {x,y}.
          */
-        [[nodiscard]] std::pair<double,double> getPosition() const;
+        [[nodiscard]] std::pair<double, double> getPosition() const;
 
         /**
         * @brief Laat de observer "subscriben" aan de entity.
         * @param observer POinter naar de observer van de movableEntity.
         */
-        void subscribe(std::shared_ptr<Observer<notifications>> observer);
+        void subscribe(std::shared_ptr<Observer<notifications> > observer);
 
         /**
         * @brief Default destructor.
@@ -75,7 +75,7 @@ namespace logic {
          * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
          * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
          */
-        wall(double x,double y);
+        wall(double x, double y);
 
         /**
         * @brief Default destructor.
@@ -95,7 +95,7 @@ namespace logic {
          * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
          * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
          */
-        invisibleWall(double x,double y);
+        invisibleWall(double x, double y);
 
         /**
         * @brief Default destructor.
@@ -103,7 +103,6 @@ namespace logic {
         ~invisibleWall() override = default;
     };
 }
-
 
 
 #endif //PACKMAN_ENTITY_H

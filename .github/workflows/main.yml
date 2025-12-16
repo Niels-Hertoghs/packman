@@ -21,17 +21,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Configure CMake for 'logic'
-      # Configure CMake in a 'build' subdirectory, using the 'logic' directory as the source.
-      run: cmake -B ${{github.workspace}}/build -S ${{github.workspace}}/${{env.SOURCE_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Configure CMake for 'logic'
+        # Configure CMake in a 'build' subdirectory, using the 'logic' directory as the source.
+        run: cmake -B ${{github.workspace}}/build -S ${{github.workspace}}/${{env.SOURCE_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    - name: Build 'logic'
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      - name: Build 'logic'
+        # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-    - name: Test 'logic'
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.
-      run: ctest -C ${{env.BUILD_TYPE}}
+      - name: Test 'logic'
+        working-directory: ${{github.workspace}}/build
+        # Execute tests defined by the CMake configuration.
+        run: ctest -C ${{env.BUILD_TYPE}}

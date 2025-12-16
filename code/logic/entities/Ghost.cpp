@@ -28,7 +28,8 @@ void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> >& wall
         // als die nog in de cage zit, eerst omhoog laten gaan, als het gaat, om er zo uit te gaan
         if (!outsideCage) {
             std::vector<directions> possibleDirections = this->possibleDirections(walls);
-            if (std::find(possibleDirections.begin(), possibleDirections.end(), directions::UP) != possibleDirections.end()) {
+            if (std::find(possibleDirections.begin(), possibleDirections.end(), directions::UP) != possibleDirections.
+                end()) {
                 direction = directions::UP;
                 outsideCage = true;
                 notifyDir();

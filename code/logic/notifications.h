@@ -21,12 +21,11 @@ enum class notificationTypes {
     END_GAME
 };
 
-template <typename notifications>
+template<typename notifications>
 class NotificationsBase {
 public:
     explicit NotificationsBase(notifications notif)
         : type(notif) {
-
     }
 
     notifications type;
@@ -64,7 +63,6 @@ public:
     }
 
     int lives{}, level{}, score{};
-
 };
 
 
@@ -72,7 +70,6 @@ enum class scoreNotificationsType {
     ENTITY_EATEN,
     LIVE_LOST,
     NEXT_lEVEL
-
 };
 
 class scoreNotifications : public NotificationsBase<scoreNotificationsType> {
@@ -86,7 +83,7 @@ public:
     }
 
     scoreNotifications(scoreNotificationsType type, int points)
-    : NotificationsBase(type), points(points) {
+        : NotificationsBase(type), points(points) {
     }
 
     int points{};

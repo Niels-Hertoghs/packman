@@ -3,12 +3,14 @@
 //
 
 #include "Stopwatch.h"
+
 namespace logic {
-    Stopwatch::Stopwatch() : lastTime(clock::now()), lastTimeEaten(clock::now()), deltaTime(0.0f) {}
+    Stopwatch::Stopwatch() : lastTime(clock::now()), lastTimeEaten(clock::now()), deltaTime(0.0f) {
+    }
 
     std::shared_ptr<Stopwatch> Stopwatch::getInstance() {
         if (!_instance) {
-            _instance = std::shared_ptr<Stopwatch>(new Stopwatch());
+            _instance = std::shared_ptr < Stopwatch > (new Stopwatch());
         }
         return _instance;
     }
@@ -77,13 +79,11 @@ namespace logic {
         // Met deze formule duurt de fear mode op level 1, 10 seconden
         // hoe hoger het level hoe korter de fearMode, het is een hyperbolische daling, zodat het nooit 0 is of negatief
         // level 2 = 8.3 sec, ... level 10 = 3.6 ,...
-        float lengthOfFear = 10.f / ( 1.f + ((0.2f) * static_cast<float>(level - 1)));
+        float lengthOfFear = 10.f / (1.f + ((0.2f) * static_cast<float>(level - 1)));
         std::chrono::duration<float> elapsed = currentTime - _startFearMode;
         if (elapsed.count() > lengthOfFear) {
             return true;
         }
         return false;
     }
-
-
 }

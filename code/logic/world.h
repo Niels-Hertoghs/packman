@@ -23,17 +23,17 @@ namespace logic {
  */
 class world {
 private:
-    std::vector<std::shared_ptr<wall>> walls;
-    std::vector<std::shared_ptr<collectable>> collectables;
-    std::vector<std::shared_ptr<invisibleWall>> invisibleWalls;
+    std::vector<std::shared_ptr<wall> > walls;
+    std::vector<std::shared_ptr<collectable> > collectables;
+    std::vector<std::shared_ptr<invisibleWall> > invisibleWalls;
 
-    std::vector<std::shared_ptr<Ghost>> ghosts;
+    std::vector<std::shared_ptr<Ghost> > ghosts;
 
     std::shared_ptr<Pacman> pacman;
     std::string inputFile;
 
     std::shared_ptr<Score> score;
-    std::vector<std::shared_ptr<Observer<scoreViewNotifications>>> observers;
+    std::vector<std::shared_ptr<Observer<scoreViewNotifications> > > observers;
 
 public:
     explicit world(const std::string& inputFile);
@@ -45,7 +45,8 @@ public:
     void updatePacmanDir(directions) const;
 
     void subscribeScore(std::shared_ptr<Score> observer);
-    void subscribeObserver(std::shared_ptr<Observer<scoreViewNotifications>> observer);
+
+    void subscribeObserver(std::shared_ptr<Observer<scoreViewNotifications> > observer);
 
     void notifyObservers(const scoreNotifications& notification);
 
@@ -63,11 +64,11 @@ public:
 
 
     //getters
-    [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
+    [[nodiscard]] std::vector<std::shared_ptr<wall> > get_walls() const;
 
-    [[nodiscard]] std::vector<std::shared_ptr<collectable>> get_collectables() const;
+    [[nodiscard]] std::vector<std::shared_ptr<collectable> > get_collectables() const;
 
-    [[nodiscard]] std::vector<std::shared_ptr<Ghost>> get_ghosts() const;
+    [[nodiscard]] std::vector<std::shared_ptr<Ghost> > get_ghosts() const;
 
     [[nodiscard]] std::shared_ptr<Pacman> get_pacman() const;
 

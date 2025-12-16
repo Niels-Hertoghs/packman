@@ -24,17 +24,17 @@ namespace logic {
         std::set<int> changedSprite; /// De Id's van de sprites die al veranderd zijn in de huidige frame.
         float deltaTime; /// Tijd tussen 2 updates
         Stopwatch(); /// private constructor (singleton)
-        inline static std::shared_ptr<Stopwatch> _instance;  /// Pointer naar singleton.
+        inline static std::shared_ptr<Stopwatch> _instance; /// Pointer naar singleton.
     public:
-
         /**
         * @return De enige instantie van de random klasse (pointer).
         */
         static std::shared_ptr<Stopwatch> getInstance();
 
         // Verwijder copy constructor en assignment operator, om singleton behouden
-        Stopwatch(const Stopwatch&) = delete;
-        Stopwatch& operator=(const Stopwatch&) = delete;
+        Stopwatch(const Stopwatch &) = delete;
+
+        Stopwatch &operator=(const Stopwatch &) = delete;
 
         /**
          * @brief Als er een nieuwe update gedaan wordt, past deltaTime aan.

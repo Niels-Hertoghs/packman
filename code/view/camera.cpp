@@ -6,7 +6,8 @@
 #include <cmath>
 
 namespace view {
-    camera::camera(const unsigned int w, const unsigned int h) : width(w), height(h) {}
+    camera::camera(const unsigned int w, const unsigned int h) : width(w), height(h) {
+    }
 
     std::pair<int, int> camera::worldToPixel(const double &x, const double &y) const {
         int pixelX = static_cast<int>(((x + 1.f) / 2.f) * width);
@@ -19,11 +20,13 @@ namespace view {
         height = h;
     }
 
-    int camera::distanceToPixelsHeight(const double& distance) const {
-        return static_cast<int>(std::round((distance)/2 * height) + 1); // +1 om de ruimte te dichten tussen de entities
+    int camera::distanceToPixelsHeight(const double &distance) const {
+        return static_cast<int>(std::round((distance) / 2 * height) + 1);
+        // +1 om de ruimte te dichten tussen de entities
     }
 
-    int camera::distanceToPixelsWidth(const double& distance) const {
-        return static_cast<int>(std::round((distance)/2 * width) + 1); // +1 om de ruimte te dichten tussen de entities
+    int camera::distanceToPixelsWidth(const double &distance) const {
+        return static_cast<int>(std::round((distance) / 2 * width) + 1);
+        // +1 om de ruimte te dichten tussen de entities
     }
 }

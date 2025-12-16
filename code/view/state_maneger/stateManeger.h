@@ -19,7 +19,7 @@ namespace logic {
 }
 
 namespace view {
-// Forward declarations
+    // Forward declarations
     class state;
 
     /**
@@ -27,7 +27,7 @@ namespace view {
      * @brief Manages the different states of the game (menu, level, pause, etc.).
      */
     class stateManeger {
-        std::stack<std::unique_ptr<view::state>> stack; /// Stack met de verschillende staten.
+        std::stack<std::unique_ptr<view::state> > stack; /// Stack met de verschillende staten.
     public:
         /**
          * @brief Constructor
@@ -73,10 +73,10 @@ namespace view {
          * @param wereld Pointer naar de wereld logica, om het eventueel te laten lopen.
          * @param deltaTime Het verschil in tijd sinds de laatste update.
          */
-        void runTop(sf::RenderWindow& window, sf::Event& event, view::camera& cam, std::shared_ptr<logic::world> wereld, const float& deltaTime);
+        void runTop(sf::RenderWindow &window, sf::Event &event, view::camera &cam, std::shared_ptr<logic::world> wereld,
+                    const float &deltaTime);
     };
 }
-
 
 
 #endif //PACKMAN_STATEMANEGER_H

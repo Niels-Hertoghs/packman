@@ -7,5 +7,4 @@
 class camera;
 
 namespace view {
-
 }

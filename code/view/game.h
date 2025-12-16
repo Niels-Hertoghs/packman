@@ -16,23 +16,22 @@
 #include "worldView.h"
 
 namespace view {
-/**
+    /**
  * @class game
  * @brief De hoofdklasse voor het spel, start alles op, heeft de main loop.
  */
-class game {
-public:
-    /**
+    class game {
+    public:
+        /**
      * @brief Constructor
      */
-    game() = default;
+        game() = default;
 
-    /**
+        /**
      * @brief Start de main game loop, en blijft lopen tot het geeindigd wordt.
      */
-    static void playGame();
-
-};
+        static void playGame();
+    };
 }
 
 

@@ -17,18 +17,20 @@ namespace logic {
          * @brief Default constructor (private) , initialiseerd de random number generator.
          */
         random();
-        inline static std::shared_ptr<random> _instance;  /// Statische pointer naar de enige instantie van de random klasse.
+
+        inline static std::shared_ptr<random> _instance;
+        /// Statische pointer naar de enige instantie van de random klasse.
         std::mt19937 mt; /// Mersenne Twister, random number generator.
     public:
-
         /**
          * @return De enige instantie van de random klasse (pointer).
          */
         static std::shared_ptr<random> getInstance();
 
         // Verwijder copy constructor en assignment operator, om singleton behouden
-        random(const random&) = delete;
-        random& operator=(const random&) = delete;
+        random(const random &) = delete;
+
+        random &operator=(const random &) = delete;
 
         /**
          * @brief Genereer een random getal tussen min (inclusief) en max (exclusief).

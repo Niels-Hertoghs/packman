@@ -8,236 +8,253 @@
 
 
 namespace logic {
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// @class movableEntity
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class movableEntity
+/// ---------------------------------------------------------------------------------------------------------------
 
-    movableEntity::movableEntity(double x, double y, double speed,directions dir)
-    : entity(x, y), direction(dir),originalDirection(dir), speed(speed),spawnLocatieX(x),spawnLocatieY(y),prevX(x),prevY(y) {}
+movableEntity::movableEntity(double x, double y, double speed, directions dir)
+    : entity(x, y), direction(dir), originalDirection(dir), speed(speed), spawnLocatieX(x), spawnLocatieY(y), prevX(x),
+      prevY(y) {
+}
 
-    bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
-        return wouldCollide(other,x,y);
+bool movableEntity::standsOn(const std::shared_ptr<entity>& other) {
+    return wouldCollide(other, x, y);
+}
+
+bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, double nextX, double nextY) {
+    double width = 1.f / 10.f;
+    double height = 1.f / 7.f;
+
+    double pacX = nextX - 1.f / 20.f;
+    double pacY = nextY + 1.f / 14.f;
+
+    double buffer = 0.005f;
+
+    bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
+    bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
+    return overlapX && overlapY;
+
+}
+
+void movableEntity::prevLocation() {
+    x = prevX;
+    y = prevY;
+}
+
+directions movableEntity::oppositeDirection(directions dir) {
+    switch (dir) {
+    case directions::UP:
+        return directions::DOWN;
+    case directions::DOWN:
+        return directions::UP;
+    case directions::LEFT:
+        return directions::RIGHT;
+    case directions::RIGHT:
+        return directions::LEFT;
+    default:
+        return directions::EMPTY;
     }
+}
 
-    bool movableEntity::wouldCollide(const std::shared_ptr<entity>& other, double nextX, double nextY) {
-        double width = 1.f / 10.f;
-        double height = 1.f / 7.f;
 
-        double pacX = nextX - 1.f/20.f;
-        double pacY = nextY + 1.f/14.f;
+void movableEntity::move(double delta) {
+    // ga de richting uit
+    prevX = this->getX();
+    prevY = this->getY();
 
-        double buffer = 0.005f;
+    std::pair<double, double> nextPos = calculateNextPos(delta, direction, x, y);
 
-        bool overlapX = pacX < other->getX() + width - buffer && pacX + width > other->getX() + buffer;
-        bool overlapY = pacY > other->getY() - height + buffer && pacY - height < other->getY() - buffer;
-        return overlapX && overlapY;
+    x = nextPos.first;
+    y = nextPos.second;
+}
 
-    }
+std::pair<double, double> movableEntity::calculateNextPos(double delta, directions dir, double _x, double _y) const {
+    double dx = 0.f, dy = 0.f;
+    if (dir == directions::RIGHT)
+        dx = 0.2f;
+    else if (dir == directions::LEFT)
+        dx = -0.2f;
+    else if (dir == directions::UP)
+        dy = 2.f / 7.f;
+    else
+        if (dir == directions::DOWN)
+            dy = -2.f / 7.f;
 
-    void movableEntity::prevLocation() {
-        x = prevX;
-        y = prevY;
-    }
+    // Positie updaten
+    double nextX = (delta * dx * speed) + _x;
+    double nextY = (delta * dy * speed) + _y;
 
-    directions movableEntity::oppositeDirection(directions dir) {
-        switch(dir) {
-        case directions::UP: return directions::DOWN;
-        case directions::DOWN: return directions::UP;
-        case directions::LEFT: return directions::RIGHT;
-        case directions::RIGHT: return directions::LEFT;
-        default: return directions::EMPTY;
+    return {nextX, nextY};
+
+}
+
+void movableEntity::toSpawnLocation() {
+    x = spawnLocatieX;
+    y = spawnLocatieY;
+    direction = originalDirection;
+    notifyDir();
+    notifyPos();
+
+}
+
+std::pair<double, double> movableEntity::getFront() {
+    return getCoSide(direction);
+}
+
+std::pair<double, double> movableEntity::getBack() {
+    return getCoSide(oppositeDirection(direction));
+}
+
+std::pair<double, double> movableEntity::getCoSide(directions dir) {
+    std::pair<double, double> pos = {x, y};
+    if (dir == directions::RIGHT || dir == directions::LEFT) {
+        pos.second = y - 1.f / 14.f;
+        if (dir == directions::RIGHT) {
+            pos.first = x + 1.f / 10.f;
+        }
+    } else if (dir == directions::UP || dir == directions::DOWN) {
+        pos.first = x + 1.f / 20.f;
+        if (dir == directions::DOWN) {
+            pos.second = y - 1.f / 7.f;
         }
     }
 
+    return pos;
+}
 
-    void movableEntity::move(double delta) {
-        // ga de richting uit
-        prevX = this->getX();
-        prevY = this->getY();
+void movableEntity::notifyPos() {
+    notifyObservers(notifications(notificationTypes::CHANGE_POSITION, x, y));
+}
 
-        std::pair<double,double> nextPos = calculateNextPos(delta,direction,x,y);
-
-        x = nextPos.first;
-        y = nextPos.second;
+void movableEntity::notifyDir() {
+    if (direction == directions::RIGHT) {
+        notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_RIGHT));
+    } else if (direction == directions::LEFT) {
+        notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_LEFT));
+    } else if (direction == directions::UP) {
+        notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_UP));
+    } else {
+        notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_DOWN));
     }
-
-    std::pair<double,double> movableEntity::calculateNextPos(double delta, directions dir,double _x,double _y) const {
-        double dx = 0.f, dy = 0.f;
-        if (dir == directions::RIGHT) dx = 0.2f;
-        else if (dir == directions::LEFT) dx = -0.2f;
-        else if (dir == directions::UP) dy = 2.f / 7.f;
-        else if (dir == directions::DOWN) dy = -2.f / 7.f;
-
-        // Positie updaten
-        double nextX = (delta * dx * speed) + _x;
-        double nextY = (delta * dy * speed) + _y;
-
-        return {nextX,nextY};
-
-    }
-
-    void movableEntity::toSpawnLocation() {
-        x = spawnLocatieX;
-        y = spawnLocatieY;
-        direction = originalDirection;
-        notifyDir();
-        notifyPos();
-
-    }
-
-    std::pair<double, double> movableEntity::getFront() {
-        return getCoSide(direction);
-    }
-
-    std::pair<double,double> movableEntity::getBack() {
-        return getCoSide(oppositeDirection(direction));
-    }
-
-    std::pair<double,double> movableEntity::getCoSide(directions dir) {
-        std::pair<double, double> pos = {x,y};
-        if (dir == directions::RIGHT || dir == directions::LEFT) {
-            pos.second = y - 1.f / 14.f;
-            if (dir == directions::RIGHT) {
-                pos.first = x + 1.f/10.f;
-            }
-        } else if (dir == directions::UP || dir == directions::DOWN) {
-            pos.first = x + 1.f / 20.f;
-            if (dir == directions::DOWN) {
-                pos.second = y - 1.f / 7.f;
-            }
-        }
-
-        return pos;
-    }
-
-    void movableEntity::notifyPos() {
-        notifyObservers(notifications(notificationTypes::CHANGE_POSITION,x,y));
-    }
-
-    void movableEntity::notifyDir() {
-        if (direction == directions::RIGHT) {
-            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_RIGHT));
-        } else if (direction == directions::LEFT) {
-            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_LEFT));
-        } else if (direction == directions::UP) {
-            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_UP));
-        } else {
-            notifyObservers(notifications(notificationTypes::CHANGE_DIRECTION_DOWN));
-        }
-    }
+}
 
 
-    directions movableEntity::get_direction() const {
-        return direction;
-    }
+directions movableEntity::get_direction() const {
+    return direction;
+}
 
 
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// @class Pacman
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class Pacman
+/// ---------------------------------------------------------------------------------------------------------------
 
-    Pacman::Pacman(double x, double y,double speed)  : movableEntity(x,y,speed,directions::RIGHT), nextDirection(directions::EMPTY) {}
+Pacman::Pacman(double x, double y, double speed)
+    : movableEntity(x, y, speed, directions::RIGHT), nextDirection(directions::EMPTY) {
+}
 
-    void Pacman::update(double delta,std::vector<std::shared_ptr<entity>>& walls) {
-        //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
+void Pacman::update(double delta, std::vector<std::shared_ptr<entity> >& walls) {
+    //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
 
-        double newX = x;
-        double newY = y;
+    double newX = x;
+    double newY = y;
 
-        // zien of pack man die richting uit kan gaan
-        if (direction != nextDirection && nextDirection != directions::EMPTY) {
-            // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
-            // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
-            // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/8 van een blokje om te zien of het een muur is.
-            // 1/8, is redelijk kklein maar ook niet te klein dat het foutgen geeft, in mijn testen
+    // zien of pack man die richting uit kan gaan
+    if (direction != nextDirection && nextDirection != directions::EMPTY) {
+        // meteen iets verder in het volgende blokje bekijken zodat de buffer geen verschil maakt
+        // als je naar de volgende locatie van pacman zou gaan kijken of het een geldige positie was was de kans heel klein dat die naar daar zou gaan, daarom kijkt die ineens naar het blokje verder
+        // de buffer is nodig (anders beweegt hij niet), nu kijkt die naar het eerste 1/8 van een blokje om te zien of het een muur is.
+        // 1/8, is redelijk kklein maar ook niet te klein dat het foutgen geeft, in mijn testen
 
-            // de positie berekenen
-            double stepX = 0.f, stepY = 0.f;
+        // de positie berekenen
+        double stepX = 0.f, stepY = 0.f;
 
+        if (nextDirection == directions::RIGHT)
+            stepX = 1 / 80.f;
+        else if (nextDirection == directions::LEFT)
+            stepX = -1 / 80.f;
+        else if (nextDirection == directions::UP)
+            stepY = 1.f / 56.f;
+        else
+            if (nextDirection == directions::DOWN)
+                stepY = -1.f / 56.f;
 
-            if (nextDirection == directions::RIGHT) stepX = 1/80.f;
-            else if (nextDirection == directions::LEFT) stepX = -1/80.f;
-            else if (nextDirection == directions::UP) stepY = 1.f / 56.f;
-            else if (nextDirection == directions::DOWN) stepY = -1.f / 56.f;
+        newX += stepX;
+        newY += stepY;
 
-            newX += stepX;
-            newY += stepY;
+        // kijken of er daar geen wall staat
+        bool canMove = true;
 
-
-            // kijken of er daar geen wall staat
-            bool canMove = true;
-
-            for (const std::shared_ptr<entity>& w : walls) {
-                if (wouldCollide(w,newX,newY)) {
-                    canMove = false;
-                    break;
-                }
-            }
-
-            if (canMove) {
-                direction = nextDirection;
-                notifyDir();
-            }
-        }
-
-        // De movable laten bewegen in de direction.
-        this->move(delta);
-
-        // zie of de huidige pos niet op een muur staat
-        for (std::shared_ptr<entity>& w : walls) {
-            if (standsOn(w)) {
-                prevLocation();
+        for (const std::shared_ptr<entity>& w : walls) {
+            if (wouldCollide(w, newX, newY)) {
+                canMove = false;
                 break;
             }
         }
-        notifyPos();
+
+        if (canMove) {
+            direction = nextDirection;
+            notifyDir();
+        }
     }
 
-    void Pacman::updateDir(enum directions dir) {
-        nextDirection = dir;
+    // De movable laten bewegen in de direction.
+    this->move(delta);
+
+    // zie of de huidige pos niet op een muur staat
+    for (std::shared_ptr<entity>& w : walls) {
+        if (standsOn(w)) {
+            prevLocation();
+            break;
+        }
     }
+    notifyPos();
+}
 
-    bool Pacman::standsOnCoin(const std::shared_ptr<entity>& other) {
-        // de radius van de coin, moet hetzelfde zijn als in de collectableView
-        double radiusx = 0.016f + 1/30.f; // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
-        double radiusy = 0.016f + 1/15.f;
+void Pacman::updateDir(enum directions dir) {
+    nextDirection = dir;
+}
+
+bool Pacman::standsOnCoin(const std::shared_ptr<entity>& other) {
+    // de radius van de coin, moet hetzelfde zijn als in de collectableView
+    double radiusx = 0.016f + 1 / 30.f;
+    // kan aangepast worden, de 30 groter maken betekent dat de coin dichter bij het centrum van pacman moet zijn
+    double radiusy = 0.016f + 1 / 15.f;
+
+    double pacX = x;
+    double pacY = y;
+
+    double buffer = 0.001f;
+
+    bool overlapX = pacX < other->getX() + radiusx - buffer && pacX + radiusx > other->getX() + buffer;
+    bool overlapY = pacY > other->getY() - radiusy + buffer && pacY - radiusy < other->getY() - buffer;
+    return overlapX && overlapY;
+}
+
+bool Pacman::standsOnGhost(const std::shared_ptr<Ghost>& ghost) {
+    double width = 1.f / 10.f;
+    double height = 1.f / 7.f;
+
+    double pacX = x - 1.f / 20.f;
+    double pacY = y + 1.f / 14.f;
+
+    double ghostX = ghost->getX() - 1.f / 20.f;
+    double ghostY = ghost->getY() + 1.f / 14.f;
+
+    // hoe hoger ghoe dichter bij het centrum van pacman de ghost moet zijn voor het er op staat.
+    double buffer = 0.035f;
+
+    bool overlapX = pacX < ghostX + width - buffer && pacX + width > ghostX + buffer;
+    bool overlapY = pacY > ghostY - height + buffer && pacY - height < ghostY - buffer;
+    return overlapX && overlapY;
+}
 
 
-        double pacX = x;
-        double pacY = y;
-
-        double buffer = 0.001f;
-
-        bool overlapX = pacX < other->getX() + radiusx - buffer && pacX + radiusx > other->getX() + buffer;
-        bool overlapY = pacY > other->getY() - radiusy + buffer && pacY - radiusy < other->getY() - buffer;
-        return overlapX && overlapY;
-    }
-
-    bool Pacman::standsOnGhost(const std::shared_ptr<Ghost>& ghost) {
-        double width = 1.f / 10.f;
-        double height = 1.f / 7.f;
-
-        double pacX = x - 1.f/20.f;
-        double pacY = y + 1.f/14.f;
-
-        double ghostX = ghost->getX() - 1.f/20.f;
-        double ghostY = ghost->getY() + 1.f/14.f;
-
-        // hoe hoger ghoe dichter bij het centrum van pacman de ghost moet zijn voor het er op staat.
-        double buffer = 0.035f;
-
-        bool overlapX = pacX < ghostX + width - buffer && pacX + width > ghostX + buffer;
-        bool overlapY = pacY > ghostY - height + buffer && pacY - height < ghostY - buffer;
-        return overlapX && overlapY;
-    }
-
-
-    void Pacman::died() {
-        toSpawnLocation();
-        nextDirection = directions::EMPTY; // is iets prive van pacman.
-        notifyDir();
-        notifyPos();
-    }
+void Pacman::died() {
+    toSpawnLocation();
+    nextDirection = directions::EMPTY; // is iets prive van pacman.
+    notifyDir();
+    notifyPos();
+}
 
 
 }
