@@ -144,7 +144,7 @@ void world::update(float deltaTime) {
     }
 }
 
-void world::died() {
+void world::died() const {
     notifyObservers(scoreNotifications(scoreNotificationsType::LIVE_LOST));
     for (const std::shared_ptr<Ghost>& ghost : ghosts) {
         ghost->died();
@@ -154,7 +154,7 @@ void world::died() {
 }
 
 
-void world::updatePacmanDir(directions dir) const {
+void world::updatePacmanDir(const directions dir) const {
     pacman->updateDir(dir);
 }
 
@@ -162,37 +162,7 @@ void world::subscribeScore(std::shared_ptr<Score> score_) {
     score = std::move(score_);
 }
 
-void world::subscribeObserver(std::shared_ptr<Observer<scoreViewNotifications> > observer) {
-    observers.push_back(std::move(observer));
-}
-
-void world::notifyObservers(const scoreNotifications& notification) {
-
-    scoreViewNotifications viewNotification;
-    switch (notification.type) {
-    case (scoreNotificationsType::ENTITY_EATEN): {
-        viewNotification.type = scoreViewTypes::UPDATE_SCORE;
-        viewNotification.score = score->getScore();
-        break;
-    }
-    case (scoreNotificationsType::LIVE_LOST): {
-        if (score->getLivesLeft() == 0) {
-            viewNotification.type = scoreViewTypes::END_GAME;
-            viewNotification.score = score->getScore();
-        } else {
-            viewNotification.type = scoreViewTypes::UPDATE_LIVES;
-            viewNotification.lives = score->getLivesLeft() - 1;
-        }
-
-        break;
-    }
-    default:
-        break;
-    }
-    for (std::shared_ptr<Observer<scoreViewNotifications> >& observer : observers) {
-        observer->notify(viewNotification);
-    }
-
+void world::notifyObservers(const scoreNotifications& notification) const {
     score->notify(notification);
 }
 

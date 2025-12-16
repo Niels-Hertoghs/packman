@@ -28,6 +28,7 @@ class Score : public Observer<scoreNotifications> {
     int livesLeft; /// Het aantal levens dat de speler nog over heeft.
     int level;     /// Het huidige level van de speler.
     view::stateManeger& manager;
+    std::vector<std::shared_ptr<Observer<scoreViewNotifications>>> observers;
     //TODO: maak een methode in maneger, of laat ergens anders oproepen
     /// Reference naar de state manager, om states te kunnen veranderen bij game over of level up.
 public:
@@ -54,6 +55,9 @@ public:
      * @return Het huidige level van de speler.
      */
     [[nodiscard]] int getLevel() const;
+
+    void subscribe(std::shared_ptr<Observer<scoreViewNotifications>>);
+    void notifyObservers(scoreViewTypes notification) const;
 
     /**
      * @brief Default destructor.

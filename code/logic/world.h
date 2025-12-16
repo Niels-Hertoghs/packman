@@ -33,7 +33,6 @@ private:
     std::string inputFile;
 
     std::shared_ptr<Score> score;
-    std::vector<std::shared_ptr<Observer<scoreViewNotifications> > > observers;
 
 public:
     explicit world(const std::string& inputFile);
@@ -44,18 +43,16 @@ public:
 
     void updatePacmanDir(directions) const;
 
-    void subscribeScore(std::shared_ptr<Score> observer);
+    void subscribeScore(std::shared_ptr<Score> score);
 
-    void subscribeObserver(std::shared_ptr<Observer<scoreViewNotifications> > observer);
-
-    void notifyObservers(const scoreNotifications& notification);
+    void notifyObservers(const scoreNotifications& notification) const;
 
     void clear();
 
     /**
      * Als pacman gestorven is -> alles restart
      */
-    void died();
+    void died() const;
 
     /**
      * @brief Laat alle objecten (die het moeten weten) weten dat Fear mode is gestart.

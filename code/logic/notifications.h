@@ -62,7 +62,7 @@ public:
         : NotificationsBase(notification) {
     }
 
-    int lives{}, level{}, score{};
+    int lives = 0, level = 0, score = 0;
 };
 
 
