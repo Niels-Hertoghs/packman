@@ -12,25 +12,14 @@
 
 #include <memory>
 
-/**
- * @brief Alle mogelijke types van collectables.
- */
-enum class collectableTypes {
-    COIN,
-    FRUIT
-};
-
-
 namespace logic {
 /**
  * @class LogicFactory
  * @brief Abstracte basis klasse voor alle logic factories.
  */
-class LogicFactory {
+class abstractFactory {
 public:
-    virtual ~LogicFactory() = default;
-
-private:
+    virtual ~abstractFactory() = default;
     /**
      * @brief Maakt een nieuwe Pacman aan.
      * @return Shared pointer naar een nieuw gemaakte Pacman.
@@ -59,25 +48,6 @@ private:
      */
     virtual std::shared_ptr<collectable> createCollectable(collectableTypes typeCollectable, double x, double y,
                                                            int points) = 0;
-};
-
-/**
- * @class ConcreteLogicFactory
- * @brief Concrete klasse voor de logic factory.
- */
-class ConcreteLogicFactory final : public LogicFactory {
-public:
-    // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-    std::shared_ptr<Pacman> createPacman(double x, double y, float speed) override;
-
-    std::shared_ptr<Ghost> createGhost(ghostTypes typeGhost, double x, double y, float speed, int points) override;
-
-    std::shared_ptr<wall> createWall(double x, double y) override;
-
-    std::shared_ptr<invisibleWall> createInvisibleWall(double x, double y) override;
-
-    std::shared_ptr<collectable>
-    createCollectable(collectableTypes typeCollectable, double x, double y, int points) override;
 };
 } // logic
 

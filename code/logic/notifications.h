@@ -120,5 +120,14 @@ enum class ghostTypes {
     ORANGE
 };
 
+/**
+ * @brief Alle mogelijke types van collectables.
+ */
+enum class collectableTypes {
+    COIN,
+    FRUIT
+};
+
+
 
 #endif //PACKMAN_NOTIFIES_H

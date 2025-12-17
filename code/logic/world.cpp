@@ -11,13 +11,13 @@
 namespace logic {
 
 
-world::world(const std::string& inputFile2) {
+world::world(const std::string& inputFile_, std::unique_ptr<abstractFactory> factory) : factory(std::move(factory)) {
     try {
-        std::ifstream file(inputFile2);
+        std::ifstream file(inputFile_);
         if (!file.is_open()) {
-            throw std::runtime_error("Bestand bestaat niet: " + inputFile2);
+            throw std::runtime_error("Bestand bestaat niet: " + inputFile_);
         }
-        inputFile = inputFile2;
+        inputFile = inputFile_;
     } catch (const std::exception& e) {
         std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
         throw;
@@ -35,8 +35,6 @@ void world::startWorld(int level) {
     const float pacmanSpeed = 1.f + level * 0.25f;
     const int coinPoints = 30 + (10 * level);
     const int fruitPoints = 40 + (10 * level);
-
-    std::unique_ptr<ConcreteLogicFactory> factory = std::make_unique<ConcreteLogicFactory>();
 
     std::string line;
     double y = 1.0 - 2.0 / 7.0;

@@ -49,6 +49,12 @@ public:
      */
     void draw() const;
 
+    void addCollectableView(const std::shared_ptr<collectableView>& collectableV);
+    void addGhostView(const std::shared_ptr<ghostView>& ghostV);
+    void addWallView(const std::shared_ptr<wallView>& wallV);
+    void addPacmanView(const std::shared_ptr<packmanView>& pacmanV);
+
+
     ~worldView() = default;
 };
 }

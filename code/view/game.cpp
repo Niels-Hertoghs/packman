@@ -4,10 +4,11 @@
 
 #include "game.h"
 
+#include "concreteFactory.h"
+
 namespace view {
     void game::playGame() {
         view::stateManeger manager; // state manager aanmaken
-        std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
 
         // Vraag de resolutie van het primaire scherm op
         sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -28,6 +29,17 @@ namespace view {
             (static_cast<int>(desktop.width - width)) / 2,
             (static_cast<int>(desktop.height - height)) / 2
         ));
+
+
+        std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt",std::move(factory));
+
+        std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
+
+        std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld, cam, window, score);
+        wereld->subscribeScore(score);
+
+        std::unique_ptr<view::concreteFactory> factory = std::make_unique<concreteFactory>(cam,window,worldView);
+
 
         // main window loop
         while (window.isOpen()) {
