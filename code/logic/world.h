@@ -34,8 +34,11 @@ private:
 
     std::shared_ptr<Score> score;
     std::unique_ptr<abstractFactory> factory;
+
 public:
-    explicit world(const std::string& inputFile,std::unique_ptr<abstractFactory> factory);
+    explicit world(const std::string& inputFile);
+
+    void giveFactory(std::unique_ptr<abstractFactory> factory);
 
     void startWorld(int level);
 

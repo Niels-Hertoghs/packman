@@ -40,7 +40,7 @@ add_executable(packman
         code/view/ScoreView.cpp
         code/view/state_maneger/state.cpp
         code/view/state_maneger/make_text.cpp
-        code/view/ViewFactory.cpp
+        code/view/concreteFactory.cpp
 )
 
 target_include_directories(packman PRIVATE code/view)

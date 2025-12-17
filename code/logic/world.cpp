@@ -11,7 +11,7 @@
 namespace logic {
 
 
-world::world(const std::string& inputFile_, std::unique_ptr<abstractFactory> factory) : factory(std::move(factory)) {
+world::world(const std::string& inputFile_) {
     try {
         std::ifstream file(inputFile_);
         if (!file.is_open()) {
@@ -22,6 +22,10 @@ world::world(const std::string& inputFile_, std::unique_ptr<abstractFactory> fac
         std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
         throw;
     }
+}
+
+void world::giveFactory(std::unique_ptr<abstractFactory> factory_) {
+    factory = std::move(factory_);
 }
 
 void world::startWorld(int level) {
@@ -191,6 +195,7 @@ void world::clear() {
     invisibleWalls.clear();
     ghosts.clear();
     pacman = nullptr;
+
 }
 
 void world::startFearMode() const {

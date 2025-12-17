@@ -31,15 +31,14 @@ namespace view {
         ));
 
 
-        std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt",std::move(factory));
+        std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
 
         std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
 
-        std::unique_ptr<view::worldView> wereldView = std::make_unique<view::worldView>(wereld, cam, window, score);
+        std::shared_ptr<view::worldView> wereldView = std::make_shared<view::worldView>(wereld, cam, window, score);
+        std::unique_ptr<logic::abstractFactory> factory = std::make_unique<concreteFactory>(cam,window,wereldView);
         wereld->subscribeScore(score);
-
-        std::unique_ptr<view::concreteFactory> factory = std::make_unique<concreteFactory>(cam,window,worldView);
-
+        wereld->giveFactory(std::move(factory));
 
         // main window loop
         while (window.isOpen()) {
@@ -63,7 +62,7 @@ namespace view {
                 }
             }
             window.clear(sf::Color::Black);
-            manager.runTop(window, event, cam, wereld, static_cast<float>(deltaTime));
+            manager.runTop(window, event, cam, wereld,wereldView, static_cast<float>(deltaTime));
 
             window.display();
         }

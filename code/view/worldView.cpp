@@ -50,4 +50,10 @@ void worldView::addPacmanView(const std::shared_ptr<packmanView>& pacmanV) {
     pacman = pacmanV;
 }
 
+void worldView::clear() {
+    walls.clear();
+    collectables.clear();
+    ghosts.clear();
+    pacman = nullptr;
+}
 }

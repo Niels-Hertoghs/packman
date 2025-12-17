@@ -61,6 +61,8 @@ public:
 
     void subscribe(std::shared_ptr<Observer<scoreViewNotifications>>);
 
+    void reset();
+
     /**
      * @brief Default destructor.
      */

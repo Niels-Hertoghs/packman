@@ -73,19 +73,21 @@ std::shared_ptr<logic::collectable> concreteFactory::createCollectable(const col
     switch (typeCollectable) {
     case collectableTypes::COIN: {
         collectable = std::make_shared<logic::coin>(x + 1.f / 20.f, y - 1.f / 14.f, points);
+        collectableView = std::make_shared<coinView>(
+    window, _camera, collectable->getX(), collectable->getY());
         break;
     }
     case collectableTypes::FRUIT: {
         collectable = std::make_shared<logic::fruit>(x + 1.f / 20.f, y - 1.f / 14.f, points);
         collectableView = std::make_shared<fruitView>(
             window, _camera, collectable->getX(), collectable->getY());
-        collectable->subscribe(collectableView);
         break;
     }
     default:
         break;
     }
+    collectable->subscribe(collectableView);
     worldV->addCollectableView(collectableView);
-    return collectable;
+    return std::move(collectable);
 }
 } // view

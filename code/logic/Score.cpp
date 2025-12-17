@@ -24,8 +24,8 @@ void Score::notify(const scoreNotifications& message) {
             // aantal coin points komt er bij de score als de collectable gegeten wordt na 1 sec
             // als het sneller wordt gedaan komen er meer punten bij, afhankelijk van hoe snel
             // (0.5 sec -> points verdubbeld, na 2 sec points gehalveerd)
-            const auto points = static_cast<float>(message.points);
-            score += static_cast<int>(std::round(points / lastEatenTime));
+            const auto points = message.points;
+            score += points / lastEatenTime;
         }
         notifyObservers(scoreViewTypes::UPDATE_SCORE);
         break;
@@ -85,5 +85,14 @@ void Score::notifyObservers(const scoreViewTypes notification) const {
     for (const auto& observer : observers) {
         observer->notify(notif);
     }
+}
+
+void Score::reset() {
+    score = 0;
+    livesLeft = 2;
+    level = 1;
+    notifyObservers(scoreViewTypes::UPDATE_SCORE);
+    notifyObservers(scoreViewTypes::UPDATE_LIVES);
+    notifyObservers(scoreViewTypes::UPDATE_LEVEL);
 }
 } // logic
