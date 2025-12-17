@@ -9,6 +9,7 @@
 #include <sstream>
 #include "make_text.h"
 #include "stateManeger.h"
+#include "../logic/Stopwatch.h"
 
 namespace view {
 state::state() {

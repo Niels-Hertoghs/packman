@@ -3,14 +3,12 @@
 //
 
 #include "Score.h"
-
+#include "Stopwatch.h"
 #include <cmath>
 
-#include "../view/state_maneger/stateManeger.h"
-
 namespace logic {
-Score::Score(view::stateManeger& manager)
-    : Observer(), score(0), livesLeft(2), level(1), manager(manager) {
+Score::Score()
+    : Observer(), score(0), livesLeft(2), level(1) {
 }
 
 void Score::notify(const scoreNotifications& message) {
@@ -33,7 +31,6 @@ void Score::notify(const scoreNotifications& message) {
         livesLeft--;
         if (livesLeft < 0) {
             notifyObservers(scoreViewTypes::END_GAME);
-            manager.gameOverState();
         }
         notifyObservers(scoreViewTypes::UPDATE_LIVES);
         break;
@@ -42,7 +39,6 @@ void Score::notify(const scoreNotifications& message) {
         level++;
         score += 100; // Standaard extra punten voor het halen van een level
         notifyObservers(scoreViewTypes::UPDATE_LEVEL);
-        manager.startVictory();
         break;
     }
 

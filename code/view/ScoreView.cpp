@@ -8,12 +8,13 @@
 
 #include "state_maneger/state.h"
 #include "state_maneger/make_text.h"
+#include "state_maneger/stateManeger.h"
 #include <iostream>
 
 namespace view {
 
-ScoreView::ScoreView(sf::RenderWindow& window, camera& cam, int score, int level, int lives)
-    : ObserverView(window, cam) {
+ScoreView::ScoreView(sf::RenderWindow& window, camera& cam, int score, int level, int lives,std::shared_ptr<stateManeger> manager)
+    : ObserverView(window, cam), _manager(std::move(manager)) {
     try {
         sf::Font Font;
         if (!Font.loadFromFile("input_output/packman_font.ttf")) {
@@ -93,6 +94,11 @@ void ScoreView::notify(const scoreViewNotifications& message) {
     case scoreViewTypes::END_GAME: {
         int score = message.score;
         gameEnded(score);
+        _manager->gameOverState();
+        break;
+    }
+    case scoreViewTypes::UPDATE_LEVEL: {
+        _manager->startVictory();
         break;
     }
     default:

@@ -9,8 +9,9 @@
 #include "entities/movableEntityView.h"
 #include "entities/collectableView.h"
 #include "entities/ghostView.h"
+#include "../logic/Score.h"
 #include "ScoreView.h"
-#include "observerView.h"
+
 
 // Forward declarations
 namespace logic {
@@ -31,7 +32,7 @@ private:
 
     std::vector<std::shared_ptr<ghostView> > ghosts;
 
-    std::shared_ptr<view::ScoreView> score; /// De score observer.
+    std::shared_ptr<ScoreView> score; /// De score observer.
 public:
     /**
      * @brief Constructor
@@ -40,8 +41,7 @@ public:
      * @param window Waar het op moet worden afgebeeld.
      * @param score Pointer naar de score logica.
      */
-    worldView(const std::shared_ptr<logic::world>& _wereld, camera& camera, sf::RenderWindow& window,
-              std::shared_ptr<logic::Score>& score);
+    worldView(camera& camera, sf::RenderWindow& window,const std::shared_ptr<logic::Score>& score,std::shared_ptr<stateManeger> manager);
 
 
     /**

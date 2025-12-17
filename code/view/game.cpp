@@ -8,7 +8,7 @@
 
 namespace view {
     void game::playGame() {
-        view::stateManeger manager; // state manager aanmaken
+        std::shared_ptr<stateManeger> manager = std::make_shared<stateManeger>(); // state manager aanmaken
 
         // Vraag de resolutie van het primaire scherm op
         sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -33,9 +33,9 @@ namespace view {
 
         std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
 
-        std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(manager); // score observer aanmaken
+        std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(); // score observer aanmaken
 
-        std::shared_ptr<view::worldView> wereldView = std::make_shared<view::worldView>(wereld, cam, window, score);
+        std::shared_ptr<view::worldView> wereldView = std::make_shared<view::worldView>(cam, window, score,manager);
         std::unique_ptr<logic::abstractFactory> factory = std::make_unique<concreteFactory>(cam,window,wereldView);
         wereld->subscribeScore(score);
         wereld->giveFactory(std::move(factory));
@@ -62,7 +62,7 @@ namespace view {
                 }
             }
             window.clear(sf::Color::Black);
-            manager.runTop(window, event, cam, wereld,wereldView, static_cast<float>(deltaTime));
+            manager->runTop(window, event, cam, wereld,wereldView, static_cast<float>(deltaTime));
 
             window.display();
         }
