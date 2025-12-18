@@ -98,6 +98,10 @@ void ScoreView::notify(const scoreViewNotifications& message) {
         break;
     }
     case scoreViewTypes::UPDATE_LEVEL: {
+        int nextlevel = message.level;
+        sf::Text LevelText = makeText(font, "Level: " + std::to_string(nextlevel), 0.16f, sf::Color::Yellow, 0.f,
+                                      1.f - 1.f / 7.f, _camera);
+        levelText = LevelText;
         _manager->startVictory();
         break;
     }

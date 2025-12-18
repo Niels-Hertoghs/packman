@@ -89,6 +89,5 @@ void Score::reset() {
     level = 1;
     notifyObservers(scoreViewTypes::UPDATE_SCORE);
     notifyObservers(scoreViewTypes::UPDATE_LIVES);
-    notifyObservers(scoreViewTypes::UPDATE_LEVEL);
 }
 } // logic
