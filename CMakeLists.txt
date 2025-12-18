@@ -19,7 +19,7 @@ add_library(packman_logic
         code/logic/random.cpp
         code/logic/Score.cpp
         code/logic/entities/manhattanGhost.cpp
-        code/logic/LogicFactory.cpp
+        code/logic/abstractFactory.cpp
 )
 
 target_include_directories(packman_logic PUBLIC code/logic)

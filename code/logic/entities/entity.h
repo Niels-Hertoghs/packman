@@ -7,13 +7,7 @@
 #include <memory>
 #include "../Observer.h"
 #include "../notifications.h"
-
 #include <vector>
-
-// Forward declarations
-namespace view {
-class wallView;
-}
 
 namespace logic {
 /**
@@ -21,12 +15,15 @@ namespace logic {
  * @brief Een abstracte klasse voor alle objecten in de game.
  */
 class entity {
-
 protected:
-    std::vector<std::shared_ptr<Observer<notifications> > > observers; /// De observer van de movableEntity.
-    double x;                                                          /// Positie op de x as.
-    double y;                                                          /// Positie op de y as.
+    std::vector<std::shared_ptr<Observer<notifications>>> observers; /// De observers van de Entity.
+    double x;                                                        /// Positie op de x as.
+    double y;                                                        /// Positie op de y as.
 
+    /**
+     * @brief notified alle observers met de notification.
+     * @param notification De notificatie die gecommuniceerd wordt.
+     */
     virtual void notifyObservers(const notifications& notification);
 
 public:
@@ -38,7 +35,6 @@ public:
     entity(double x, double y);
 
     // methodes
-
 
     /**
      * @return De positie van het object op de x-as.
@@ -57,9 +53,9 @@ public:
 
     /**
     * @brief Laat de observer "subscriben" aan de entity.
-    * @param observer POinter naar de observer van de movableEntity.
+    * @param observer Pointer naar de observer van de Entity.
     */
-    void subscribe(std::shared_ptr<Observer<notifications> > observer);
+    void subscribe(std::shared_ptr<Observer<notifications>> observer);
 
     /**
     * @brief Default destructor.
@@ -87,10 +83,10 @@ public:
 };
 
 /**
-* @class invisibleWall
-* @brief Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window, maar de objecten kunnen er niet door gaan (enkel de ghosts om uit hun cage te gaan).
-* @brief Positie x,y is de linkerbovenhoek.
-*/
+ * @class invisibleWall
+ * @brief Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window, maar de objecten kunnen er niet door gaan (enkel de ghosts om uit hun cage te gaan).
+ * @brief Positie x,y is de linkerbovenhoek.
+ */
 class invisibleWall final : public entity {
 public:
     /**

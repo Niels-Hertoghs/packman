@@ -110,7 +110,7 @@ void world::update(float deltaTime) {
     // zien of pacman niet op een collectable staat
     for (auto it = collectables.begin(); it != collectables.end();) {
         if (pacman->standsOnCoin(*it)) {
-            notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN, it->get()->getPoints()));
+            notifyObservers(scoreNotifications( it->get()->getPoints()));
             it->get()->collected();
             if (it->get()->isFruit()) {
                 startFearMode();
@@ -127,7 +127,7 @@ void world::update(float deltaTime) {
                 died();
             } else if (ghost->get_mode() == modes::FEAR_MODE) {
                 ghost->died();
-                notifyObservers(scoreNotifications(scoreNotificationsType::ENTITY_EATEN, ghost->getGhostPoints(),
+                notifyObservers(scoreNotifications(ghost->getGhostPoints(),
                                                    true));
             }
         }

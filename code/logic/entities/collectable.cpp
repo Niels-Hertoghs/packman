@@ -3,7 +3,6 @@
 //
 
 #include "collectable.h"
-#include <utility>
 
 
 namespace logic {
@@ -11,8 +10,8 @@ namespace logic {
 /// @class collectable
 /// ---------------------------------------------------------------------------------------------------------------
 
-collectable::collectable(double x, double y, int Points)
-    : entity(x, y), points(Points) {
+collectable::collectable(const double x, const double y, const int points)
+    : entity(x, y), points(points) {
 }
 
 int collectable::getPoints() const {

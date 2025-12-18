@@ -35,6 +35,6 @@ void wallView::draw() {
     window.draw(_wall);
 }
 
-void wallView::notify(const notifications& message) {
+void wallView::notify(const logic::notifications& message) {
 }
 }

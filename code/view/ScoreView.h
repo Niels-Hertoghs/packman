@@ -13,7 +13,7 @@ class stateManeger;
 * @class ScoreView
 * @brief Concrete klasse voor de score observer.
 */
-class ScoreView final : public ObserverView<scoreViewNotifications> {
+class ScoreView final : public ObserverView<logic::scoreViewNotifications> {
     sf::Font font;      /// Font voor de score tekst.
     sf::Text scoreText; /// Tekst voor de score.
     sf::Text levelText; /// Tekst voor het level.
@@ -35,7 +35,7 @@ public:
  * @brief Waarschuwing dat er iets is veranderd in de score logica.
  * @param message De notificatie die is verzonden.
  */
-    void notify(const scoreViewNotifications& message) override;
+    void notify(const logic::scoreViewNotifications& message) override;
 
     /**
  * @brief Tekent de score, level en levens op de juiste plaats in de window.

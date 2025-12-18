@@ -22,7 +22,7 @@ namespace view {
  * @class entityView
  * @brief Abstracte klasse voor alle entity observers.
  */
-    class entityView : public ObserverView<notifications> {
+    class entityView : public ObserverView<logic::notifications> {
     protected:
         double x, y; /// de positie van van de entity
     public:
@@ -34,7 +34,7 @@ namespace view {
         entityView(sf::RenderWindow &window, camera &cam, double x, double y);
 
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-        void notify(const notifications &message) override = 0;
+        void notify(const logic::notifications &message) override = 0;
 
         void draw() override = 0;
 
@@ -63,7 +63,7 @@ namespace view {
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
 
-        void notify(const notifications &message) override;
+        void notify(const logic::notifications &message) override;
 
         /**
      * @brief Default destructor.

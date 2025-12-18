@@ -71,9 +71,9 @@ void ScoreView::draw() {
     window.draw(livesText);
 }
 
-void ScoreView::notify(const scoreViewNotifications& message) {
+void ScoreView::notify(const logic::scoreViewNotifications& message) {
     switch (message.type) {
-    case scoreViewTypes::UPDATE_SCORE: {
+    case logic::scoreViewTypes::UPDATE_SCORE: {
         int currentScore = message.score;
         sf::Text ScoreText = makeText(font, "SCORE: " + std::to_string(currentScore), 0.05, sf::Color::Yellow, -0.95f,
                                       -0.95f, _camera);
@@ -83,7 +83,7 @@ void ScoreView::notify(const scoreViewNotifications& message) {
         break;
     }
 
-    case scoreViewTypes::UPDATE_LIVES: {
+    case logic::scoreViewTypes::UPDATE_LIVES: {
         int livesLeft = message.lives;
         sf::Text LifesText = makeText(font, "# LIFES REMAINING:" + std::to_string(livesLeft), 0.05, sf::Color::Yellow,
                                       0.95f, -0.95f, _camera);
@@ -92,13 +92,13 @@ void ScoreView::notify(const scoreViewNotifications& message) {
         livesText = LifesText;
         break;
     }
-    case scoreViewTypes::END_GAME: {
+    case logic::scoreViewTypes::END_GAME: {
         int score = message.score;
         gameEnded(score);
         _manager->gameOverState();
         break;
     }
-    case scoreViewTypes::UPDATE_LEVEL: {
+    case logic::scoreViewTypes::UPDATE_LEVEL: {
         int nextlevel = message.level;
         sf::Text LevelText = makeText(font, "Level: " + std::to_string(nextlevel), 0.16f, sf::Color::Yellow, 0.f,
                                       1.f - 1.f / 7.f, _camera);

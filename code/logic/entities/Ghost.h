@@ -9,22 +9,33 @@
 
 namespace logic {
 /**
-* @Class Ghost
-* @brief De abstracte klasse voor alle ghosts.
-*/
+ * @Class Ghost
+ * @brief De abstracte klasse voor alle ghosts.
+ */
 class Ghost : public movableEntity {
     int points; /// Het aantal points dat er bij de score komen als er een ghost opgegeten wordt.
 protected:
-    enum modes mode;          /// De mode van de Ghost (FEAR_MODE of CHASING_MODE).
+    modes mode;          /// De mode van de Ghost (FEAR_MODE of CHASING_MODE).
     directions prevDirection; /// De vorige richting van de ghost.
     bool hasChosenAtIntersection;
     /// Zodat die niet meerdere keren kan kiezen aan een intersectie, als die juist heeft gekozen kan die niet meer kiezen tot die voorbij het kruispunt is.
     bool canChoseDir;
     /// Moet in het begin even de top raken, voordat het de random richtingen uit kan gaan. Is er ook zodat de ghost de ghost kamer kan verlaten en daarna niet meer door de invisible walls kan.
     bool outsideCage;
-    /// Of de ghost al uit de cage is, is voor de ghosts aan de zijde van de cage, die moeten eerste zijwaarts bewegen en dan zoals de andere 2 omhoog..
-    bool originalOutsideCage;
-    /// Als de ghost word her spawned moet die terug uit hun cage kunnen (de zijwaartse beweging).
+    /// Of de ghost al uit de cage is, is voor de ghosts aan de zijde van de cage, die moeten eerste zijwaarts bewegen en dan zoals de andere 2 omhoog.
+
+    /**
+     * @brief Berekent alle mogelijke richtingen waar de ghost naartoe kan bewegen.
+     * @param walls De muren in de wereld, om te zien dat de ghost er niet door kan bewegen.
+     * @return Vector met alle mogelijke richtingen waar de ghost naartoe kan bewegen.
+     */
+    [[nodiscard]] std::vector<directions> possibleDirections(const std::vector<std::shared_ptr<entity>>& walls) const;
+
+    /**
+     * @brief Verandert de richting van de ghost en laat de observer weten dat de richting is veranderd.
+     * @param direction De richting waar de ghost naartoe moet veranderen.
+     */
+    void changeDirection(directions direction);
 public:
     // constructor
     /**
@@ -38,7 +49,7 @@ public:
     Ghost(double x, double y, bool outsideCage, directions direction, double speed, int points);
 
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-    void update(double deltaTime, std::vector<std::shared_ptr<entity> >& walls) override;
+    void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
 
     void died() override;
 
@@ -47,13 +58,13 @@ public:
      * @brief Als de ghost aan een kruispunt staat, kies dan een nieuwe richting.
      * @param walls De muren in de wereld, om te zien dat de ghost er niet door kan bewegen.
      */
-    virtual void chooseAtIntersection(std::vector<std::shared_ptr<entity> >& walls) = 0;
+    virtual void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) = 0;
 
     /**
      * @brief Kies de volgende richting van de ghost.
      * @param walls De muren in de wereld, om te zien dat de ghost er niet door kan bewegen.
      */
-    virtual void nextDirection(std::vector<std::shared_ptr<entity> >& walls) = 0;
+    virtual void nextDirection(std::vector<std::shared_ptr<entity>>& walls) = 0;
 
     /**
      * @brief Zien of de ghost mag bewegen (na de start van de game, sommige ghosts moeten even wachten).
@@ -75,22 +86,9 @@ public:
 
     // methodes
     /**
-     * @brief Berekent alle mogelijke richtingen waar de ghost naartoe kan bewegen.
-     * @param walls De muren in de wereld, om te zien dat de ghost er niet door kan bewegen.
-     * @return Vector met alle mogelijke richtingen waar de ghost naartoe kan bewegen.
-     */
-    [[nodiscard]] std::vector<directions> possibleDirections(const std::vector<std::shared_ptr<entity> >& walls) const;
-
-    /**
      * @return Bool of de ghost al uit de cage is.
      */
     [[nodiscard]] bool hadFirstCollision() const;
-
-    /**
-     * @brief Verandert de richting van de ghost en laat de observer weten dat de richting is veranderd.
-     * @param direction De richting waar de ghost naartoe moet veranderen.
-     */
-    void changeDirection(directions direction);
 
     /**
      * @brief Zet de ghost in fear mode, met alle gevolgen.
@@ -134,11 +132,11 @@ public:
     redGhost(double x, double y, double speed, int points);
 
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-    void nextDirection(std::vector<std::shared_ptr<entity> >& walls) override;
+    void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
 
     [[nodiscard]] bool canMove() override;
 
-    void chooseAtIntersection(std::vector<std::shared_ptr<entity> >& walls) override;
+    void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
 
     void givePacman(std::shared_ptr<Pacman> pacman) override;
 

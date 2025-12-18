@@ -6,136 +6,136 @@
 #include "../Stopwatch.h"
 
 namespace logic {
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
 /// manhattanGhost
 /// ---------------------------------------------------------------------------------------------------------------
 
-    manhattanGhost::manhattanGhost(double x, double y, bool outsideCage, directions direction, double speed, int points)
-        : Ghost(x, y, outsideCage, direction, speed, points) {
+manhattanGhost::manhattanGhost(const double x, const double y, const bool outsideCage, const directions direction, const double speed, const int points)
+    : Ghost(x, y, outsideCage, direction, speed, points) {
+}
+
+void manhattanGhost::givePacman(std::shared_ptr<Pacman> _pacman) {
+    pacman = std::move(_pacman);
+}
+
+double manhattanGhost::calculateManhattan(double x1, double y1, double x2, double y2) {
+    double x = std::abs(x1 - x2);
+    double y = std::abs(y1 - y2);
+    return x + y;
+}
+
+
+void manhattanGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
+    std::vector<directions> posDirections = this->possibleDirections(walls);
+
+    // De volg kant van pacman opvargen van de derivdes.
+    std::pair<double, double> kantPac = getFollowSide();
+
+    // initializatie om de richting te kiezen
+    directions nextDirection = direction;
+    double edgeDistance = 0;
+    if (mode == modes::CHASING_MODE) {
+        edgeDistance = std::numeric_limits<double>::max();
+    } else if (mode == modes::FEAR_MODE) {
+        edgeDistance = std::numeric_limits<double>::min();
     }
 
-    void manhattanGhost::givePacman(std::shared_ptr<logic::Pacman> _pacman) {
-        pacman = std::move(_pacman);
-    }
-
-    double manhattanGhost::calculateManhattan(double x1, double y1, double x2, double y2) {
-        double x = std::abs(x1 - x2);
-        double y = std::abs(y1 - y2);
-        return x + y;
-    }
-
-
-    void manhattanGhost::nextDirection(std::vector<std::shared_ptr<entity> > &walls) {
-        std::vector<directions> posDirections = this->possibleDirections(walls);
-
-        // De volg kant van pacman opvargen van de derivdes.
-        std::pair<double, double> kantPac = getFollowSide();
-
-        // initializatie om de richting te kiezen
-        directions nextDirection = direction;
-        double edgeDistance = 0;
+    for (directions d : posDirections) {
+        // std::pair<double, double> voorkantGhost = this->getFront(direction);
+        // de pos van het spookje als het direction p op gaat
+        std::pair<double, double> nextPosGhost = calculateNextPos(1, d, x + 1.f / 20.f, y - 1.f / 14.f);
+        double distance = calculateManhattan(kantPac.first, kantPac.second, nextPosGhost.first,
+                                             nextPosGhost.second);
         if (mode == modes::CHASING_MODE) {
-            edgeDistance = std::numeric_limits<double>::max();
+            // zoek de kleinste distance
+            if (distance < edgeDistance) {
+                edgeDistance = distance;
+                nextDirection = d;
+            }
         } else if (mode == modes::FEAR_MODE) {
-            edgeDistance = std::numeric_limits<double>::min();
-        }
-
-        for (directions d: posDirections) {
-            // std::pair<double, double> voorkantGhost = this->getFront(direction);
-            // de pos van het spookje als het direction p op gaat
-            std::pair<double, double> nextPosGhost = calculateNextPos(1, d, x + 1.f / 20.f, y - 1.f / 14.f);
-            double distance = calculateManhattan(kantPac.first, kantPac.second, nextPosGhost.first,
-                                                 nextPosGhost.second);
-            if (mode == modes::CHASING_MODE) {
-                // zoek de kleinste distance
-                if (distance < edgeDistance) {
-                    edgeDistance = distance;
-                    nextDirection = d;
-                }
-            } else if (mode == modes::FEAR_MODE) {
-                if (distance > edgeDistance) {
-                    // zoek de grootste distance
-                    edgeDistance = distance;
-                    nextDirection = d;
-                }
+            if (distance > edgeDistance) {
+                // zoek de grootste distance
+                edgeDistance = distance;
+                nextDirection = d;
             }
         }
-
-        changeDirection(nextDirection);
     }
 
-    void manhattanGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> > &walls) {
-        this->nextDirection(walls);
-    }
+    changeDirection(nextDirection);
+}
 
-    /// ---------------------------------------------------------------------------------------------------------------
+void manhattanGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
+    this->nextDirection(walls);
+}
+
+/// ---------------------------------------------------------------------------------------------------------------
 /// frontManhattanGhost
 /// ---------------------------------------------------------------------------------------------------------------
 
-    frontManhattanGhost::frontManhattanGhost(double x, double y, bool outsideCage, directions direction, double speed,
-                                             int points)
-        : manhattanGhost(x, y, outsideCage, direction, speed, points) {
-    }
+frontManhattanGhost::frontManhattanGhost(double x, double y, bool outsideCage, directions direction, double speed,
+                                         int points)
+    : manhattanGhost(x, y, outsideCage, direction, speed, points) {
+}
 
-    std::pair<double, double> frontManhattanGhost::getFollowSide() {
-        std::pair<double, double> voorkantPac = pacman->getFront();
-        return voorkantPac;
-    }
+std::pair<double, double> frontManhattanGhost::getFollowSide() {
+    std::pair<double, double> voorkantPac = pacman->getFront();
+    return voorkantPac;
+}
 
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
 /// blueGhost
 /// ---------------------------------------------------------------------------------------------------------------
 
 
-    blueGhost::blueGhost(double x, double y, double speed, int points)
-        : frontManhattanGhost(x, y, true, directions::UP, speed, points) {
-    }
+blueGhost::blueGhost(double x, double y, double speed, int points)
+    : frontManhattanGhost(x, y, true, directions::UP, speed, points) {
+}
 
-    bool blueGhost::canMove() {
-        return true;
-    }
+bool blueGhost::canMove() {
+    return true;
+}
 
-    ghostTypes blueGhost::getType() {
-        return ghostTypes::BLUE;
-    }
+ghostTypes blueGhost::getType() {
+    return ghostTypes::BLUE;
+}
 
 
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
 /// greenGhost
 /// ---------------------------------------------------------------------------------------------------------------
 
 
-    greenGhost::greenGhost(double x, double y, double speed, int points)
-        : frontManhattanGhost(x, y, false, directions::RIGHT, speed, points) {
-    }
+greenGhost::greenGhost(double x, double y, double speed, int points)
+    : frontManhattanGhost(x, y, false, directions::RIGHT, speed, points) {
+}
 
-    bool greenGhost::canMove() {
-        return Stopwatch::getInstance()->canStartAfter5Sec();
-    }
+bool greenGhost::canMove() {
+    return Stopwatch::getInstance()->canStartAfter5Sec();
+}
 
-    ghostTypes greenGhost::getType() {
-        return ghostTypes::GREEN;
-    }
+ghostTypes greenGhost::getType() {
+    return ghostTypes::GREEN;
+}
 
 
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
 /// orangeGhost
 /// ---------------------------------------------------------------------------------------------------------------
 
 
-    orangeGhost::orangeGhost(double x, double y, double speed, int points)
-        : manhattanGhost(x, y, false, directions::LEFT, speed, points) {
-    }
+orangeGhost::orangeGhost(double x, double y, double speed, int points)
+    : manhattanGhost(x, y, false, directions::LEFT, speed, points) {
+}
 
-    std::pair<double, double> orangeGhost::getFollowSide() {
-        return pacman->getBack();
-    }
+std::pair<double, double> orangeGhost::getFollowSide() {
+    return pacman->getBack();
+}
 
-    bool orangeGhost::canMove() {
-        return Stopwatch::getInstance()->canStartAfter10Sec();
-    }
+bool orangeGhost::canMove() {
+    return Stopwatch::getInstance()->canStartAfter10Sec();
+}
 
-    ghostTypes orangeGhost::getType() {
-        return ghostTypes::ORANGE;
-    }
+ghostTypes orangeGhost::getType() {
+    return ghostTypes::ORANGE;
+}
 } // logic

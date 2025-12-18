@@ -62,30 +62,30 @@ void movableEntityView::draw() {
     _movable.setOrigin(bounds.width / 2, bounds.height / 2);
 }
 
-void movableEntityView::notify(const notifications& message) {
+void movableEntityView::notify(const logic::notifications& message) {
     switch (message.type) {
-    case notificationTypes::CHANGE_POSITION: {
+    case logic::notificationTypes::CHANGE_POSITION: {
         x = message.x;
         y = message.y;
         break;
     }
-    case notificationTypes::CHANGE_DIRECTION_DOWN: {
+    case logic::notificationTypes::CHANGE_DIRECTION_DOWN: {
         spriteCo = allSprites[0];
         break;
     }
-    case notificationTypes::CHANGE_DIRECTION_UP: {
+    case logic::notificationTypes::CHANGE_DIRECTION_UP: {
         spriteCo = allSprites[1];
         break;
     }
-    case notificationTypes::CHANGE_DIRECTION_RIGHT: {
+    case logic::notificationTypes::CHANGE_DIRECTION_RIGHT: {
         spriteCo = allSprites[2];
         break;
     }
-    case notificationTypes::CHANGE_DIRECTION_LEFT: {
+    case logic::notificationTypes::CHANGE_DIRECTION_LEFT: {
         spriteCo = allSprites[3];
         break;
     }
-    case notificationTypes::TO_FEAR_MODE: {
+    case logic::notificationTypes::TO_FEAR_MODE: {
         if (isGhost()) {
             allSprites = {{{-5, 550}, {-5, 600}}, {{-5, 550}, {-5, 600}}, {{-5, 550}, {-5, 600}},
                           {{-5, 550}, {-5, 600}}};
@@ -93,7 +93,7 @@ void movableEntityView::notify(const notifications& message) {
         }
         break;
     }
-    case notificationTypes::TO_CHASING_MODE: {
+    case logic::notificationTypes::TO_CHASING_MODE: {
         if (isGhost()) {
             allSprites = originalAllSprites;
 

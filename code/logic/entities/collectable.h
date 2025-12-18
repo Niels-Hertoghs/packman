@@ -33,7 +33,7 @@ public:
     void collected();
 
     /**
-     * @return Of de collectable en fruit is.
+     * @return Of de collectable een fruit is.
      */
     [[nodiscard]] virtual bool isFruit() const = 0;
 
@@ -60,18 +60,18 @@ class coin final : public collectable {
 public:
     // constructor
     /**
- * @param x De positie van de collectable op de x-as (relatief tussen -1 en 1).
- * @param y De positie van de collectable op de y-as (relatief tussen -1 en 1).
- * @param points Het aantal punten dat er bij de score komen als de collectable wordt opgegeten (na 1 seconde).
- */
+     * @param x De positie van de collectable op de x-as (relatief tussen -1 en 1).
+     * @param y De positie van de collectable op de y-as (relatief tussen -1 en 1).
+     * @param points Het aantal punten dat er bij de score komen als de collectable wordt opgegeten (na 1 seconde).
+     */
     coin(double x, double y, int points);
 
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] bool isFruit() const override;
 
     /**
- * @brief Default destructor.
- */
+     * @brief Default destructor.
+     */
     ~coin() override = default;
 };
 
@@ -83,18 +83,18 @@ class fruit final : public collectable {
 public:
     // constructor
     /**
- * @param x De positie van de collectable op de x-as (relatief tussen -1 en 1).
- * @param y De positie van de collectable op de y-as (relatief tussen -1 en 1).
- * @param points Het aantal punten dat er bij de score komen als de collectable wordt opgegeten (na 1 seconde).
- */
+     * @param x De positie van de collectable op de x-as (relatief tussen -1 en 1).
+     * @param y De positie van de collectable op de y-as (relatief tussen -1 en 1).
+     * @param points Het aantal punten dat er bij de score komen als de collectable wordt opgegeten (na 1 seconde).
+     */
     fruit(double x, double y, int points);
 
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] bool isFruit() const override;
 
     /**
- * @brief Default destructor.
- */
+     * @brief Default destructor.
+     */
     ~fruit() override = default;
 };
 }

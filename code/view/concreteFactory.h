@@ -5,7 +5,7 @@
 #ifndef PACKMAN_VIEWFACTORY_H
 #define PACKMAN_VIEWFACTORY_H
 
-#include "LogicFactory.h"
+#include "abstractFactory.h"
 #include "entities/collectableView.h"
 #include "entities/ghostView.h"
 #include "entities/movableEntityView.h"
@@ -25,13 +25,13 @@ public:
     std::shared_ptr<logic::Pacman> createPacman(double x, double y, float speed) override;
 
     std::shared_ptr<logic::Ghost>
-    createGhost(ghostTypes typeGhost, double x, double y, float speed, int points) override;
+    createGhost(logic::ghostTypes typeGhost, double x, double y, float speed, int points) override;
 
     std::shared_ptr<logic::wall> createWall(double x, double y) override;
 
     std::shared_ptr<logic::invisibleWall> createInvisibleWall(double x, double y) override;
 
-    std::shared_ptr<logic::collectable> createCollectable(collectableTypes typeCollectable, double x, double y,
+    std::shared_ptr<logic::collectable> createCollectable(logic::collectableTypes typeCollectable, double x, double y,
                                                           int points) override;
 };
 } // view

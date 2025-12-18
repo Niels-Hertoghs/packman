@@ -122,7 +122,7 @@ std::pair<double, double> movableEntity::getCoSide(directions dir) {
 }
 
 void movableEntity::notifyPos() {
-    notifyObservers(notifications(notificationTypes::CHANGE_POSITION, x, y));
+    notifyObservers(notifications(x, y));
 }
 
 void movableEntity::notifyDir() {

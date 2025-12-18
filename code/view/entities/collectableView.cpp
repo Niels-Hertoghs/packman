@@ -38,8 +38,8 @@ namespace view {
         window.draw(_coin);
     }
 
-    void coinView::notify(const notifications &message) {
-        if (message.type == notificationTypes::COLLECTED) {
+    void coinView::notify(const logic::notifications &message) {
+        if (message.type == logic::notificationTypes::COLLECTED) {
             collected = true;
         }
     }
@@ -90,8 +90,8 @@ namespace view {
         window.draw(_fruit);
     }
 
-    void fruitView::notify(const notifications &message) {
-        if (message.type == notificationTypes::COLLECTED) {
+    void fruitView::notify(const logic::notifications &message) {
+        if (message.type == logic::notificationTypes::COLLECTED) {
             collected = true;
         }
     }

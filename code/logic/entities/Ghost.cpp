@@ -3,7 +3,6 @@
 //
 
 #include "Ghost.h"
-
 #include <algorithm>
 
 namespace logic {
@@ -16,10 +15,10 @@ Ghost::Ghost(const double x, const double y, const bool outsideCage, const direc
              const int _points)
     : movableEntity(x, y, speed, direction), points(_points), mode(modes::CHASING_MODE),
       prevDirection(directions::EMPTY), hasChosenAtIntersection(false), canChoseDir(false),
-      outsideCage(outsideCage), originalOutsideCage(outsideCage) {
+      outsideCage(outsideCage) {
 }
 
-void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> >& walls) {
+void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) {
     // ghost de richting laten uitgaan
     // als het als mag vertrekken (green na 5 sec, orange na 10 sec)
     if (canMove()) {
@@ -75,7 +74,7 @@ void Ghost::update(double deltaTime, std::vector<std::shared_ptr<entity> >& wall
 }
 
 
-std::vector<directions> Ghost::possibleDirections(const std::vector<std::shared_ptr<entity> >& walls) const {
+std::vector<directions> Ghost::possibleDirections(const std::vector<std::shared_ptr<entity>>& walls) const {
     std::vector<directions> possibleDirections;
 
     for (directions dir : {directions::DOWN, directions::UP, directions::RIGHT, directions::LEFT}) {
@@ -147,7 +146,7 @@ int Ghost::getGhostPoints() const {
 void Ghost::died() {
     toSpawnLocation();
     canChoseDir = false; // prive van ghost
-    outsideCage = originalOutsideCage;\
+    outsideCage = false;
 
     if (mode == modes::FEAR_MODE) {
         // moet terug naar chasing mode gaan en de snelheid moet terug naar originele gaan.
@@ -168,7 +167,7 @@ redGhost::redGhost(const double x, const double y, const double speed, const int
     : Ghost(x, y, true, directions::UP, speed, points) {
 }
 
-void redGhost::nextDirection(std::vector<std::shared_ptr<entity> >& walls) {
+void redGhost::nextDirection(std::vector<std::shared_ptr<entity>>& walls) {
 
     const std::vector<directions> possibleDirections = this->possibleDirections(walls);
 
@@ -179,7 +178,7 @@ void redGhost::nextDirection(std::vector<std::shared_ptr<entity> >& walls) {
     changeDirection(possibleDirections[chosenDir]);
 }
 
-void redGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity> >& walls) {
+void redGhost::chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) {
 
     const std::vector<directions> posDirections = this->possibleDirections(walls);
 

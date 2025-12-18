@@ -5,32 +5,34 @@
 #include "../logic/entities/collectable.h"
 #include "concreteFactory.h"
 
+#include "entities/manhattanGhost.h"
+
 namespace view {
 concreteFactory::concreteFactory(camera& camera, sf::RenderWindow& window, std::shared_ptr<worldView> wereld)
     : _camera(camera), window(window), worldV(std::move(wereld)) {
 }
 
-std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const ghostTypes typeGhost, const double x, const double y,
+std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const logic::ghostTypes typeGhost, const double x, const double y,
                                                            float speed, int points) {
     std::shared_ptr<logic::Ghost> ghost;
     std::shared_ptr<ghostView> ghostV;
     switch (typeGhost) {
-    case ghostTypes::RED: {
+    case logic::ghostTypes::RED: {
         ghost = std::make_shared<logic::redGhost>(x + 1.f / 20.f, y - 1.f / 14.f, speed, points);
         ghostV = std::make_shared<redGhostView>(window, _camera, ghost->getX(), ghost->getY());
         break;
     }
-    case ghostTypes::GREEN: {
+    case logic::ghostTypes::GREEN: {
         ghost = std::make_shared<logic::greenGhost>(x + 1.f / 20.f, y - 1.f / 14.f, speed, points);
         ghostV = std::make_shared<greenGhostView>(window, _camera, ghost->getX(), ghost->getY());
         break;
     }
-    case ghostTypes::BLUE: {
+    case logic::ghostTypes::BLUE: {
         ghost = std::make_shared<logic::blueGhost>(x + 1.f / 20.f, y - 1.f / 14.f, speed, points);
         ghostV = std::make_shared<blueGhostView>(window, _camera, ghost->getX(), ghost->getY());
         break;
     }
-    case ghostTypes::ORANGE: {
+    case logic::ghostTypes::ORANGE: {
         ghost = std::make_shared<logic::orangeGhost>(x + 1.f / 20.f, y - 1.f / 14.f, speed, points);
         ghostV = std::make_shared<orangeGhostView>(window, _camera, ghost->getX(), ghost->getY());
         break;
@@ -66,19 +68,19 @@ std::shared_ptr<logic::invisibleWall> concreteFactory::createInvisibleWall(doubl
 }
 
 
-std::shared_ptr<logic::collectable> concreteFactory::createCollectable(const collectableTypes typeCollectable,
+std::shared_ptr<logic::collectable> concreteFactory::createCollectable(const logic::collectableTypes typeCollectable,
                                                                        const double x,
                                                                        const double y, int points) {
     std::shared_ptr<logic::collectable> collectable;
     std::shared_ptr<collectableView> collectableView;
     switch (typeCollectable) {
-    case collectableTypes::COIN: {
+    case logic::collectableTypes::COIN: {
         collectable = std::make_shared<logic::coin>(x + 1.f / 20.f, y - 1.f / 14.f, points);
         collectableView = std::make_shared<coinView>(
             window, _camera, collectable->getX(), collectable->getY());
         break;
     }
-    case collectableTypes::FRUIT: {
+    case logic::collectableTypes::FRUIT: {
         collectable = std::make_shared<logic::fruit>(x + 1.f / 20.f, y - 1.f / 14.f, points);
         collectableView = std::make_shared<fruitView>(
             window, _camera, collectable->getX(), collectable->getY());

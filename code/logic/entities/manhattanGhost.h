@@ -14,6 +14,17 @@ namespace logic {
 class manhattanGhost : public Ghost {
 protected:
     std::shared_ptr<Pacman> pacman; /// Pointer naar pacman, om zijn positie te weten.
+
+    /**
+     * @brief Berekent de manhattan afstand tussen 2 punten.
+     * @param x1 De x coordinaat van het eerste punt.
+     * @param y1 De y coordinaat van het eerste punt.
+     * @param x2 De x coordinaat van het tweede punt.
+     * @param y2 De y coordinaat van het tweede punt.
+     * @return De manhattan afstand tussen de 2 punten.
+     */
+    [[nodiscard]] static double calculateManhattan(double x1, double y1, double x2, double y2);
+
 public:
     // constructor
     /**
@@ -27,13 +38,14 @@ public:
     manhattanGhost(double x, double y, bool outsideCage, directions direction, double speed, int points);
 
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-    void nextDirection(std::vector<std::shared_ptr<entity> >& walls) override;
+    void nextDirection(std::vector<std::shared_ptr<entity>>& walls) override;
 
-    void chooseAtIntersection(std::vector<std::shared_ptr<entity> >& walls) override;
+    void chooseAtIntersection(std::vector<std::shared_ptr<entity>>& walls) override;
+
+    void givePacman(std::shared_ptr<Pacman> pacman) override;
 
     [[nodiscard]] bool canMove() override = 0;
 
-    void givePacman(std::shared_ptr<Pacman> pacman) override;
 
     ghostTypes getType() override = 0;
 
@@ -44,16 +56,6 @@ public:
      * @return Pair van de x en y coordinaat van de kant van pacman die de ghost moet volgen.
      */
     [[nodiscard]] virtual std::pair<double, double> getFollowSide() = 0;
-
-    /**
-     * @brief Berekent de manhattan afstand tussen 2 punten.
-     * @param x1 De x coordinaat van het eerste punt.
-     * @param y1 De y coordinaat van het eerste punt.
-     * @param x2 De x coordinaat van het tweede punt.
-     * @param y2 De y coordinaat van het tweede punt.
-     * @return De manhattan afstand tussen de 2 punten.
-     */
-    [[nodiscard]] static double calculateManhattan(double x1, double y1, double x2, double y2);
 
     /**
     * @brief default destructor.

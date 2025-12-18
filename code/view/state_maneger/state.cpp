@@ -134,13 +134,13 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > LevelState::r
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
-            wereld->updatePacmanDir(directions::UP);
+            wereld->updatePacmanDir(logic::directions::UP);
         } else if (event.key.code == sf::Keyboard::Down) {
-            wereld->updatePacmanDir(directions::DOWN);
+            wereld->updatePacmanDir(logic::directions::DOWN);
         } else if (event.key.code == sf::Keyboard::Left) {
-            wereld->updatePacmanDir(directions::LEFT);
+            wereld->updatePacmanDir(logic::directions::LEFT);
         } else if (event.key.code == sf::Keyboard::Right) {
-            wereld->updatePacmanDir(directions::RIGHT);
+            wereld->updatePacmanDir(logic::directions::RIGHT);
         } else if (event.key.code == sf::Keyboard::Escape) {
             manager.pushState(std::make_unique<pausedState>());
             return {};

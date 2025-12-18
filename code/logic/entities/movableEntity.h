@@ -26,6 +26,11 @@ protected:
     /// Vorige posities van de objecten (voor de update, als het op een muur gaat staan kan het terug naar de oude positie gaan).
     const double spawnLocatieX, spawnLocatieY;
     /// Begin locatie van het object, voor als het dood gaat dat het er terug kan spawnen.
+
+    /**
+     * @brief Zet de positie van de movable terug naar de vorige locatie (voor als die op een muur is beland).
+     */
+    void prevLocation();
 public:
     // constructor
     /**
@@ -42,7 +47,7 @@ public:
      * @param deltaTime De tijd dat er verstreken is sinds de laatste update.
      * @param walls De muren in de wereld, om te zien dat de movable er niet door kan bewegen.
      */
-    virtual void update(double deltaTime, std::vector<std::shared_ptr<entity> >& walls) = 0;
+    virtual void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) = 0;
 
     /**
      * @brief Reset alles van de movable toen het was ingeladen (positie, richting, ...).
@@ -67,10 +72,6 @@ public:
      */
     [[nodiscard]] bool standsOn(const std::shared_ptr<entity>& other);
 
-    /**
-     * @brief Zet de positie van de movable terug naar de vorige locatie (voor als die op een muur is beland).
-     */
-    void prevLocation();
 
     /**
      * @brief Laat de movable effectief bewegen in de huidige direction.
@@ -156,7 +157,7 @@ public:
     Pacman(double x, double y, double speed);
 
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
-    void update(double deltaTime, std::vector<std::shared_ptr<entity> >& walls) override;
+    void update(double deltaTime, std::vector<std::shared_ptr<entity>>& walls) override;
 
     void died() override;
 

@@ -50,7 +50,7 @@ namespace view {
         // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
         void draw() override;
 
-        void notify(const notifications &message) override;
+        void notify(const logic::notifications &message) override;
 
 
         // Pure virtual methodes

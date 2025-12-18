@@ -5,8 +5,34 @@
 #ifndef PACKMAN_NOTIFIES_H
 #define PACKMAN_NOTIFIES_H
 
+namespace logic {
+
 /**
- * @brief Alle mogelijke notificaties die een observer kan ontvangen van zijn subject.
+ * @class NotificationsBase
+ * @brief Basis klasse alle notificatie klasses, waarmee de observers worden genotified.
+ * @tparam notifications De notificatie set, van de observer.
+ */
+template <typename notifications>
+class NotificationsBase {
+public:
+    /**
+     * @brief Constructor van de notification.
+     * @param notif De notificatie/ de boodschap.
+     */
+    explicit NotificationsBase(notifications notif)
+        : type(notif) {
+    }
+
+    notifications type; /// Het type van de notificatie (de boodschap).
+
+    /**
+     * @brief Default destructor.
+     */
+    ~NotificationsBase() = default;
+};
+
+/**
+ * @brief Alle mogelijke notificaties (niet die van score) die een observer kan ontvangen van zijn subject.
  */
 enum class notificationTypes {
     CHANGE_DIRECTION_UP,
@@ -21,29 +47,43 @@ enum class notificationTypes {
     END_GAME
 };
 
-template <typename notifications>
-class NotificationsBase {
-public:
-    explicit NotificationsBase(notifications notif)
-        : type(notif) {
-    }
-
-    notifications type;
-};
-
+/**
+ * @class notifications
+ * @brief De notificatie klasse voor de entities. (alles wat er bij hun kan voorkomen).
+ * @tparam notificationTypes De notificaties van een entity.
+ */
 class notifications : public NotificationsBase<notificationTypes> {
 public:
+    /**
+     * @brief Explicit constructor.
+     * @param notification De notificatie van een entity.
+     */
     explicit notifications(const notificationTypes notification)
         : NotificationsBase(notification) {
     }
 
-    notifications(notificationTypes notification, double x, double y)
-        : NotificationsBase(notification), x(x), y(y) {
+    /**
+     * @brief Constructor voor als de positie veranderd.
+     * @param x De nieuwe positie op de x-as.
+     * @param y De nieuwe positie op de y-as.
+     */
+    notifications(double x, double y)
+        : NotificationsBase(notificationTypes::CHANGE_POSITION), x(x), y(y) {
     }
 
-    double x{}, y{};
+    double x = 0, y = 0; /// Voor als de positie veranderd, is dit de nieuwe positie.
+
+    /**
+     * @brief Default destructor.
+     */
+    ~notifications() = default;
 };
 
+
+/**
+ * @class scoreViewTypes
+ * @brief Notificatie set voor alle notificaties die aan de scoreview obserever kunnen doorgegeven worden.
+ */
 enum class scoreViewTypes {
     UPDATE_SCORE,
     UPDATE_LIVES,
@@ -52,42 +92,84 @@ enum class scoreViewTypes {
     EMPTY
 };
 
+/**
+ * @class scoreViewNotifications
+ * @brief De notificatie klasse voor de score View (observer van de score observer). (alles wat er bij hun kan voorkomen).
+ * @tparam scoreViewTypes de notificatie set.
+ */
 class scoreViewNotifications : public NotificationsBase<scoreViewTypes> {
 public:
+    /**
+     * @brief default constructor.
+     */
     scoreViewNotifications()
         : NotificationsBase(scoreViewTypes::EMPTY) {
     };
 
+    /**
+     * @brief Explicit constructor.
+     */
     explicit scoreViewNotifications(const scoreViewTypes notification)
         : NotificationsBase(notification) {
     }
 
-    int lives = 0, level = 0, score = 0;
+    int lives = 0; /// Als het aantal remaining lives veranderen, dan staat hier het nieuwe level.
+    int level = 0; /// Als het level veranderd, staat heir het nieuwe level.
+    int score = 0; /// De aangepaste score.
+
+    /**
+     * @brief Default destructor.
+     */
+    ~scoreViewNotifications() = default;
 };
 
-
+/**
+ * @brief Alle mogelijke notificaties voor de score observer.
+ */
 enum class scoreNotificationsType {
     ENTITY_EATEN,
     LIVE_LOST,
     NEXT_lEVEL
 };
 
+/**
+ * @brief De notificatie voor de score observer.
+ * @tparam scoreNotificationsType De notificatie set van de score observer.
+ */
 class scoreNotifications : public NotificationsBase<scoreNotificationsType> {
 public:
-    explicit scoreNotifications(scoreNotificationsType type)
+    /**
+     * @brief Explicit constructor
+     * @param type De effectieve notificate.
+     */
+    explicit scoreNotifications(const scoreNotificationsType type)
         : NotificationsBase(type) {
     }
 
-    scoreNotifications(scoreNotificationsType type, int points, bool isGhost)
-        : NotificationsBase(type), points(points), isGhost(isGhost) {
+    /**
+     * @brief Constructor voor als er een ghost gegeten is geweest.
+     * @param points Het aantal points dat een ghost waard is.
+     * @param isGhost True als het een ghost is.
+     */
+    scoreNotifications(const int points, const bool isGhost)
+        : NotificationsBase(scoreNotificationsType::ENTITY_EATEN), points(points), isGhost(isGhost) {
     }
 
-    scoreNotifications(scoreNotificationsType type, int points)
-        : NotificationsBase(type), points(points) {
+    /**
+     * @brief Constructor voor als er een entity geconsumeerd is.
+     * @param points Het aantal points dat een entity waard is.
+     */
+    explicit scoreNotifications(const int points)
+        : NotificationsBase(scoreNotificationsType::ENTITY_EATEN), points(points) {
     }
 
-    int points{};
-    bool isGhost = false;
+    int points = 0;       /// Het aantal points dat een object waard is.
+    bool isGhost = false; /// Of het eventueel opgegeten object een ghost was.
+
+    /**
+     * @brief Default destructor.
+     */
+    ~scoreNotifications() = default;
 };
 
 
@@ -127,6 +209,5 @@ enum class collectableTypes {
     COIN,
     FRUIT
 };
-
-
+}
 #endif //PACKMAN_NOTIFIES_H

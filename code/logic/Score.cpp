@@ -4,7 +4,6 @@
 
 #include "Score.h"
 #include "Stopwatch.h"
-#include <cmath>
 
 namespace logic {
 Score::Score()
@@ -59,7 +58,7 @@ int Score::getLevel() const {
     return level;
 }
 
-void Score::subscribe(std::shared_ptr<Observer<scoreViewNotifications> > observer) {
+void Score::subscribe(std::shared_ptr<Observer<scoreViewNotifications>> observer) {
     observers.push_back(std::move(observer));
 }
 

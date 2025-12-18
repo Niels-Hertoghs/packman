@@ -9,7 +9,6 @@
 #include "camera.h"
 #include "../logic/notifications.h"
 #include "../logic/Observer.h"
-#include "observerView.h"
 
 namespace view {
     /**

@@ -4,7 +4,6 @@
 
 #ifndef PACKMAN_WORLD_H
 #define PACKMAN_WORLD_H
-#include <fstream>
 #include <memory>
 #include <vector>
 #include "notifications.h"
@@ -12,29 +11,25 @@
 #include "entities/collectable.h"
 #include "entities/movableEntity.h"
 #include "entities/Ghost.h"
-#include "entities/manhattanGhost.h"
 #include "Score.h"
-#include "LogicFactory.h"
+#include "abstractFactory.h"
 
 namespace logic {
 /**
- * Class world
- * brief bevat alle entities, en bevat de algemene game logica.
+ * @Class world
+ * @brief Bevat alle entities, en bevat de algemene game logica.
  */
 class world {
-private:
-    std::vector<std::shared_ptr<wall> > walls;
-    std::vector<std::shared_ptr<collectable> > collectables;
-    std::vector<std::shared_ptr<invisibleWall> > invisibleWalls;
-
-    std::vector<std::shared_ptr<Ghost> > ghosts;
-
-    std::shared_ptr<Pacman> pacman;
-    std::string inputFile;
-
-    std::shared_ptr<Score> score;
-    std::unique_ptr<abstractFactory> factory;
-
+    std::vector<std::shared_ptr<wall>> walls; /// De walls in de world.
+    std::vector<std::shared_ptr<invisibleWall>> invisibleWalls;
+    /// De invisible walls in de world (worden niet weergegeven, movables kunnen er niet door).
+    ///
+    std::vector<std::shared_ptr<collectable>> collectables; /// de collectables in de world.
+    std::vector<std::shared_ptr<Ghost>> ghosts; /// de ghosts in de world.
+    std::shared_ptr<Pacman> pacman; /// pointer naar pacman.
+    std::string inputFile; /// File path naar het text bestand van de map dat afgebeeld moet worden.
+    std::shared_ptr<Score> score; /// Pointer naar de score observer.
+    std::unique_ptr<abstractFactory> factory; /// Pointer naar de factory.
 public:
     explicit world(const std::string& inputFile);
 
@@ -64,11 +59,11 @@ public:
 
 
     //getters
-    [[nodiscard]] std::vector<std::shared_ptr<wall> > get_walls() const;
+    [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
 
-    [[nodiscard]] std::vector<std::shared_ptr<collectable> > get_collectables() const;
+    [[nodiscard]] std::vector<std::shared_ptr<collectable>> get_collectables() const;
 
-    [[nodiscard]] std::vector<std::shared_ptr<Ghost> > get_ghosts() const;
+    [[nodiscard]] std::vector<std::shared_ptr<Ghost>> get_ghosts() const;
 
     [[nodiscard]] std::shared_ptr<Pacman> get_pacman() const;
 

@@ -8,43 +8,44 @@
 #include <random>
 
 namespace logic {
+/**
+ * @class random
+ * @brief Singleton klasse voor het genereren van random getallen.
+ */
+class random {
     /**
-     * @class random
-     * @brief Singleton klasse voor het genereren van random getallen.
+     * @brief Default constructor (private) , initialiseerd de random number generator.
      */
-    class random {
-        /**
-         * @brief Default constructor (private) , initialiseerd de random number generator.
-         */
-        random();
+    random();
 
-        inline static std::shared_ptr<random> _instance;
-        /// Statische pointer naar de enige instantie van de random klasse.
-        std::mt19937 mt; /// Mersenne Twister, random number generator.
-    public:
-        /**
-         * @return De enige instantie van de random klasse (pointer).
-         */
-        static std::shared_ptr<random> getInstance();
+    inline static std::shared_ptr<random> _instance;
+    /// Statische pointer naar de enige instantie van de random klasse.
 
-        // Verwijder copy constructor en assignment operator, om singleton behouden
-        random(const random &) = delete;
+    std::mt19937 mt; /// Mersenne Twister, random number generator.
+public:
+    /**
+     * @return De enige instantie van de random klasse (pointer).
+     */
+    static std::shared_ptr<random> getInstance();
 
-        random &operator=(const random &) = delete;
+    // Verwijder copy constructor en assignment operator, om singleton behouden
+    random(const random&) = delete;
 
-        /**
-         * @brief Genereer een random getal tussen min (inclusief) en max (exclusief).
-         * @param min Het minimum getal.
-         * @param max Het maximum getal.
-         * @return Een random getal tussen min en max.
-         */
-        [[nodiscard]] int getNumber(int min, int max);
+    random& operator=(const random&) = delete;
 
-        /**
-         * @brief Default destructor.
-         */
-        ~random() = default;
-    };
+    /**
+     * @brief Genereer een random getal tussen min (inclusief) en max (exclusief).
+     * @param min Het minimum getal.
+     * @param max Het maximum getal.
+     * @return Een random getal tussen min en max.
+     */
+    [[nodiscard]] int getNumber(int min, int max);
+
+    /**
+     * @brief Default destructor.
+     */
+    ~random() = default;
+};
 } // logic
 
 #endif //PACKMAN_RANDOM_H
