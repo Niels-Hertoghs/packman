@@ -10,7 +10,8 @@ concreteFactory::concreteFactory(camera& camera, sf::RenderWindow& window, std::
     : _camera(camera), window(window), worldV(std::move(wereld)) {
 }
 
-std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const ghostTypes typeGhost, const double x, const double y, float speed, int points) {
+std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const ghostTypes typeGhost, const double x, const double y,
+                                                           float speed, int points) {
     std::shared_ptr<logic::Ghost> ghost;
     std::shared_ptr<ghostView> ghostV;
     switch (typeGhost) {
@@ -42,7 +43,7 @@ std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const ghostTypes type
     return std::move(ghost);
 }
 
-std::shared_ptr<logic::Pacman> concreteFactory::createPacman (double x, double y, float speed) {
+std::shared_ptr<logic::Pacman> concreteFactory::createPacman(double x, double y, float speed) {
     std::shared_ptr<logic::Pacman> pacmanModel = std::make_shared<logic::Pacman>(x + 1.f / 20.f, y - 1.f / 14.f, speed);
     const std::shared_ptr<packmanView> PacmanView = std::make_shared<packmanView>(
         window, _camera, pacmanModel->getX(), pacmanModel->getY());
@@ -66,15 +67,15 @@ std::shared_ptr<logic::invisibleWall> concreteFactory::createInvisibleWall(doubl
 
 
 std::shared_ptr<logic::collectable> concreteFactory::createCollectable(const collectableTypes typeCollectable,
-                                                                    const double x,
-                                                                    const double y, int points) {
+                                                                       const double x,
+                                                                       const double y, int points) {
     std::shared_ptr<logic::collectable> collectable;
     std::shared_ptr<collectableView> collectableView;
     switch (typeCollectable) {
     case collectableTypes::COIN: {
         collectable = std::make_shared<logic::coin>(x + 1.f / 20.f, y - 1.f / 14.f, points);
         collectableView = std::make_shared<coinView>(
-    window, _camera, collectable->getX(), collectable->getY());
+            window, _camera, collectable->getX(), collectable->getY());
         break;
     }
     case collectableTypes::FRUIT: {

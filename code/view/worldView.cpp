@@ -7,10 +7,13 @@
 #include "concreteFactory.h"
 
 namespace view {
-worldView::worldView(camera& camera, sf::RenderWindow& window, const std::shared_ptr<logic::Score>& _score,std::shared_ptr<stateManeger> manager) {
+worldView::worldView(camera& camera, sf::RenderWindow& window, const std::shared_ptr<logic::Score>& _score,
+                     std::shared_ptr<stateManeger> manager) {
 
     const std::shared_ptr<ScoreView> score_view = std::make_shared<ScoreView>(window, camera, _score->getScore(),
-                                                                        _score->getLevel(), _score->getLivesLeft(),std::move(manager));
+                                                                              _score->getLevel(),
+                                                                              _score->getLivesLeft(),
+                                                                              std::move(manager));
     _score->subscribe(score_view);
     score = score_view;
 }

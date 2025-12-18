@@ -76,9 +76,8 @@ std::pair<double, double> movableEntity::calculateNextPos(double delta, directio
         dx = -0.2f;
     else if (dir == directions::UP)
         dy = 2.f / 7.f;
-    else
-        if (dir == directions::DOWN)
-            dy = -2.f / 7.f;
+    else if (dir == directions::DOWN)
+        dy = -2.f / 7.f;
 
     // Positie updaten
     double nextX = (delta * dx * speed) + _x;
@@ -174,9 +173,8 @@ void Pacman::update(double delta, std::vector<std::shared_ptr<entity> >& walls) 
             stepX = -1 / 80.f;
         else if (nextDirection == directions::UP)
             stepY = 1.f / 56.f;
-        else
-            if (nextDirection == directions::DOWN)
-                stepY = -1.f / 56.f;
+        else if (nextDirection == directions::DOWN)
+            stepY = -1.f / 56.f;
 
         newX += stepX;
         newY += stepY;

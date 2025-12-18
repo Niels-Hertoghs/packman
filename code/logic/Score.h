@@ -23,7 +23,8 @@ class Score : public Observer<scoreNotifications> {
     int score;     /// de huidige score van de speler.
     int livesLeft; /// Het aantal levens dat de speler nog over heeft.
     int level;     /// Het huidige level van de speler.
-    std::vector<std::shared_ptr<Observer<scoreViewNotifications>>> observers;
+    std::vector<std::shared_ptr<Observer<scoreViewNotifications> > > observers;
+
     /// Reference naar de state manager, om states te kunnen veranderen bij game over of level up.
     void notifyObservers(scoreViewTypes notification) const;
 
@@ -52,7 +53,7 @@ public:
      */
     [[nodiscard]] int getLevel() const;
 
-    void subscribe(std::shared_ptr<Observer<scoreViewNotifications>>);
+    void subscribe(std::shared_ptr<Observer<scoreViewNotifications> >);
 
     void reset();
 

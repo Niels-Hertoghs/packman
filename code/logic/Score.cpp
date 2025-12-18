@@ -64,7 +64,7 @@ void Score::subscribe(std::shared_ptr<Observer<scoreViewNotifications> > observe
 }
 
 void Score::notifyObservers(const scoreViewTypes notification) const {
-     scoreViewNotifications notif(notification);
+    scoreViewNotifications notif(notification);
     switch (notification) {
     case scoreViewTypes::UPDATE_SCORE:
         notif.score = score;

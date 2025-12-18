@@ -70,7 +70,7 @@ public:
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > run(
         sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-        std::shared_ptr<logic::world> wereld,std::shared_ptr<view::worldView> wereldView, const
+        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
         float& deltaTime) override;
 };
 
@@ -91,7 +91,7 @@ public:
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > run(
         sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const
+        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
         float& deltaTime) override;
 };
 
@@ -109,7 +109,8 @@ public:
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > run(
         sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const float& deltaTime) override;
+        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,
+        const float& deltaTime) override;
 };
 
 /**
@@ -128,7 +129,8 @@ public:
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > run(
         sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-        std::shared_ptr<logic::world> wereld,std::shared_ptr<view::worldView> wereldView, const float& deltaTime) override;
+        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,
+        const float& deltaTime) override;
 };
 
 /**
@@ -145,7 +147,8 @@ public:
     // override methodes van pure virtual, voor commentaar en uitleg zie de originele pure virtual.
     [[nodiscard]] std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > run(
         sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const float& deltaTime) override;
+        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,
+        const float& deltaTime) override;
 };
 
 } // view

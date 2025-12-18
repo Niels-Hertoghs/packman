@@ -12,99 +12,99 @@
 
 // Forward declarations
 namespace view {
-    class wallView;
+class wallView;
 }
 
 namespace logic {
+/**
+ * @class entity
+ * @brief Een abstracte klasse voor alle objecten in de game.
+ */
+class entity {
+
+protected:
+    std::vector<std::shared_ptr<Observer<notifications> > > observers; /// De observer van de movableEntity.
+    double x;                                                          /// Positie op de x as.
+    double y;                                                          /// Positie op de y as.
+
+    virtual void notifyObservers(const notifications& notification);
+
+public:
+    // constructor
     /**
-     * @class entity
-     * @brief Een abstracte klasse voor alle objecten in de game.
+     * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
+     * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
      */
-    class entity {
+    entity(double x, double y);
 
-    protected:
-        std::vector<std::shared_ptr<Observer<notifications> > > observers; /// De observer van de movableEntity.
-        double x; /// Positie op de x as.
-        double y; /// Positie op de y as.
+    // methodes
 
-        virtual void notifyObservers(const notifications &notification);
-
-    public:
-        // constructor
-        /**
-         * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
-         * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
-         */
-        entity(double x, double y);
-
-        // methodes
-
-
-        /**
-         * @return De positie van het object op de x-as.
-         */
-        [[nodiscard]] double getX() const;
-
-        /**
-         * @return De positie van het object op de y-as.
-         */
-        [[nodiscard]] double getY() const;
-
-        /**
-         * @return De positie van het object als een pair {x,y}.
-         */
-        [[nodiscard]] std::pair<double, double> getPosition() const;
-
-        /**
-        * @brief Laat de observer "subscriben" aan de entity.
-        * @param observer POinter naar de observer van de movableEntity.
-        */
-        void subscribe(std::shared_ptr<Observer<notifications> > observer);
-
-        /**
-        * @brief Default destructor.
-        */
-        virtual ~entity() = default;
-    };
 
     /**
-     * @class wall
-     * @brief Concrete klasse die een muur representeert, positie x,y is de linkerbovenhoek.
+     * @return De positie van het object op de x-as.
      */
-    class wall final : public entity {
-    public:
-        // constructor
-        /**
-         * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
-         * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
-         */
-        wall(double x, double y);
-
-        /**
-        * @brief Default destructor.
-        */
-        ~wall() override = default;
-    };
+    [[nodiscard]] double getX() const;
 
     /**
-    * @class invisibleWall
-    * @brief Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window, maar de objecten kunnen er niet door gaan (enkel de ghosts om uit hun cage te gaan).
-    * @brief Positie x,y is de linkerbovenhoek.
+     * @return De positie van het object op de y-as.
+     */
+    [[nodiscard]] double getY() const;
+
+    /**
+     * @return De positie van het object als een pair {x,y}.
+     */
+    [[nodiscard]] std::pair<double, double> getPosition() const;
+
+    /**
+    * @brief Laat de observer "subscriben" aan de entity.
+    * @param observer POinter naar de observer van de movableEntity.
     */
-    class invisibleWall final : public entity {
-    public:
-        /**
-         *
-         * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
-         * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
-         */
-        invisibleWall(double x, double y);
+    void subscribe(std::shared_ptr<Observer<notifications> > observer);
 
-        /**
-        * @brief Default destructor.
-        */
-        ~invisibleWall() override = default;
-    };
+    /**
+    * @brief Default destructor.
+    */
+    virtual ~entity() = default;
+};
+
+/**
+ * @class wall
+ * @brief Concrete klasse die een muur representeert, positie x,y is de linkerbovenhoek.
+ */
+class wall final : public entity {
+public:
+    // constructor
+    /**
+     * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
+     * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
+     */
+    wall(double x, double y);
+
+    /**
+    * @brief Default destructor.
+    */
+    ~wall() override = default;
+};
+
+/**
+* @class invisibleWall
+* @brief Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window, maar de objecten kunnen er niet door gaan (enkel de ghosts om uit hun cage te gaan).
+* @brief Positie x,y is de linkerbovenhoek.
+*/
+class invisibleWall final : public entity {
+public:
+    /**
+     *
+     * @param x De positie van het object op de x-as (relatief tussen -1 en 1).
+     * @param y De positie van het object op de y-as (relatief tussen -1 en 1).
+     */
+    invisibleWall(double x, double y);
+
+    /**
+    * @brief Default destructor.
+    */
+    ~invisibleWall() override = default;
+};
 }
 
 

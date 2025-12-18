@@ -7,44 +7,46 @@
 
 
 namespace logic {
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// @class collectable
-    /// ---------------------------------------------------------------------------------------------------------------
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class collectable
+/// ---------------------------------------------------------------------------------------------------------------
 
-    collectable::collectable(double x, double y, int Points) : entity(x, y), points(Points) {
-    }
+collectable::collectable(double x, double y, int Points)
+    : entity(x, y), points(Points) {
+}
 
-    int collectable::getPoints() const {
-        return points;
-    }
+int collectable::getPoints() const {
+    return points;
+}
 
-    void collectable::collected() {
-        notifyObservers(notifications(notificationTypes::COLLECTED));
-    }
-
-
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// @class coin
-    /// ---------------------------------------------------------------------------------------------------------------
-
-    coin::coin(const double x, const double y, const int points) : collectable(x, y, points) {
-    }
+void collectable::collected() {
+    notifyObservers(notifications(notificationTypes::COLLECTED));
+}
 
 
-    bool coin::isFruit() const {
-        return false;
-    }
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class coin
+/// ---------------------------------------------------------------------------------------------------------------
+
+coin::coin(const double x, const double y, const int points)
+    : collectable(x, y, points) {
+}
 
 
-    /// ---------------------------------------------------------------------------------------------------------------
-    /// @class fruit
-    /// ---------------------------------------------------------------------------------------------------------------
+bool coin::isFruit() const {
+    return false;
+}
 
-    fruit::fruit(const double x, const double y, const int points)
-        : collectable(x, y, points) {
-    }
 
-    bool fruit::isFruit() const {
-        return true;
-    }
+/// ---------------------------------------------------------------------------------------------------------------
+/// @class fruit
+/// ---------------------------------------------------------------------------------------------------------------
+
+fruit::fruit(const double x, const double y, const int points)
+    : collectable(x, y, points) {
+}
+
+bool fruit::isFruit() const {
+    return true;
+}
 }

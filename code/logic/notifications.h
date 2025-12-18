@@ -21,7 +21,7 @@ enum class notificationTypes {
     END_GAME
 };
 
-template<typename notifications>
+template <typename notifications>
 class NotificationsBase {
 public:
     explicit NotificationsBase(notifications notif)
@@ -127,7 +127,6 @@ enum class collectableTypes {
     COIN,
     FRUIT
 };
-
 
 
 #endif //PACKMAN_NOTIFIES_H

@@ -41,7 +41,8 @@ public:
      * @param window Waar het op moet worden afgebeeld.
      * @param score Pointer naar de score logica.
      */
-    worldView(camera& camera, sf::RenderWindow& window,const std::shared_ptr<logic::Score>& score,std::shared_ptr<stateManeger> manager);
+    worldView(camera& camera, sf::RenderWindow& window, const std::shared_ptr<logic::Score>& score,
+              std::shared_ptr<stateManeger> manager);
 
 
     /**
@@ -52,8 +53,11 @@ public:
     void clear();
 
     void addCollectableView(const std::shared_ptr<collectableView>& collectableV);
+
     void addGhostView(const std::shared_ptr<ghostView>& ghostV);
+
     void addWallView(const std::shared_ptr<wallView>& wallV);
+
     void addPacmanView(const std::shared_ptr<packmanView>& pacmanV);
 
 

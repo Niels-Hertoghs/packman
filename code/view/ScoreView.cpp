@@ -13,7 +13,8 @@
 
 namespace view {
 
-ScoreView::ScoreView(sf::RenderWindow& window, camera& cam, int score, int level, int lives,std::shared_ptr<stateManeger> manager)
+ScoreView::ScoreView(sf::RenderWindow& window, camera& cam, int score, int level, int lives,
+                     std::shared_ptr<stateManeger> manager)
     : ObserverView(window, cam), _manager(std::move(manager)) {
     try {
         sf::Font Font;

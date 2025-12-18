@@ -38,7 +38,7 @@ state::state() {
 
 std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > menuState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const
+    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
     float& deltaTime) {
 
     std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
@@ -129,7 +129,7 @@ LevelState::LevelState(const std::shared_ptr<logic::world>& wereld, std::shared_
 
 std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > LevelState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const
+    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
     float& deltaTime) {
 
     if (event.type == sf::Event::KeyPressed) {
@@ -157,7 +157,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > LevelState::r
 
 std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > gameOverState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-    std::shared_ptr<logic::world> wereld,std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
+    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
     std::vector<sf::Text> text;
     std::vector<sf::RectangleShape> rectangles;
 
@@ -191,7 +191,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > gameOverState
 
 std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > VictoryState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const float& deltaTime) {
+    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
 
     sf::Texture Texture;
     try {
@@ -258,7 +258,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > VictoryState:
 
 std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > pausedState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView,const float& deltaTime) {
+    std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
 
     std::vector<sf::Text> text;
     std::vector<sf::RectangleShape> rechthoeken;
