@@ -25,7 +25,7 @@ state::state() {
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
+        throw std::runtime_error("Fout bij het openen of verwerken van bestand.");
         throw;
     }
     font = Font;
@@ -36,7 +36,7 @@ state::state() {
 /// @class menuState
 /// ---------------------------------------------------------------------------------------------------------------
 
-std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > menuState::run(
+std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> menuState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
     std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
     float& deltaTime) {
@@ -44,7 +44,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > menuState::ru
     std::ifstream file("input_output/HighScores.txt"); // open het bestand met de high score
     try {
         if (!file) {
-            std::cerr << "Kon bestand niet openen.\n";
+            throw std::runtime_error("Kon het bestand niet openen.");
         }
 
     } catch (const std::exception& e) {
@@ -127,7 +127,7 @@ LevelState::LevelState(const std::shared_ptr<logic::world>& wereld, std::shared_
     : worldView(std::move(worldV)) {
 }
 
-std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > LevelState::run(
+std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> LevelState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
     std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
     float& deltaTime) {
@@ -155,7 +155,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > LevelState::r
 /// @class gameOverState
 /// --------------------------------------------------------------------------------------------------------------
 
-std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > gameOverState::run(
+std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> gameOverState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
     std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
     std::vector<sf::Text> text;
@@ -189,7 +189,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > gameOverState
     return {text, rectangles};
 }
 
-std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > VictoryState::run(
+std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> VictoryState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
     std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
 
@@ -256,7 +256,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > VictoryState:
 /// @class pausedState
 /// --------------------------------------------------------------------------------------------------------------
 
-std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > pausedState::run(
+std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> pausedState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
     std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const float& deltaTime) {
 

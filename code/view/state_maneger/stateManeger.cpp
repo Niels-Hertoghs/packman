@@ -4,8 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "stateManeger.h"
-#include <fstream>
-#include <utility>
 #include "../../logic/world.h"
 
 namespace view {
@@ -45,7 +43,7 @@ std::unique_ptr<view::state> stateManeger::getCurrentState() {
 void stateManeger::runTop(sf::RenderWindow& window, sf::Event& event, view::camera& cam,
                           std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldV,
                           const float& deltaTime) {
-    std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > result = stack.top().get()->run(
+    std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> result = stack.top().get()->run(
         window, event, *this, cam, std::move(wereld), std::move(wereldV), deltaTime);
     // alles op het scherm afdrukken
     // eerst de buttens = rechthoek met een texture

@@ -9,16 +9,9 @@
 #include "../camera.h"
 #include "../../view/worldView.h"
 
-// Forward declarations
-namespace logic {
-class world;
-}
-
-
 namespace view {
 // Forward declarations
 class stateManeger;
-class worldView;
 
 /**
 * @class state
@@ -42,12 +35,13 @@ public:
      * @param manager De state manager om van state te veranderen indien nodig.
      * @param cam Camera voor het omzetten van wereld naar pixel coordinaten.
      * @param wereld Pointer naar de wereld logica, om het eventueel te laten lopen.
+     * @param wereldView Pointer naar de world view, die alle observers beheerd.
      * @param deltaTime Het verschil in tijd sinds de laatste update.
      * @return Pair van vectoren met text en rechthoeken die getekend moeten worden.
      */
     virtual std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape> > run(
         sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
-        std::shared_ptr<logic::world> wereld, std::shared_ptr<view::worldView> wereldView, const
+        std::shared_ptr<logic::world> wereld, std::shared_ptr<worldView> wereldView, const
         float& deltaTime) = 0;
 
     /**

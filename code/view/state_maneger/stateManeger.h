@@ -4,22 +4,12 @@
 
 #ifndef PACKMAN_STATEMANEGER_H
 #define PACKMAN_STATEMANEGER_H
-#include <iostream>
 #include <memory>
 #include <stack>
-#include <vector>
 #include "../camera.h"
 #include "state.h"
 
-// Forward declarations
-namespace logic {
-class world;
-}
-
 namespace view {
-// Forward declarations
-class state;
-
 /**
  * @class stateManeger
  * @brief Manages the different states of the game (menu, level, pause, etc.).
@@ -54,8 +44,14 @@ public:
      */
     void pop2State();
 
+    /**
+     * @brief Maakt een victory state aan en pusht die op de stack.
+     */
     void startVictory();
 
+    /**
+     * @brief Maakt een game over state aan en pusht die op de stack.
+     */
     void gameOverState();
 
     /**
@@ -69,6 +65,7 @@ public:
      * @param event Als eventuate evenementen te verwerken.
      * @param cam Camera voor het omzetten van wereld naar pixel coordinaten.
      * @param wereld Pointer naar de wereld logica, om het eventueel te laten lopen.
+     * @param wereldView Pointer naar de wereld view, die alle observers van de world beheerd.
      * @param deltaTime Het verschil in tijd sinds de laatste update.
      */
     void runTop(sf::RenderWindow& window, sf::Event& event, view::camera& cam, std::shared_ptr<logic::world> wereld,

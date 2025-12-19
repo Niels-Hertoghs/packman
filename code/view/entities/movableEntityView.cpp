@@ -3,15 +3,13 @@
 //
 
 #include "movableEntityView.h"
-#include <iostream>
-#include <utility>
 #include "../../logic/entities/movableEntity.h"
 #include "../../logic/Stopwatch.h"
 
 namespace view {
 movableEntityView::movableEntityView(sf::RenderWindow& window, camera& cam, double x, double y,
-                                     const std::vector<std::pair<int, int> >& SpriteCo, int _aantalSprites,
-                                     const std::vector<std::vector<std::pair<int, int> > >& allSprites)
+                                     const std::vector<std::pair<int, int>>& SpriteCo, int _aantalSprites,
+                                     const std::vector<std::vector<std::pair<int, int>>>& allSprites)
     : entityView(window, cam, x, y), aantalSprites(_aantalSprites), counter(0), allSprites(allSprites),
       originalAllSprites(allSprites), spriteCo(SpriteCo) {
 
@@ -22,8 +20,7 @@ movableEntityView::movableEntityView(sf::RenderWindow& window, camera& cam, doub
         }
         texture = Texture;
     } catch (const std::exception& e) {
-        std::cerr << "Fout bij het openen of verwerken van bestand: " << e.what() << std::endl;
-        throw;
+        throw std::runtime_error("Fout bij het openen of verwerken van bestand.");
     }
 
     int PacmanSizeHeight = cam.distanceToPixelsHeight(2.f / 14.f);

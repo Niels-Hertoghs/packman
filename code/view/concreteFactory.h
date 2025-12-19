@@ -6,13 +6,13 @@
 #define PACKMAN_VIEWFACTORY_H
 
 #include "abstractFactory.h"
-#include "entities/collectableView.h"
-#include "entities/ghostView.h"
-#include "entities/movableEntityView.h"
 #include "worldView.h"
 #include <memory>
 
 namespace view {
+/**
+ * @class
+ */
 class concreteFactory final : public logic::abstractFactory {
     camera& _camera;
     sf::RenderWindow& window;

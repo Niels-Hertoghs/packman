@@ -4,7 +4,6 @@
 #include "../logic/entities/Ghost.h"
 #include "../logic/entities/collectable.h"
 #include "concreteFactory.h"
-
 #include "entities/manhattanGhost.h"
 
 namespace view {
@@ -12,7 +11,8 @@ concreteFactory::concreteFactory(camera& camera, sf::RenderWindow& window, std::
     : _camera(camera), window(window), worldV(std::move(wereld)) {
 }
 
-std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const logic::ghostTypes typeGhost, const double x, const double y,
+std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const logic::ghostTypes typeGhost, const double x,
+                                                           const double y,
                                                            float speed, int points) {
     std::shared_ptr<logic::Ghost> ghost;
     std::shared_ptr<ghostView> ghostV;

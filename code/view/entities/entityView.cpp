@@ -3,7 +3,6 @@
 //
 
 #include "entityView.h"
-#include <utility>
 
 
 namespace view {

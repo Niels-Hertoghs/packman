@@ -31,20 +31,51 @@ class world {
     std::shared_ptr<Score> score; /// Pointer naar de score observer.
     std::unique_ptr<abstractFactory> factory; /// Pointer naar de factory.
 public:
+    /**
+     * @brief Constructor world.
+     * @param inputFile File path naar het text bestand van de map dat afgebeeld moet worden.
+     */
     explicit world(const std::string& inputFile);
 
+    /**
+     * @brief Waar alle objecten in de game aangemaakt worden en correct geinitializeerd.
+     * @param factory Pointer naar de factory.
+     */
     void giveFactory(std::unique_ptr<abstractFactory> factory);
 
+    /**
+     * @brief Laad de wereld in aan de hand van de Input file.
+     * @param level Het level van de ronde.
+     */
     void startWorld(int level);
 
+    /**
+     * @brief Update alle objecten in de world.
+     * @param deltaTime De tijd dat er verstreken is tussen de 2 laatste updates.
+     */
     void update(float deltaTime);
 
-    void updatePacmanDir(directions) const;
+    /**
+     * @brief Als pacman een andere richting uit moet gaan (wanneer mogelijk).
+     * @param dir De volgende richting dat pacman uit moet gaan zodra het mogelijk is.
+     */
+    void updatePacmanDir(directions dir) const;
 
+    /**
+     * @brief Laat de score "subscriben" aan de world.
+     * @param score Pointer naar de score observer.
+     */
     void subscribeScore(std::shared_ptr<Score> score);
 
+    /**
+     * @brief Notified alle observers in world met de notification.
+     * @param notification de notificatie die gecommuniceerd moet worden met de observers.
+     */
     void notifyObservers(const scoreNotifications& notification) const;
 
+    /**
+     * @brief Reset alles in de world.
+     */
     void clear();
 
     /**
@@ -59,15 +90,15 @@ public:
 
 
     //getters
-    [[nodiscard]] std::vector<std::shared_ptr<wall>> get_walls() const;
-
-    [[nodiscard]] std::vector<std::shared_ptr<collectable>> get_collectables() const;
-
-    [[nodiscard]] std::vector<std::shared_ptr<Ghost>> get_ghosts() const;
-
-    [[nodiscard]] std::shared_ptr<Pacman> get_pacman() const;
-
+    /**
+     * @return Pointer naar de score observer.
+     */
     [[nodiscard]] std::shared_ptr<Score> get_score() const;
+
+    /**
+     * @brief Default destructor.
+     */
+    ~world() = default;
 };
 }
 

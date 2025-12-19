@@ -91,7 +91,7 @@ void world::startWorld(int level) {
 
 void world::update(float deltaTime) {
     // pacman updaten, oa de locatie
-    std::vector<std::shared_ptr<entity> > allWalls;
+    std::vector<std::shared_ptr<entity>> allWalls;
     allWalls.insert(allWalls.end(), walls.begin(), walls.end());
     allWalls.insert(allWalls.end(), invisibleWalls.begin(), invisibleWalls.end());
 
@@ -101,7 +101,7 @@ void world::update(float deltaTime) {
         if (ghost->hadFirstCollision()) {
             ghost->update(deltaTime, allWalls);
         } else {
-            std::vector<std::shared_ptr<entity> > w;
+            std::vector<std::shared_ptr<entity>> w;
             w.insert(w.end(), walls.begin(), walls.end());
             ghost->update(deltaTime, w);
         }
@@ -110,7 +110,7 @@ void world::update(float deltaTime) {
     // zien of pacman niet op een collectable staat
     for (auto it = collectables.begin(); it != collectables.end();) {
         if (pacman->standsOnCoin(*it)) {
-            notifyObservers(scoreNotifications( it->get()->getPoints()));
+            notifyObservers(scoreNotifications(it->get()->getPoints()));
             it->get()->collected();
             if (it->get()->isFruit()) {
                 startFearMode();
@@ -168,25 +168,8 @@ void world::notifyObservers(const scoreNotifications& notification) const {
     score->notify(notification);
 }
 
-
-std::vector<std::shared_ptr<wall> > world::get_walls() const {
-    return walls;
-}
-
-std::vector<std::shared_ptr<collectable> > world::get_collectables() const {
-    return collectables;
-}
-
-std::shared_ptr<Pacman> world::get_pacman() const {
-    return pacman;
-}
-
 std::shared_ptr<Score> world::get_score() const {
     return score;
-}
-
-std::vector<std::shared_ptr<Ghost> > world::get_ghosts() const {
-    return ghosts;
 }
 
 void world::clear() {
