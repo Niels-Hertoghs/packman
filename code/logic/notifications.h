@@ -129,7 +129,8 @@ public:
 enum class scoreNotificationsType {
     ENTITY_EATEN,
     LIVE_LOST,
-    NEXT_lEVEL
+    NEXT_lEVEL,
+    DECREASE_SCORE
 };
 
 /**
@@ -162,6 +163,7 @@ public:
     explicit scoreNotifications(const int points)
         : NotificationsBase(scoreNotificationsType::ENTITY_EATEN), points(points) {
     }
+
 
     int points = 0;       /// Het aantal points dat een object waard is.
     bool isGhost = false; /// Of het eventueel opgegeten object een ghost was.

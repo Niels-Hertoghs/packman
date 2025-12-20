@@ -40,6 +40,10 @@ void Score::notify(const scoreNotifications& message) {
         notifyObservers(scoreViewTypes::UPDATE_LEVEL);
         break;
     }
+    case scoreNotificationsType::DECREASE_SCORE: {
+        score -= 10; // het aantal punten dat er van de score afgaan elke seconden.
+        notifyObservers(scoreViewTypes::UPDATE_SCORE);
+    }
 
     default:
         break;

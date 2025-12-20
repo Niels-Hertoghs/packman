@@ -21,6 +21,7 @@ class Stopwatch {
     std::chrono::time_point<clock> lastTimeEaten; /// Tijdspunt van laatst gegeten coin.
     std::chrono::time_point<clock> lastChangedSprite; /// Tijdspunt van laatst veranderde sprite.
     std::chrono::time_point<clock> _startFearMode; /// Start tijdspunt van fear mode.
+    std::chrono::time_point<clock> LastTimeSindsSec; /// Hoeveel tijd er gepasseerd is sinds de laatste sec
     std::set<int> changedSprite; /// De Id's van de sprites die al veranderd zijn in de huidige frame.
     float deltaTime; /// Tijd tussen 2 updates
     inline static std::shared_ptr<Stopwatch> _instance; /// Pointer naar singleton.
@@ -83,6 +84,11 @@ public:
      * @return Bool, of dat fear mode gedaan is
      */
     [[nodiscard]] bool isFearDone(int level) const;
+
+    /**
+     * @return Bool, of er een seconden voorbij is zodat de score kan verlagen.
+     */
+    [[nodiscard]] bool decScore();
 
     /**
      * @brief Default destructor.

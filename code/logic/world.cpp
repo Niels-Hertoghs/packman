@@ -90,6 +90,10 @@ void world::startWorld(int level) {
 }
 
 void world::update(float deltaTime) {
+    // elke seconde gaan er een x aantal points af bij de score (score decreases over time)
+    if (Stopwatch::getInstance()->decScore()) {
+        notifyObservers(scoreNotifications(scoreNotificationsType::DECREASE_SCORE));
+    }
     // pacman updaten, oa de locatie
     std::vector<std::shared_ptr<entity>> allWalls;
     allWalls.insert(allWalls.end(), walls.begin(), walls.end());
