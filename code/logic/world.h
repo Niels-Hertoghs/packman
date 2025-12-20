@@ -23,7 +23,7 @@ class world {
     std::vector<std::shared_ptr<wall>> walls; /// De walls in de world.
     std::vector<std::shared_ptr<invisibleWall>> invisibleWalls;
     /// De invisible walls in de world (worden niet weergegeven, movables kunnen er niet door).
-    ///
+
     std::vector<std::shared_ptr<collectable>> collectables; /// de collectables in de world.
     std::vector<std::shared_ptr<Ghost>> ghosts; /// de ghosts in de world.
     std::shared_ptr<Pacman> pacman; /// pointer naar pacman.

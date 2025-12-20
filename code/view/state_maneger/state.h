@@ -7,7 +7,8 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "../camera.h"
-#include "../../view/worldView.h"
+#include "worldView.h"
+#include "../../logic/world.h"
 
 namespace view {
 // Forward declarations

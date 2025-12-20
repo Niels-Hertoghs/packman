@@ -3,7 +3,6 @@
 //
 
 #include "game.h"
-
 #include "concreteFactory.h"
 
 namespace view {
@@ -29,6 +28,7 @@ void game::playGame() {
         (static_cast<int>(desktop.height - height)) / 2
         ));
 
+    // wereld en score aanmeken en hun observers eraan linken
     std::shared_ptr<logic::world> wereld = std::make_shared<logic::world>("input_output/map.txt");
 
     std::shared_ptr<logic::Score> score = std::make_shared<logic::Score>(); // score observer aanmaken
@@ -37,6 +37,7 @@ void game::playGame() {
     std::unique_ptr<logic::abstractFactory> factory = std::make_unique<concreteFactory>(cam, window, wereldView);
     wereld->subscribeScore(score);
     wereld->giveFactory(std::move(factory));
+
 
     // main window loop
     while (window.isOpen()) {

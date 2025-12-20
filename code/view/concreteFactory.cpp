@@ -8,7 +8,7 @@
 
 namespace view {
 concreteFactory::concreteFactory(camera& camera, sf::RenderWindow& window, std::shared_ptr<worldView> wereld)
-    : _camera(camera), window(window), worldV(std::move(wereld)) {
+    : _camera(camera), window(window),worldV(std::move(wereld)) {
 }
 
 std::shared_ptr<logic::Ghost> concreteFactory::createGhost(const logic::ghostTypes typeGhost, const double x,

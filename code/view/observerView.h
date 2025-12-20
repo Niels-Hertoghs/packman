@@ -7,38 +7,38 @@
 
 #include <SFML/Graphics.hpp>
 #include "camera.h"
-#include "../logic/notifications.h"
 #include "../logic/Observer.h"
 
 namespace view {
+/**
+* @class ObserverView
+* @brief Abstracte klasse voor alle view observers.
+* @tparam notification De notificatie set dat er gebruikt moet worden voor de observer.
+*/
+template <typename notification>
+class ObserverView : public logic::Observer<notification> {
+protected:
+    sf::RenderWindow& window; /// Reference naar de window waar het op getekend moet worden.
+    camera& _camera;
+    /// Reference naar de camera klasse voor het omzetten van wereld coordinaten naar pixel coordinaten.
+public:
     /**
- * @class ObserverView
- * @brief Abstracte klasse voor alle view observers.
- */
-    template<typename notification>
-    class ObserverView : public logic::Observer<notification> {
-    protected:
-        sf::RenderWindow &window; /// Reference naar de window waar het op getekend moet worden.
-        camera &_camera;
-        /// Reference naar de camera klasse voor het omzetten van wereld coordinaten naar pixel coordinaten.
-
-    public:
-        /**
      * @brief Constructor
      * @param window Waar het op moet worden afgebeeld.
      * @param camera Camera klasse voor het omzetten naar pixel coordinaten.
      */
-        ObserverView(sf::RenderWindow &window, camera &camera)
-            : window(window), _camera(camera) {
-        };
+    ObserverView(sf::RenderWindow& window, camera& camera)
+        : window(window), _camera(camera) {
+    }
 
-        void notify(const notification &message) override = 0;
+    // override, kijk originele pure virtual voor commentaar
+    void notify(const notification& message) override = 0;
 
-        /**
-     * @brief Methode om de observer te tekenen op de window.
+    /**
+     * @brief Methode om de observer voor te stellen op de window.
      */
-        virtual void draw() = 0;
-    };
+    virtual void draw() = 0;
+};
 }
 
 #endif //PACKMAN_OBSERVERVIEW_H

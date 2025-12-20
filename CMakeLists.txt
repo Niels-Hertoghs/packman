@@ -30,6 +30,7 @@ target_link_libraries(packman_logic PUBLIC sfml-system)
 add_executable(packman
         main.cpp
         code/view/game.cpp
+        code/view/observerView.h
         code/view/state_maneger/stateManeger.cpp
         code/view/camera.cpp
         code/view/entities/entityView.cpp

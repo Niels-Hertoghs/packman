@@ -4,7 +4,5 @@
 
 #include "observerView.h"
 
-class camera;
-
 namespace view {
 }

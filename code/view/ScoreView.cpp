@@ -3,9 +3,7 @@
 //
 
 #include "ScoreView.h"
-
 #include <fstream>
-
 #include "state_maneger/state.h"
 #include "state_maneger/make_text.h"
 #include "state_maneger/stateManeger.h"
@@ -49,6 +47,7 @@ ScoreView::ScoreView(sf::RenderWindow& window, camera& cam, int score, int level
 }
 
 void ScoreView::draw() {
+    // Tekent de score op de window
     const std::pair<unsigned int, unsigned int> scorepos = _camera.worldToPixel(-0.95f, -0.95f);
     scoreText.setCharacterSize(_camera.distanceToPixelsHeight(0.05f));
     scoreText.setPosition(static_cast<float>(scorepos.first), static_cast<float>(scorepos.second));
@@ -56,6 +55,7 @@ void ScoreView::draw() {
     scoreText.setOrigin(0, scoreTextBounds.height);
     window.draw(scoreText);
 
+    // Tekent de level op de window
     const std::pair<unsigned int, unsigned int> levelpos = _camera.worldToPixel(-0.f, 1.f - 1.f / 7.f);
     levelText.setCharacterSize(_camera.distanceToPixelsHeight(0.16f));
     levelText.setPosition(static_cast<float>(levelpos.first), static_cast<float>(levelpos.second));
@@ -63,6 +63,7 @@ void ScoreView::draw() {
     levelText.setOrigin(levelTextBounds.width / 2, levelTextBounds.height / 2);
     window.draw(levelText);
 
+    // Tekent de remaining lives op de window
     const std::pair<unsigned int, unsigned int> livespos = _camera.worldToPixel(0.95f, -0.95f);
     livesText.setCharacterSize(_camera.distanceToPixelsHeight(0.05f));
     livesText.setPosition(static_cast<float>(livespos.first), static_cast<float>(livespos.second));

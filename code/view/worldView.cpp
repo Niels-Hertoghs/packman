@@ -4,7 +4,6 @@
 
 #include "worldView.h"
 #include "../logic/world.h"
-#include "concreteFactory.h"
 
 namespace view {
 worldView::worldView(camera& camera, sf::RenderWindow& window, const std::shared_ptr<logic::Score>& _score,
