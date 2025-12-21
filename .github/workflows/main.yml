@@ -11,7 +11,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Debug
-  SOURCE_DIR: logic #<------ DIT AANPASSEN MOET WIJZEN NAAR DE DIRECTORY MET DAARIN DE LOGIC CMAKELIST
+  SOURCE_DIR: code/logic #<------ DIT AANPASSEN MOET WIJZEN NAAR DE DIRECTORY MET DAARIN DE LOGIC CMAKELIST
 
 jobs:
   build:
