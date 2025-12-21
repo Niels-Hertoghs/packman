@@ -1,0 +1,13 @@
+<map id="view::collectableView" name="view::collectableView">
+<area shape="rect" id="Node000001" title="Een abstracte klasse voor alle collectables representatie." alt="" coords="54,240,217,265"/>
+<area shape="rect" id="Node000005" href="$classview_1_1coinView.html" title="De concrete klasse van een coin observer." alt="" coords="5,313,124,339"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="116,277,78,315,74,311,112,273"/>
+<area shape="rect" id="Node000006" href="$classview_1_1fruitView.html" title="De concrete klasse van een fruit observer." alt="" coords="148,313,267,339"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="159,273,198,311,194,315,155,277"/>
+<area shape="rect" id="Node000002" href="$classview_1_1entityView.html" title="Abstracte klasse voor alle entity observers." alt="" coords="70,167,201,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,206,138,240,133,240,133,206"/>
+<area shape="rect" id="Node000003" href="$classview_1_1ObserverView.html" title=" " alt="" coords="50,79,221,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="138,132,138,166,133,166,133,132"/>
+<area shape="rect" id="Node000004" href="$classlogic_1_1Observer.html" title="Basis klasse voor alle observers." alt="" coords="24,5,247,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="138,44,138,79,133,79,133,44"/>
+</map>

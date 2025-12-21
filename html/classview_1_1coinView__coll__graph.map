@@ -1,0 +1,13 @@
+<map id="view::coinView" name="view::coinView">
+<area shape="rect" id="Node000001" title="De concrete klasse van een coin observer." alt="" coords="152,332,271,357"/>
+<area shape="rect" id="Node000002" href="$classview_1_1collectableView.html" title="Een abstracte klasse voor alle collectables representatie." alt="" coords="130,257,293,283"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,297,214,332,209,332,209,297"/>
+<area shape="rect" id="Node000003" href="$classview_1_1entityView.html" title="Abstracte klasse voor alle entity observers." alt="" coords="146,183,277,208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="214,222,214,257,209,257,209,222"/>
+<area shape="rect" id="Node000004" href="$classview_1_1ObserverView.html" title=" " alt="" coords="126,93,297,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="214,147,214,182,209,182,209,147"/>
+<area shape="rect" id="Node000005" href="$classlogic_1_1Observer.html" title="Basis klasse voor alle observers." alt="" coords="5,5,228,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="140,38,194,91,190,95,136,42"/>
+<area shape="rect" id="Node000006" href="$classview_1_1camera.html" title="Zorgt ervoor dat elk object/tekst op de juiste plaatst staat op de window, onafhankelijk van de resol..." alt="" coords="253,5,362,31"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="288,42,233,95,229,91,284,38"/>
+</map>

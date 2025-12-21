@@ -1,0 +1,9 @@
+<map id="logic::manhattanGhost" name="logic::manhattanGhost">
+<area shape="rect" id="Node000001" title="Abstracte klasse voor ghosts die de manhatten afstand gebruiken om pacman te volgen." alt="" coords="5,225,176,251"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1Ghost.html" title="De abstracte klasse voor alle ghosts." alt="" coords="41,152,140,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,191,93,225,88,225,88,191"/>
+<area shape="rect" id="Node000003" href="$classlogic_1_1movableEntity.html" title="Een abstracte klasse voor alle beweegbare objecten in de game (x, y coo zijn in het midden van de spr..." alt="" coords="13,79,169,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="93,118,93,152,88,152,88,118"/>
+<area shape="rect" id="Node000004" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="41,5,140,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="93,44,93,79,88,79,88,44"/>
+</map>

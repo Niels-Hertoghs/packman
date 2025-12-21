@@ -1,0 +1,9 @@
+<map id="logic::collectable" name="logic::collectable">
+<area shape="rect" id="Node000001" title="Een abstracte klasse voor collecteerbare objecten." alt="" coords="39,79,171,104"/>
+<area shape="rect" id="Node000003" href="$classlogic_1_1coin.html" title="Een concrete klasse voor de coins, positie is het midden van de coin." alt="" coords="5,152,93,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,117,60,154,56,150,85,113"/>
+<area shape="rect" id="Node000004" href="$classlogic_1_1fruit.html" title="Een concrete klasse voor de fruit, positie is de linkerbovenhoek van de fruit." alt="" coords="117,152,205,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="125,113,154,150,150,154,121,117"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="56,5,155,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,44,108,79,103,79,103,44"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="Observer" name="Observer">
+<area shape="rect" id="Node000001" title=" " alt="" coords="119,93,201,119"/>
+<area shape="rect" id="Node000002" href="$classIObserver.html" title=" " alt="" coords="5,5,91,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,37,146,91,143,95,73,41"/>
+<area shape="rect" id="Node000003" href="$classStopwatch.html" title=" " alt="" coords="115,5,205,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="163,45,163,93,157,93,157,45"/>
+<area shape="rect" id="Node000004" href="$classcamera.html" title=" " alt="" coords="230,5,301,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="257,45,238,71,218,85,197,96,195,91,215,81,234,67,253,42"/>
+</map>

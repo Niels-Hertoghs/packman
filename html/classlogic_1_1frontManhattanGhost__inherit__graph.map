@@ -1,0 +1,15 @@
+<map id="logic::frontManhattanGhost" name="logic::frontManhattanGhost">
+<area shape="rect" id="Node000001" title="Abstracte klasse voor ghosts die de voorkant van pacman volgen (zijn weg proberen af te snijden)." alt="" coords="46,299,246,324"/>
+<area shape="rect" id="Node000006" href="$classlogic_1_1blueGhost.html" title="De concrete klasse voor de blauwe ghost, die de voorkant van pacman volgt." alt="" coords="5,372,132,397"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="125,335,83,374,80,370,122,331"/>
+<area shape="rect" id="Node000007" href="$classlogic_1_1greenGhost.html" title="De concrete klasse voor de groene ghost, die de voorkant van pacman volgt." alt="" coords="157,372,293,397"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="171,331,214,370,210,374,167,335"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1manhattanGhost.html" title="Abstracte klasse voor ghosts die de manhatten afstand gebruiken om pacman te volgen." alt="" coords="61,225,231,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,264,149,299,143,299,143,264"/>
+<area shape="rect" id="Node000003" href="$classlogic_1_1Ghost.html" title="De abstracte klasse voor alle ghosts." alt="" coords="97,152,195,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="149,191,149,225,143,225,143,191"/>
+<area shape="rect" id="Node000004" href="$classlogic_1_1movableEntity.html" title="Een abstracte klasse voor alle beweegbare objecten in de game (x, y coo zijn in het midden van de spr..." alt="" coords="68,79,224,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="149,118,149,152,143,152,143,118"/>
+<area shape="rect" id="Node000005" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="97,5,195,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="149,44,149,79,143,79,143,44"/>
+</map>

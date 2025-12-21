@@ -1,0 +1,7 @@
+<map id="logic::LogicFactory" name="logic::LogicFactory">
+<area shape="rect" id="Node000001" title="Abstracte basis klasse voor alle logic factories." alt="" coords="34,79,177,104"/>
+<area shape="rect" id="Node000003" href="$classlogic_1_1ConcreteLogicFactory.html" title="Concrete klasse voor de logic factory." alt="" coords="5,152,205,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="108,118,108,152,103,152,103,118"/>
+<area shape="rect" id="Node000002" href="$classBaseFactory.html" title="Basis abstracte klasse voor alle factories." alt="" coords="55,5,156,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,44,108,79,103,79,103,44"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="logic::Pacman" name="logic::Pacman">
+<area shape="rect" id="Node000001" title="De concrete klasse voor pacman." alt="" coords="27,152,139,177"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1movableEntity.html" title="Een abstracte klasse voor alle beweegbare objecten in de game (x, y coo zijn in het midden van de spr..." alt="" coords="5,79,161,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,118,86,152,81,152,81,118"/>
+<area shape="rect" id="Node000003" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="34,5,133,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,44,86,79,81,79,81,44"/>
+</map>

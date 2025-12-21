@@ -1,0 +1,7 @@
+<map id="fruit" name="fruit">
+<area shape="rect" id="Node000001" title=" " alt="" coords="27,152,77,177"/>
+<area shape="rect" id="Node000002" href="$classcollectable.html" title="Een abstracte klasse voor collectables." alt="" coords="5,79,99,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,118,55,152,49,152,49,118"/>
+<area shape="rect" id="Node000003" href="$classentity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="22,5,82,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="55,44,55,79,49,79,49,44"/>
+</map>

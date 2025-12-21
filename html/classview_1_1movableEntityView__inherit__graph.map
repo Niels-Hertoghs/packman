@@ -1,0 +1,21 @@
+<map id="view::movableEntityView" name="view::movableEntityView">
+<area shape="rect" id="Node000001" title="Abstracte klasse voor alle movableEntity observers." alt="" coords="357,240,543,265"/>
+<area shape="rect" id="Node000005" href="$classview_1_1ghostView.html" title="Abstracte klasse voor alle ghost observers." alt="" coords="305,313,433,339"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="428,276,384,315,380,311,425,272"/>
+<area shape="rect" id="Node000010" href="$classview_1_1packmanView.html" title="Concrete klasse voor de pacman observer." alt="" coords="457,313,609,339"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="475,272,521,311,517,315,472,276"/>
+<area shape="rect" id="Node000002" href="$classview_1_1entityView.html" title="Abstracte klasse voor alle entity observers." alt="" coords="385,167,515,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="453,206,453,240,447,240,447,206"/>
+<area shape="rect" id="Node000003" href="$classview_1_1ObserverView.html" title=" " alt="" coords="365,79,535,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,132,453,166,447,166,447,132"/>
+<area shape="rect" id="Node000004" href="$classlogic_1_1Observer.html" title="Basis klasse voor alle observers." alt="" coords="339,5,561,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="453,44,453,79,447,79,447,44"/>
+<area shape="rect" id="Node000006" href="$classview_1_1blueGhostView.html" title="Concrete klasse voor de blueGhost observer." alt="" coords="5,387,164,412"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="311,345,131,389,130,384,309,339"/>
+<area shape="rect" id="Node000007" href="$classview_1_1greenGhostView.html" title="Concrete klasse voor de greenGhost observer." alt="" coords="188,387,355,412"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="343,349,289,389,286,384,340,345"/>
+<area shape="rect" id="Node000008" href="$classview_1_1orangeGhostView.html" title="Concrete klasse voor de orangeGhost observer." alt="" coords="379,387,553,412"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="397,345,452,384,449,389,394,349"/>
+<area shape="rect" id="Node000009" href="$classview_1_1redGhostView.html" title="Concrete klasse voor de redGhost observer." alt="" coords="577,387,728,412"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="428,339,607,384,606,389,427,345"/>
+</map>

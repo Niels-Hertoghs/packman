@@ -1,0 +1,5 @@
+<map id="view::pausedState" name="view::pausedState">
+<area shape="rect" id="Node000001" title="Concrete klasse voor paused staat inj de game (als de esc knop ingedrukt wordt tijdens het spelen)." alt="" coords="5,79,147,104"/>
+<area shape="rect" id="Node000002" href="$classview_1_1state.html" title="Abstracte basis klasse voor alle staten van de game." alt="" coords="29,5,123,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,44,79,79,73,79,73,44"/>
+</map>

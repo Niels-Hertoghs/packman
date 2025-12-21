@@ -1,0 +1,5 @@
+<map id="logic::invisibleWall" name="logic::invisibleWall">
+<area shape="rect" id="Node000001" title="Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window,..." alt="" coords="5,79,149,104"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="28,5,127,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,44,80,79,75,79,75,44"/>
+</map>

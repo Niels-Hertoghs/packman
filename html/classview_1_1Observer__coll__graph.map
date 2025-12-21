@@ -1,0 +1,7 @@
+<map id="view::Observer" name="view::Observer">
+<area shape="rect" id="Node000001" title="Abstracte klasse voor alle view observers." alt="" coords="49,93,167,119"/>
+<area shape="rect" id="Node000002" href="$classIObserver.html" title="Basis klasse voor alle observers." alt="" coords="5,5,91,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,41,102,91,97,94,62,44"/>
+<area shape="rect" id="Node000003" href="$classview_1_1camera.html" title="Zorgt ervoor dat elk object/tekst op de juiste plaatst staat op de window, onafhankelijk van de resol..." alt="" coords="115,5,224,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,44,119,94,114,91,151,41"/>
+</map>

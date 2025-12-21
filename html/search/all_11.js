@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['score_0',['score',['../classlogic_1_1Score.html',1,'logic::Score'],['../classlogic_1_1scoreViewNotifications.html#a63f263c8db42e0e702fc7eaea082ac02',1,'logic::scoreViewNotifications::score'],['../classlogic_1_1Score.html#a07b6ac91ebef7416e8544d80295d4b22',1,'logic::Score::Score()']]],
+  ['scorenotifications_1',['scorenotifications',['../classlogic_1_1scoreNotifications.html',1,'logic::scoreNotifications'],['../classlogic_1_1scoreNotifications.html#ae49beacc8fd101b438cc56e1623341e3',1,'logic::scoreNotifications::scoreNotifications(const scoreNotificationsType type)'],['../classlogic_1_1scoreNotifications.html#a67c47832f4fcf749d1e1fc967667203c',1,'logic::scoreNotifications::scoreNotifications(const int points, const bool isGhost)'],['../classlogic_1_1scoreNotifications.html#a8d8c0958fd3ba86e2a75db9fdc7fb212',1,'logic::scoreNotifications::scoreNotifications(const int points)']]],
+  ['scoreview_2',['scoreview',['../classview_1_1ScoreView.html',1,'view::ScoreView'],['../classview_1_1ScoreView.html#a54c2ed2be87e09d2c13e7616ed59a5ee',1,'view::ScoreView::ScoreView()']]],
+  ['scoreviewnotifications_3',['scoreviewnotifications',['../classlogic_1_1scoreViewNotifications.html',1,'logic::scoreViewNotifications'],['../classlogic_1_1scoreViewNotifications.html#acc7bd3ea0876b08c5e7ad337291f51a6',1,'logic::scoreViewNotifications::scoreViewNotifications(const scoreViewTypes notification)'],['../classlogic_1_1scoreViewNotifications.html#a1c9922233665835e7e833e3c118afb91',1,'logic::scoreViewNotifications::scoreViewNotifications()']]],
+  ['scoreviewtypes_4',['scoreViewTypes',['../classscoreViewTypes.html',1,'']]],
+  ['setdimensions_5',['setDimensions',['../classview_1_1camera.html#ad8fbc36668cf3bb287a9a41a7871061a',1,'view::camera']]],
+  ['sfml_6',['Upgrading SFML',['../md_README.html#autotoc_md24',1,'']]],
+  ['sfml_20project_20template_7',['CMake SFML Project Template',['../md_README.html',1,'']]],
+  ['spawnlocatiex_8',['spawnLocatieX',['../classlogic_1_1movableEntity.html#a0c49af597b069ff375ef5645ccafe584',1,'logic::movableEntity']]],
+  ['speed_9',['speed',['../classlogic_1_1movableEntity.html#a5f93334c1bfa064293ccc0b0d33d4f36',1,'logic::movableEntity']]],
+  ['spriteco_10',['spriteCo',['../classview_1_1movableEntityView.html#ae4e92c9d7ab0e900406dc5a1354211c5',1,'view::movableEntityView']]],
+  ['standson_11',['standsOn',['../classlogic_1_1movableEntity.html#aba57b680d95bf58e4ec34aafd4c3d7ef',1,'logic::movableEntity']]],
+  ['standsoncoin_12',['standsOnCoin',['../classlogic_1_1Pacman.html#a7406a45d448e897c01abe55e598054cc',1,'logic::Pacman']]],
+  ['standsonghost_13',['standsOnGhost',['../classlogic_1_1Pacman.html#a0223b10821469e9584331229071083aa',1,'logic::Pacman']]],
+  ['start_14',['Quick start',['../md_README.html#autotoc_md21',1,'']]],
+  ['startchasemode_15',['startChaseMode',['../classlogic_1_1Ghost.html#a7f1129250bd1631d7d29fbab9ceed719',1,'logic::Ghost']]],
+  ['startfearmode_16',['startfearmode',['../classlogic_1_1Ghost.html#a8052b0804c56ddedb66e7a20052d9149',1,'logic::Ghost::startFearMode()'],['../classlogic_1_1Stopwatch.html#af157b893f6f4f3124f0a2f670546ecee',1,'logic::Stopwatch::startFearMode()'],['../classlogic_1_1world.html#abb590e10dec814da5ab8ca7a7af45f3e',1,'logic::world::startFearMode()']]],
+  ['startvictory_17',['startVictory',['../classview_1_1stateManeger.html#a0c071b42911c5c69aed5fa171e74c3ae',1,'view::stateManeger']]],
+  ['startworld_18',['startWorld',['../classlogic_1_1world.html#a89512b82cdd9b6975d8090c11080be33',1,'logic::world']]],
+  ['state_19',['state',['../classview_1_1state.html',1,'view::state'],['../classview_1_1state.html#af62e305e7decbb233c7f5028abbc7679',1,'view::state::state()']]],
+  ['statemaneger_20',['statemaneger',['../classview_1_1stateManeger.html#autotoc_md19',1,'@class stateManeger'],['../classview_1_1stateManeger.html#a7b12c5db724c6b319343f036da4abbf3',1,'view::stateManeger::stateManeger()'],['../classview_1_1stateManeger.html',1,'view::stateManeger']]],
+  ['stopwatch_21',['Stopwatch',['../classlogic_1_1Stopwatch.html',1,'logic']]],
+  ['studio_22',['Visual Studio',['../md_README.html#autotoc_md23',1,'']]],
+  ['subscribe_23',['subscribe',['../classlogic_1_1entity.html#a79e40ae37254f0a0ec2ebaa2c1d70276',1,'logic::entity::subscribe()'],['../classlogic_1_1Score.html#a498cf8275dc50e03bfa8d9388dad8e5e',1,'logic::Score::subscribe()']]],
+  ['subscribescore_24',['subscribeScore',['../classlogic_1_1world.html#a2c133ade1d3c666d4953581dcb5bdc2a',1,'logic::world']]]
+];

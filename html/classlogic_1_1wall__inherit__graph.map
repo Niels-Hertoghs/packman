@@ -1,0 +1,5 @@
+<map id="logic::wall" name="logic::wall">
+<area shape="rect" id="Node000001" title="Concrete klasse die een muur representeert, positie x,y is de linkerbovenhoek." alt="" coords="11,79,99,104"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="5,5,104,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,44,57,79,52,79,52,44"/>
+</map>

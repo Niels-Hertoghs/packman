@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classview_1_1state.html" title="Abstracte basis klasse voor alle staten van de game." alt="" coords="5,104,99,129"/>
+<area shape="rect" id="Node000001" href="$classview_1_1LevelState.html" title="Concrete klasse voor de level staat van de game." alt="" coords="163,5,293,31"/>
+<area shape="poly" id="edge36_Node000000_Node000001" title=" " alt="" coords="74,92,107,65,145,40,173,28,175,33,148,44,110,69,78,96"/>
+<area shape="rect" id="Node000002" href="$classview_1_1VictoryState.html" title="Concrete klasse voor de virctory staat van de game (voor het naar een volgend level gaat)." alt="" coords="158,55,298,80"/>
+<area shape="poly" id="edge37_Node000000_Node000002" title=" " alt="" coords="110,98,181,78,182,83,112,103"/>
+<area shape="rect" id="Node000003" href="$classview_1_1gameOverState.html" title="Concrete klasse voor de game over staat van de game (als de player dood is)." alt="" coords="147,104,309,129"/>
+<area shape="poly" id="edge38_Node000000_Node000003" title=" " alt="" coords="112,114,147,114,147,119,112,119"/>
+<area shape="rect" id="Node000004" href="$classview_1_1menuState.html" title="Concrete klasse voor de menu staat van de game." alt="" coords="163,153,293,179"/>
+<area shape="poly" id="edge39_Node000000_Node000004" title=" " alt="" coords="112,131,182,151,181,156,110,136"/>
+<area shape="rect" id="Node000005" href="$classview_1_1pausedState.html" title="Concrete klasse voor paused staat inj de game (als de esc knop ingedrukt wordt tijdens het spelen)." alt="" coords="157,203,299,228"/>
+<area shape="poly" id="edge40_Node000000_Node000005" title=" " alt="" coords="79,137,110,163,148,188,178,200,176,205,145,192,107,168,75,141"/>
+</map>

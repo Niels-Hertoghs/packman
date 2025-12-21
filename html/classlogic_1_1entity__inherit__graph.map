@@ -1,0 +1,31 @@
+<map id="logic::entity" name="logic::entity">
+<area shape="rect" id="Node000001" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="271,5,370,31"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1collectable.html" title="Een abstracte klasse voor collecteerbare objecten." alt="" coords="5,79,137,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="268,37,112,81,111,76,267,32"/>
+<area shape="rect" id="Node000005" href="$classlogic_1_1invisibleWall.html" title="Concrete klasse die een invisible muur representeert, ja kan het niet zien op de window,..." alt="" coords="162,79,306,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="298,41,250,81,246,76,295,37"/>
+<area shape="rect" id="Node000006" href="$classlogic_1_1movableEntity.html" title="Een abstracte klasse voor alle beweegbare objecten in de game (x, y coo zijn in het midden van de spr..." alt="" coords="331,79,487,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="347,37,396,76,393,81,344,41"/>
+<area shape="rect" id="Node000015" href="$classlogic_1_1wall.html" title="Concrete klasse die een muur representeert, positie x,y is de linkerbovenhoek." alt="" coords="511,79,599,104"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="372,32,518,76,517,81,371,37"/>
+<area shape="rect" id="Node000003" href="$classlogic_1_1coin.html" title="Een concrete klasse voor de coins, positie is het midden van de coin." alt="" coords="17,152,105,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="70,118,65,152,60,151,65,117"/>
+<area shape="rect" id="Node000004" href="$classlogic_1_1fruit.html" title="Een concrete klasse voor de fruit, positie is de linkerbovenhoek van de fruit." alt="" coords="129,152,217,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="100,110,158,150,155,154,97,114"/>
+<area shape="rect" id="Node000007" href="$classlogic_1_1Ghost.html" title="De abstracte klasse voor alle ghosts." alt="" coords="299,152,398,177"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="392,116,360,154,356,150,388,113"/>
+<area shape="rect" id="Node000014" href="$classlogic_1_1Pacman.html" title="De concrete klasse voor pacman." alt="" coords="422,152,534,177"/>
+<area shape="poly" id="edge13_Node000006_Node000014" title=" " alt="" coords="431,112,469,150,465,154,428,116"/>
+<area shape="rect" id="Node000008" href="$classlogic_1_1manhattanGhost.html" title="Abstracte klasse voor ghosts die de manhatten afstand gebruiken om pacman te volgen." alt="" coords="178,225,349,251"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="326,188,279,227,276,223,323,184"/>
+<area shape="rect" id="Node000013" href="$classlogic_1_1redGhost.html" title="De concrete klasse voor de rode ghost (random ghost)." alt="" coords="373,225,493,251"/>
+<area shape="poly" id="edge12_Node000007_Node000013" title=" " alt="" coords="374,184,421,223,417,227,371,188"/>
+<area shape="rect" id="Node000009" href="$classlogic_1_1frontManhattanGhost.html" title="Abstracte klasse voor ghosts die de voorkant van pacman volgen (zijn weg proberen af te snijden)." alt="" coords="66,299,266,324"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="238,261,183,301,180,296,235,257"/>
+<area shape="rect" id="Node000012" href="$classlogic_1_1orangeGhost.html" title="Concrete klasse voor de oranje ghost, die de achterkant van pacman volgt." alt="" coords="290,299,434,324"/>
+<area shape="poly" id="edge11_Node000008_Node000012" title=" " alt="" coords="292,256,347,296,344,301,288,261"/>
+<area shape="rect" id="Node000010" href="$classlogic_1_1blueGhost.html" title="De concrete klasse voor de blauwe ghost, die de voorkant van pacman volgt." alt="" coords="25,372,152,397"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="145,335,103,374,100,370,142,331"/>
+<area shape="rect" id="Node000011" href="$classlogic_1_1greenGhost.html" title="De concrete klasse voor de groene ghost, die de voorkant van pacman volgt." alt="" coords="177,372,313,397"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="191,331,234,370,230,374,187,335"/>
+</map>

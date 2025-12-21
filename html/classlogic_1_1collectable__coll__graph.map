@@ -1,0 +1,5 @@
+<map id="logic::collectable" name="logic::collectable">
+<area shape="rect" id="Node000001" title="Een abstracte klasse voor collecteerbare objecten." alt="" coords="5,79,137,104"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1entity.html" title="Een abstracte klasse voor alle objecten in de game." alt="" coords="22,5,121,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,44,74,79,69,79,69,44"/>
+</map>

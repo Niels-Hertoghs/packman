@@ -1,0 +1,5 @@
+<map id="logic::Score" name="logic::Score">
+<area shape="rect" id="Node000001" title="Score observer die de score, levens en level bijhoudt." alt="" coords="90,79,187,104"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1Observer.html" title=" " alt="" coords="5,5,272,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,44,141,79,136,79,136,44"/>
+</map>

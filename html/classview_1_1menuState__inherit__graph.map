@@ -1,0 +1,5 @@
+<map id="view::menuState" name="view::menuState">
+<area shape="rect" id="Node000001" title="Concrete klasse voor de menu staat van de game." alt="" coords="5,79,136,104"/>
+<area shape="rect" id="Node000002" href="$classview_1_1state.html" title="Abstracte basis klasse voor alle staten van de game." alt="" coords="24,5,117,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,44,73,79,68,79,68,44"/>
+</map>

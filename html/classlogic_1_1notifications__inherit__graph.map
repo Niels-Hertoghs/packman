@@ -1,0 +1,5 @@
+<map id="logic::notifications" name="logic::notifications">
+<area shape="rect" id="Node000001" title="De notificatie klasse voor de entities. (alles wat er bij hun kan voorkomen)." alt="" coords="22,93,163,119"/>
+<area shape="rect" id="Node000002" href="$classlogic_1_1NotificationsBase.html" title=" " alt="" coords="5,5,180,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,59,95,93,90,93,90,59"/>
+</map>
