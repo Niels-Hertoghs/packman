@@ -1,3 +1,0 @@
-/home/runner/work/packman/packman/build_logic/CMakeFiles/packman_logic.dir
-/home/runner/work/packman/packman/build_logic/CMakeFiles/edit_cache.dir
-/home/runner/work/packman/packman/build_logic/CMakeFiles/rebuild_cache.dir
