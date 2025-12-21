@@ -81,7 +81,7 @@ Project gemaakt door Niels Hertoghs (s0241591).
     - Design rationale
     - Architecture overview
     - Pattern motivation  
-      _Bestand:_ In de root van het project: pacmanReport.word
+      _Bestand:_ In de root van het project: [REPORT.md](REPORT.md)
 
 - [x] **Code comments & API documentation**  
   _Toelichting:_ Bij elke methode staat duidelijke doxygen commentaar, voor parameters, return types, ... Doorheen de code is ook nog veel gewone comentaar toegevoegd "//" voor verdere verduidelijking van bepaalde code.
