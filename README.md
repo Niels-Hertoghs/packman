@@ -57,10 +57,10 @@ Project gemaakt door Niels Hertoghs (s0241591).
 - [x] **Logic as standalone library (no SFML dependency)**  
   _Toelichting:_ Er is een aparte cmake in de logic, die enkel de logic van de game compileerd.
 
-- [ ] **Camera & normalized coordinates**  
+- [x] **Camera & normalized coordinates**  
   _Toelichting:_ Camera is geimplementeerd en alle objecten in de logic werken met een normalized coordinaten systeem, de normalized coo worden vertaald naar effectieve coordinaten in de camera klasse en dan door de view correct afgebeeld in de window.
 
-- [ ] **Polymorphism & extensibility**  
+- [x] **Polymorphism & extensibility**  
   _Toelichting:_ Zoals u kan zien in de html folder van de doxygen is er veel gebruik gemaakt van polymorphisme.
 
 ---
@@ -83,7 +83,7 @@ Project gemaakt door Niels Hertoghs (s0241591).
     - Pattern motivation  
       _Bestand:_ In de root van het project: pacmanReport.word
 
-- [ ] **Code comments & API documentation**  
+- [x] **Code comments & API documentation**  
   _Toelichting:_ Bij elke methode staat duidelijke doxygen commentaar, voor parameters, return types, ... Doorheen de code is ook nog veel gewone comentaar toegevoegd "//" voor verdere verduidelijking van bepaalde code.
 
 ---
