@@ -78,6 +78,8 @@ void Score::notifyObservers(const scoreViewTypes notification) const {
     case scoreViewTypes::UPDATE_LEVEL:
         notif.level = level;
         break;
+    case scoreViewTypes::END_GAME:
+        notif.score = score;
     default:
         break;
     }
