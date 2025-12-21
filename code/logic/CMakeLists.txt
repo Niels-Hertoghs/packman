@@ -1,3 +1,9 @@
+cmake_minimum_required(VERSION 3.16)
+project(packman_logic)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_library(packman_logic
         world.cpp
         entities/entity.cpp
