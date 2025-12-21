@@ -152,7 +152,6 @@ Pacman::Pacman(double x, double y, double speed)
 }
 
 void Pacman::update(double delta, std::vector<std::shared_ptr<entity> >& walls) {
-    //TODO: zien wat van walls er const mag zijn (mss getters ook const makern)
 
     double newX = x;
     double newY = y;
