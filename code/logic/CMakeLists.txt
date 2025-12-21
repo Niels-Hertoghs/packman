@@ -15,8 +15,3 @@ add_library(packman_logic
 target_include_directories(packman_logic
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )
-
-# Logic gebruikt enkel sfml-system
-target_link_libraries(packman_logic
-        PUBLIC sfml-system
-)
