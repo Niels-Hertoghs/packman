@@ -108,7 +108,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> menuState::run
             // alles in de wereld inladen
             wereld->startWorld(wereld->get_score()->getLevel());
 
-            std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld, std::move(wereldView));
+            std::unique_ptr<LevelState> level = std::make_unique<LevelState>();
             //unique maken en in de private zetten, dan eventuele argumenten verwijderen
             manager.pushState(std::move(level));
             return {};
@@ -121,11 +121,6 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> menuState::run
 /// ---------------------------------------------------------------------------------------------------------------
 /// @class LevelState
 /// ---------------------------------------------------------------------------------------------------------------
-
-
-LevelState::LevelState(const std::shared_ptr<logic::world>& wereld, std::shared_ptr<view::worldView> worldV)
-    : worldView(std::move(worldV)) {
-}
 
 std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> LevelState::run(
     sf::RenderWindow& window, sf::Event& event, stateManeger& manager, camera& cam,
@@ -146,7 +141,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> LevelState::ru
             return {};
         }
     }
-    worldView->draw();
+    wereldView->draw();
     wereld->update(deltaTime);
     return {};
 }
@@ -241,7 +236,7 @@ std::pair<std::vector<sf::Text>, std::vector<sf::RectangleShape>> VictoryState::
 
             // alle view observers linken aan objecten, elk object een observer geven
 
-            std::unique_ptr<LevelState> level = std::make_unique<LevelState>(wereld, wereldView);
+            std::unique_ptr<LevelState> level = std::make_unique<LevelState>();
 
             //unique maken en in de private zetten, dan eventuele argumenten verwijderen
             manager.pushStateAndDelete(std::move(level));

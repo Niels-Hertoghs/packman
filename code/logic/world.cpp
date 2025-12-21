@@ -192,6 +192,4 @@ void world::startFearMode() const {
     }
     Stopwatch::getInstance()->startFearMode();
 }
-
-
 }
