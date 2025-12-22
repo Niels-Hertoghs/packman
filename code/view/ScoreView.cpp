@@ -94,6 +94,9 @@ void ScoreView::notify(const logic::scoreViewNotifications& message) {
         break;
     }
     case logic::scoreViewTypes::END_GAME: {
+        sf::Text LevelText = makeText(font, "Level: " + std::to_string(1), 0.16f, sf::Color::Yellow, 0.f,
+                              1.f - 1.f / 7.f, _camera);
+        levelText = LevelText;
         int score = message.score;
         gameEnded(score);
         _manager->gameOverState();

@@ -1,4 +1,4 @@
-# Packman Project – Evaluation Checklist
+# Packman Project
 
 Project gemaakt door Niels Hertoghs (s0241591).
 
