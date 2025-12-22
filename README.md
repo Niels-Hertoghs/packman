@@ -1,6 +1,7 @@
 # Packman Project
 
 Project gemaakt door Niels Hertoghs (s0241591).
+Defense video: https://1drv.ms/v/c/b96c3d903af24271/IQCXGMJIODgWTZb9ogGu888HAUDFQ8PGpYDHNWkVX-67bBk?e=JqkxvF
 
 > Checklist om bij te houden welke onderdelen geïmplementeerd zijn en waar ze zich in de code bevinden.
 
